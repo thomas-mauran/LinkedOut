@@ -399,3 +399,72 @@ Keycloak is the OpenID Connect identity provider that will be used to authentica
 - Manage the platform.
 - For now, only the deletion of seasonal worker accounts is planned.
 - Only users with the administrator role can access this module.
+
+## Workflow
+
+### User sign up
+
+```mermaid
+sequenceDiagram
+    actor A as User
+    participant K as Keycloak
+    participant L as LinkedOut
+
+    rect rgba(127, 127, 127, .4)
+        A ->> K: Sign up
+        K -->> A: Confirm account creation
+    end
+
+    rect rgba(127, 127, 127, .4)
+        A ->> K: Log in
+        K -->> A: Access and refresh token
+        A ->> L: Access token
+        L ->> K: Validate access token
+        K -->> L: Access token is valid
+    end
+
+    rect rgba(127, 127, 127, .4)
+        L -->> A: Begin profile creation
+        A ->> L: Profile information
+        L -->> A: Profile created
+    end
+```
+
+### Job creation and application
+
+```mermaid
+sequenceDiagram
+    actor A as Seasonal worker
+    participant L as LinkedOut
+    participant E as Employer application
+    actor B as Employer
+
+    rect rgba(127, 127, 127, .4)
+        B ->> E: Create job listing
+        E -->> B: Job listing created
+    end
+
+    rect rgba(127, 127, 127, .4)
+        A ->> L: View job listings
+        L ->> E: Get job listings
+        E -->> L: Job listings
+        L -->> A: Job listings
+    end
+
+    rect rgba(127, 127, 127, .4)
+        A ->> L: Apply to job listing
+        L -->> A: Job listing application status
+    end
+
+    rect rgba(127, 127, 127, .4)
+        B ->> E: View job listing applications
+        E -->> B: Job listing applications
+        B ->> E: Accept/Refuse job listing application
+        E -->> B: Job listing application status
+    end
+
+    rect rgba(127, 127, 127, .4)
+        A ->> L: View job listing applications
+        L -->> A: Job listing applications
+    end
+```
