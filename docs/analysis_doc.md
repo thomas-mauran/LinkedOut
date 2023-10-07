@@ -9,13 +9,13 @@ This platform offers a variety of essential features, including user profile man
 ### Actors
 
 - User: A person using the platform that is not yet registered.
-- Seasonworker: A person looking for a job for a season.
-- Employer: A person looking for a seasonworker.
+- Seasonal worker: A person looking for a job for a season.
+- Employer: A person looking for a seasonal worker.
 - Administrator: A person managing the platform.
 
 ### Glossary
 
-- Reference: A person who can recommend a seasonworker.
+- Reference: A person who can recommend a seasonal worker.
 
 ## User stories
 
@@ -283,13 +283,13 @@ This table stores the messages sent between a seasonal worker and an employer.
 It is linked to:
 - The `Seasonworker` table to store the seasonal worker who sent/received the message.
 
-| Column name   | Type    | Description                                                                                                     |
-| ------------- | ------- | --------------------------------------------------------------------------------------------------------------- |
-| `id`          | Integer | Unique identifier of the message.                                                                               |
-| `employer_id` | Integer | Unique identifier of the employer who sent/received the message.                                                |
-| `direction`   | Integer | Direction of the message. Valid values are `0` (Seasonworker => Employer) and `1` (Employer => Seasonworker).   |
-| `text`        | String  | Contents of the message.                                                                                        |
-| `sent_at`     | Date    | Date at which the message was sent.                                                                             |
+| Column name   | Type    | Description                                                                                                         |
+| ------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| `id`          | Integer | Unique identifier of the message.                                                                                   |
+| `employer_id` | Integer | Unique identifier of the employer who sent/received the message.                                                    |
+| `direction`   | Integer | Direction of the message. Valid values are `0` (Seasonal worker => Employer) and `1` (Employer => Seasonal worker). |
+| `text`        | String  | Contents of the message.                                                                                            |
+| `sent_at`     | Date    | Date at which the message was sent.                                                                                 |
 
 ### `Review`
 
@@ -302,7 +302,7 @@ It is linked to:
 | ------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `id`          | Integer | Unique identifier of the review.                                                                                        |
 | `employer_id` | Integer | Unique identifier of the employer who gave/received the review.                                                         |
-| `direction`   | Integer | Direction of the review. Valid values are `0` (Seasonworker => Employer) and `1` (Employer => Seasonworker).            |
+| `direction`   | Integer | Direction of the review. Valid values are `0` (Seasonal worker => Employer) and `1` (Employer => Seasonal worker).      |
 | `score`       | Integer | Score given in the review. Valid values are `1` (Very bad), `2` (Bad), `3` (Neutral), `4` (Good) and `5` (Very good).   |
 | `review`      | String  | Contents of the review.                                                                                                 |
 | `created_at`  | Date    | Date at which the review was created.                                                                                   |
@@ -344,12 +344,12 @@ It is linked to:
 
 This table stores addresses.
 
-| Column name   | Type    | Description                                                                                                             |
-| ------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `id`          | Integer | Unique identifier of the address.                                                                                       |
-| `address_line1` | String  | First line of the address.                                                                                            |
-| `zip_code`    | String  | ZIP code of the address.                                                                                                |
-| `city`        | String  | City of the address.                                                                                                    |
+| Column name       | Type    | Description                                                                                                             |
+| ----------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `id`              | Integer | Unique identifier of the address.                                                                                       |
+| `address_line1`   | String  | First line of the address.                                                                                              |
+| `zip_code`        | String  | ZIP code of the address.                                                                                                |
+| `city`            | String  | City of the address.                                                                                                    |
 
 ## Modules
 
@@ -357,22 +357,28 @@ This table stores addresses.
 
 The authentication, role and account management will be handled by Keycloak.
 
+Keycloak is the OpenID Connect identity provider that will be used to authenticate users, register new users, and help them recover their password. Each user will be linked to a seasonal worker and they may also have an administrator role to manage the platform.
+
 ### Seasonworker profile 
 
 - Manage seasonal worker profiles.
 - Add, view, modify, and delete references, experiences, and availabilities.
+- Only the seasonal worker can view and modify their profile.
+- Employers can view the profile of a seasonal worker depending on their subscription.
 
-### Job listing 
+### Job 
 
-- Display job listings.
-- View all, sort by relevance, and receive notifications for new listings.
+- Display and apply job listings.
+- Any seasonal worker can view all, sort by relevance, and receive notifications for new listings.
 - Create and manage job listings (employers).
+- Employers can view and accept/refuse applicants.
+- Only the seasonal worker can view the status of their application.
+- This module is an external service that will be integrated into the platform.
 
-### Job application 
+### Job recommendation
 
-- Apply to job listings.
-- View applied listings and application statuses.
-- Employers can view and manage applicants.
+- Recommend jobs to seasonal workers based on their profile.
+- This uses the seasonal worker profile and job listing modules to recommend jobs to seasonal workers.
 
 ### Review and rating 
 
@@ -381,9 +387,15 @@ The authentication, role and account management will be handled by Keycloak.
 
 ### Messaging 
 
-- Send/receive messages between seasonworkers and employers.
+- Send/receive messages between seasonal workers and employers.
 
 ### Notification 
 
 - Handle system notifications.
-- Notify users about application status changes and new listings.
+- Notify seasonal worker about job application changes and new listings.
+
+### Administration
+
+- Manage the platform.
+- For now, only the deletion of seasonal worker accounts is planned.
+- Only users with the administrator role can access this module.
