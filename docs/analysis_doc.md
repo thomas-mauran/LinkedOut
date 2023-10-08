@@ -330,7 +330,7 @@ It is linked to:
 | ------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
 | `id`          | Integer | Unique identifier of the message.                                                                                   |
 | `employer_id` | Integer | Unique identifier of the employer who sent/received the message.                                                    |
-| `direction`   | Integer | Direction of the message. Valid values are `0` (Seasonal worker => Employer) and `1` (Employer => Seasonal worker). |
+| `direction`   | Integer | Direction of the message. Valid values are `0` (Seasonal worker ⇒ Employer) and `1` (Employer ⇒ Seasonal worker).   |
 | `text`        | String  | Contents of the message.                                                                                            |
 | `sent_at`     | Date    | Date at which the message was sent.                                                                                 |
 
@@ -342,14 +342,14 @@ It is linked to:
 
 - The `Seasonworker` table to store the seasonal worker who gave/received the review.
 
-| Column name   | Type    | Description                                                                                                           |
-| ------------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
-| `id`          | Integer | Unique identifier of the review.                                                                                      |
-| `employer_id` | Integer | Unique identifier of the employer who gave/received the review.                                                       |
-| `direction`   | Integer | Direction of the review. Valid values are `0` (Seasonal worker => Employer) and `1` (Employer => Seasonal worker).    |
-| `score`       | Integer | Score given in the review. Valid values are `1` (Very bad), `2` (Bad), `3` (Neutral), `4` (Good) and `5` (Very good). |
-| `review`      | String  | Contents of the review.                                                                                               |
-| `created_at`  | Date    | Date at which the review was created.                                                                                 |
+| Column name   | Type    | Description                                                                                                             |
+| ------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `id`          | Integer | Unique identifier of the review.                                                                                        |
+| `employer_id` | Integer | Unique identifier of the employer who gave/received the review.                                                         |
+| `direction`   | Integer | Direction of the review. Valid values are `0` (Seasonal worker ⇒ Employer) and `1` (Employer ⇒ Seasonal worker).        |
+| `score`       | Integer | Score given in the review. Valid values are `1` (Very bad), `2` (Bad), `3` (Neutral), `4` (Good) and `5` (Very good).   |
+| `review`      | String  | Contents of the review.                                                                                                 |
+| `created_at`  | Date    | Date at which the review was created.                                                                                   |
 
 ### `JobCategory`
 
@@ -401,23 +401,23 @@ This table stores addresses.
 
 ### Authentication and account
 
-The authentication, role and account management will be handled by Keycloak.
+Authentication, role and account management will be handled by Keycloak.
 
-Keycloak is the OpenID Connect identity provider that will be used to authenticate users, register new users, and help them recover their password. Each user will be linked to a seasonal worker and they may also have an administrator role to manage the platform.
+Keycloak is the OpenID Connect identity provider that will be used to authenticate users, register new users, and help them recover their password. Each user will be linked to a seasonal worker, and they may also have an administrator role to manage the platform.
 
 ### Seasonworker profile
 
 - Manage seasonal worker profiles.
 - Add, view, modify, and delete references, experiences, and availabilities.
 - Only the seasonal worker can view and modify their profile.
-- Employers can view the profile of a seasonal worker depending on their subscription.
+- Employers can view the profile of a seasonal worker, depending on their subscription.
 
 ### Job
 
 - Display and apply job listings.
 - Any seasonal worker can view all, sort by relevance, and receive notifications for new listings.
 - Create and manage job listings (employers).
-- Employers can view and accept/refuse applicants.
+- Employers can view and accept or reject applicants.
 - Only the seasonal worker can view the status of their application.
 - This module is an external service that will be integrated into the platform.
 
