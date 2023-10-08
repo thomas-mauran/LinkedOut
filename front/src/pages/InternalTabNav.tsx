@@ -3,6 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import InternalMiscNav from '@/pages/internal/InternalMiscNav';
 import InternalPagesPage from '@/pages/internal/InternalPagesPage';
+import InternalProfilPage from '@/pages/internal/InternalProfileNav';
 
 /**
  * The parameter list for the InternalTab navigator.
@@ -10,6 +11,7 @@ import InternalPagesPage from '@/pages/internal/InternalPagesPage';
 export type InternalTabParamList = {
   InternalPages: undefined;
   InternalMisc: undefined;
+  InternalProfil: undefined;
 };
 
 const InternalTab = createMaterialBottomTabNavigator<InternalTabParamList>();
@@ -38,6 +40,16 @@ const InternalTabNav = () => {
           tabBarLabel: 'Miscellaneous',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name='test-tube' color={color} size={24} />
+          ),
+        }}
+      />
+      <InternalTab.Screen
+        name='InternalProfil'
+        component={InternalProfilPage}
+        options={{
+          tabBarLabel: 'Profil',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name='account' color={color} size={24} />
           ),
         }}
       />
