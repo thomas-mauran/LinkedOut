@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { Button, Divider, Text } from 'react-native-paper';
 
 import { InternalMiscStackParamList } from '@/pages/internal/InternalMiscNav';
+import i18n from '@/utils/i18n';
 
 type InternalMiscPageProps = NativeStackScreenProps<
   InternalMiscStackParamList,
@@ -45,6 +46,11 @@ const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
       contentContainerStyle={styles.contentContainer}
     >
       <Text>This is the InternalMiscPage.tsx file</Text>
+
+      <Divider style={styles.divider} />
+      <Text variant='headlineMedium'>Localization</Text>
+      <Text>This text is NOT localized</Text>
+      <Text>{i18n.t('internal.translatedText')}</Text>
 
       <Divider style={styles.divider} />
       <Text variant='headlineMedium'>Text styles</Text>
