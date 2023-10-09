@@ -34,6 +34,10 @@ const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
     navigation.navigate('MiscAppBar');
   }, [navigation]);
 
+  const tabBarButtonPress = useCallback(() => {
+    navigation.navigate('MiscTabBar');
+  }, [navigation]);
+
   return (
     <ScrollView
       style={styles.container}
@@ -46,6 +50,9 @@ const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
       </Text>
       <Button mode='contained-tonal' onPress={appBarButtonPress}>
         RNPaper AppBar
+      </Button>
+      <Button mode='contained-tonal' onPress={tabBarButtonPress}>
+        TabView & PagerView
       </Button>
     </ScrollView>
   );

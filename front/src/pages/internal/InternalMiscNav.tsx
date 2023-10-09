@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PaperNavigationBar from '@/components/PaperNavigationBar';
 import InternalMiscAppBarPage from '@/pages/internal/misc/InternalMiscAppBarPage';
 import InternalMiscPage from '@/pages/internal/misc/InternalMiscPage';
+import InternalMiscTabBarNav from '@/pages/internal/misc/InternalMiscTabBarNav';
 
 /**
  * The parameter list for the InternalMiscStack navigator.
@@ -10,6 +11,7 @@ import InternalMiscPage from '@/pages/internal/misc/InternalMiscPage';
 export type InternalMiscStackParamList = {
   MiscMain: undefined;
   MiscAppBar: undefined;
+  MiscTabBar: undefined;
 };
 
 const InternalMiscStack =
@@ -34,6 +36,11 @@ const InternalMiscNav = () => {
         name='MiscAppBar'
         component={InternalMiscAppBarPage}
         options={{ headerTitle: 'Miscellaneous > RNPaper AppBar' }}
+      />
+      <InternalMiscStack.Screen
+        name='MiscTabBar'
+        component={InternalMiscTabBarNav}
+        options={{ headerTitle: 'Miscellaneous > TabBar' }}
       />
     </InternalMiscStack.Navigator>
   );
