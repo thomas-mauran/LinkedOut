@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { Button, Divider, Text } from 'react-native-paper';
 
 import { InternalMiscStackParamList } from '@/pages/internal/InternalMiscNav';
 
@@ -13,15 +13,16 @@ type InternalMiscPageProps = NativeStackScreenProps<
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
   },
   contentContainer: {
     alignItems: 'flex-start',
     gap: 8,
     justifyContent: 'flex-start',
+    padding: 8,
   },
-  headline: {
-    fontStyle: 'italic',
+  divider: {
+    marginVertical: 8,
+    width: '100%',
   },
 });
 
@@ -45,9 +46,26 @@ const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
     >
       <Text>This is the InternalMiscPage.tsx file</Text>
 
-      <Text variant='headlineMedium' style={styles.headline}>
-        Navigation
-      </Text>
+      <Divider style={styles.divider} />
+      <Text variant='headlineMedium'>Text styles</Text>
+      <Text variant='displayLarge'>displayLarge</Text>
+      <Text variant='displayMedium'>displayMedium</Text>
+      <Text variant='displaySmall'>displaySmall</Text>
+      <Text variant='headlineLarge'>headlineLarge</Text>
+      <Text variant='headlineMedium'>headlineMedium</Text>
+      <Text variant='headlineSmall'>headlineSmall</Text>
+      <Text variant='titleLarge'>titleLarge</Text>
+      <Text variant='titleMedium'>titleMedium</Text>
+      <Text variant='titleSmall'>titleSmall</Text>
+      <Text variant='bodyLarge'>bodyLarge</Text>
+      <Text variant='bodyMedium'>bodyMedium</Text>
+      <Text variant='bodySmall'>bodySmall</Text>
+      <Text variant='labelLarge'>labelLarge</Text>
+      <Text variant='labelMedium'>labelMedium</Text>
+      <Text variant='labelSmall'>labelSmall</Text>
+
+      <Divider style={styles.divider} />
+      <Text variant='headlineMedium'>Navigation</Text>
       <Button mode='contained-tonal' onPress={appBarButtonPress}>
         RNPaper AppBar
       </Button>
