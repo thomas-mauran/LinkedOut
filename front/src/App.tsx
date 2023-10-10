@@ -19,8 +19,10 @@ import {
   configureFonts,
 } from 'react-native-paper';
 import { MD3Type } from 'react-native-paper/lib/typescript/types';
+import { Provider } from 'react-redux';
 
 import InternalTabNav from '@/pages/InternalTabNav';
+import store from '@/store/Store';
 
 // Theme setup
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -106,17 +108,19 @@ const App = () => {
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer theme={theme} onReady={onNavigationContainerReady}>
-        <StatusBar style='auto' />
-        <RootStack.Navigator
-          initialRouteName='Internal'
-          screenOptions={{ headerShown: false }}
-        >
-          <RootStack.Screen name='Internal' component={InternalTabNav} />
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <Provider store={store}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer theme={theme} onReady={onNavigationContainerReady}>
+          <StatusBar style='auto' />
+          <RootStack.Navigator
+            initialRouteName='Internal'
+            screenOptions={{ headerShown: false }}
+          >
+            <RootStack.Screen name='Internal' component={InternalTabNav} />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </Provider>
   );
 };
 
