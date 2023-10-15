@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icons/icon.png",
     "userInterfaceStyle": "automatic",
+    "scheme": "linkedout",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",

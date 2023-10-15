@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, Divider, Text } from 'react-native-paper';
 
+import InternalOIDCTest from '@/components/internal/InternalOIDCTest';
 import { InternalMiscStackParamList } from '@/pages/internal/InternalMiscNav';
 import i18n from '@/utils/i18n';
 
@@ -46,6 +47,10 @@ const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
       contentContainerStyle={styles.contentContainer}
     >
       <Text>This is the InternalMiscPage.tsx file</Text>
+
+      <Divider style={styles.divider} />
+      <Text variant='headlineMedium'>OIDC w/ Keycloak</Text>
+      <InternalOIDCTest />
 
       <Divider style={styles.divider} />
       <Text variant='headlineMedium'>Localization</Text>
