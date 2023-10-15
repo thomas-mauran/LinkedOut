@@ -1,3 +1,8 @@
-### Run the server
+# External API mock server
 
-`json-server db.json --routes routes.json`
+## Run the server
+The server used to mock the API is `json-server`. You can start it using the following command:
+
+```sh
+npx json-server db.json --routes routes.json
+```
