@@ -1,0 +1,200 @@
+{
+  "profile": [
+    {
+      "id": 1,
+      "firstName": "Bernard",
+      "lastName": "Tapie",
+      "gender": 1,
+      "birthday": "1943-01-26",
+      "nationality": "FRA",
+      "address": {
+        "firstLine": "52 rue des Saints-Pères",
+        "zipCode": "75107",
+        "city": "Paris"
+      },
+      "phone": "0695154879",
+      "email": "bernard.tapie@gmail.com",
+      "shortBiography": "Entrepreneur, politique et ancien propriétaire de l'Olympique de Marseille.\nExpérience étendue en business et services publics.",
+      "deletionRequested": false,
+      "nbExperiences": 3,
+      "nbReviews": 2
+    },
+    {
+      "id": 2,
+      "firstName": "François",
+      "lastName": "Hollande",
+      "gender": 1,
+      "birthday": "1954-08-12",
+      "nationality": "FRA",
+      "address": {
+        "firstLine": "52 rue du Faubourg-Saint-Honoré",
+        "zipCode": "75008",
+        "city": "Paris"
+      },
+      "phone": "063545572839",
+      "email": "francois.hollande@gmail.com",
+      "shortBiography": "Ancien chef de l'Etat français.\nExpérience étendue en politique et diplomatie.",
+      "deletionRequested": false,
+      "nbExperiences": 0,
+      "nbReviews": 0
+    }
+  ],
+  "reference": [
+    {
+      "id": 1,
+      "firstName": "Patrick",
+      "lastName": "Balkany",
+      "address": {
+        "firstLine": "52 rue des Saints-Pères",
+        "zipCode": "75107",
+        "city": "Paris"
+      },
+      "phone": "0680459527",
+      "email": "patrick.balkany@gmail.com",
+      "company": {
+        "id": 1,
+        "name": "Wonder"
+      }
+    }
+  ],
+  "experience": [
+    {
+      "id": 1,
+      "startDate": "1986-02-28",
+      "endDate": "1987-02-29",
+      "address": {
+        "firstLine": "52 rue des Saints-Pères",
+        "zipCode": "75107",
+        "city": "Paris"
+      },
+      "company": {
+        "id": 1,
+        "name": "Wonder"
+      },
+      "job": {
+        "id": 1,
+        "title": "Homme d'affaires",
+        "category": "Autre"
+      }
+    },
+    {
+      "id": 1,
+      "startDate": "1986-02-28",
+      "endDate": "1987-02-29",
+      "address": {
+        "firstLine": "52 rue des Saints-Pères",
+        "zipCode": "75107",
+        "city": "Paris"
+      },
+      "company": {
+        "id": 1,
+        "name": "Wonder"
+      },
+      "job": {
+        "id": 1,
+        "title": "Homme d'affaires",
+        "category": "Autre"
+      }
+    }
+  ],
+  "jobOffer": [
+    {
+      "id": 1,
+      "title": "Femme de ménage",
+      "description": "Nous recherchons des femmes de ménage saisonniers enthousiastes pour rejoindre notre équipe dynamique au restaurant L'Entrecôte.\nSi vous êtes passionné par le ménage, les produits d'entretien exceptionnels, et que vous aimez travailler dans une ambiance conviviale, nous aimerions vous rencontrer.",
+      "startDate": "2023-08-23",
+      "endDate": "2023-12-12",
+      "geographicArea": "Paris, 16ème arrondissement",
+      "status": -1
+    }
+  ],
+  "job": [
+    {
+      "id": 1,
+      "title": "Software Engineer",
+      "description": "We are looking for a skilled software engineer to join our dynamic team.",
+      "location": "Paris",
+      "salary": "Competitive",
+      "companyId": 1
+    },
+    {
+      "id": 2,
+      "title": "Marketing Manager",
+      "description": "Seeking an experienced marketing manager to lead our marketing department.",
+      "location": "New York",
+      "salary": "Negotiable",
+      "companyId": 2
+    }
+  ],
+  "messageChannel": [
+    {
+      "id": 1,
+      "employer": {
+        "id": 1,
+        "firstName": "Nicolas",
+        "lastName": "Sarkozy",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Flickr_-_europeanpeoplesparty_-_EPP_Summit_October_2010_(105)-(cropped).jpg",
+        "phone": "0677096463"
+      },
+      "lastMessage": "Salut Bernard, ton profil m'interesse."
+    }
+  ],
+  "message": [
+    {
+      "id": 1,
+      "channelId": 1,
+      "employerId": 1,
+      "direction": 0,
+      "sentAt": "2023-10-23T09:34:19Z",
+      "content": "Coucou Sarko, dis moi tout..."
+    },
+    {
+      "content": "Coucou sarko, dis moi tout...",
+      "messagingId": "1",
+      "id": 2
+    }
+  ],
+  "employer": [
+    {
+      "id": 1,
+      "firstName": "Nicolas",
+      "lastName": "Sarkozy",
+      "picture": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Flickr_-_europeanpeoplesparty_-_EPP_Summit_October_2010_(105)-(cropped).jpg",
+      "phone": "0677096463"
+    }
+  ],
+  "workerEvaluation": [
+    {
+      "id": 1,
+      "employerFirstName": "François",
+      "employerLastName": "Mitterand",
+      "score": 5,
+      "review": "Bernard est un employé modèle. Il cherche toujours à réussir, et cela peu importe la tâche."
+    }
+  ],
+  "employerEvaluation": [
+    {
+      "id": 1,
+      "score": 2,
+      "review": "François était au départ, un employeur modèle, mais il a vite montré son véritable visage..."
+    }
+  ],
+  "notification": [
+    {
+      "id": 1,
+      "title": "Candidature refusée",
+      "content": "Votre candidature à l'offre 'Serveur à l'entrecôte' à été refusée par l'employeur.",
+      "sentAt": "2023-10-23T09:34:19Z"
+    }
+  ],
+  "company": [
+    {
+      "id": 1,
+      "name": "Wonder"
+    },
+    {
+      "id": 1,
+      "name": "Dunder Miffline"
+    }
+  ]
+}

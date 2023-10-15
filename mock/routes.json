@@ -1,0 +1,23 @@
+{
+  "/profile/reference": "/reference",
+  "/profile/reference/:id": "/reference/:id/",
+  "/profile/experience": "/experience",
+  "/profile/evaluation": "/workerEvaluation",
+  "/profile/evaluation/:id": "/workerEvaluation/:id",
+  "/jobOffers": "/jobOffers",
+  "/jobOffers/:jobOfferId": "/jobOffers/:jobOfferId",
+  "/jobOffers/:jobOfferId/apply": "/jobOffers/:jobOfferId/apply",
+  "/messaging": "/messageChannel ",
+  "/messaging/:messageChannelId": "/messageChannel/:messageChannelId",
+  "/messaging/:messageChannelId/message": "/messaging/:messageChannelId/message",
+  "/employer/:employerId": "/employer/:employerId",
+  "/employer/:employerId/evaluation": "/employerEvaluation/:employerId",
+  "/employer/:employerId/messaging": "/messageChannel/:employerId",
+  "/notification": "/notification",
+  "/job": "/job",
+  "/job/:jobId": "/job/:jobId",
+  "/job/category": "/job/category",
+  "/job/byCategory/:jobCategory": "/job/byCategory/:jobCategory",
+  "/company": "/company",
+  "/company/:companyId": "/company/:companyId"
+}
