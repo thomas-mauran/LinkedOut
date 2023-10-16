@@ -31,9 +31,9 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
 });
 
 const DefaultFontHeading = Platform.select({
-  web: 'RedHatDisplay, Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif',
+  web: 'RedHatDisplay',
   ios: 'RedHatDisplay',
-  default: 'RedHatDisplay, sans-serif',
+  default: 'RedHatDisplay',
 });
 
 const FontConfig: Partial<Record<MD3TypescaleKey, Partial<MD3Type>>> = {
