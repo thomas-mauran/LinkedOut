@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-open class BackendApplication
+open class ApiGatewayApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(BackendApplication::class.java, *args)
+    SpringApplication.run(ApiGatewayApplication::class.java, *args)
 }

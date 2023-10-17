@@ -17,7 +17,7 @@ public class TestBackendApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(BackendApplication::main).with(TestBackendApplication.class).run(args);
+		SpringApplication.from(ApiGatewayApplication::main).with(TestBackendApplication.class).run(args);
 	}
 
 }
