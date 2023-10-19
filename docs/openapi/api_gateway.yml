@@ -755,6 +755,12 @@ paths:
       summary: Get every known jobs.
       description: Can only be used by logged-in users.
       operationId: getAllJobs
+      parameters:
+        - in: query
+          name: category
+          description: The job category to filter the results by.
+          schema:
+            type: string
       responses:
         '200':
           description: Jobs retrieved successfully
@@ -802,26 +808,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/JobCategory'
-        '401':
-          description: User is not authenticated
-  /jobs/byCategory/{jobCategory}:
-    get:
-      tags:
-        - Job
-      summary: Get every job for a category.
-      description: Can only be used by logged-in users.
-      operationId: getAllJobsByCategory
-      parameters:
-        - $ref: '#/components/parameters/jobCategory'
-      responses:
-        '200':
-          description: Jobs retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
         '401':
           description: User is not authenticated
   # Company
