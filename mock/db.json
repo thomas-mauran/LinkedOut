@@ -34,11 +34,12 @@
       "phone": "063545572839",
       "email": "francois.hollande@gmail.com",
       "shortBiography": "Ancien chef de l'Etat français.\nExpérience étendue en politique et diplomatie.",
-      "deletionRequested": false,
+      "deletionRequested": true,
       "nbExperiences": 0,
       "nbReviews": 0
     }
   ],
+  "deletionProfiles": [2],
   "references": [
     {
       "id": 1,
@@ -55,45 +56,80 @@
         "id": 1,
         "name": "Wonder"
       }
+    },
+    {
+      "id": 2,
+      "firstName": "François",
+      "lastName": "Mitterand",
+      "address": {
+        "firstLine": "52 rue du Faubourg-Saint-Honoré",
+        "zipCode": "75008",
+        "city": "Paris"
+      },
+      "phone": "0635455728",
+      "email": "fmiterrand@gouv.fr",
+      "company": {
+        "id": 2,
+        "name": "Government"
+      }
     }
   ],
   "experiences": [
     {
       "id": 1,
-      "startDate": "1986-02-28",
-      "endDate": "1987-02-29",
+      "startDate": "1976-10-12",
+      "endDate": "1989-05-18",
       "address": {
         "firstLine": "52 rue des Saints-Pères",
         "zipCode": "75107",
         "city": "Paris"
       },
       "company": {
-        "id": 1,
-        "name": "Wonder"
+        "id": 3,
+        "name": "La rue"
       },
       "job": {
         "id": 1,
-        "title": "Homme d'affaires",
+        "title": "Escroc",
         "category": "Autre"
       }
     },
     {
-      "id": 1,
+      "id": 2,
       "startDate": "1986-02-28",
       "endDate": "1987-02-29",
       "address": {
-        "firstLine": "52 rue des Saints-Pères",
-        "zipCode": "75107",
+        "firstLine": "17 rue de l'Arrivée",
+        "zipCode": "75115",
         "city": "Paris"
       },
       "company": {
-        "id": 1,
-        "name": "Wonder"
+        "id": 4,
+        "name": "TF1"
       },
       "job": {
-        "id": 1,
-        "title": "Homme d'affaires",
-        "category": "Autre"
+        "id": 2,
+        "title": "Hôte de show télévisé",
+        "category": "Showbiz"
+      }
+    },
+    {
+      "id": 3,
+      "startDate": "1970-10-12",
+      "endDate": "1971-05-18",
+      "address": {
+        "firstLine": "20 Rue de la Candolle",
+        "zipCode": "34000",
+        "city": "Montpellier"
+      },
+      "company": {
+        "id": 5,
+        "name": "Black Cat"
+      },
+      "job": {
+        "id": 3,
+        "title": "Serveur en restaurant",
+        "category": "Hôtels, cafés, bars, restaurants"
       }
     }
   ],
@@ -106,24 +142,73 @@
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
       "status": -1
+    },
+    {
+      "id": 2,
+      "title": "Serveur à l'entrecôte",
+      "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
+      "startDate": "2023-08-23",
+      "endDate": "2023-12-12",
+      "geographicArea": "Paris, 16ème arrondissement",
+      "status": -1
+    },
+    {
+      "id": 3,
+      "title": "Serveur à l'entrecôte (Denied)",
+      "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
+      "startDate": "2023-08-23",
+      "endDate": "2023-12-12",
+      "geographicArea": "Paris, 16ème arrondissement",
+      "status": 2
+    },
+    {
+      "id": 4,
+      "title": "Serveur à l'entrecôte (Accepted)",
+      "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
+      "startDate": "2023-08-23",
+      "endDate": "2023-12-12",
+      "geographicArea": "Paris, 16ème arrondissement",
+      "status": 1
+    },
+    {
+      "id": 5,
+      "title": "Serveur à l'entrecôte (Pending)",
+      "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
+      "startDate": "2023-08-23",
+      "endDate": "2023-12-12",
+      "geographicArea": "Paris, 16ème arrondissement",
+      "status": 0
     }
   ],
   "jobs": [
     {
       "id": 1,
-      "title": "Software Engineer",
-      "description": "We are looking for a skilled software engineer to join our dynamic team.",
-      "location": "Paris",
-      "salary": "Competitive",
-      "companyId": 1
+      "title": "Escroc",
+      "category": "Autre"
     },
     {
       "id": 2,
-      "title": "Marketing Manager",
-      "description": "Seeking an experienced marketing manager to lead our marketing department.",
-      "location": "New York",
-      "salary": "Negotiable",
-      "companyId": 2
+      "title": "Hôte de show télévisé",
+      "category": "Showbiz"
+    },
+    {
+      "id": 3,
+      "title": "Serveur en restaurant",
+      "category": "Hôtels, cafés, bars, restaurants"
+    }
+  ],
+  "jobCategories": [
+    {
+      "id": 1,
+      "name": "Autre"
+    },
+    {
+      "id": 2,
+      "name": "Showbiz"
+    },
+    {
+      "id": 3,
+      "name": "Hôtels, cafés, bars, restaurants"
     }
   ],
   "messageChannels": [
@@ -137,6 +222,39 @@
         "phone": "0677096463"
       },
       "lastMessage": "Salut Bernard, ton profil m'interesse."
+    },
+    {
+      "id": 2,
+      "employer": {
+        "id": 2,
+        "firstName": "François",
+        "lastName": "Hollande",
+        "picture": "https://peopleauquotidien.com/wp-content/uploads/2022/12/JTA19T-1-e1670495723208.jpg",
+        "phone": "0632789456"
+      },
+      "lastMessage": "Bonjour, j’aimerai vous confier une mission"
+    },
+    {
+      "id": 3,
+      "employer": {
+        "id": 3,
+        "firstName": "John",
+        "lastName": "Cena",
+        "picture": "https://i.pinimg.com/736x/2d/8d/dd/2d8ddd5b89a7e067c2d3404773549a4d.jpg",
+        "phone": "0742569874"
+      },
+      "lastMessage": "Bonjour Tapy, do you know Bing Chilling?"
+    },
+    {
+      "id": 4,
+      "employer": {
+        "id": 4,
+        "firstName": "Noé",
+        "lastName": "Tarbouret",
+        "picture": "https://vectorseek.com/wp-content/uploads/2023/03/Golang-Gopher-Logo-Vector.jpg",
+        "phone": "0647932568"
+      },
+      "lastMessage": "c kan tu fé pokémmo"
     }
   ],
   "messages": [
@@ -144,14 +262,17 @@
       "id": 1,
       "channelId": 1,
       "employerId": 1,
-      "direction": 0,
+      "direction": 1,
       "sentAt": "2023-10-23T09:34:19Z",
-      "content": "Coucou Sarko, dis moi tout..."
+      "content": "Salut Bernard, ton profil m'interesse"
     },
     {
-      "content": "Coucou sarko, dis moi tout...",
-      "messagingId": "1",
-      "id": 2
+      "id": 2,
+      "channelId": 1,
+      "employerId": 1,
+      "direction": 0,
+      "sentAt": "2023-10-26T01:34:56Z",
+      "content": "Coucou Sarko, dis moi tout..."
     }
   ],
   "employers": [
@@ -161,6 +282,27 @@
       "lastName": "Sarkozy",
       "picture": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Flickr_-_europeanpeoplesparty_-_EPP_Summit_October_2010_(105)-(cropped).jpg",
       "phone": "0677096463"
+    },
+    {
+      "id": 2,
+      "firstName": "François",
+      "lastName": "Hollande",
+      "picture": "https://peopleauquotidien.com/wp-content/uploads/2022/12/JTA19T-1-e1670495723208.jpg",
+      "phone": "0632789456"
+    },
+    {
+      "id": 3,
+      "firstName": "John",
+      "lastName": "Cena",
+      "picture": "https://i.pinimg.com/736x/2d/8d/dd/2d8ddd5b89a7e067c2d3404773549a4d.jpg",
+      "phone": "0742569874"
+    },
+    {
+      "id": 4,
+      "firstName": "Noé",
+      "lastName": "Tarbouret",
+      "picture": "https://vectorseek.com/wp-content/uploads/2023/03/Golang-Gopher-Logo-Vector.jpg",
+      "phone": "0647932568"
     }
   ],
   "workerEvaluations": [
@@ -169,7 +311,16 @@
       "employerFirstName": "François",
       "employerLastName": "Mitterand",
       "score": 5,
-      "review": "Bernard est un employé modèle. Il cherche toujours à réussir, et cela peu importe la tâche."
+      "review": "Bernard est un employé modèle. Il cherche toujours à réussir, et cela peu importe la tâche.",
+      "createdAt": "2022-10-16T15:29:31Z"
+    },
+    {
+      "id": 2,
+      "employerFirstName": "Jacques",
+      "employerLastName": "Glassman",
+      "score": 1,
+      "review": "Bernard est un escroc : il a essayé de m'acheter !!!!",
+      "createdAt": "2021-09-11T09:34:19Z"
     }
   ],
   "employerEvaluations": [
@@ -193,8 +344,20 @@
       "name": "Wonder"
     },
     {
-      "id": 1,
-      "name": "Dunder Miffline"
+      "id": 2,
+      "name": "Government"
+    },
+    {
+      "id": 3,
+      "name": "La rue"
+    },
+    {
+      "id": 4,
+      "name": "TF1"
+    },
+    {
+      "id": 5,
+      "name": "Black Cat"
     }
   ]
 }
