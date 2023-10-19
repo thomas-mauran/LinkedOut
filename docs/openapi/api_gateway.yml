@@ -1079,6 +1079,11 @@ components:
           type: string
           example: Bernard est un employé modèle. Il cherche toujours à réussir, et cela peu importe la tâche.
           readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          example: 2022-10-16T15:29:31Z
+          readOnly: true
     JobOffer:
       type: object
       properties:
