@@ -212,7 +212,7 @@ paths:
         '404':
           description: User profile not found
   # Reference
-  /profile/reference:
+  /profile/references:
     post:
       tags:
         - Reference
@@ -250,7 +250,7 @@ paths:
                   $ref: '#/components/schemas/Reference'
         '401':
           description: User is not authenticated
-  /profile/reference/{referenceId}:
+  /profile/references/{referenceId}:
     patch:
       tags:
         - Reference
@@ -313,7 +313,7 @@ paths:
         '404':
           description: Reference not found
   # Experience
-  /profile/experience:
+  /profile/experiences:
     post:
       tags:
         - Experience
@@ -351,7 +351,7 @@ paths:
                   $ref: '#/components/schemas/Experience'
         '401':
           description: User is not authenticated
-  /profile/experience/{experienceId}:
+  /profile/experiences/{experienceId}:
     patch:
       tags:
         - Experience
@@ -414,7 +414,7 @@ paths:
         '404':
           description: Experience not found
   # Evaluation
-  /profile/evaluation:
+  /profile/evaluations:
     get:
       tags:
         - Evaluation
@@ -432,7 +432,7 @@ paths:
                   $ref: '#/components/schemas/Evaluation'
         '401':
           description: User is not authenticated
-  /profile/evaluation/{evaluationId}:
+  /profile/evaluations/{evaluationId}:
     get:
       tags:
         - Evaluation
@@ -558,7 +558,7 @@ paths:
           description: User is not authenticated
         '404':
           description: Message channel not found
-  /messaging/{messageChannelId}/message:
+  /messaging/{messageChannelId}/messages:
     post:
       tags:
         - Messaging
@@ -605,7 +605,7 @@ paths:
         '404':
           description: Message channel not found
   # Employer
-  /employer/{employerId}:
+  /employers/{employerId}:
     get:
       tags:
         - Employer
@@ -625,7 +625,7 @@ paths:
           description: User is not authenticated
         '404':
           description: Employer not found
-  /employer/{employerId}/evaluation:
+  /employers/{employerId}/evaluations:
     post:
       tags:
         - Employer
@@ -684,7 +684,7 @@ paths:
           description: User is not authenticated
         '404':
           description: Employer or employer evaluation not found
-  /employer/{employerId}/messaging:
+  /employers/{employerId}/messaging:
     post:
       tags:
         - Employer
@@ -729,7 +729,7 @@ paths:
         '404':
           description: Employer or message channel not found
   # Notification
-  /notification:
+  /notifications:
     get:
       tags:
         - Notification
@@ -748,7 +748,7 @@ paths:
         '401':
           description: User is not authenticated
   # Job
-  /job:
+  /jobs:
     get:
       tags:
         - Job
@@ -766,7 +766,7 @@ paths:
                   $ref: '#/components/schemas/Job'
         '401':
           description: User is not authenticated
-  /job/{jobId}:
+  /jobs/{jobId}:
     get:
       tags:
         - Job
@@ -786,7 +786,7 @@ paths:
           description: User is not authenticated
         '404':
           description: Job not found
-  /job/category:
+  /jobs/categories:
     get:
       tags:
         - Job
@@ -804,7 +804,7 @@ paths:
                   $ref: '#/components/schemas/JobCategory'
         '401':
           description: User is not authenticated
-  /job/byCategory/{jobCategory}:
+  /jobs/byCategory/{jobCategory}:
     get:
       tags:
         - Job
@@ -825,7 +825,7 @@ paths:
         '401':
           description: User is not authenticated
   # Company
-  /company:
+  /companies:
     get:
       tags:
         - Company
@@ -843,7 +843,7 @@ paths:
                   $ref: '#/components/schemas/Company'
         '401':
           description: User is not authenticated
-  /company/{companyId}:
+  /companies/{companyId}:
     get:
       tags:
         - Company
