@@ -1,0 +1,34 @@
+services:
+  postgresql:
+    image: docker.io/bitnami/postgresql:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=bn_keycloak
+      - POSTGRESQL_DATABASE=bitnami_keycloak
+    volumes:
+      - "postgresql_data:/bitnami/postgresql"
+
+  keycloak:
+    image: "bitnami/keycloak"
+    ports:
+      - "8180:8080"
+    depends_on:
+      - postgresql
+
+  keycloak_config:
+    image: bitnami/keycloak-config-cli
+    environment:
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_USER=user
+      - KEYCLOAK_PASSWORD=bitnami
+      - KEYCLOAK_AVAILABILITYCHECK_ENABLED=true
+      - KEYCLOAK_AVAILABILITYCHECK_TIMEOUT=120s
+      - IMPORT_FILES_LOCATIONS=/config/*
+    volumes:
+      - ./config/keycloak:/config
+    depends_on:
+      - keycloak
+
+volumes:
+  postgresql_data:
+
