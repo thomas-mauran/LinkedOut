@@ -1,6 +1,8 @@
 {
   "/profile": "/profiles/1",
   "/profile/requestDeletion": "/_deletionProfiles",
+  "/profile/availabilities": "/availabilities",
+  "/profile/availabilities/:id": "/availabilities/:id/",
   "/profile/references": "/references",
   "/profile/references/:id": "/references/:id/",
   "/profile/experiences": "/experiences",
