@@ -47,7 +47,14 @@
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
       "category": "Showbiz"
-    }
+    },
+    {
+       "id": 2,
+       "startDate": "2023-03-14",
+       "endDate": "2022-12-12",
+       "geographicArea": "Paris, 16ème arrondissement",
+       "category": "Restauration"
+     }
   ],
   "references": [
     {
