@@ -6,6 +6,8 @@ info:
 tags:
   - name: Profile
     description: Profile of a user
+- name: Availability
+  description: Availability of a user
   - name: Reference
     description: References (people who can recommand) of a user
   - name: Experience
@@ -211,6 +213,108 @@ paths:
           description: User is not authorized to delete a profile
         '404':
           description: User profile not found
+
+  # Availabilities
+  /profile/availabilities:
+    post:
+      tags:
+      - Availability
+      summary: Create an availability for the logged-in user.
+      description: Can only be used by logged-in users.
+      operationId: createMyProfileSingleAvailability
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Availability'
+      responses:
+        '200':
+          description: Availability created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Availability'
+        '401':
+          description: User is not authenticated
+    get:
+      tags:
+      - Availability
+      summary: Get the logged-in user availabilities.
+      description: Can only be used by logged-in users.
+      operationId: getMyProfileAvailability
+      responses:
+        '200':
+          description: Availability retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Availability'
+        '401':
+          description: User is not authenticated
+  /profile/availabilities/{availabilityId}:
+    patch:
+      tags:
+      - Availability
+      summary: Update a availabilities of the logged-in user.
+      description: Can only be used by logged-in users.
+      operationId: updateMyProfileSingleAvailability
+      parameters:
+      - $ref: '#/components/parameters/availabilityId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Availability'
+      responses:
+        '200':
+          description: Availability updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Availability'
+        '400':
+          description: Invalid request payload
+        '401':
+          description: User is not authenticated
+        '404':
+          description: Availability not found
+    get:
+      tags:
+      - Availability
+      summary: Get a availability of the logged-in user.
+      description: Can only be used by logged-in users.
+      operationId: getMyProfileSingleAvailability
+      parameters:
+      - $ref: '#/components/parameters/availabilityId'
+      responses:
+        '200':
+          description: Availability retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Availability'
+        '401':
+          description: User is not authenticated
+        '404':
+          description: Availability not found
+    delete:
+      tags:
+      - Availability
+      summary: Delete a availability of the logged-in user.
+      description: Can only be used by logged-in users.
+      operationId: deleteMyProfileSingleAvailability
+      parameters:
+      - $ref: '#/components/parameters/availabilityId'
+      responses:
+        '200':
+          description: Reference deleted successfully
+        '401':
+          description: User is not authenticated
+        '404':
+          description: Reference not found
   # Reference
   /profile/references:
     post:
@@ -1210,6 +1314,15 @@ components:
     userId:
       name: userId
       description: Unique identifier of a user.
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 1
+    availabilityId:
+      name: availabilityId
+      description: Unique identifier of a availability.
       in: path
       required: true
       schema:
