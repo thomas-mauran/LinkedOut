@@ -6,6 +6,8 @@ import { Appbar, Button, Divider, IconButton, Text } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import TextField from '@/components/TextField';
+import { useGetProfileQuery, useGetProfilesQuery } from '@/store/slice/api';
+import { Profile } from '@/store/slice/types';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +47,15 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const InternalProfilePage = ({ navigation }) => {
+  const {
+    isLoading,
+    isError,
+    error,
+    data: profileData,
+  } = useGetProfileQuery('1');
+
+  console.log('dataFetched:', profileData);
+
   useEffect(() => {
     // Set the action buttons in the appbar for rotating the picture
     navigation.setOptions({
@@ -77,7 +88,7 @@ const InternalProfilePage = ({ navigation }) => {
         />
         <View style={styles.centerContainer}>
           <Text variant='headlineMedium' style={{ marginBottom: 5 }}>
-            Bernard Tapie
+            {profileData?.firstName} {profileData?.lastName}
           </Text>
           <View>
             <View style={styles.horizontalContainer}>
@@ -111,10 +122,7 @@ const InternalProfilePage = ({ navigation }) => {
         <View style={{ marginTop: 10 }}>
           <View style={styles.horizontalContainer}>
             <Divider style={{ width: 3, height: '100%', marginRight: 10 }} />
-            <Text>
-              Entrepreneur, politique et ancien propriétaire de l’Olympique de
-              Marseille. Expérience étendue en business et services publics.
-            </Text>
+            <Text>{profileData?.shortBiography}</Text>
           </View>
         </View>
         <View style={{ alignItems: 'flex-start' }}>
@@ -124,11 +132,8 @@ const InternalProfilePage = ({ navigation }) => {
           <Text variant='titleLarge' style={{ marginBottom: 5 }}>
             Contact
           </Text>
-          <TextField title='Téléphone' list={['06 95 15 48 76']} />
-          <TextField
-            title='Addresse e-mail'
-            list={['bernard.tapie@gmail.com']}
-          />
+          <TextField title='Téléphone' list={[profileData?.phone]} />
+          <TextField title='Addresse e-mail' list={[profileData?.email]} />
         </View>
         <View>
           <Text variant='titleLarge' style={{ marginBottom: 5 }}>

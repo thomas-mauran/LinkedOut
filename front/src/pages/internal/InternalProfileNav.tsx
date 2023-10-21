@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import PaperNavigationBar from '@/components/PaperNavigationBar';
+import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 
 import InternalProfilePage from './profile/InternalProfilePage';
 
