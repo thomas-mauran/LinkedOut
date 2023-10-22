@@ -1,7 +1,13 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { Availability, Experience, Profile, References } from './types';
+import {
+  Availability,
+  Evaluation,
+  Experience,
+  Profile,
+  References,
+} from './types';
 
 const baseUrl = 'http://10.0.2.2:3000';
 
@@ -25,7 +31,7 @@ export const api = createApi({
     getReferences: builder.query<References[], string>({
       query: () => 'profile/references/',
     }),
-    getEvaluation: builder.query<References[], string>({
+    getEvaluation: builder.query<Evaluation[], string>({
       query: () => 'profile/evaluation/',
     }),
   }),

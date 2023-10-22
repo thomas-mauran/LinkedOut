@@ -58,3 +58,12 @@ export interface References {
   phone: string;
   company: Company;
 }
+
+export interface Evaluation {
+  id: number;
+  employerFirstName: string;
+  employerLastName: string;
+  score: number;
+  review: string;
+  createdAt: string;
+}

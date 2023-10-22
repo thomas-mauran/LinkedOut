@@ -1,5 +1,17 @@
 {
   "internal": {
     "translatedText": "Ce texte est traduit en Français."
+  },
+  "profile": {
+    "info": {
+      "contact": "Contact",
+      "availabilities": "Disponibilités",
+      "experiences": "Expériences",
+      "reviews": "Avis",
+      "phoneNumber": "Numéro",
+      "email": "Email",
+      "references": "Références",
+      "downloadResume": "Télécharger le CV"
+    }
   }
 }

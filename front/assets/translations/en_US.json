@@ -1,5 +1,17 @@
 {
   "internal": {
     "translatedText": "This text is translated to English."
+  },
+  "profile": {
+    "info": {
+      "contact": "Contact",
+      "availabilities": "Availabilities",
+      "experiences": "Experiences",
+      "reviews": "Reviews",
+      "phoneNumber": "Phone number",
+      "email": "Email",
+      "references": "Références",
+      "downloadResume": "Download resume"
+    }
   }
 }

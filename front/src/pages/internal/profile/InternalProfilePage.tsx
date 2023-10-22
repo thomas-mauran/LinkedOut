@@ -1,17 +1,17 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { useColorScheme } from 'react-native';
 import { Appbar, Button, Divider, IconButton, Text } from 'react-native-paper';
+import { TouchableRipple } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import TextField from '@/components/TextField';
 import {
   useGetAvailabilitiesQuery,
-  useGetExperiencesQuery,
   useGetProfileQuery,
-  useGetReferencesQuery,
 } from '@/store/slice/api';
+import i18n from '@/utils/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,19 +54,13 @@ const InternalProfilePage = ({ navigation }) => {
   const { data: profile } = useGetProfileQuery('');
   const { data: availabilities } = useGetAvailabilitiesQuery('');
 
-  // useEffect(() => {
-  //   // Set the action buttons in the appbar for rotating the picture
-  //   navigation.setOptions({
-  //     headerRight: () => (
-  //       <>
-  //         <Appbar.Action
-  //           icon='pencil'
-  //           onPress={navigation.navigate('MiscAppBar')}
-  //         />
-  //       </>
-  //     ),
-  //   });
-  // }, [navigation]);
+  const experiencesButtonPressed = useCallback(() => {
+    navigation.navigate('Experiences');
+  }, [navigation]);
+
+  const referencesButtonPressed = useCallback(() => {
+    navigation.navigate('References');
+  }, [navigation]);
 
   const starsIntoArray = function (num: number) {
     let resultArray = [];
@@ -83,7 +77,6 @@ const InternalProfilePage = ({ navigation }) => {
         resultArray.push(0);
         remaining -= 0;
       }
-      console.log('remaining', remaining);
     }
 
     return resultArray;
@@ -136,32 +129,40 @@ const InternalProfilePage = ({ navigation }) => {
                   marginLeft: 5,
                 }}
               >
-                5
+                {profile?.averageRating}
               </Text>
             </View>
           </View>
         </View>
       </View>
       <View style={{ marginRight: 10, marginLeft: 10 }}>
-        <View style={{ marginTop: 10 }}>
+        <View style={{ marginTop: 5 }}>
           <View style={styles.horizontalContainer}>
             <Divider style={{ width: 3, height: '100%', marginRight: 10 }} />
             <Text>{profile?.shortBiography}</Text>
           </View>
         </View>
         <View style={{ alignItems: 'flex-start' }}>
-          <Button icon='file-document'>Télecharger le cv</Button>
+          <Button icon='file-document'>
+            {i18n.t('profile.info.downloadResume')}
+          </Button>
         </View>
         <View>
           <Text variant='titleLarge' style={{ marginBottom: 5 }}>
-            Contact
+            {i18n.t('profile.info.contact')}
           </Text>
-          <TextField title='Téléphone' list={[profile?.phone]} />
-          <TextField title='Addresse e-mail' list={[profile?.email]} />
+          <TextField
+            title={`${i18n.t('profile.info.phoneNumber')}`}
+            list={[profile?.phone]}
+          />
+          <TextField
+            title={`${i18n.t('profile.info.email')}`}
+            list={[profile?.email]}
+          />
         </View>
         <View>
-          <Text variant='titleLarge' style={{ marginBottom: 5 }}>
-            Disponibilités
+          <Text variant='titleLarge' style={{ marginBottom: 5, marginTop: 10 }}>
+            {i18n.t('profile.info.availabilities')}
           </Text>
           {availabilities?.map((availability) => (
             <View>
@@ -175,47 +176,72 @@ const InternalProfilePage = ({ navigation }) => {
             </View>
           ))}
         </View>
-        <View
+        <TouchableRipple
           style={{
             ...styles.horizontalContainer,
-            backgroundColor: '#FEF7FF',
+            marginTop: 15,
           }}
+          onPress={experiencesButtonPressed}
         >
-          <TextField
-            title='Expériences'
-            list={[`${profile?.nbExperiences} expériences`]}
-          />
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
-            <MaterialCommunityIcons
-              name='chevron-right'
-              size={24}
-              style={[
-                isDarkTheme ? { color: 'white' } : { color: 'black' },
-                { marginTop: 'auto', marginBottom: 'auto', marginRight: 10 },
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <TextField
+              title={`${i18n.t('profile.info.experiences')}`}
+              list={[
+                `${profile?.nbExperiences} ${i18n.t(
+                  'profile.info.experiences',
+                )}`,
               ]}
             />
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+              <MaterialCommunityIcons
+                name='chevron-right'
+                size={24}
+                style={[
+                  isDarkTheme ? { color: 'white' } : { color: 'black' },
+                  { marginTop: 'auto', marginBottom: 'auto', marginRight: 10 },
+                ]}
+              />
+            </View>
           </View>
-        </View>
-        <View
+        </TouchableRipple>
+        <TouchableRipple
           style={{
             ...styles.horizontalContainer,
+            marginTop: 15,
           }}
+          onPress={referencesButtonPressed}
         >
-          <TextField
-            title='Références & Avis'
-            list={[`${profile?.nbReviews} avis`]}
-          />
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
-            <MaterialCommunityIcons
-              name='chevron-right'
-              size={24}
-              style={[
-                isDarkTheme ? { color: 'white' } : { color: 'black' },
-                { marginTop: 'auto', marginBottom: 'auto', marginRight: 10 },
-              ]}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <TextField
+              title={`${i18n.t('profile.info.references')} & ${i18n.t(
+                'profile.info.reviews',
+              )} `}
+              list={[`${profile?.nbReviews} ${i18n.t('profile.info.reviews')}`]}
             />
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+              <MaterialCommunityIcons
+                name='chevron-right'
+                size={24}
+                style={[
+                  isDarkTheme ? { color: 'white' } : { color: 'black' },
+                  { marginTop: 'auto', marginBottom: 'auto', marginRight: 10 },
+                ]}
+              />
+            </View>
           </View>
-        </View>
+        </TouchableRipple>
       </View>
     </ScrollView>
   );
