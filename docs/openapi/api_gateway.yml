@@ -1061,6 +1061,11 @@ components:
           format: int64
           example: 2
           readOnly: true
+        averageRating:
+          type: number
+          format: float
+          example: 4.5
+          readOnly: true
     Reference:
       type: object
       properties:

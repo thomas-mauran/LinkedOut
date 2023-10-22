@@ -17,7 +17,8 @@
       "shortBiography": "Entrepreneur, politique et ancien propriétaire de l'Olympique de Marseille.\nExpérience étendue en business et services publics.",
       "deletionRequested": false,
       "nbExperiences": 3,
-      "nbReviews": 2
+      "nbReviews": 2,
+      "averageRating": 4.6
     },
     {
       "id": "5977517d-d26c-4149-863e-4ed4567e42f6",
@@ -36,7 +37,8 @@
       "shortBiography": "Ancien chef de l'Etat français.\nExpérience étendue en politique et diplomatie.",
       "deletionRequested": true,
       "nbExperiences": 0,
-      "nbReviews": 0
+      "nbReviews": 0,
+      "averageRating": 3.6
     }
   ],
   "deletionProfiles": [2],

@@ -6,8 +6,12 @@ import { Appbar, Button, Divider, IconButton, Text } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import TextField from '@/components/TextField';
-import { useGetProfileQuery, useGetProfilesQuery } from '@/store/slice/api';
-import { Profile } from '@/store/slice/types';
+import {
+  useGetAvailabilitiesQuery,
+  useGetExperiencesQuery,
+  useGetProfileQuery,
+  useGetReferencesQuery,
+} from '@/store/slice/api';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,30 +51,44 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const InternalProfilePage = ({ navigation }) => {
-  const {
-    isLoading,
-    isError,
-    error,
-    data: profileData,
-  } = useGetProfileQuery('1');
+  const { data: profile } = useGetProfileQuery('');
+  const { data: availabilities } = useGetAvailabilitiesQuery('');
 
-  console.log('dataFetched:', profileData);
+  // useEffect(() => {
+  //   // Set the action buttons in the appbar for rotating the picture
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <>
+  //         <Appbar.Action
+  //           icon='pencil'
+  //           onPress={navigation.navigate('MiscAppBar')}
+  //         />
+  //       </>
+  //     ),
+  //   });
+  // }, [navigation]);
 
-  useEffect(() => {
-    // Set the action buttons in the appbar for rotating the picture
-    navigation.setOptions({
-      headerRight: () => (
-        <>
-          <Appbar.Action
-            icon='pencil'
-            onPress={navigation.navigate('MiscAppBar')}
-          />
-        </>
-      ),
-    });
-  }, [navigation]);
+  const starsIntoArray = function (num: number) {
+    let resultArray = [];
+    let remaining = num;
 
-  const data = [1, 1, 1, 1, 1];
+    for (let i = 0; i < 5; i++) {
+      if (remaining >= 1) {
+        resultArray.push(1);
+        remaining -= 1;
+      } else if (remaining >= 0.5) {
+        resultArray.push(0.5);
+        remaining -= 0.5;
+      } else {
+        resultArray.push(0);
+        remaining -= 0;
+      }
+      console.log('remaining', remaining);
+    }
+
+    return resultArray;
+  };
+
   const theme = useColorScheme();
   const isDarkTheme = theme === 'dark';
 
@@ -88,16 +106,22 @@ const InternalProfilePage = ({ navigation }) => {
         />
         <View style={styles.centerContainer}>
           <Text variant='headlineMedium' style={{ marginBottom: 5 }}>
-            {profileData?.firstName} {profileData?.lastName}
+            {profile?.firstName} {profile?.lastName}
           </Text>
           <View>
             <View style={styles.horizontalContainer}>
               <FlatList
-                data={data}
+                data={starsIntoArray(profile?.averageRating)}
                 horizontal={true}
-                renderItem={() => (
+                renderItem={({ item }) => (
                   <MaterialCommunityIcons
-                    name='star'
+                    name={
+                      item === 1
+                        ? 'star'
+                        : item === 0.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
                     size={24}
                     style={
                       isDarkTheme ? { color: 'white' } : { color: 'black' }
@@ -122,7 +146,7 @@ const InternalProfilePage = ({ navigation }) => {
         <View style={{ marginTop: 10 }}>
           <View style={styles.horizontalContainer}>
             <Divider style={{ width: 3, height: '100%', marginRight: 10 }} />
-            <Text>{profileData?.shortBiography}</Text>
+            <Text>{profile?.shortBiography}</Text>
           </View>
         </View>
         <View style={{ alignItems: 'flex-start' }}>
@@ -132,29 +156,24 @@ const InternalProfilePage = ({ navigation }) => {
           <Text variant='titleLarge' style={{ marginBottom: 5 }}>
             Contact
           </Text>
-          <TextField title='Téléphone' list={[profileData?.phone]} />
-          <TextField title='Addresse e-mail' list={[profileData?.email]} />
+          <TextField title='Téléphone' list={[profile?.phone]} />
+          <TextField title='Addresse e-mail' list={[profile?.email]} />
         </View>
         <View>
           <Text variant='titleLarge' style={{ marginBottom: 5 }}>
             Disponibilités
           </Text>
-          <TextField
-            title='Restauration'
-            list={[
-              '21 oct. - 14 mars',
-              'Paris, 16ème arrondissement',
-              '5 expériences passées',
-            ]}
-          />
-          <TextField
-            title='Événementiel'
-            list={[
-              '14 déc. - 23 août',
-              'Paris, 16ème arrondissement',
-              '1 expérience passée',
-            ]}
-          />
+          {availabilities?.map((availability) => (
+            <View>
+              <TextField
+                title='Restauration'
+                list={[
+                  `${availability?.startDate} - ${availability?.endDate}`,
+                  availability?.geographicArea,
+                ]}
+              />
+            </View>
+          ))}
         </View>
         <View
           style={{
@@ -164,7 +183,7 @@ const InternalProfilePage = ({ navigation }) => {
         >
           <TextField
             title='Expériences'
-            list={['3 expériences professionnelles']}
+            list={[`${profile?.nbExperiences} expériences`]}
           />
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
             <MaterialCommunityIcons
@@ -182,7 +201,10 @@ const InternalProfilePage = ({ navigation }) => {
             ...styles.horizontalContainer,
           }}
         >
-          <TextField title='Références & Avis' list={['2 avis']} />
+          <TextField
+            title='Références & Avis'
+            list={[`${profile?.nbReviews} avis`]}
+          />
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
             <MaterialCommunityIcons
               name='chevron-right'
