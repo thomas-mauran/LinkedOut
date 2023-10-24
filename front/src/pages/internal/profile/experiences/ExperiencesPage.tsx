@@ -1,19 +1,19 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar, Divider, IconButton, Text } from 'react-native-paper';
 
 import TextField from '@/components/TextField';
-import { InternalMiscStackParamList } from '@/pages/internal/InternalMiscNav';
-import { useGetExperiencesQuery } from '@/store/slice/api';
+import {
+  useDeleteExperienceMutation,
+  useGetExperiencesQuery,
+} from '@/store/slice/api';
+import { Experience } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 
 import { InternalProfileStackParamList } from '../../InternalProfileNav';
-
-type InternalMiscPageProps = NativeStackScreenProps<
-  InternalMiscStackParamList,
-  'MiscMain'
->;
 
 const styles = StyleSheet.create({
   container: {
@@ -47,7 +47,11 @@ type ExperiencesAppPageProps = NativeStackScreenProps<
  * @constructor
  */
 const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
-  const { data: experiences } = useGetExperiencesQuery('');
+  // Constants
+
+  // Hooks
+  const { data: experiences, refetch } = useGetExperiencesQuery('');
+  const [deleteExperience] = useDeleteExperienceMutation();
 
   const [isEdited, setIsEdited] = useState(false);
 
@@ -56,6 +60,9 @@ const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
     navigation.setOptions({
       headerRight: () => (
         <>
+          {isEdited && (
+            <Appbar.Action icon={'plus'} onPress={createButtonPressed} />
+          )}
           <Appbar.Action
             icon={isEdited === true ? 'check' : 'pencil'}
             onPress={editButtonPressed}
@@ -65,8 +72,34 @@ const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
     });
   }, [navigation, isEdited]);
 
+  // Fetch data from the API
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
+
+  // Methods
   const editButtonPressed = useCallback(() => {
     setIsEdited((prev) => !prev);
+  }, []);
+  const createButtonPressed = useCallback(() => {
+    navigation.navigate('ExperiencesUpdate', {});
+  }, [navigation]);
+
+  const editButtonExperience = useCallback(
+    (experience: Experience) => {
+      navigation.navigate('ExperiencesUpdate', { ...experience });
+    },
+    [navigation],
+  );
+
+  const trashcanButtonExperience = useCallback((experience: Experience) => {
+    deleteExperience(experience.id)
+      .unwrap()
+      .then(() => {
+        refetch();
+      });
   }, []);
 
   return (
@@ -81,12 +114,27 @@ const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
               style={{ marginLeft: 5 }}
               title={experience.job.title}
               list={[
-                `${experience.startDate} - ${experience.endDate}`,
+                `${new Date(experience.startDate).toLocaleDateString(
+                  'en-US',
+                )} - ${new Date(experience.endDate).toLocaleDateString(
+                  'en-US',
+                )}`,
                 `${experience.address.firstLine}, ${experience.address.city}, ${experience.address.zipCode}`,
               ]}
             />
             {isEdited && (
-              <IconButton icon='pencil' style={styles.editBtnInline} />
+              <View style={styles.horizontalContainer}>
+                <IconButton
+                  icon='pencil'
+                  style={styles.editBtnInline}
+                  onPress={() => editButtonExperience(experience)}
+                />
+                <IconButton
+                  icon='trash-can'
+                  style={styles.editBtnInline}
+                  onPress={() => trashcanButtonExperience(experience)}
+                />
+              </View>
             )}
           </View>
           <Divider style={styles.divider} />

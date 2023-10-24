@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
-import ExperiencePage from '@/pages/internal/profile/experiences/ExperiencesPage';
+import ExperiencesPage from '@/pages/internal/profile/experiences/ExperiencesPage';
+import ExperiencesUpdatePage from '@/pages/internal/profile/experiences/ExperiencesUpdatePage';
 import ReferencesPage from '@/pages/internal/profile/references/ReferencesPage';
+import { Experience } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 
 import InternalProfilePage from './profile/InternalProfilePage';
@@ -10,9 +12,11 @@ import InternalProfilePage from './profile/InternalProfilePage';
 /**
  * The parameter list for the InternalProfileStack navigator.
  */
+
 export type InternalProfileStackParamList = {
   ProfileMain: undefined;
   Experiences: undefined;
+  ExperiencesUpdate: Experience;
   References: undefined;
 };
 
@@ -36,8 +40,12 @@ const InternalProfileNav = () => {
       />
       <InternalProfileStack.Screen
         name='Experiences'
-        component={ExperiencePage}
+        component={ExperiencesPage}
         options={{ headerTitle: `${i18n.t('profile.info.experiences')}` }}
+      />
+      <InternalProfileStack.Screen
+        name='ExperiencesUpdate'
+        component={ExperiencesUpdatePage}
       />
       <InternalProfileStack.Screen
         name='References'

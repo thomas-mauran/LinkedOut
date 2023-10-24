@@ -12,6 +12,10 @@
       "email": "Email",
       "references": "Références",
       "downloadResume": "Download resume"
+    },
+    "experience": {
+      "experienceEdit": "Edit experience",
+      "experienceCreate": "Create experience"
     }
   }
 }

@@ -1,7 +1,7 @@
 export type Address = {
-  firstLine: string;
-  zipCode: string;
-  city: string;
+  firstLine?: string;
+  zipCode?: string;
+  city?: string;
 };
 
 export type Profile = {
@@ -30,23 +30,23 @@ export type Availability = {
 };
 
 export interface Company {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }
 
 export interface Job {
-  id: number;
-  title: string;
-  category: string;
+  id?: number;
+  title?: string;
+  category?: string;
 }
 
 export interface Experience {
-  id: number;
-  startDate: string;
-  endDate: string;
-  address: Address;
-  company: Company;
-  job: Job;
+  id?: number;
+  startDate?: string;
+  endDate?: string;
+  address?: Address;
+  company?: Company;
+  job?: Job;
 }
 
 export interface References {

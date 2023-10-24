@@ -1,8 +1,7 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { useColorScheme } from 'react-native';
-import { Appbar, Button, Divider, IconButton, Text } from 'react-native-paper';
+import { Button, Divider, Text } from 'react-native-paper';
 import { TouchableRipple } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 

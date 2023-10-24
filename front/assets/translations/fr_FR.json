@@ -11,7 +11,11 @@
       "phoneNumber": "Numéro",
       "email": "Email",
       "references": "Références",
-      "downloadResume": "Télécharger le CV"
+      "downloadResume": "Télécharger le CV",
+      "experience": {
+        "experienceEdit": "Mettre à jour l'expérience",
+        "experienceCreate": "Créer une expérience"
+      }
     }
   }
 }

@@ -9,9 +9,7 @@ import {
   References,
 } from './types';
 
-const baseUrl = 'http://10.0.2.2:3000';
-
-console.log('baseUrl', baseUrl);
+const baseUrl = process.env.EXPO_PUBLIC_MOCK_API_URL;
 
 export const api = createApi({
   reducerPath: 'api',
@@ -28,6 +26,26 @@ export const api = createApi({
     getExperiences: builder.query<Experience[], string>({
       query: () => 'profile/experiences/',
     }),
+    postExperience: builder.mutation<Experience, Experience>({
+      query: (body) => ({
+        url: 'profile/experiences/',
+        method: 'POST',
+        body,
+      }),
+    }),
+    patchExperience: builder.mutation<Experience, Experience>({
+      query: (body) => ({
+        url: `profile/experiences/${body.id}/`,
+        method: 'PATCH',
+        body,
+      }),
+    }),
+    deleteExperience: builder.mutation<Experience, number>({
+      query: (id) => ({
+        url: `profile/experiences/${id}/`,
+        method: 'DELETE',
+      }),
+    }),
     getReferences: builder.query<References[], string>({
       query: () => 'profile/references/',
     }),
@@ -42,4 +60,7 @@ export const {
   useGetAvailabilitiesQuery,
   useGetExperiencesQuery,
   useGetReferencesQuery,
+  usePostExperienceMutation,
+  usePatchExperienceMutation,
+  useDeleteExperienceMutation,
 } = api;
