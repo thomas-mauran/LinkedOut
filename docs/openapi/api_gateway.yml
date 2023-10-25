@@ -1137,9 +1137,13 @@ components:
           type: string
           format: date
           example: 2023-03-14
-        geographicArea:
-          type: string
-          example: Paris, 16ème arrondissement
+        address:
+          $ref: '#/components/schemas/Address'
+        range:
+          type: integer
+          format: int64
+          example: 10
+          readOnly: true
         jobCategory:
           allOf:
           - $ref: '#/components/schemas/Job'

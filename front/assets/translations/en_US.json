@@ -14,7 +14,10 @@
       "downloadResume": "Download resume",
       "informations": "Informations",
       "firstName": "First name",
-      "lastName": "Last name"
+      "lastName": "Last name",
+      "shortBiography": "Biography",
+      "updateProfile": "Udpate profile",
+      "profil": "Profile"
     },
     "experience": {
       "experienceEdit": "Edit experience",
@@ -40,6 +43,11 @@
     "date": {
       "dateRange": "Date range",
       "pickRange": "Pick range"
+    },
+    "availabilities": {
+      "availabilitiesEdit": "Edit availability",
+      "availabilitiesCreate": "Create availability",
+      "radiusRange": "Radius range (in Km)"
     }
   }
 }

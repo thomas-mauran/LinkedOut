@@ -13,7 +13,7 @@ import {
 import { Experience } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 
-import { InternalProfileStackParamList } from '../../InternalProfileNav';
+import { ProfileStackParamList } from '../../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 });
 type ExperiencesAppPageProps = NativeStackScreenProps<
-  InternalProfileStackParamList,
+  ProfileStackParamList,
   'Experiences'
 >;
 /**

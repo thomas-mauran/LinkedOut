@@ -14,15 +14,18 @@
       "downloadResume": "Télécharger le CV",
       "informations": "Informations",
       "firstName": "Prénom",
-      "lastName": "Nom"
+      "lastName": "Nom",
+      "shortBiography": "Biographie",
+      "updateProfile": "Mettre à jour le profil",
+      "profil": "Profil"
     },
     "experience": {
       "experienceEdit": "Mettre à jour l'expérience",
       "experienceCreate": "Créer une expérience"
     },
     "references": {
-      "referenceEdit": "Edit reference",
-      "referenceCreate": "Create reference"
+      "referenceEdit": "Mettre à jour la référence",
+      "referenceCreate": "Créer une référence"
     },
     "company": {
       "company": "Entreprise",
@@ -40,6 +43,11 @@
     "date": {
       "dateRange": "Période",
       "pickRange": "Choisir une période"
+    },
+    "availabilities": {
+      "availabilitiesEdit": "Mettre à jour une disponibilité",
+      "availabilitiesCreate": "Créer une disponibilité",
+      "radiusRange": "Rayon de recherche (en Km)"
     }
   }
 }

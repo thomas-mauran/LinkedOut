@@ -22,7 +22,7 @@ import { Reference } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 import { starsIntoArray } from '@/utils/methods';
 
-import { InternalProfileStackParamList } from '../../InternalProfileNav';
+import { ProfileStackParamList } from '../../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
 });
 type ReferencesAppPageProps = NativeStackScreenProps<
-  InternalProfileStackParamList,
+  ProfileStackParamList,
   'References'
 >;
 /**

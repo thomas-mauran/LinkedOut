@@ -2,14 +2,17 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Appbar, Button, Text, TextInput } from 'react-native-paper';
+import Slider from 'react-native-a11y-slider';
+import { Appbar, Button, Text, TextInput, useTheme } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
+import DropDown from 'react-native-paper-dropdown';
 
 import {
-  usePatchExperienceMutation,
-  usePostExperienceMutation,
+  useGetJobCategoriesQuery,
+  usePatchAvailabilitiesMutation,
+  usePostAvailabilitiesMutation,
 } from '@/store/slice/api';
-import { Experience } from '@/store/slice/types';
+import { Availability } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 
 import { ProfileStackParamList } from '../../ProfileNav';
@@ -55,33 +58,34 @@ const styles = StyleSheet.create({
   },
 });
 
-type ExperiencesUpdatePageProps = NativeStackScreenProps<
+type AvailabilitiesUpdatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
-  'ExperiencesUpdate'
+  'AvailabilitiesUpdate'
 >;
 
-const ExperiencesUpdatePage = ({
+const AvailabilitiesUpdatePage = ({
   route,
   navigation,
-}: ExperiencesUpdatePageProps) => {
+}: AvailabilitiesUpdatePageProps) => {
   // Constants
-  const { id, company, job, address, startDate, endDate } =
-    route.params as Experience;
-
-  let [isCreate, setIsCreate] = useState(false);
+  const { id, address, startDate, endDate, range, category } =
+    route.params as Availability;
 
   // Hooks
+  let [isCreate, setIsCreate] = useState(false);
+  const { colors } = useTheme();
 
   // Form State
   const [formData, setFormData] = useState({
     id,
-    jobTitle: job?.title,
     firstLine: address?.firstLine,
     zipCode: address?.zipCode,
     city: address?.city,
-    companyName: company?.name,
     startDate,
     endDate,
+    range: [range ?? 0],
+    categoryId: category?.id,
+    category: category?.category,
   });
 
   // To set the action buttons in the appbar for saving the changes
@@ -89,8 +93,8 @@ const ExperiencesUpdatePage = ({
     navigation.setOptions({
       headerTitle: `${
         isCreate
-          ? i18n.t('profile.experience.experienceCreate')
-          : i18n.t('profile.experience.experienceEdit')
+          ? i18n.t('profile.availabilities.availabilitiesCreate')
+          : i18n.t('profile.availabilities.availabilitiesEdit')
       }`, // Change this to your desired title
       headerRight: () => (
         <>
@@ -108,17 +112,18 @@ const ExperiencesUpdatePage = ({
       handleInputChange('endDate', new Date());
     }
   }, []);
-
   // Api calls
-  const [patchExperience] = usePatchExperienceMutation();
-  const [postExperience] = usePostExperienceMutation();
+  const [patchAvailabilitie] = usePatchAvailabilitiesMutation();
+  const [postAvailabilitie] = usePostAvailabilitiesMutation();
+  const { data: categories } = useGetJobCategoriesQuery('');
 
   // Date picker states
-  const [range, setRange] = React.useState({
+  const [dateRange, setDateRange] = React.useState({
     startDate: new Date(startDate ?? new Date()),
     endDate: new Date(endDate ?? new Date()),
   });
   const [open, setOpen] = React.useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
 
   // Methods
   const onDismiss = React.useCallback(() => {
@@ -136,45 +141,50 @@ const ExperiencesUpdatePage = ({
   const onConfirm = React.useCallback(
     ({ startDate, endDate }) => {
       setOpen(false);
-      setRange({ startDate, endDate });
+      setDateRange({ startDate, endDate });
       handleInputChange('startDate', startDate.toISOString());
       handleInputChange('endDate', endDate.toISOString());
     },
-    [setOpen, setRange],
+    [setOpen, setDateRange],
   );
 
   // To save the changes
   const checkPressed = useCallback(() => {
-    const updatedExperience: Experience = {
+    const updatedAvailabilitie: Availability = {
       id: formData.id ?? null,
-      company: {
-        name: formData.companyName,
-      },
-      job: {
-        title: formData.jobTitle,
-      },
       address: {
         firstLine: formData.firstLine,
         zipCode: formData.zipCode,
         city: formData.city,
       },
+      category: {
+        category: formData.category,
+        id: formData.categoryId,
+      },
       startDate: formData.startDate,
       endDate: formData.endDate,
+      range: formData.range[0],
     };
     if (isCreate === true) {
-      postExperience(updatedExperience)
+      postAvailabilitie(updatedAvailabilitie)
         .unwrap()
         .then((r) => {
           navigation.goBack();
         });
     } else {
-      patchExperience(updatedExperience)
+      patchAvailabilitie(updatedAvailabilitie)
         .unwrap()
         .then((r) => {
           navigation.goBack();
         });
     }
-  }, [formData, patchExperience, navigation]);
+  }, [formData, patchAvailabilitie, navigation]);
+
+  const dropdownChange = (value: number) => {
+    const category = categories?.find((c) => c.id === value);
+    handleInputChange('categoryId', value);
+    handleInputChange('category', category?.category);
+  };
 
   return (
     <ScrollView
@@ -182,12 +192,6 @@ const ExperiencesUpdatePage = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.verticalCenterContainer}>
-        <TextInput
-          label={i18n.t('profile.job.jobTitle')}
-          value={formData.jobTitle || ''}
-          style={styles.textInput}
-          onChangeText={(value) => handleInputChange('jobTitle', value)}
-        />
         <View style={styles.horizontalContainer}>
           <View>
             <Text>{i18n.t('profile.date.dateRange')}</Text>
@@ -209,17 +213,29 @@ const ExperiencesUpdatePage = ({
             mode='range'
             visible={open}
             onDismiss={onDismiss}
-            startDate={range.startDate}
-            endDate={range.endDate}
+            startDate={dateRange.startDate}
+            endDate={dateRange.endDate}
             onConfirm={onConfirm}
           />
         </View>
-        <TextInput
-          label={i18n.t('profile.company.companyName')}
-          value={formData.companyName || ''}
-          style={styles.textInput}
-          onChangeText={(value) => handleInputChange('companyName', value)}
-        />
+        <View style={{ width: '80%', marginTop: 10, marginBottom: 10 }}>
+          {categories && (
+            <DropDown
+              label={'Category'}
+              visible={showDropDown}
+              showDropDown={() => setShowDropDown(true)}
+              onDismiss={() => setShowDropDown(false)}
+              value={formData.categoryId}
+              setValue={(value) => {
+                dropdownChange(value);
+              }}
+              list={categories?.map((category) => ({
+                label: category.category,
+                value: category.id,
+              }))}
+            />
+          )}
+        </View>
         <TextInput
           label={i18n.t('profile.address.firstLine')}
           value={formData.firstLine || ''}
@@ -240,9 +256,30 @@ const ExperiencesUpdatePage = ({
             onChangeText={(value) => handleInputChange('city', value)}
           />
         </View>
+        <View
+          style={[
+            styles.horizontalContainer,
+            { width: '80%', marginTop: 20, marginBottom: 20 },
+          ]}
+        >
+          <Text variant='headlineSmall'>
+            {i18n.t('profile.availabilities.radiusRange')} {formData.range[0]}{' '}
+          </Text>
+        </View>
+        <Slider
+          min={1}
+          max={200}
+          values={formData.range}
+          onChange={(value) => {
+            handleInputChange('range', value);
+          }}
+          style={{ width: '80%' }}
+          markerColor={colors.inversePrimary}
+          showLabel={false}
+        />
       </View>
     </ScrollView>
   );
 };
 
-export default ExperiencesUpdatePage;
+export default AvailabilitiesUpdatePage;

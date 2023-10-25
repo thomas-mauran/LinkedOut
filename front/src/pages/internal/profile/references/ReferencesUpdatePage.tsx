@@ -12,7 +12,7 @@ import {
 import { Reference } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 
-import { InternalProfileStackParamList } from '../../InternalProfileNav';
+import { ProfileStackParamList } from '../../InternalProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 });
 
 type ReferencesUpdatePageProps = NativeStackScreenProps<
-  InternalProfileStackParamList,
+  ProfileStackParamList,
   'ReferencesUpdate'
 >;
 

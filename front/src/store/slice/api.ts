@@ -5,6 +5,7 @@ import {
   Availability,
   Evaluation,
   Experience,
+  JobCategory,
   Profile,
   Reference,
 } from './types';
@@ -17,12 +18,32 @@ export const api = createApi({
     baseUrl,
   }),
   endpoints: (builder) => ({
-    getProfile: builder.query<Profile, string>({
-      query: () => 'profile/',
-    }),
+    // Availabilities
     getAvailabilities: builder.query<Availability[], string>({
       query: () => 'profile/availabilities/',
     }),
+    deleteAvailabilities: builder.mutation<Availability, number>({
+      query: (id) => ({
+        url: `profile/availabilities/${id}/`,
+        method: 'DELETE',
+      }),
+    }),
+    postAvailabilities: builder.mutation<Availability, Availability>({
+      query: (body) => ({
+        url: 'profile/availabilities/',
+        method: 'POST',
+        body,
+      }),
+    }),
+    patchAvailabilities: builder.mutation<Availability, Availability>({
+      query: (body) => ({
+        url: `profile/availabilities/${body.id}/`,
+        method: 'PATCH',
+        body,
+      }),
+    }),
+
+    // Experiences
     getExperiences: builder.query<Experience[], string>({
       query: () => 'profile/experiences/',
     }),
@@ -46,6 +67,8 @@ export const api = createApi({
         method: 'DELETE',
       }),
     }),
+
+    // References
     getReferences: builder.query<Reference[], string>({
       query: () => 'profile/references/',
     }),
@@ -69,8 +92,29 @@ export const api = createApi({
         method: 'DELETE',
       }),
     }),
+
+    // Evaluations
     getEvaluations: builder.query<Evaluation[], string>({
       query: () => 'profile/evaluations/',
+    }),
+
+    // Profile
+    getProfile: builder.query<Profile, string>({
+      query: () => 'profile/',
+    }),
+    patchProfile: builder.mutation<Profile, Profile>({
+      query: (body) => ({
+        url: 'profile/',
+        method: 'PATCH',
+        body,
+      }),
+    }),
+
+    // JOBS
+
+    // JobCategories
+    getJobCategories: builder.query<JobCategory[], string>({
+      query: () => 'jobs/categories/',
     }),
   }),
 });
@@ -87,4 +131,9 @@ export const {
   usePatchReferenceMutation,
   useDeleteReferenceMutation,
   useGetEvaluationsQuery,
+  usePatchProfileMutation,
+  usePostAvailabilitiesMutation,
+  usePatchAvailabilitiesMutation,
+  useDeleteAvailabilitiesMutation,
+  useGetJobCategoriesQuery,
 } = api;

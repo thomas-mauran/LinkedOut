@@ -1,7 +1,10 @@
-import { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { useColorScheme } from 'react-native';
-import { Button, Divider, Text } from 'react-native-paper';
+import { Appbar, Button, Divider, Text } from 'react-native-paper';
 import { TouchableRipple } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -10,8 +13,11 @@ import {
   useGetAvailabilitiesQuery,
   useGetProfileQuery,
 } from '@/store/slice/api';
+import { Profile } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 import { starsIntoArray } from '@/utils/methods';
+
+import { ProfileStackParamList } from '../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,13 +52,51 @@ const styles = StyleSheet.create({
   },
 });
 
+type ProfileAppPageProps = NativeStackScreenProps<
+  ProfileStackParamList,
+  'Profile'
+>;
+
 /**
  * The internal page that has links to all the application pages.
  * @constructor
  */
-const InternalProfilePage = ({ navigation }) => {
-  const { data: profile } = useGetProfileQuery('');
+const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
+  const { data: profile, refetch } = useGetProfileQuery('');
   const { data: availabilities } = useGetAvailabilitiesQuery('');
+
+  const [isEdited, setIsEdited] = useState(false);
+
+  useEffect(() => {
+    // Set the action buttons in the appbar for rotating the picture
+    navigation.setOptions({
+      headerRight: () => (
+        <>
+          <Appbar.Action
+            icon={isEdited === true ? 'check' : 'pencil'}
+            onPress={() => {
+              editButtonPressed(profile);
+            }}
+          />
+        </>
+      ),
+    });
+  }, [navigation, isEdited, profile]);
+
+  // Fetch data from the API
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+      console.log('refetch', profile);
+    }, [refetch]),
+  );
+
+  const editButtonPressed = useCallback(
+    (newProfile: Profile) => {
+      navigation.navigate('ProfileUpdate', { ...newProfile });
+    },
+    [navigation, profile],
+  );
 
   const experiencesButtonPressed = useCallback(() => {
     navigation.navigate('Experiences');
@@ -71,6 +115,7 @@ const InternalProfilePage = ({ navigation }) => {
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.horizontalContainer}>
+        {/* TODO FETCH THE PICTURE FROM THE API */}
         <Image
           style={styles.profilePicture}
           source={{
@@ -119,7 +164,9 @@ const InternalProfilePage = ({ navigation }) => {
         <View style={{ marginTop: 5 }}>
           <View style={styles.horizontalContainer}>
             <Divider style={{ width: 3, height: '100%', marginRight: 10 }} />
-            <Text>{profile?.shortBiography}</Text>
+            <Text style={{ textAlign: 'left', width: '97%' }}>
+              {profile?.shortBiography}
+            </Text>
           </View>
         </View>
         <View style={{ alignItems: 'flex-start' }}>
@@ -145,12 +192,16 @@ const InternalProfilePage = ({ navigation }) => {
             {i18n.t('profile.info.availabilities')}
           </Text>
           {availabilities?.map((availability) => (
-            <View>
+            <View key={availability.id}>
               <TextField
                 title='Restauration'
                 list={[
-                  `${availability?.startDate} - ${availability?.endDate}`,
-                  availability?.geographicArea,
+                  `${new Date(availability.startDate).toLocaleDateString(
+                    'apiS',
+                  )} - ${new Date(availability.endDate).toLocaleDateString(
+                    'apiS',
+                  )}`,
+                  `${availability?.address.firstLine}, ${availability?.address.city}, ${availability?.address.zipCode}`,
                 ]}
               />
             </View>
@@ -227,4 +278,4 @@ const InternalProfilePage = ({ navigation }) => {
   );
 };
 
-export default InternalProfilePage;
+export default ProfilePage;
