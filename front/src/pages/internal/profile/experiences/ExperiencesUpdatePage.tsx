@@ -183,14 +183,14 @@ const ExperiencesUpdatePage = ({
     >
       <View style={styles.verticalCenterContainer}>
         <TextInput
-          label='Job Title'
+          label={i18n.t('profile.job.jobTitle')}
           value={formData.jobTitle || ''}
           style={styles.textInput}
           onChangeText={(value) => handleInputChange('jobTitle', value)}
         />
         <View style={styles.horizontalContainer}>
           <View>
-            <Text>Date range</Text>
+            <Text>{i18n.t('profile.date.dateRange')}</Text>
             <Text>
               {`${new Date(formData.startDate).toLocaleDateString(
                 'en-US',
@@ -202,7 +202,7 @@ const ExperiencesUpdatePage = ({
             uppercase={false}
             mode='outlined'
           >
-            Pick range
+            {i18n.t('profile.date.pickRange')}
           </Button>
           <DatePickerModal
             locale='en'
@@ -215,26 +215,26 @@ const ExperiencesUpdatePage = ({
           />
         </View>
         <TextInput
-          label='Company Name'
+          label={i18n.t('profile.company.companyName')}
           value={formData.companyName || ''}
           style={styles.textInput}
           onChangeText={(value) => handleInputChange('companyName', value)}
         />
         <TextInput
-          label='Address'
+          label={i18n.t('profile.address.firstLine')}
           value={formData.firstLine || ''}
           style={styles.textInput}
           onChangeText={(value) => handleInputChange('firstLine', value)}
         />
         <View style={styles.horizontalContainer}>
           <TextInput
-            label='Zip Code'
+            label={i18n.t('profile.address.zipCode')}
             value={formData.zipCode || ''}
             style={styles.smallInput}
             onChangeText={(value) => handleInputChange('zipCode', value, true)}
           />
           <TextInput
-            label='City'
+            label={i18n.t('profile.address.city')}
             value={formData.city || ''}
             style={styles.smallInput}
             onChangeText={(value) => handleInputChange('city', value)}

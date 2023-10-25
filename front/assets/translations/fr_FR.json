@@ -32,6 +32,14 @@
       "firstLine": "Rue",
       "city": "Ville",
       "zipCode": "Code postal"
+    },
+    "job": {
+      "job": "Emploi",
+      "jobTitle": "Intitulé du poste"
+    },
+    "date": {
+      "dateRange": "Période",
+      "pickRange": "Choisir une période"
     }
   }
 }

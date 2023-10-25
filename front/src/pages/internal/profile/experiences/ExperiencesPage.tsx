@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Appbar, Divider, IconButton, Text } from 'react-native-paper';
+import { Appbar, Divider, IconButton } from 'react-native-paper';
 
 import TextField from '@/components/TextField';
 import {

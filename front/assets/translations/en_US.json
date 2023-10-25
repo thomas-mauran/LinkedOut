@@ -32,6 +32,14 @@
       "firstLine": "First line",
       "city": "City",
       "zipCode": "Zip code"
+    },
+    "job": {
+      "job": "Job",
+      "jobTitle": "Job title"
+    },
+    "date": {
+      "dateRange": "Date range",
+      "pickRange": "Pick range"
     }
   }
 }
