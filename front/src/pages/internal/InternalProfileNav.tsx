@@ -4,10 +4,11 @@ import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import ExperiencesPage from '@/pages/internal/profile/experiences/ExperiencesPage';
 import ExperiencesUpdatePage from '@/pages/internal/profile/experiences/ExperiencesUpdatePage';
 import ReferencesPage from '@/pages/internal/profile/references/ReferencesPage';
-import { Experience } from '@/store/slice/types';
+import { Experience, Reference } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 
 import InternalProfilePage from './profile/InternalProfilePage';
+import ReferencesUpdatePage from './profile/references/ReferencesUpdatePage';
 
 /**
  * The parameter list for the InternalProfileStack navigator.
@@ -18,6 +19,7 @@ export type InternalProfileStackParamList = {
   Experiences: undefined;
   ExperiencesUpdate: Experience;
   References: undefined;
+  ReferencesUpdate: Reference;
 };
 
 const InternalProfileStack =
@@ -51,6 +53,10 @@ const InternalProfileNav = () => {
         name='References'
         component={ReferencesPage}
         options={{ headerTitle: `${i18n.t('profile.info.references')}` }}
+      />
+      <InternalProfileStack.Screen
+        name='ReferencesUpdate'
+        component={ReferencesUpdatePage}
       />
     </InternalProfileStack.Navigator>
   );

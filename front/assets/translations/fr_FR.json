@@ -8,14 +8,30 @@
       "availabilities": "Disponibilités",
       "experiences": "Expériences",
       "reviews": "Avis",
-      "phoneNumber": "Numéro",
+      "phoneNumber": "Numéro de téléphone",
       "email": "Email",
       "references": "Références",
       "downloadResume": "Télécharger le CV",
-      "experience": {
-        "experienceEdit": "Mettre à jour l'expérience",
-        "experienceCreate": "Créer une expérience"
-      }
+      "informations": "Informations",
+      "firstName": "Prénom",
+      "lastName": "Nom"
+    },
+    "experience": {
+      "experienceEdit": "Mettre à jour l'expérience",
+      "experienceCreate": "Créer une expérience"
+    },
+    "references": {
+      "referenceEdit": "Edit reference",
+      "referenceCreate": "Create reference"
+    },
+    "company": {
+      "company": "Entreprise",
+      "companyName": "Nom de l'entreprise"
+    },
+    "address": {
+      "firstLine": "Rue",
+      "city": "Ville",
+      "zipCode": "Code postal"
     }
   }
 }

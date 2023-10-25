@@ -10,12 +10,28 @@
       "reviews": "Reviews",
       "phoneNumber": "Phone number",
       "email": "Email",
-      "references": "Références",
-      "downloadResume": "Download resume"
+      "references": "References",
+      "downloadResume": "Download resume",
+      "informations": "Informations",
+      "firstName": "First name",
+      "lastName": "Last name"
     },
     "experience": {
       "experienceEdit": "Edit experience",
       "experienceCreate": "Create experience"
+    },
+    "reference": {
+      "referenceEdit": "Edit reference",
+      "referenceCreate": "Create reference"
+    },
+    "company": {
+      "company": "Company",
+      "companyName": "Company name"
+    },
+    "address": {
+      "firstLine": "First line",
+      "city": "City",
+      "zipCode": "Zip code"
     }
   }
 }

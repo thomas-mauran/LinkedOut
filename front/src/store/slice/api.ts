@@ -6,7 +6,7 @@ import {
   Evaluation,
   Experience,
   Profile,
-  References,
+  Reference,
 } from './types';
 
 const baseUrl = process.env.EXPO_PUBLIC_MOCK_API_URL;
@@ -46,11 +46,31 @@ export const api = createApi({
         method: 'DELETE',
       }),
     }),
-    getReferences: builder.query<References[], string>({
+    getReferences: builder.query<Reference[], string>({
       query: () => 'profile/references/',
     }),
-    getEvaluation: builder.query<Evaluation[], string>({
-      query: () => 'profile/evaluation/',
+    postReference: builder.mutation<Reference, Reference>({
+      query: (body) => ({
+        url: 'profile/references/',
+        method: 'POST',
+        body,
+      }),
+    }),
+    patchReference: builder.mutation<Reference, Reference>({
+      query: (body) => ({
+        url: `profile/references/${body.id}/`,
+        method: 'PATCH',
+        body,
+      }),
+    }),
+    deleteReference: builder.mutation<Reference, number>({
+      query: (id) => ({
+        url: `profile/references/${id}/`,
+        method: 'DELETE',
+      }),
+    }),
+    getEvaluations: builder.query<Evaluation[], string>({
+      query: () => 'profile/evaluations/',
     }),
   }),
 });
@@ -63,4 +83,8 @@ export const {
   usePostExperienceMutation,
   usePatchExperienceMutation,
   useDeleteExperienceMutation,
+  usePostReferenceMutation,
+  usePatchReferenceMutation,
+  useDeleteReferenceMutation,
+  useGetEvaluationsQuery,
 } = api;

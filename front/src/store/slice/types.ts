@@ -49,14 +49,14 @@ export interface Experience {
   job?: Job;
 }
 
-export interface References {
-  id: number;
-  firstName: string;
-  lastName: string;
-  address: Address;
-  email: string;
-  phone: string;
-  company: Company;
+export interface Reference {
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  address?: Address;
+  email?: string;
+  phone?: string;
+  company?: Company;
 }
 
 export interface Evaluation {
