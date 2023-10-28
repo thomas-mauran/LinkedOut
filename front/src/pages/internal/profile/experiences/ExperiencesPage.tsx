@@ -3,15 +3,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Appbar, Divider, IconButton } from 'react-native-paper';
+import { Appbar, Divider, IconButton, Text } from 'react-native-paper';
 
-import TextField from '@/components/TextField';
 import {
   useDeleteExperienceMutation,
   useGetExperiencesQuery,
 } from '@/store/slice/api';
 import { Experience } from '@/store/slice/types';
-import i18n from '@/utils/i18n';
 
 import { ProfileStackParamList } from '../../ProfileNav';
 
@@ -36,6 +34,13 @@ const styles = StyleSheet.create({
   editBtnInline: {
     marginTop: 'auto',
     marginBottom: 'auto',
+  },
+  textFieldTitle: {
+    marginTop: 5,
+  },
+  textFieldElement: {
+    marginBottom: 2,
+    marginTop: 2,
   },
 });
 type ExperiencesAppPageProps = NativeStackScreenProps<
@@ -110,18 +115,19 @@ const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
       {experiences?.map((experience) => (
         <View key={experience.id} style={{ width: '100%' }}>
           <View style={styles.horizontalContainer}>
-            <TextField
-              style={{ marginLeft: 5 }}
-              title={experience.job.title}
-              list={[
-                `${new Date(experience.startDate).toLocaleDateString(
-                  'en-US',
-                )} - ${new Date(experience.endDate).toLocaleDateString(
-                  'en-US',
-                )}`,
-                `${experience.address.firstLine}, ${experience.address.city}, ${experience.address.zipCode}`,
-              ]}
-            />
+            <View style={{ marginLeft: 5 }}>
+              <Text variant='labelLarge' style={styles.textFieldTitle}>
+                {experience.job.title}
+              </Text>
+              <Text style={styles.textFieldElement}>
+                {new Date(experience.startDate).toLocaleDateString('en-US')} -
+                {new Date(experience.endDate).toLocaleDateString('en-US')}
+              </Text>
+              <Text style={styles.textFieldElement}>
+                {experience.address.firstLine}, {experience.address.city},{' '}
+                {experience.address.zipCode}
+              </Text>
+            </View>
             {isEdited && (
               <View style={styles.horizontalContainer}>
                 <IconButton

@@ -5,7 +5,6 @@ import * as React from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar, IconButton, Text, TextInput } from 'react-native-paper';
 
-import TextField from '@/components/TextField';
 import {
   useDeleteAvailabilitiesMutation,
   useGetAvailabilitiesQuery,
@@ -59,6 +58,13 @@ const styles = StyleSheet.create({
   },
   smallInput: {
     width: '45%',
+  },
+  textFieldTitle: {
+    marginTop: 5,
+  },
+  textFieldElement: {
+    marginBottom: 2,
+    marginTop: 2,
   },
 });
 
@@ -238,18 +244,20 @@ const ProfilesUpdatePage = ({ route, navigation }: ProfilesUpdatePageProps) => {
             <View key={availability.id} style={{ width: '100%' }}>
               <View style={[styles.horizontalContainer]}>
                 <View style={{ width: '80%' }}>
-                  <TextField
-                    style={{ marginLeft: 5 }}
-                    title={availability.category.category}
-                    list={[
-                      `${new Date(availability.startDate).toLocaleDateString(
-                        'apiS',
-                      )} - ${new Date(availability.endDate).toLocaleDateString(
-                        'apiS',
-                      )}`,
-                      `${availability?.address.firstLine}, ${availability?.address.city}, ${availability?.address.zipCode}`,
-                    ]}
-                  />
+                  <Text variant='labelLarge' style={styles.textFieldTitle}>
+                    {availability.category.category}
+                  </Text>
+                  <Text style={styles.textFieldElement}>
+                    {new Date(availability.startDate).toLocaleDateString(
+                      'en-US',
+                    )}{' '}
+                    -
+                    {new Date(availability.endDate).toLocaleDateString('en-US')}
+                  </Text>
+                  <Text style={styles.textFieldElement}>
+                    {availability?.address.firstLine},
+                    {availability?.address.city},{availability?.address.zipCode}
+                  </Text>
                 </View>
 
                 <View

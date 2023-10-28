@@ -34,7 +34,7 @@
     "address": {
       "firstLine": "First line",
       "city": "City",
-      "zipCode": "Zip code"
+      "zipCode": "ZIP Code"
     },
     "job": {
       "job": "Job",
@@ -47,7 +47,7 @@
     "availabilities": {
       "availabilitiesEdit": "Edit availability",
       "availabilitiesCreate": "Create availability",
-      "radiusRange": "Radius range (in Km)"
+      "radiusRange": "Radius range (in km)"
     }
   }
 }

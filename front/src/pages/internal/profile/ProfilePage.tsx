@@ -8,7 +8,6 @@ import { Appbar, Button, Divider, Text } from 'react-native-paper';
 import { TouchableRipple } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import TextField from '@/components/TextField';
 import {
   useGetAvailabilitiesQuery,
   useGetProfileQuery,
@@ -49,6 +48,13 @@ const styles = StyleSheet.create({
   },
   experiencesButton: {
     backgroundColor: '#FEF7FF',
+  },
+  textFieldTitle: {
+    marginTop: 5,
+  },
+  textFieldElement: {
+    marginBottom: 2,
+    marginTop: 2,
   },
 });
 
@@ -178,14 +184,14 @@ const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
           <Text variant='titleLarge' style={{ marginBottom: 5 }}>
             {i18n.t('profile.info.contact')}
           </Text>
-          <TextField
-            title={`${i18n.t('profile.info.phoneNumber')}`}
-            list={[profile?.phone]}
-          />
-          <TextField
-            title={`${i18n.t('profile.info.email')}`}
-            list={[profile?.email]}
-          />
+          <Text variant='labelLarge' style={styles.textFieldTitle}>
+            {i18n.t('profile.info.phoneNumber')}
+          </Text>
+          <Text style={styles.textFieldElement}>{profile?.phone}</Text>
+          <Text variant='labelLarge' style={styles.textFieldTitle}>
+            {i18n.t('profile.info.email')}
+          </Text>
+          <Text style={styles.textFieldElement}>{profile?.email}</Text>
         </View>
         <View>
           <Text variant='titleLarge' style={{ marginBottom: 5, marginTop: 10 }}>
@@ -193,17 +199,17 @@ const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
           </Text>
           {availabilities?.map((availability) => (
             <View key={availability.id}>
-              <TextField
-                title='Restauration'
-                list={[
-                  `${new Date(availability.startDate).toLocaleDateString(
-                    'apiS',
-                  )} - ${new Date(availability.endDate).toLocaleDateString(
-                    'apiS',
-                  )}`,
-                  `${availability?.address.firstLine}, ${availability?.address.city}, ${availability?.address.zipCode}`,
-                ]}
-              />
+              <Text variant='labelLarge' style={styles.textFieldTitle}>
+                {availability?.category.category}
+              </Text>
+              <Text style={styles.textFieldElement}>
+                {new Date(availability.startDate).toLocaleDateString('en-US')} -{' '}
+                {new Date(availability.endDate).toLocaleDateString('en-US')}
+              </Text>
+              <Text style={styles.textFieldElement}>
+                {availability?.address.firstLine}, {availability?.address.city},{' '}
+                {availability?.address.zipCode}
+              </Text>
             </View>
           ))}
         </View>
@@ -221,14 +227,15 @@ const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
               width: '100%',
             }}
           >
-            <TextField
-              title={`${i18n.t('profile.info.experiences')}`}
-              list={[
-                `${profile?.nbExperiences} ${i18n.t(
-                  'profile.info.experiences',
-                )}`,
-              ]}
-            />
+            <View>
+              <Text variant='labelLarge' style={styles.textFieldTitle}>
+                {i18n.t('profile.info.experiences')}
+              </Text>
+              <Text style={styles.textFieldElement}>
+                {profile?.nbExperiences} {i18n.t('profile.info.experiences')}
+              </Text>
+            </View>
+
             <View style={{ flex: 1, alignItems: 'flex-end' }}>
               <MaterialCommunityIcons
                 name='chevron-right'
@@ -255,12 +262,15 @@ const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
               width: '100%',
             }}
           >
-            <TextField
-              title={`${i18n.t('profile.info.references')} & ${i18n.t(
-                'profile.info.reviews',
-              )} `}
-              list={[`${profile?.nbReviews} ${i18n.t('profile.info.reviews')}`]}
-            />
+            <View>
+              <Text variant='labelLarge' style={styles.textFieldTitle}>
+                {i18n.t('profile.info.references')}
+              </Text>
+              <Text style={styles.textFieldElement}>
+                {profile?.nbReviews} {i18n.t('profile.info.reviews')}
+              </Text>
+            </View>
+
             <View style={{ flex: 1, alignItems: 'flex-end' }}>
               <MaterialCommunityIcons
                 name='chevron-right'
