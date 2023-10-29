@@ -2,6 +2,10 @@
   "internal": {
     "translatedText": "This text is translated to English."
   },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
   "profile": {
     "info": {
       "contact": "Contact",
@@ -12,20 +16,24 @@
       "email": "Email",
       "references": "References",
       "downloadResume": "Download resume",
-      "informations": "Informations",
+      "information": "Information",
       "firstName": "First name",
       "lastName": "Last name",
       "shortBiography": "Biography",
-      "updateProfile": "Udpate profile",
-      "profil": "Profile"
+      "updateProfile": "Update profile",
+      "profile": "Profile"
     },
-    "experience": {
-      "experienceEdit": "Edit experience",
-      "experienceCreate": "Create experience"
+    "experiences": {
+      "edit": "Edit experience",
+      "create": "Create experience",
+      "delete": "Delete experience",
+      "deleteConfirm": "Are you sure you want to delete this experience?"
     },
-    "reference": {
-      "referenceEdit": "Edit reference",
-      "referenceCreate": "Create reference"
+    "references": {
+      "edit": "Edit reference",
+      "create": "Create reference",
+      "delete": "Delete reference",
+      "deleteConfirm": "Are you sure you want to delete this reference?"
     },
     "company": {
       "company": "Company",
@@ -45,9 +53,11 @@
       "pickRange": "Pick range"
     },
     "availabilities": {
-      "availabilitiesEdit": "Edit availability",
-      "availabilitiesCreate": "Create availability",
-      "radiusRange": "Radius range (in km)"
+      "edit": "Edit availability",
+      "create": "Create availability",
+      "radiusRange": "Radius range (in km): %{range}",
+      "delete": "Delete availability",
+      "deleteConfirm": "Are you sure you want to delete this availability?"
     }
   }
 }

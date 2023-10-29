@@ -1,21 +1,19 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
+import { Availability, Experience, Profile, Reference } from '@/models/types';
+import ExperienceCreatePage from '@/pages/internal/profile/experiences/ExperienceCreatePage ';
+import ExperienceUpdatePage from '@/pages/internal/profile/experiences/ExperienceUpdatePage';
 import ExperiencesPage from '@/pages/internal/profile/experiences/ExperiencesPage';
-import ExperiencesUpdatePage from '@/pages/internal/profile/experiences/ExperiencesUpdatePage';
 import ReferencesPage from '@/pages/internal/profile/references/ReferencesPage';
-import {
-  Availability,
-  Experience,
-  Profile,
-  Reference,
-} from '@/store/slice/types';
 import i18n from '@/utils/i18n';
 
 import InternalProfilePage from './profile/ProfilePage';
 import ProfileUpdatePage from './profile/ProfileUpdatePage';
-import AvailabilitiesUpdatePage from './profile/availabilities/AvailabilitiesUpdatePage';
-import ReferencesUpdatePage from './profile/references/ReferencesUpdatePage';
+import AvailabilityCreatePage from './profile/availabilities/AvailabilityCreatePage';
+import AvailabilityUpdatePage from './profile/availabilities/AvailabilityUpdatePage';
+import ReferenceCreatePage from './profile/references/ReferenceCreatePage ';
+import ReferenceUpdatePage from './profile/references/ReferenceUpdatePage';
 
 /**
  * The parameter list for the InternalProfileStack navigator.
@@ -23,12 +21,15 @@ import ReferencesUpdatePage from './profile/references/ReferencesUpdatePage';
 
 export type ProfileStackParamList = {
   Profile: undefined;
-  ProfileUpdate: Profile;
-  AvailabilitiesUpdate: Availability;
+  ProfileUpdate: Partial<Profile>;
+  AvailabilityUpdate: Partial<Availability>;
+  AvailabilityCreate: undefined;
   Experiences: undefined;
-  ExperiencesUpdate: Experience;
+  ExperienceCreate: undefined;
+  ExperienceUpdate: Partial<Experience>;
   References: undefined;
-  ReferencesUpdate: Reference;
+  ReferenceCreate: undefined;
+  ReferenceUpdate: Partial<Reference>;
 };
 
 const InternalProfileStack =
@@ -47,17 +48,26 @@ const InternalProfileNav = () => {
       <InternalProfileStack.Screen
         name='Profile'
         component={InternalProfilePage}
-        options={{ headerTitle: `${i18n.t('profile.info.profil')}` }}
+        options={{ headerTitle: `${i18n.t('profile.info.profile')}` }}
       />
       <InternalProfileStack.Screen
         name='ProfileUpdate'
         component={ProfileUpdatePage}
-        options={{ headerTitle: `${i18n.t('profile.info.profil')}` }}
+        options={{ headerTitle: `${i18n.t('profile.info.profile')}` }}
       />
       <InternalProfileStack.Screen
-        name='AvailabilitiesUpdate'
-        component={AvailabilitiesUpdatePage}
-        options={{ headerTitle: `${i18n.t('profile.info.experiences')}` }}
+        name='AvailabilityUpdate'
+        component={AvailabilityUpdatePage}
+        options={{
+          headerTitle: `${i18n.t('profile.availabilities.edit')}`,
+        }}
+      />
+      <InternalProfileStack.Screen
+        name='AvailabilityCreate'
+        component={AvailabilityCreatePage}
+        options={{
+          headerTitle: `${i18n.t('profile.availabilities.create')}`,
+        }}
       />
       <InternalProfileStack.Screen
         name='Experiences'
@@ -65,8 +75,14 @@ const InternalProfileNav = () => {
         options={{ headerTitle: `${i18n.t('profile.info.experiences')}` }}
       />
       <InternalProfileStack.Screen
-        name='ExperiencesUpdate'
-        component={ExperiencesUpdatePage}
+        name='ExperienceCreate'
+        component={ExperienceCreatePage}
+        options={{ headerTitle: `${i18n.t('profile.experiences.create')}` }}
+      />
+      <InternalProfileStack.Screen
+        name='ExperienceUpdate'
+        component={ExperienceUpdatePage}
+        options={{ headerTitle: `${i18n.t('profile.experiences.edit')}` }}
       />
       <InternalProfileStack.Screen
         name='References'
@@ -74,8 +90,14 @@ const InternalProfileNav = () => {
         options={{ headerTitle: `${i18n.t('profile.info.references')}` }}
       />
       <InternalProfileStack.Screen
-        name='ReferencesUpdate'
-        component={ReferencesUpdatePage}
+        name='ReferenceUpdate'
+        component={ReferenceUpdatePage}
+        options={{ headerTitle: `${i18n.t('profile.references.edit')}` }}
+      />
+      <InternalProfileStack.Screen
+        name='ReferenceCreate'
+        component={ReferenceCreatePage}
+        options={{ headerTitle: `${i18n.t('profile.references.edit')}` }}
       />
     </InternalProfileStack.Navigator>
   );

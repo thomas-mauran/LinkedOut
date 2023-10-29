@@ -2,6 +2,10 @@
   "internal": {
     "translatedText": "Ce texte est traduit en Français."
   },
+  "common": {
+    "cancel": "Annuler",
+    "delete": "Supprimer"
+  },
   "profile": {
     "info": {
       "contact": "Contact",
@@ -12,20 +16,24 @@
       "email": "Email",
       "references": "Références",
       "downloadResume": "Télécharger le CV",
-      "informations": "Informations",
+      "information": "Informations",
       "firstName": "Prénom",
       "lastName": "Nom",
       "shortBiography": "Biographie",
       "updateProfile": "Mettre à jour le profil",
-      "profil": "Profil"
+      "profile": "Profil"
     },
-    "experience": {
-      "experienceEdit": "Mettre à jour l'expérience",
-      "experienceCreate": "Créer une expérience"
+    "experiences": {
+      "edit": "Mettre à jour l'expérience",
+      "create": "Créer une expérience",
+      "delete": "Supprimer l'experience",
+      "deleteConfirm": "Voulez-vous vraiment supprimer cette expérience?"
     },
     "references": {
-      "referenceEdit": "Mettre à jour la référence",
-      "referenceCreate": "Créer une référence"
+      "edit": "Mettre à jour la référence",
+      "create": "Créer une référence",
+      "delete": "Supprimer la référence",
+      "deleteConfirm": "Voulez-vous vraiment supprimer cette référence?"
     },
     "company": {
       "company": "Entreprise",
@@ -45,9 +53,11 @@
       "pickRange": "Choisir une période"
     },
     "availabilities": {
-      "availabilitiesEdit": "Mettre à jour une disponibilité",
-      "availabilitiesCreate": "Créer une disponibilité",
-      "radiusRange": "Rayon de recherche (en Km)"
+      "edit": "Mettre à jour une disponibilité",
+      "create": "Créer une disponibilité",
+      "radiusRange": "Rayon de recherche (en Km): %{range}",
+      "delete": "Supprimer la disponibilité",
+      "deleteConfirm": "Voulez-vous vraiment supprimer cette disponibilité?"
     }
   }
 }

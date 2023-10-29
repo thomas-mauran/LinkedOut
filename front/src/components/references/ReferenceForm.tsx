@@ -1,18 +1,8 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Appbar, Button, Text, TextInput } from 'react-native-paper';
-import { DatePickerModal } from 'react-native-paper-dates';
+import { Text, TextInput } from 'react-native-paper';
 
-import {
-  usePatchReferenceMutation,
-  usePostReferenceMutation,
-} from '@/store/slice/api';
-import { Reference } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
-
-import { ProfileStackParamList } from '../../InternalProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,64 +45,23 @@ const styles = StyleSheet.create({
   },
 });
 
-type ReferencesUpdatePageProps = NativeStackScreenProps<
-  ProfileStackParamList,
-  'ReferencesUpdate'
->;
-
-const ReferencesUpdatePage = ({
-  route,
-  navigation,
-}: ReferencesUpdatePageProps) => {
-  // Constants
-  const { id, firstName, lastName, address, email, phone, company } =
-    route.params as Reference;
-
-  let [isCreate, setIsCreate] = useState(false);
-
+type ReferenceFormProps = {
+  formData: any;
+  setFormData: any;
+};
+const ReferenceForm: React.FC<ReferenceFormProps> = ({
+  formData,
+  setFormData,
+}) => {
   // Hooks
 
-  // Form State
-  const [formData, setFormData] = useState({
-    id,
-    firstName: firstName ?? '',
-    lastName: lastName ?? '',
-    firstLine: address?.firstLine ?? '',
-    zipCode: address?.zipCode ?? '',
-    city: address?.city ?? '',
-    email: email ?? '',
-    phone: phone ?? '',
-    companyName: company?.name ?? '',
-  });
-
-  // To set the action buttons in the appbar for saving the changes
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: `${
-        isCreate
-          ? i18n.t('profile.reference.referenceCreate')
-          : i18n.t('profile.reference.referenceEdit')
-      }`, // Change this to your desired title
-      headerRight: () => (
-        <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
-        </>
-      ),
-    });
-  }, [navigation, formData]);
-
-  // To check if we are creating or updating
-  useEffect(() => {
-    if (id === undefined) {
-      setIsCreate(true);
-      handleInputChange('startDate', new Date());
-      handleInputChange('endDate', new Date());
-    }
-  }, []);
-
   // Api calls
-  const [patchReference] = usePatchReferenceMutation();
-  const [postReference] = usePostReferenceMutation();
+
+  // Date picker states
+  const [range, setRange] = React.useState({
+    startDate: new Date(formData.startDate ?? new Date()),
+    endDate: new Date(formData.endDate ?? new Date()),
+  });
 
   const [open, setOpen] = React.useState(false);
 
@@ -128,37 +77,16 @@ const ReferencesUpdatePage = ({
     }));
   };
 
-  // To save the changes
-  const checkPressed = useCallback(() => {
-    const updatedReference: Reference = {
-      id: formData.id ?? null,
-      company: {
-        name: formData.companyName,
-      },
-      address: {
-        firstLine: formData.firstLine,
-        zipCode: formData.zipCode,
-        city: formData.city,
-      },
-      email: formData.email,
-      phone: formData.phone,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-    };
-    if (isCreate === true) {
-      postReference(updatedReference)
-        .unwrap()
-        .then((r) => {
-          navigation.goBack();
-        });
-    } else {
-      patchReference(updatedReference)
-        .unwrap()
-        .then((r) => {
-          navigation.goBack();
-        });
-    }
-  }, [formData, patchReference, navigation]);
+  // On confirm of the date picker
+  const onConfirm = React.useCallback(
+    ({ startDate, endDate }) => {
+      setOpen(false);
+      setRange({ startDate, endDate });
+      handleInputChange('startDate', startDate.toISOString());
+      handleInputChange('endDate', endDate.toISOString());
+    },
+    [setOpen, setRange],
+  );
 
   return (
     <ScrollView
@@ -168,7 +96,7 @@ const ReferencesUpdatePage = ({
       <View style={styles.verticalCenterContainer}>
         <View style={{ width: '100%', marginTop: 10, marginLeft: '20%' }}>
           <Text variant='headlineMedium'>
-            {i18n.t('profile.info.informations')}
+            {i18n.t('profile.info.information')}
           </Text>
         </View>
         <TextInput
@@ -233,4 +161,4 @@ const ReferencesUpdatePage = ({
   );
 };
 
-export default ReferencesUpdatePage;
+export default ReferenceForm;

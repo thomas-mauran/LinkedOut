@@ -1,21 +1,12 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Slider from 'react-native-a11y-slider';
-import { Appbar, Button, Text, TextInput, useTheme } from 'react-native-paper';
+import { Button, Text, TextInput, useTheme } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import DropDown from 'react-native-paper-dropdown';
 
-import {
-  useGetJobCategoriesQuery,
-  usePatchAvailabilitiesMutation,
-  usePostAvailabilitiesMutation,
-} from '@/store/slice/api';
-import { Availability } from '@/store/slice/types';
+import { useGetJobCategoriesQuery } from '@/store/slice/api';
 import i18n from '@/utils/i18n';
-
-import { ProfileStackParamList } from '../../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -58,75 +49,31 @@ const styles = StyleSheet.create({
   },
 });
 
-type AvailabilitiesUpdatePageProps = NativeStackScreenProps<
-  ProfileStackParamList,
-  'AvailabilitiesUpdate'
->;
-
-const AvailabilitiesUpdatePage = ({
-  route,
-  navigation,
-}: AvailabilitiesUpdatePageProps) => {
-  // Constants
-  const { id, address, startDate, endDate, range, category } =
-    route.params as Availability;
-
+type AvailabilityFormProps = {
+  formData: any;
+  setFormData: any;
+};
+const AvailabilityForm: React.FC<AvailabilityFormProps> = ({
+  formData,
+  setFormData,
+}) => {
   // Hooks
-  let [isCreate, setIsCreate] = useState(false);
   const { colors } = useTheme();
+  const [showDropDown, setShowDropDown] = useState(false);
 
-  // Form State
-  const [formData, setFormData] = useState({
-    id,
-    firstLine: address?.firstLine,
-    zipCode: address?.zipCode,
-    city: address?.city,
-    startDate,
-    endDate,
-    range: [range ?? 0],
-    categoryId: category?.id,
-    category: category?.category,
-  });
-
-  // To set the action buttons in the appbar for saving the changes
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: `${
-        isCreate
-          ? i18n.t('profile.availabilities.availabilitiesCreate')
-          : i18n.t('profile.availabilities.availabilitiesEdit')
-      }`, // Change this to your desired title
-      headerRight: () => (
-        <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
-        </>
-      ),
-    });
-  }, [navigation, formData]);
-
-  // To check if we are creating or updating
-  useEffect(() => {
-    if (id === undefined) {
-      setIsCreate(true);
-      handleInputChange('startDate', new Date());
-      handleInputChange('endDate', new Date());
-    }
-  }, []);
   // Api calls
-  const [patchAvailabilitie] = usePatchAvailabilitiesMutation();
-  const [postAvailabilitie] = usePostAvailabilitiesMutation();
   const { data: categories } = useGetJobCategoriesQuery('');
 
   // Date picker states
-  const [dateRange, setDateRange] = React.useState({
-    startDate: new Date(startDate ?? new Date()),
-    endDate: new Date(endDate ?? new Date()),
+  const [range, setRange] = useState({
+    startDate: new Date(formData.startDate ?? new Date()),
+    endDate: new Date(formData.endDate ?? new Date()),
   });
-  const [open, setOpen] = React.useState(false);
-  const [showDropDown, setShowDropDown] = useState(false);
+
+  const [open, setOpen] = useState(false);
 
   // Methods
-  const onDismiss = React.useCallback(() => {
+  const onDismiss = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
 
@@ -138,47 +85,15 @@ const AvailabilitiesUpdatePage = ({
   };
 
   // On confirm of the date picker
-  const onConfirm = React.useCallback(
+  const onConfirm = useCallback(
     ({ startDate, endDate }) => {
       setOpen(false);
-      setDateRange({ startDate, endDate });
+      setRange({ startDate, endDate });
       handleInputChange('startDate', startDate.toISOString());
       handleInputChange('endDate', endDate.toISOString());
     },
-    [setOpen, setDateRange],
+    [setOpen, setRange],
   );
-
-  // To save the changes
-  const checkPressed = useCallback(() => {
-    const updatedAvailabilitie: Availability = {
-      id: formData.id ?? null,
-      address: {
-        firstLine: formData.firstLine,
-        zipCode: formData.zipCode,
-        city: formData.city,
-      },
-      category: {
-        category: formData.category,
-        id: formData.categoryId,
-      },
-      startDate: formData.startDate,
-      endDate: formData.endDate,
-      range: formData.range[0],
-    };
-    if (isCreate === true) {
-      postAvailabilitie(updatedAvailabilitie)
-        .unwrap()
-        .then((r) => {
-          navigation.goBack();
-        });
-    } else {
-      patchAvailabilitie(updatedAvailabilitie)
-        .unwrap()
-        .then((r) => {
-          navigation.goBack();
-        });
-    }
-  }, [formData, patchAvailabilitie, navigation]);
 
   const dropdownChange = (value: number) => {
     const category = categories?.find((c) => c.id === value);
@@ -213,8 +128,8 @@ const AvailabilitiesUpdatePage = ({
             mode='range'
             visible={open}
             onDismiss={onDismiss}
-            startDate={dateRange.startDate}
-            endDate={dateRange.endDate}
+            startDate={range.startDate}
+            endDate={range.endDate}
             onConfirm={onConfirm}
           />
         </View>
@@ -263,7 +178,9 @@ const AvailabilitiesUpdatePage = ({
           ]}
         >
           <Text variant='headlineSmall'>
-            {i18n.t('profile.availabilities.radiusRange')} {formData.range[0]}{' '}
+            {i18n.t('profile.availabilities.radiusRange', {
+              range: formData.range[0],
+            })}
           </Text>
         </View>
         <Slider
@@ -282,4 +199,4 @@ const AvailabilitiesUpdatePage = ({
   );
 };
 
-export default AvailabilitiesUpdatePage;
+export default AvailabilityForm;

@@ -1,18 +1,9 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Appbar, Button, Text, TextInput } from 'react-native-paper';
+import { Button, Text, TextInput } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 
-import {
-  usePatchExperienceMutation,
-  usePostExperienceMutation,
-} from '@/store/slice/api';
-import { Experience } from '@/store/slice/types';
 import i18n from '@/utils/i18n';
-
-import { ProfileStackParamList } from '../../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,69 +46,24 @@ const styles = StyleSheet.create({
   },
 });
 
-type ExperiencesUpdatePageProps = NativeStackScreenProps<
-  ProfileStackParamList,
-  'ExperiencesUpdate'
->;
-
-const ExperiencesUpdatePage = ({
-  route,
-  navigation,
-}: ExperiencesUpdatePageProps) => {
-  // Constants
-  const { id, company, job, address, startDate, endDate } =
-    route.params as Experience;
-
-  let [isCreate, setIsCreate] = useState(false);
-
+type ExperienceFormProps = {
+  formData: any;
+  setFormData: any;
+};
+const ExperienceForm: React.FC<ExperienceFormProps> = ({
+  formData,
+  setFormData,
+}) => {
   // Hooks
 
-  // Form State
-  const [formData, setFormData] = useState({
-    id,
-    jobTitle: job?.title,
-    firstLine: address?.firstLine,
-    zipCode: address?.zipCode,
-    city: address?.city,
-    companyName: company?.name,
-    startDate,
-    endDate,
-  });
-
-  // To set the action buttons in the appbar for saving the changes
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: `${
-        isCreate
-          ? i18n.t('profile.experience.experienceCreate')
-          : i18n.t('profile.experience.experienceEdit')
-      }`, // Change this to your desired title
-      headerRight: () => (
-        <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
-        </>
-      ),
-    });
-  }, [navigation, formData]);
-
-  // To check if we are creating or updating
-  useEffect(() => {
-    if (id === undefined) {
-      setIsCreate(true);
-      handleInputChange('startDate', new Date());
-      handleInputChange('endDate', new Date());
-    }
-  }, []);
-
   // Api calls
-  const [patchExperience] = usePatchExperienceMutation();
-  const [postExperience] = usePostExperienceMutation();
 
   // Date picker states
   const [range, setRange] = React.useState({
-    startDate: new Date(startDate ?? new Date()),
-    endDate: new Date(endDate ?? new Date()),
+    startDate: new Date(formData.startDate ?? new Date()),
+    endDate: new Date(formData.endDate ?? new Date()),
   });
+
   const [open, setOpen] = React.useState(false);
 
   // Methods
@@ -143,39 +89,6 @@ const ExperiencesUpdatePage = ({
     [setOpen, setRange],
   );
 
-  // To save the changes
-  const checkPressed = useCallback(() => {
-    const updatedExperience: Experience = {
-      id: formData.id ?? null,
-      company: {
-        name: formData.companyName,
-      },
-      job: {
-        title: formData.jobTitle,
-      },
-      address: {
-        firstLine: formData.firstLine,
-        zipCode: formData.zipCode,
-        city: formData.city,
-      },
-      startDate: formData.startDate,
-      endDate: formData.endDate,
-    };
-    if (isCreate === true) {
-      postExperience(updatedExperience)
-        .unwrap()
-        .then((r) => {
-          navigation.goBack();
-        });
-    } else {
-      patchExperience(updatedExperience)
-        .unwrap()
-        .then((r) => {
-          navigation.goBack();
-        });
-    }
-  }, [formData, patchExperience, navigation]);
-
   return (
     <ScrollView
       style={styles.container}
@@ -192,9 +105,9 @@ const ExperiencesUpdatePage = ({
           <View>
             <Text>{i18n.t('profile.date.dateRange')}</Text>
             <Text>
-              {`${new Date(formData.startDate).toLocaleDateString(
+              {`${new Date(range.startDate).toLocaleDateString(
                 'en-US',
-              )} - ${new Date(formData.endDate).toLocaleDateString('en-US')}`}
+              )} - ${new Date(range.endDate).toLocaleDateString('en-US')}`}
             </Text>
           </View>
           <Button
@@ -245,4 +158,4 @@ const ExperiencesUpdatePage = ({
   );
 };
 
-export default ExperiencesUpdatePage;
+export default ExperienceForm;
