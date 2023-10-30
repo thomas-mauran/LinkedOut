@@ -3,7 +3,7 @@
     {
       "id": "a1a6d77e-e63f-4274-8d06-a780b5a5d028",
       "firstName": "Bernard",
-      "lastName": "test",
+      "lastName": "Tapie",
       "gender": 1,
       "birthday": "1943-01-26",
       "nationality": "FRA",
@@ -98,8 +98,8 @@
       "startDate": "1976-10-12",
       "endDate": "1989-05-18",
       "address": {
-        "firstLine": "17 rue de l'Arrivée",
-        "zipCode": "75115",
+        "firstLine": "52 rue des Saints-Pères",
+        "zipCode": "75107",
         "city": "Paris"
       },
       "company": {

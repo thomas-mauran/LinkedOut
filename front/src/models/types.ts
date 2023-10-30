@@ -31,7 +31,7 @@ export interface Availability {
   startDate: string;
   endDate: string;
   address: Address;
-  category: JobCategory;
+  jobCategory: JobCategory;
   range: number;
 }
 

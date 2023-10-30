@@ -1146,7 +1146,7 @@ components:
           readOnly: true
         jobCategory:
           allOf:
-          - $ref: '#/components/schemas/Job'
+          - $ref: '#/components/schemas/JobCategory'
           - readOnly: true
         jobCategoryId:
           type: string
