@@ -97,7 +97,7 @@ const AvailabilityCreatePage = ({
         zipCode: formData.zipCode,
         city: formData.city,
       },
-      category: {
+      jobCategory: {
         category: formData.category,
         id: formData.categoryId,
       },

@@ -61,7 +61,7 @@ const AvailabilityUpdatePage = ({
   navigation,
 }: AvailabilityUpdatePageProps) => {
   // Constants
-  const { id, address, startDate, endDate, range, category } =
+  const { id, address, startDate, endDate, range, jobCategory } =
     route.params as Availability;
 
   // Form State
@@ -73,8 +73,8 @@ const AvailabilityUpdatePage = ({
     startDate,
     endDate,
     range: [range ?? 0],
-    categoryId: category?.id,
-    category: category?.category,
+    categoryId: jobCategory?.id,
+    category: jobCategory?.category,
   });
 
   // To set the action buttons in the appbar for saving the changes
@@ -101,7 +101,7 @@ const AvailabilityUpdatePage = ({
         zipCode: formData.zipCode,
         city: formData.city,
       },
-      category: {
+      jobCategory: {
         category: formData.category,
         id: formData.categoryId,
       },

@@ -111,7 +111,7 @@ const AvailabilitiesList: React.FC<
         <View key={availability.id} style={styles.horizontalContainer}>
           <View style={{ width: '80%' }}>
             <Text variant='labelLarge' style={styles.textFieldTitle}>
-              {availability?.category.category}
+              {availability?.jobCategory.category}
             </Text>
             <Text style={styles.textFieldElement}>
               {new Date(availability.startDate).toLocaleDateString('en-US')} -{' '}
