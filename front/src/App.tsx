@@ -14,7 +14,7 @@ import InternalTabNav from '@/pages/InternalTabNav';
 import { store } from '@/store/Store';
 import { DarkTheme, LightTheme } from '@/utils/theme';
 
-import ProfileTabNav from './pages/ProfileTabNav';
+import MainTabNav from './pages/MainTabNav';
 import { api } from './store/slice/api';
 
 // We want to hide the splash screen ourselves
@@ -25,7 +25,7 @@ SplashScreen.preventAutoHideAsync();
  */
 export type RootStackParamList = {
   Internal: undefined;
-  Profile: undefined;
+  Main: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -71,7 +71,7 @@ const App = () => {
               screenOptions={{ headerShown: false }}
             >
               <RootStack.Screen name='Internal' component={InternalTabNav} />
-              <RootStack.Screen name='Profile' component={ProfileTabNav} />
+              <RootStack.Screen name="Main" component={MainTabNav} />
             </RootStack.Navigator>
           </NavigationContainer>
         </ApiProvider>

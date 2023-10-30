@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import AvailabilitiesList from '@/components/availabilities/AvailabilitiesList';
 import ProfileUpdateInfos from '@/components/profile/ProfileUpdateInfos';
 
-import { ProfileStackParamList } from '../ProfileNav';
+import { ProfileStackParamList } from './ProfileNav';
 
 const styles = StyleSheet.create({
   container: {

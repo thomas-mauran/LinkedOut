@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ProfilePage from '@/pages/internal/ProfileNav';
+import ProfilePage from '@/pages/profile/ProfileNav';
 
 /**
  * The parameter list for the ProfileTab navigator.
@@ -17,7 +17,7 @@ const ProfileTab = createMaterialBottomTabNavigator<ProfileTabParamList>();
  * The tabbed navigator for the internal pages.
  * @constructor
  */
-const ProfileTabNav = () => {
+const MainTabNav = () => {
   return (
     <ProfileTab.Navigator>
       <ProfileTab.Screen
@@ -34,4 +34,4 @@ const ProfileTabNav = () => {
   );
 };
 
-export default ProfileTabNav;
+export default MainTabNav;

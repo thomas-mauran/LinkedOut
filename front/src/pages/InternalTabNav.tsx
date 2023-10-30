@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import InternalMiscNav from '@/pages/internal/InternalMiscNav';
 import InternalPagesPage from '@/pages/internal/InternalPagesPage';
-import ProfilePage from '@/pages/internal/ProfileNav';
+import ProfilePage from '@/pages/profile/ProfileNav';
 
 /**
  * The parameter list for the InternalTab navigator.

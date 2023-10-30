@@ -8,7 +8,7 @@ import AvailabilityForm from '@/components/availabilities/AvailabilityForm';
 import { Availability } from '@/models/types';
 import { usePostAvailabilitiesMutation } from '@/store/slice/api';
 
-import { ProfileStackParamList } from '../../ProfileNav';
+import { ProfileStackParamList } from '../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {

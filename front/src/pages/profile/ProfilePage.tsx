@@ -12,7 +12,7 @@ import ProfileHeader from '@/components/profile/ProfileHeader';
 import { Profile } from '@/models/types';
 import { useGetProfileQuery } from '@/store/slice/api';
 
-import { ProfileStackParamList } from '../ProfileNav';
+import { ProfileStackParamList } from './ProfileNav';
 
 const styles = StyleSheet.create({
   container: {

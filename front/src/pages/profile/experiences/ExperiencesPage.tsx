@@ -1,17 +1,18 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-import EvaluationsList from '@/components/evaluations/EvaluationsList';
-import ReferencesList from '@/components/references/ReferencesList';
+import ExperiencesList from '@/components/experiences/ExperiencesList';
+import { Experience } from '@/models/types';
 import {
-  useDeleteReferenceMutation,
-  useGetEvaluationsQuery,
+  useDeleteExperienceMutation,
+  useGetExperiencesQuery,
 } from '@/store/slice/api';
 
-import { ProfileStackParamList } from '../../ProfileNav';
+import { ProfileStackParamList } from '../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,9 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  divider: {
-    marginVertical: 8,
-  },
+
   horizontalContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -35,21 +34,28 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
+  textFieldTitle: {
+    marginTop: 5,
+  },
+  textFieldElement: {
+    marginBottom: 2,
+    marginTop: 2,
+  },
 });
-type ReferencesAppPageProps = NativeStackScreenProps<
+type ExperiencesAppPageProps = NativeStackScreenProps<
   ProfileStackParamList,
-  'References'
+  'Experiences'
 >;
 /**
  * The internal page for testing various stuff about React Native and the installed libraries.
  * @constructor
  */
-const ReferencesPage = ({ navigation }: ReferencesAppPageProps) => {
+const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
   // Constants
 
   // Hooks
-  const [deleteReference] = useDeleteReferenceMutation();
-  const { data: evaluations } = useGetEvaluationsQuery('');
+  const { data: experiences, refetch } = useGetExperiencesQuery('');
+  const [deleteExperience] = useDeleteExperienceMutation();
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -70,23 +76,37 @@ const ReferencesPage = ({ navigation }: ReferencesAppPageProps) => {
     });
   }, [navigation, isEditing]);
 
+  // Fetch data from the API
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
+
   // Methods
   const editButtonPressed = useCallback(() => {
     setIsEditing((prev) => !prev);
   }, []);
   const createButtonPressed = useCallback(() => {
-    navigation.navigate('ReferenceUpdate', {});
+    navigation.navigate('ExperienceCreate');
   }, [navigation]);
+
+  const trashcanButtonExperience = useCallback((experience: Experience) => {
+    deleteExperience(experience.id)
+      .unwrap()
+      .then(() => {
+        refetch();
+      });
+  }, []);
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ReferencesList isEditing={isEditing} navigation={navigation} />
-      <EvaluationsList />
+      <ExperiencesList isEditing={isEditing} navigation={navigation} />
     </ScrollView>
   );
 };
 
-export default ReferencesPage;
+export default ExperiencesPage;

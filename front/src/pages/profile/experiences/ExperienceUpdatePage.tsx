@@ -4,11 +4,11 @@ import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-import ReferenceForm from '@/components/references/ReferenceForm';
-import { Reference } from '@/models/types';
-import { usePostReferenceMutation } from '@/store/slice/api';
+import ExperienceForm from '@/components/experiences/ExperienceForm';
+import { Experience } from '@/models/types';
+import { usePatchExperienceMutation } from '@/store/slice/api';
 
-import { ProfileStackParamList } from '../../ProfileNav';
+import { ProfileStackParamList } from '../ProfileNav';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,29 +51,31 @@ const styles = StyleSheet.create({
   },
 });
 
-type ReferenceCreatePageProps = NativeStackScreenProps<
+type ExperienceUpdatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
-  'ReferenceCreate'
+  'ExperienceUpdate'
 >;
 
-const ReferenceCreatePage = ({
+const ExperienceUpdatePage = ({
   route,
   navigation,
-}: ReferenceCreatePageProps) => {
+}: ExperienceUpdatePageProps) => {
   // Constants
-  const { id, firstName, lastName, address, email, phone, company } =
-    route.params as Reference;
+  const { id, company, job, address, startDate, endDate } =
+    route.params as Experience;
+
+  // Hooks
+
   // Form State
   const [formData, setFormData] = useState({
     id,
-    firstName: firstName ?? '',
-    lastName: lastName ?? '',
-    firstLine: address?.firstLine ?? '',
-    zipCode: address?.zipCode ?? '',
-    city: address?.city ?? '',
-    email: email ?? '',
-    phone: phone ?? '',
-    companyName: company?.name ?? '',
+    jobTitle: job?.title,
+    firstLine: address?.firstLine,
+    zipCode: address?.zipCode,
+    city: address?.city,
+    companyName: company?.name,
+    startDate,
+    endDate,
   });
 
   // To set the action buttons in the appbar for saving the changes
@@ -88,33 +90,34 @@ const ReferenceCreatePage = ({
   }, [navigation, formData]);
 
   // Api calls
-  const [postReference] = usePostReferenceMutation();
+  const [patchExperience] = usePatchExperienceMutation();
 
   // Methods
 
   const checkPressed = useCallback(() => {
-    const updatedReference: Partial<Reference> = {
+    const updatedExperience: Experience = {
       id: formData.id,
       company: {
         name: formData.companyName,
+      },
+      job: {
+        title: formData.jobTitle,
       },
       address: {
         firstLine: formData.firstLine,
         zipCode: formData.zipCode,
         city: formData.city,
       },
-      email: formData.email,
-      phone: formData.phone,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
     };
 
-    postReference(updatedReference)
+    patchExperience(updatedExperience)
       .unwrap()
       .then((r) => {
         navigation.goBack();
       });
-  }, [formData, postReference, navigation]);
+  }, [formData, patchExperience, navigation]);
 
   return (
     <ScrollView
@@ -122,10 +125,10 @@ const ReferenceCreatePage = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.verticalCenterContainer}>
-        <ReferenceForm formData={formData} setFormData={setFormData} />
+        <ExperienceForm formData={formData} setFormData={setFormData} />
       </View>
     </ScrollView>
   );
 };
 
-export default ReferenceCreatePage;
+export default ExperienceUpdatePage;
