@@ -6,11 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import ExperiencesList from '@/components/experiences/ExperiencesList';
-import { Experience } from '@/models/types';
-import {
-  useDeleteExperienceMutation,
-  useGetExperiencesQuery,
-} from '@/store/slice/api';
+import { useGetExperiencesQuery } from '@/store/slice/api';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
@@ -24,23 +20,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-
-  horizontalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  textFieldTitle: {
-    marginTop: 5,
-  },
-  textFieldElement: {
-    marginBottom: 2,
-    marginTop: 2,
-  },
 });
 type ExperiencesAppPageProps = NativeStackScreenProps<
   ProfileStackParamList,
@@ -51,13 +30,19 @@ type ExperiencesAppPageProps = NativeStackScreenProps<
  * @constructor
  */
 const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
-  // Constants
-
   // Hooks
-  const { data: experiences, refetch } = useGetExperiencesQuery('');
-  const [deleteExperience] = useDeleteExperienceMutation();
+  const { refetch } = useGetExperiencesQuery('');
 
   const [isEditing, setIsEditing] = useState(false);
+
+  // Methods
+  const editButtonPressed = useCallback(() => {
+    setIsEditing((prev) => !prev);
+  }, []);
+
+  const createButtonPressed = useCallback(() => {
+    navigation.navigate('ExperienceCreate');
+  }, [navigation]);
 
   useEffect(() => {
     // Set the action buttons in the appbar for rotating the picture
@@ -74,7 +59,7 @@ const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
         </>
       ),
     });
-  }, [navigation, isEditing]);
+  }, [createButtonPressed, editButtonPressed, navigation, isEditing]);
 
   // Fetch data from the API
   useFocusEffect(
@@ -82,22 +67,6 @@ const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
       refetch();
     }, [refetch]),
   );
-
-  // Methods
-  const editButtonPressed = useCallback(() => {
-    setIsEditing((prev) => !prev);
-  }, []);
-  const createButtonPressed = useCallback(() => {
-    navigation.navigate('ExperienceCreate');
-  }, [navigation]);
-
-  const trashcanButtonExperience = useCallback((experience: Experience) => {
-    deleteExperience(experience.id)
-      .unwrap()
-      .then(() => {
-        refetch();
-      });
-  }, []);
 
   return (
     <ScrollView

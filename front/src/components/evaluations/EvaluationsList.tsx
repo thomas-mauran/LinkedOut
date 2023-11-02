@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React from 'react';
+import React, { FC } from 'react';
 import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider, Text, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -21,35 +21,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-
-  horizontalContainer: {
-    flexDirection: 'row',
-  },
-  centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textFieldTitle: {
-    marginTop: 5,
-  },
-  textFieldElement: {
-    marginBottom: 2,
-    marginTop: 2,
-  },
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
   divider: {
     marginVertical: 8,
   },
+  horizontalContainer: {
+    flexDirection: 'row',
+  },
 });
 
-const EvaluationsList: React.FC = ({}) => {
+const EvaluationsList: FC = () => {
   const { data: evaluations, refetch } = useGetEvaluationsQuery('');
 
   const theme = useTheme();
-  const isDarkTheme = theme.dark;
 
   // Fetch data from the API
   useFocusEffect(
@@ -63,27 +46,14 @@ const EvaluationsList: React.FC = ({}) => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <Text variant='headlineMedium' style={{ marginBottom: 10 }}>
-        {i18n.t('profile.info.reviews')}
-      </Text>
+      <Text variant='headlineMedium'>{i18n.t('profile.info.reviews')}</Text>
       {evaluations?.map((evaluation) => (
-        <View key={evaluation.id} style={{ width: '100%' }}>
-          <View
-            style={[
-              styles.horizontalContainer,
-              { justifyContent: 'flex-start', marginBottom: 10 },
-            ]}
-          >
+        <View key={evaluation.id}>
+          <View style={styles.horizontalContainer}>
             <ProfilePicturePlaceholder
               username={`${evaluation.employerFirstName}${evaluation.employerLastName}`}
             />
-            <View
-              style={{
-                marginTop: 'auto',
-                marginBottom: 'auto',
-                marginLeft: 10,
-              }}
-            >
+            <View>
               <Text>
                 {`${evaluation.employerFirstName} ${evaluation.employerLastName}`}
               </Text>
@@ -100,21 +70,19 @@ const EvaluationsList: React.FC = ({}) => {
                         : 'star-outline'
                     }
                     size={24}
-                    style={
-                      isDarkTheme ? { color: 'white' } : { color: 'black' }
-                    }
+                    style={{ color: theme.colors.onSurface }}
                   />
                 )}
               />
             </View>
           </View>
-          <View style={{ marginLeft: 5 }}>
-            <Text style={{ marginBottom: 10 }}>{`"${evaluation.review}"`}</Text>
+          <View>
+            <Text>{`"${evaluation.review}"`}</Text>
             <Text>
               {new Date(evaluation.createdAt).toLocaleDateString('en-US')}
             </Text>
           </View>
-          <Divider style={[styles.divider, { marginTop: 20 }]} />
+          <Divider style={styles.divider} />
         </View>
       ))}
     </ScrollView>

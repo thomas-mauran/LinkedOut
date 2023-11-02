@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
@@ -10,31 +10,22 @@ interface ProfileContactInfosProps {
 }
 
 const styles = StyleSheet.create({
-  horizontalContainer: {
-    flexDirection: 'row',
-  },
-  centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textFieldTitle: {
-    marginTop: 5,
-  },
   textFieldElement: {
     marginBottom: 2,
     marginTop: 2,
   },
+  textFieldTitle: {
+    marginTop: 5,
+  },
 });
 
-const ProfileContactInfos: React.FC<ProfileContactInfosProps> = ({
+const ProfileContactInfos: FC<ProfileContactInfosProps> = ({
   phone,
   email,
 }) => {
   return (
     <View>
-      <Text variant='titleLarge' style={{ marginBottom: 5 }}>
-        {i18n.t('profile.info.contact')}
-      </Text>
+      <Text variant='titleLarge'>{i18n.t('profile.info.contact')}</Text>
       <Text variant='labelLarge' style={styles.textFieldTitle}>
         {i18n.t('profile.info.phoneNumber')}
       </Text>

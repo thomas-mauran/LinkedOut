@@ -1,9 +1,9 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import React from 'react';
-import { FlatList, Image, ScrollView, StyleSheet, View } from 'react-native';
-import { Appbar, Button, Divider, Text } from 'react-native-paper';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Appbar } from 'react-native-paper';
 
 import AvailabilitiesList from '@/components/availabilities/AvailabilitiesList';
 import ProfileContactInfos from '@/components/profile/ProfileContactInfos';
@@ -24,34 +24,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  headline: {
-    fontStyle: 'italic',
-  },
-  horizontalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profilePicture: {
-    borderRadius: 50,
-    width: 100,
-    height: 100,
-    marginRight: 30,
-    marginLeft: 15,
-  },
-  experiencesButton: {
-    backgroundColor: '#FEF7FF',
-  },
-  textFieldTitle: {
-    marginTop: 5,
-  },
-  textFieldElement: {
-    marginBottom: 2,
-    marginTop: 2,
-  },
 });
 
 type ProfileAppPageProps = NativeStackScreenProps<
@@ -64,7 +36,14 @@ type ProfileAppPageProps = NativeStackScreenProps<
  * @constructor
  */
 const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
-  const { data: profile, refetch } = useGetProfileQuery('');
+  const { data: profile, refetch } = useGetProfileQuery();
+
+  const editButtonPressed = useCallback(
+    (newProfile: Partial<Profile>) => {
+      navigation.navigate('ProfileUpdate', { ...newProfile });
+    },
+    [navigation],
+  );
 
   useEffect(() => {
     // Set the action buttons in the appbar for rotating the picture
@@ -80,20 +59,13 @@ const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
         </>
       ),
     });
-  }, [navigation, profile]);
+  }, [editButtonPressed, navigation, profile]);
 
   // Fetch data from the API
   useFocusEffect(
     React.useCallback(() => {
       refetch();
     }, [refetch]),
-  );
-
-  const editButtonPressed = useCallback(
-    (newProfile: Partial<Profile>) => {
-      navigation.navigate('ProfileUpdate', { ...newProfile });
-    },
-    [navigation, profile],
   );
 
   return (
@@ -107,7 +79,7 @@ const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
         shortBiography={profile?.shortBiography}
         averageRating={profile?.averageRating}
       />
-      <View style={{ marginRight: 10, marginLeft: 10 }}>
+      <View>
         <ProfileContactInfos phone={profile?.phone} email={profile?.email} />
         <AvailabilitiesList isEditing={false} navigation={navigation} />
         <ProfileFooterButtons

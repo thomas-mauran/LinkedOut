@@ -5,7 +5,6 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
-import * as React from 'react';
 import { useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
@@ -71,7 +70,7 @@ const App = () => {
               screenOptions={{ headerShown: false }}
             >
               <RootStack.Screen name='Internal' component={InternalTabNav} />
-              <RootStack.Screen name="Main" component={MainTabNav} />
+              <RootStack.Screen name='Main' component={MainTabNav} />
             </RootStack.Navigator>
           </NavigationContainer>
         </ApiProvider>

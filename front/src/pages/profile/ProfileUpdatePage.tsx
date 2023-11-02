@@ -1,9 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import AvailabilitiesList from '@/components/availabilities/AvailabilitiesList';
-import ProfileUpdateInfos from '@/components/profile/ProfileUpdateInfos';
+import ProfileUpdateInfosForm from '@/components/profile/ProfileUpdateInfosForm';
 
 import { ProfileStackParamList } from './ProfileNav';
 
@@ -15,40 +14,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 8,
     justifyContent: 'flex-start',
-    padding: 8,
     marginLeft: 15,
     marginRight: 15,
-  },
-  divider: {
-    marginVertical: 8,
-  },
-
-  horizontalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-    marginTop: 8,
-  },
-
-  profilePicture: {
-    borderRadius: 50,
-    width: 100,
-    height: 100,
-  },
-
-  verticalCenterContainer: {
-    width: '100%',
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-
-  textFieldTitle: {
-    marginTop: 5,
-  },
-  textFieldElement: {
-    marginBottom: 2,
-    marginTop: 2,
+    padding: 8,
   },
 });
 
@@ -62,18 +30,22 @@ const ProfilesUpdatePage = ({ route, navigation }: ProfilesUpdatePageProps) => {
   const { id, firstName, lastName, shortBiography, phone, email } =
     route.params;
 
+  const initialFormData = {
+    id,
+    firstName,
+    lastName,
+    shortBiography,
+    phone,
+    email,
+  };
+
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ProfileUpdateInfos
-        id={id}
-        firstName={firstName}
-        lastName={lastName}
-        shortBiography={shortBiography}
-        phone={phone}
-        email={email}
+      <ProfileUpdateInfosForm
+        initialFormData={initialFormData}
         navigation={navigation}
       />
       <AvailabilitiesList isEditing={true} navigation={navigation} />

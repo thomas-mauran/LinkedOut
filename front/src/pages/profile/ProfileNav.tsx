@@ -2,18 +2,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import { Availability, Experience, Profile, Reference } from '@/models/types';
-import ExperienceCreatePage from '@/pages/profile/experiences/ExperienceCreatePage';
-import ExperienceUpdatePage from '@/pages/profile/experiences/ExperienceUpdatePage';
-import ExperiencesPage from '@/pages/profile/experiences/ExperiencesPage';
-import ReferencesPage from '@/pages/profile/references/ReferencesPage';
-import i18n from '@/utils/i18n';
-
 import InternalProfilePage from '@/pages/profile/ProfilePage';
 import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 import AvailabilityCreatePage from '@/pages/profile/availabilities/AvailabilityCreatePage';
 import AvailabilityUpdatePage from '@/pages/profile/availabilities/AvailabilityUpdatePage';
+import ExperienceCreatePage from '@/pages/profile/experiences/ExperienceCreatePage';
+import ExperienceUpdatePage from '@/pages/profile/experiences/ExperienceUpdatePage';
+import ExperiencesPage from '@/pages/profile/experiences/ExperiencesPage';
 import ReferenceCreatePage from '@/pages/profile/references/ReferenceCreatePage';
 import ReferenceUpdatePage from '@/pages/profile/references/ReferenceUpdatePage';
+import ReferencesPage from '@/pages/profile/references/ReferencesPage';
+import i18n from '@/utils/i18n';
 
 /**
  * The parameter list for the InternalProfileStack navigator.

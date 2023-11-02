@@ -1,9 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { FC, useCallback } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider, IconButton, Text } from 'react-native-paper';
 
 import { Reference } from '@/models/types';
+import { ProfileStackParamList } from '@/pages/profile/ProfileNav';
 import {
   useDeleteReferenceMutation,
   useGetReferencesQuery,
@@ -14,6 +16,7 @@ import ProfilePicturePlaceholder from '../utils/ProfilePicturePlaceholder';
 
 interface ReferencesListProps {
   isEditing?: boolean;
+  navigation: NativeStackNavigationProp<ProfileStackParamList>;
 }
 
 const styles = StyleSheet.create({
@@ -27,34 +30,19 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-
-  horizontalContainer: {
-    flexDirection: 'row',
-  },
-  centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textFieldTitle: {
-    marginTop: 5,
-  },
-  textFieldElement: {
-    marginBottom: 2,
-    marginTop: 2,
-  },
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
   divider: {
     marginVertical: 8,
   },
+  editBtnInline: {
+    marginBottom: 'auto',
+    marginTop: 'auto',
+  },
+  horizontalContainer: {
+    flexDirection: 'row',
+  },
 });
 
-const ReferencesList: React.FC<ReferencesListProps & { navigation: any }> = ({
-  isEditing,
-  navigation,
-}) => {
+const ReferencesList: FC<ReferencesListProps> = ({ isEditing, navigation }) => {
   const [deleteReference] = useDeleteReferenceMutation();
   const { data: references, refetch } = useGetReferencesQuery('');
 
@@ -67,10 +55,11 @@ const ReferencesList: React.FC<ReferencesListProps & { navigation: any }> = ({
 
   const editButtonReference = useCallback(
     (availability: Partial<Reference>) => {
-      navigation.navigate('ReferencesUpdate', { ...availability });
+      navigation.navigate('ReferenceUpdate', { ...availability });
     },
-    [navigation, references],
+    [navigation],
   );
+
   const trashcanButtonReference = useCallback(
     (reference: Partial<Reference>) => {
       Alert.alert(
@@ -83,50 +72,35 @@ const ReferencesList: React.FC<ReferencesListProps & { navigation: any }> = ({
           },
           {
             text: i18n.t('common.delete'),
-            onPress: () => handleDelete(reference),
+            onPress: () => {
+              deleteReference(reference.id)
+                .unwrap()
+                .then(() => {
+                  refetch();
+                });
+            },
           },
         ],
       );
     },
-    [],
+    [deleteReference, refetch],
   );
-
-  const handleDelete = (reference: Partial<Reference>) => {
-    deleteReference(reference.id)
-      .unwrap()
-      .then(() => {
-        refetch();
-      });
-  };
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <Text variant='headlineMedium' style={{ marginBottom: 20 }}>
-        {i18n.t('profile.info.references')}
-      </Text>
+      <Text variant='headlineMedium'>{i18n.t('profile.info.references')}</Text>
       {references?.map((reference) => (
         <View key={reference.id} style={styles.horizontalContainer}>
-          <View style={{ width: '80%' }}>
+          <View>
             <View style={styles.horizontalContainer}>
-              <View
-                style={[
-                  styles.horizontalContainer,
-                  { justifyContent: 'flex-start', marginBottom: 10 },
-                ]}
-              >
+              <View style={styles.horizontalContainer}>
                 <ProfilePicturePlaceholder
                   username={`${reference.firstName}${reference.lastName}`}
                 />
-                <View
-                  style={{
-                    marginTop: 'auto',
-                    marginBottom: 'auto',
-                    marginLeft: 10,
-                  }}
-                >
+                <View>
                   <Text>{reference.firstName}</Text>
                   <Text>{reference.lastName}</Text>
                 </View>
@@ -134,15 +108,7 @@ const ReferencesList: React.FC<ReferencesListProps & { navigation: any }> = ({
             </View>
           </View>
           {isEditing && (
-            <View
-              style={[
-                styles.horizontalContainer,
-                {
-                  justifyContent: 'space-around',
-                  width: '20%',
-                },
-              ]}
-            >
+            <View style={styles.horizontalContainer}>
               <IconButton
                 icon='pencil'
                 style={styles.editBtnInline}

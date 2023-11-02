@@ -107,7 +107,7 @@ export const api = createApi({
     }),
 
     // Profile
-    getProfile: builder.query<Partial<Profile>, string>({
+    getProfile: builder.query<Partial<Profile>, void>({
       query: () => 'profile/',
     }),
     patchProfile: builder.mutation<Partial<Profile>, Partial<Profile>>({

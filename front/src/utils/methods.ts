@@ -1,5 +1,5 @@
 export function starsIntoArray(num: number) {
-  let resultArray = [];
+  const resultArray = [];
   let remaining = num;
 
   for (let i = 0; i < 5; i++) {

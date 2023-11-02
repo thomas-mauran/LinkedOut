@@ -1,10 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-import ExperienceForm from '@/components/experiences/ExperienceForm';
+import ExperienceForm, {
+  ExperienceFormData,
+} from '@/components/experiences/ExperienceForm';
 import { Experience } from '@/models/types';
 import { usePatchExperienceMutation } from '@/store/slice/api';
 
@@ -20,34 +21,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  divider: {
-    marginVertical: 8,
-  },
-
-  horizontalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    marginTop: 8,
-  },
-
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  textInput: {
-    marginVertical: 8,
-    width: '80%',
-  },
-
   verticalCenterContainer: {
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  smallInput: {
-    width: '45%',
+    width: '100%',
   },
 });
 
@@ -60,15 +37,15 @@ const ExperienceUpdatePage = ({
   route,
   navigation,
 }: ExperienceUpdatePageProps) => {
+  // Api calls
+  const [patchExperience] = usePatchExperienceMutation();
+
   // Constants
   const { id, company, job, address, startDate, endDate } =
     route.params as Experience;
 
-  // Hooks
-
   // Form State
-  const [formData, setFormData] = useState({
-    id,
+  const [formData, setFormData] = useState<ExperienceFormData>({
     jobTitle: job?.title,
     firstLine: address?.firstLine,
     zipCode: address?.zipCode,
@@ -78,25 +55,10 @@ const ExperienceUpdatePage = ({
     endDate,
   });
 
-  // To set the action buttons in the appbar for saving the changes
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
-        </>
-      ),
-    });
-  }, [navigation, formData]);
-
-  // Api calls
-  const [patchExperience] = usePatchExperienceMutation();
-
   // Methods
-
   const checkPressed = useCallback(() => {
     const updatedExperience: Experience = {
-      id: formData.id,
+      id,
       company: {
         name: formData.companyName,
       },
@@ -114,10 +76,21 @@ const ExperienceUpdatePage = ({
 
     patchExperience(updatedExperience)
       .unwrap()
-      .then((r) => {
+      .then(() => {
         navigation.goBack();
       });
-  }, [formData, patchExperience, navigation]);
+  }, [formData, id, patchExperience, navigation]);
+
+  // To set the action buttons in the appbar for saving the changes
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <>
+          <Appbar.Action icon='check' onPress={checkPressed} />
+        </>
+      ),
+    });
+  }, [checkPressed, navigation, formData]);
 
   return (
     <ScrollView
@@ -125,7 +98,7 @@ const ExperienceUpdatePage = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.verticalCenterContainer}>
-        <ExperienceForm formData={formData} setFormData={setFormData} />
+        <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
       </View>
     </ScrollView>
   );

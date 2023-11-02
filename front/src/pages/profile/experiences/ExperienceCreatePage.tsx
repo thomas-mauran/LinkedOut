@@ -1,6 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -20,34 +19,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  divider: {
-    marginVertical: 8,
-  },
-
-  horizontalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    marginTop: 8,
-  },
-
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  textInput: {
-    marginVertical: 8,
-    width: '80%',
-  },
-
   verticalCenterContainer: {
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  smallInput: {
-    width: '45%',
+    width: '100%',
   },
 });
 
@@ -56,11 +31,9 @@ type ExperienceCreatePageProps = NativeStackScreenProps<
   'ExperienceCreate'
 >;
 
-const ExperienceCreatePage = ({
-  route,
-  navigation,
-}: ExperienceCreatePageProps) => {
-  // Hooks
+const ExperienceCreatePage = ({ navigation }: ExperienceCreatePageProps) => {
+  // Api calls
+  const [postExperience] = usePostExperienceMutation();
 
   // Form State
   const [formData, setFormData] = useState({
@@ -73,22 +46,7 @@ const ExperienceCreatePage = ({
     endDate: null,
   });
 
-  // To set the action buttons in the appbar for saving the changes
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
-        </>
-      ),
-    });
-  }, [navigation, formData]);
-
-  // Api calls
-  const [postExperience] = usePostExperienceMutation();
-
   // Methods
-
   const checkPressed = useCallback(() => {
     const updatedExperience: Partial<Experience> = {
       company: {
@@ -108,10 +66,21 @@ const ExperienceCreatePage = ({
 
     postExperience(updatedExperience)
       .unwrap()
-      .then((r) => {
+      .then(() => {
         navigation.goBack();
       });
   }, [formData, postExperience, navigation]);
+
+  // To set the action buttons in the appbar for saving the changes
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <>
+          <Appbar.Action icon='check' onPress={checkPressed} />
+        </>
+      ),
+    });
+  }, [checkPressed, navigation, formData]);
 
   return (
     <ScrollView
@@ -119,7 +88,7 @@ const ExperienceCreatePage = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.verticalCenterContainer}>
-        <ExperienceForm formData={formData} setFormData={setFormData} />
+        <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
       </View>
     </ScrollView>
   );

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC, useCallback } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
 
@@ -14,78 +14,63 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  divider: {
-    marginVertical: 8,
-  },
-
   horizontalContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '80%',
     marginTop: 8,
-  },
-
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  textInput: {
-    marginVertical: 8,
     width: '80%',
-  },
-
-  verticalCenterContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   smallInput: {
     width: '45%',
   },
+  textInput: {
+    marginVertical: 8,
+    width: '80%',
+  },
+  verticalCenterContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
 });
 
-type ReferenceFormProps = {
-  formData: any;
-  setFormData: any;
+export type ReferenceFormData = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  companyName: string;
+  firstLine: string;
+  zipCode: string;
+  city: string;
 };
-const ReferenceForm: React.FC<ReferenceFormProps> = ({
+
+type ReferenceFormProps = {
+  formData: ReferenceFormData;
+  onFormDataUpdate: (data: ReferenceFormData) => void;
+};
+
+const ReferenceForm: FC<ReferenceFormProps> = ({
   formData,
-  setFormData,
+  onFormDataUpdate,
 }) => {
-  // Hooks
-
-  // Api calls
-
-  // Date picker states
-  const [range, setRange] = React.useState({
-    startDate: new Date(formData.startDate ?? new Date()),
-    endDate: new Date(formData.endDate ?? new Date()),
-  });
-
-  const [open, setOpen] = React.useState(false);
-
   // Methods
-  const onDismiss = React.useCallback(() => {
-    setOpen(false);
-  }, [setOpen]);
+  const handleInputChange = useCallback(
+    (
+      key: keyof ReferenceFormData,
+      value: ReferenceFormData[typeof key],
+      isDigitOnly = false,
+    ) => {
+      if (typeof value === 'string' && isDigitOnly) {
+        value = value.replace(/[^0-9]/g, '');
+      }
 
-  const handleInputChange = (key: string, value: any, isDigitOnly = false) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [key]: isDigitOnly ? value.replace(/[^0-9]/g, '') : value,
-    }));
-  };
-
-  // On confirm of the date picker
-  const onConfirm = React.useCallback(
-    ({ startDate, endDate }) => {
-      setOpen(false);
-      setRange({ startDate, endDate });
-      handleInputChange('startDate', startDate.toISOString());
-      handleInputChange('endDate', endDate.toISOString());
+      onFormDataUpdate({
+        ...formData,
+        [key]: value,
+      });
     },
-    [setOpen, setRange],
+    [formData, onFormDataUpdate],
   );
 
   return (
@@ -94,7 +79,7 @@ const ReferenceForm: React.FC<ReferenceFormProps> = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.verticalCenterContainer}>
-        <View style={{ width: '100%', marginTop: 10, marginLeft: '20%' }}>
+        <View>
           <Text variant='headlineMedium'>
             {i18n.t('profile.info.information')}
           </Text>
@@ -125,7 +110,7 @@ const ReferenceForm: React.FC<ReferenceFormProps> = ({
           onChangeText={(value) => handleInputChange('email', value)}
         />
 
-        <View style={{ width: '100%', marginTop: 20, marginLeft: '20%' }}>
+        <View>
           <Text variant='headlineMedium'>
             {i18n.t('profile.company.company')}
           </Text>

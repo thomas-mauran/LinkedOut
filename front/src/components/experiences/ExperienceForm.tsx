@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FC, useCallback } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
@@ -15,44 +16,44 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  divider: {
-    marginVertical: 8,
-  },
-
   horizontalContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '80%',
     marginTop: 8,
-  },
-
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  textInput: {
-    marginVertical: 8,
     width: '80%',
-  },
-
-  verticalCenterContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   smallInput: {
     width: '45%',
   },
+  textInput: {
+    marginVertical: 8,
+    width: '80%',
+  },
+  verticalCenterContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
 });
 
-type ExperienceFormProps = {
-  formData: any;
-  setFormData: any;
+export type ExperienceFormData = {
+  jobTitle: string;
+  startDate: string;
+  endDate: string;
+  companyName: string;
+  firstLine: string;
+  zipCode: string;
+  city: string;
 };
-const ExperienceForm: React.FC<ExperienceFormProps> = ({
+
+type ExperienceFormProps = {
+  formData: ExperienceFormData;
+  onFormDataUpdate: (data: ExperienceFormData) => void;
+};
+
+const ExperienceForm: FC<ExperienceFormProps> = ({
   formData,
-  setFormData,
+  onFormDataUpdate,
 }) => {
   // Hooks
 
@@ -71,22 +72,34 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
     setOpen(false);
   }, [setOpen]);
 
-  const handleInputChange = (key: string, value: any, isDigitOnly = false) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [key]: isDigitOnly ? value.replace(/[^0-9]/g, '') : value,
-    }));
-  };
+  const handleInputChange = useCallback(
+    (
+      key: keyof ExperienceFormData,
+      value: ExperienceFormData[typeof key],
+      isDigitOnly = false,
+    ) => {
+      if (typeof value === 'string' && isDigitOnly) {
+        value = value.replace(/[^0-9]/g, '');
+      }
+
+      onFormDataUpdate({
+        ...formData,
+        [key]: value,
+      });
+    },
+    [formData, onFormDataUpdate],
+  );
 
   // On confirm of the date picker
-  const onConfirm = React.useCallback(
+  const onDatePickerConfirm = React.useCallback(
     ({ startDate, endDate }) => {
       setOpen(false);
       setRange({ startDate, endDate });
+
       handleInputChange('startDate', startDate.toISOString());
       handleInputChange('endDate', endDate.toISOString());
     },
-    [setOpen, setRange],
+    [handleInputChange, setOpen, setRange],
   );
 
   return (
@@ -124,7 +137,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({
             onDismiss={onDismiss}
             startDate={range.startDate}
             endDate={range.endDate}
-            onConfirm={onConfirm}
+            onConfirm={onDatePickerConfirm}
           />
         </View>
         <TextInput

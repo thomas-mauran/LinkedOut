@@ -1,9 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { FC, useCallback } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 
 import { Availability } from '@/models/types';
+import { ProfileStackParamList } from '@/pages/profile/ProfileNav';
 import {
   useDeleteAvailabilitiesMutation,
   useGetAvailabilitiesQuery,
@@ -12,32 +14,34 @@ import i18n from '@/utils/i18n';
 
 interface AvailabilitiesListProps {
   isEditing?: boolean;
+  navigation: NativeStackNavigationProp<ProfileStackParamList>;
 }
 
 const styles = StyleSheet.create({
+  editBtnContainer: {
+    alignItems: 'flex-end',
+    flex: 1,
+  },
+  editBtnInline: {
+    marginBottom: 'auto',
+    marginTop: 'auto',
+  },
   horizontalContainer: {
     flexDirection: 'row',
-  },
-  centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textFieldTitle: {
-    marginTop: 5,
   },
   textFieldElement: {
     marginBottom: 2,
     marginTop: 2,
   },
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
+  textFieldTitle: {
+    marginTop: 5,
   },
 });
 
-const AvailabilitiesList: React.FC<
-  AvailabilitiesListProps & { navigation: any }
-> = ({ isEditing, navigation }) => {
+const AvailabilitiesList: FC<AvailabilitiesListProps> = ({
+  isEditing,
+  navigation,
+}) => {
   const [deleteAvailability] = useDeleteAvailabilitiesMutation();
   const { data: availabilities, refetch } = useGetAvailabilitiesQuery('');
 
@@ -52,7 +56,7 @@ const AvailabilitiesList: React.FC<
     (availability: Partial<Availability>) => {
       navigation.navigate('AvailabilityUpdate', { ...availability });
     },
-    [navigation, availabilities],
+    [navigation],
   );
 
   const trashcanButtonAvailability = useCallback(
@@ -67,21 +71,19 @@ const AvailabilitiesList: React.FC<
           },
           {
             text: i18n.t('common.delete'),
-            onPress: () => handleDelete(availability),
+            onPress: () => {
+              deleteAvailability(availability.id)
+                .unwrap()
+                .then(() => {
+                  refetch();
+                });
+            },
           },
         ],
       );
     },
-    [],
+    [deleteAvailability, refetch],
   );
-
-  const handleDelete = (availability: Partial<Availability>) => {
-    deleteAvailability(availability.id)
-      .unwrap()
-      .then(() => {
-        refetch();
-      });
-  };
 
   const createButtonAvailability = useCallback(() => {
     navigation.navigate('AvailabilityCreate');
@@ -90,16 +92,15 @@ const AvailabilitiesList: React.FC<
   return (
     <View>
       <View>
-        {/* Rest of your code remains unchanged */}
-        <View style={[styles.horizontalContainer, { width: '100%' }]}>
-          <Text variant='titleLarge' style={{ marginBottom: 5, marginTop: 10 }}>
+        <View style={styles.horizontalContainer}>
+          <Text variant='titleLarge'>
             {i18n.t('profile.info.availabilities')}
           </Text>
           {isEditing && (
-            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            <View style={styles.editBtnContainer}>
               <IconButton
                 icon='plus'
-                style={[styles.editBtnInline]}
+                style={styles.editBtnInline}
                 onPress={() => createButtonAvailability()}
               />
             </View>
@@ -109,7 +110,7 @@ const AvailabilitiesList: React.FC<
 
       {availabilities?.map((availability) => (
         <View key={availability.id} style={styles.horizontalContainer}>
-          <View style={{ width: '80%' }}>
+          <View>
             <Text variant='labelLarge' style={styles.textFieldTitle}>
               {availability?.jobCategory.category}
             </Text>
@@ -123,15 +124,7 @@ const AvailabilitiesList: React.FC<
             </Text>
           </View>
           {isEditing && (
-            <View
-              style={[
-                styles.horizontalContainer,
-                {
-                  justifyContent: 'space-around',
-                  width: '20%',
-                },
-              ]}
-            >
+            <View style={styles.horizontalContainer}>
               <IconButton
                 icon='pencil'
                 style={styles.editBtnInline}

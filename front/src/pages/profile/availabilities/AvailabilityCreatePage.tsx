@@ -1,10 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-import AvailabilityForm from '@/components/availabilities/AvailabilityForm';
+import AvailabilityForm, {
+  AvailabilityFormData,
+} from '@/components/availabilities/AvailabilityForm';
 import { Availability } from '@/models/types';
 import { usePostAvailabilitiesMutation } from '@/store/slice/api';
 
@@ -20,34 +21,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  divider: {
-    marginVertical: 8,
-  },
-
-  horizontalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    marginTop: 8,
-  },
-
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  textInput: {
-    marginVertical: 8,
-    width: '80%',
-  },
-
   verticalCenterContainer: {
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  smallInput: {
-    width: '45%',
+    width: '100%',
   },
 });
 
@@ -57,13 +34,13 @@ type AvailabilityCreatePageProps = NativeStackScreenProps<
 >;
 
 const AvailabilityCreatePage = ({
-  route,
   navigation,
 }: AvailabilityCreatePageProps) => {
-  // Constants
+  // Api calls
+  const [postAvailability] = usePostAvailabilitiesMutation();
 
   // Form State
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<AvailabilityFormData>({
     firstLine: '',
     zipCode: '',
     city: '',
@@ -74,22 +51,7 @@ const AvailabilityCreatePage = ({
     category: '',
   });
 
-  // To set the action buttons in the appbar for saving the changes
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
-        </>
-      ),
-    });
-  }, [navigation, formData]);
-
-  // Api calls
-  const [postAvailability] = usePostAvailabilitiesMutation();
-
   // Methods
-
   const checkPressed = useCallback(() => {
     const updatedAvailability: Partial<Availability> = {
       address: {
@@ -108,10 +70,21 @@ const AvailabilityCreatePage = ({
 
     postAvailability(updatedAvailability)
       .unwrap()
-      .then((r) => {
+      .then(() => {
         navigation.goBack();
       });
   }, [formData, postAvailability, navigation]);
+
+  // To set the action buttons in the appbar for saving the changes
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <>
+          <Appbar.Action icon='check' onPress={checkPressed} />
+        </>
+      ),
+    });
+  }, [checkPressed, navigation, formData]);
 
   return (
     <ScrollView
@@ -119,7 +92,7 @@ const AvailabilityCreatePage = ({
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.verticalCenterContainer}>
-        <AvailabilityForm formData={formData} setFormData={setFormData} />
+        <AvailabilityForm formData={formData} onFormDataUpdate={setFormData} />
       </View>
     </ScrollView>
   );

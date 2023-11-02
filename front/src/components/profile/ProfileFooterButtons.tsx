@@ -1,42 +1,37 @@
-import React, { useCallback } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { FC, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, TouchableRipple, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Availability } from '@/models/types';
+import { ProfileStackParamList } from '@/pages/profile/ProfileNav';
 import i18n from '@/utils/i18n';
 
 interface ProfileFooterButtonsProps {
   nbExperiences: number;
   nbReviews: number;
+  navigation: NativeStackNavigationProp<ProfileStackParamList>;
 }
 
 const styles = StyleSheet.create({
   horizontalContainer: {
     flexDirection: 'row',
   },
-  centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textFieldTitle: {
-    marginTop: 5,
-  },
   textFieldElement: {
     marginBottom: 2,
     marginTop: 2,
   },
+  textFieldTitle: {
+    marginTop: 5,
+  },
 });
 
-const ProfileFooterButtons: React.FC<
-  ProfileFooterButtonsProps & { navigation: any }
-> = ({
+const ProfileFooterButtons: FC<ProfileFooterButtonsProps> = ({
   nbExperiences,
   nbReviews,
   navigation, // Add the navigation prop
 }) => {
   const theme = useTheme();
-  const isDarkTheme = theme.dark;
 
   const experiencesButtonPressed = useCallback(() => {
     navigation.navigate('Experiences');
@@ -49,19 +44,10 @@ const ProfileFooterButtons: React.FC<
   return (
     <View>
       <TouchableRipple
-        style={{
-          ...styles.horizontalContainer,
-          marginTop: 15,
-        }}
+        style={styles.horizontalContainer}
         onPress={experiencesButtonPressed}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
+        <View>
           <View>
             <Text variant='labelLarge' style={styles.textFieldTitle}>
               {i18n.t('profile.info.experiences')}
@@ -71,32 +57,20 @@ const ProfileFooterButtons: React.FC<
             </Text>
           </View>
 
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+          <View>
             <MaterialCommunityIcons
               name='chevron-right'
               size={24}
-              style={[
-                isDarkTheme ? { color: 'white' } : { color: 'black' },
-                { marginTop: 'auto', marginBottom: 'auto', marginRight: 10 },
-              ]}
+              style={{ color: theme.colors.onSurface }}
             />
           </View>
         </View>
       </TouchableRipple>
       <TouchableRipple
-        style={{
-          ...styles.horizontalContainer,
-          marginTop: 15,
-        }}
+        style={styles.horizontalContainer}
         onPress={referencesButtonPressed}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
+        <View>
           <View>
             <Text variant='labelLarge' style={styles.textFieldTitle}>
               {i18n.t('profile.info.references')}
@@ -106,14 +80,11 @@ const ProfileFooterButtons: React.FC<
             </Text>
           </View>
 
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+          <View>
             <MaterialCommunityIcons
               name='chevron-right'
               size={24}
-              style={[
-                isDarkTheme ? { color: 'white' } : { color: 'black' },
-                { marginTop: 'auto', marginBottom: 'auto', marginRight: 10 },
-              ]}
+              style={{ color: theme.colors.onSurface }}
             />
           </View>
         </View>

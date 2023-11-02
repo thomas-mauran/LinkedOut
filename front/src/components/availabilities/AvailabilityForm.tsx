@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Slider from 'react-native-a11y-slider';
 import { Button, Text, TextInput, useTheme } from 'react-native-paper';
@@ -18,44 +18,45 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-  divider: {
-    marginVertical: 8,
-  },
-
   horizontalContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '80%',
     marginTop: 8,
-  },
-
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-
-  textInput: {
-    marginVertical: 8,
     width: '80%',
-  },
-
-  verticalCenterContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   smallInput: {
     width: '45%',
   },
+  textInput: {
+    marginVertical: 8,
+    width: '80%',
+  },
+  verticalCenterContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
 });
 
-type AvailabilityFormProps = {
-  formData: any;
-  setFormData: any;
+export type AvailabilityFormData = {
+  startDate: string;
+  endDate: string;
+  categoryId: number;
+  category: string;
+  firstLine: string;
+  zipCode: string;
+  city: string;
+  range: number[];
 };
-const AvailabilityForm: React.FC<AvailabilityFormProps> = ({
+
+type AvailabilityFormProps = {
+  formData: AvailabilityFormData;
+  onFormDataUpdate: (data: AvailabilityFormData) => void;
+};
+
+const AvailabilityForm: FC<AvailabilityFormProps> = ({
   formData,
-  setFormData,
+  onFormDataUpdate,
 }) => {
   // Hooks
   const { colors } = useTheme();
@@ -77,22 +78,34 @@ const AvailabilityForm: React.FC<AvailabilityFormProps> = ({
     setOpen(false);
   }, [setOpen]);
 
-  const handleInputChange = (key: string, value: any, isDigitOnly = false) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [key]: isDigitOnly ? value.replace(/[^0-9]/g, '') : value,
-    }));
-  };
+  const handleInputChange = useCallback(
+    (
+      key: keyof AvailabilityFormData,
+      value: AvailabilityFormData[typeof key],
+      isDigitOnly = false,
+    ) => {
+      if (typeof value === 'string' && isDigitOnly) {
+        value = value.replace(/[^0-9]/g, '');
+      }
+
+      onFormDataUpdate({
+        ...formData,
+        [key]: value,
+      });
+    },
+    [formData, onFormDataUpdate],
+  );
 
   // On confirm of the date picker
-  const onConfirm = useCallback(
+  const onDatePickerConfirm = useCallback(
     ({ startDate, endDate }) => {
       setOpen(false);
       setRange({ startDate, endDate });
+
       handleInputChange('startDate', startDate.toISOString());
       handleInputChange('endDate', endDate.toISOString());
     },
-    [setOpen, setRange],
+    [handleInputChange, setOpen, setRange],
   );
 
   const dropdownChange = (value: number) => {
@@ -130,10 +143,10 @@ const AvailabilityForm: React.FC<AvailabilityFormProps> = ({
             onDismiss={onDismiss}
             startDate={range.startDate}
             endDate={range.endDate}
-            onConfirm={onConfirm}
+            onConfirm={onDatePickerConfirm}
           />
         </View>
-        <View style={{ width: '80%', marginTop: 10, marginBottom: 10 }}>
+        <View>
           {categories && (
             <DropDown
               label={'Category'}
@@ -171,12 +184,7 @@ const AvailabilityForm: React.FC<AvailabilityFormProps> = ({
             onChangeText={(value) => handleInputChange('city', value)}
           />
         </View>
-        <View
-          style={[
-            styles.horizontalContainer,
-            { width: '80%', marginTop: 20, marginBottom: 20 },
-          ]}
-        >
+        <View style={styles.horizontalContainer}>
           <Text variant='headlineSmall'>
             {i18n.t('profile.availabilities.radiusRange', {
               range: formData.range[0],
@@ -187,10 +195,9 @@ const AvailabilityForm: React.FC<AvailabilityFormProps> = ({
           min={1}
           max={200}
           values={formData.range}
-          onChange={(value) => {
+          onChange={(value: number[]) => {
             handleInputChange('range', value);
           }}
-          style={{ width: '80%' }}
           markerColor={colors.inversePrimary}
           showLabel={false}
         />

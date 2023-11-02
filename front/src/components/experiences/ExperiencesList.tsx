@@ -1,9 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { FC, useCallback } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider, IconButton, Text } from 'react-native-paper';
 
 import { Experience } from '@/models/types';
+import { ProfileStackParamList } from '@/pages/profile/ProfileNav';
 import {
   useDeleteExperienceMutation,
   useGetExperiencesQuery,
@@ -12,6 +14,7 @@ import i18n from '@/utils/i18n';
 
 interface ExperiencesListProps {
   isEditing?: boolean;
+  navigation: NativeStackNavigationProp<ProfileStackParamList>;
 }
 
 const styles = StyleSheet.create({
@@ -25,31 +28,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 8,
   },
-
+  divider: {
+    marginVertical: 8,
+  },
+  editBtnInline: {
+    marginBottom: 'auto',
+    marginTop: 'auto',
+  },
   horizontalContainer: {
     flexDirection: 'row',
-  },
-  centerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textFieldTitle: {
-    marginTop: 5,
   },
   textFieldElement: {
     marginBottom: 2,
     marginTop: 2,
   },
-  editBtnInline: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  divider: {
-    marginVertical: 8,
+  textFieldTitle: {
+    marginTop: 5,
   },
 });
 
-const ExperiencesList: React.FC<ExperiencesListProps & { navigation: any }> = ({
+const ExperiencesList: FC<ExperiencesListProps> = ({
   isEditing,
   navigation,
 }) => {
@@ -67,7 +65,7 @@ const ExperiencesList: React.FC<ExperiencesListProps & { navigation: any }> = ({
     (experience: Partial<Experience>) => {
       navigation.navigate('ExperienceUpdate', { ...experience });
     },
-    [navigation, experiences],
+    [navigation],
   );
 
   const trashcanButtonExperience = useCallback(
@@ -82,21 +80,19 @@ const ExperiencesList: React.FC<ExperiencesListProps & { navigation: any }> = ({
           },
           {
             text: i18n.t('common.delete'),
-            onPress: () => handleDelete(experience),
+            onPress: () => {
+              deleteExperience(experience.id)
+                .unwrap()
+                .then(() => {
+                  refetch();
+                });
+            },
           },
         ],
       );
     },
-    [],
+    [deleteExperience, refetch],
   );
-
-  const handleDelete = (experience: Partial<Experience>) => {
-    deleteExperience(experience.id)
-      .unwrap()
-      .then(() => {
-        refetch();
-      });
-  };
 
   return (
     <ScrollView
@@ -105,9 +101,9 @@ const ExperiencesList: React.FC<ExperiencesListProps & { navigation: any }> = ({
     >
       {experiences?.map((experience) => (
         <View key={experience.id} style={styles.horizontalContainer}>
-          <View style={{ width: '80%' }}>
+          <View>
             <View style={styles.horizontalContainer}>
-              <View style={{ marginLeft: 5 }}>
+              <View>
                 <Text variant='labelLarge' style={styles.textFieldTitle}>
                   {experience.job.title}
                 </Text>
@@ -123,15 +119,7 @@ const ExperiencesList: React.FC<ExperiencesListProps & { navigation: any }> = ({
             </View>
           </View>
           {isEditing && (
-            <View
-              style={[
-                styles.horizontalContainer,
-                {
-                  justifyContent: 'space-around',
-                  width: '20%',
-                },
-              ]}
-            >
+            <View style={styles.horizontalContainer}>
               <IconButton
                 icon='pencil'
                 style={styles.editBtnInline}

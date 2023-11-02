@@ -1,16 +1,16 @@
 import * as Crypto from 'expo-crypto';
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 50,
-    width: 60,
-    height: 60,
-    display: 'flex',
     alignItems: 'center',
+    borderRadius: 50,
+    display: 'flex',
+    height: 60,
     justifyContent: 'center',
+    width: 60,
   },
 });
 
@@ -18,7 +18,7 @@ type ProfilePicturePlaceholderProps = {
   username: string;
 };
 
-const ProfilePicturePlaceholder: React.FC<ProfilePicturePlaceholderProps> = ({
+const ProfilePicturePlaceholder: FC<ProfilePicturePlaceholderProps> = ({
   username,
 }) => {
   const [backgroundColor, setBackgroundColor] = useState<string>('#000000'); // Initial color, change as required
@@ -31,7 +31,7 @@ const ProfilePicturePlaceholder: React.FC<ProfilePicturePlaceholderProps> = ({
       );
       let color = '#';
       for (let j = 0; j < 3; j++) {
-        let value = parseInt(digest.slice(j * 8, j * 8 + 8), 16) % 255;
+        const value = parseInt(digest.slice(j * 8, j * 8 + 8), 16) % 255;
         color += ('00' + value.toString(16)).slice(-2);
       }
       setBackgroundColor(color);
@@ -41,9 +41,7 @@ const ProfilePicturePlaceholder: React.FC<ProfilePicturePlaceholderProps> = ({
 
   return (
     <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
-        {username[0]}
-      </Text>
+      <Text>{username[0]}</Text>
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { Button, Divider, Text, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,35 +14,32 @@ interface ProfileHeaderProps {
 }
 
 const styles = StyleSheet.create({
-  horizontalContainer: {
-    flexDirection: 'row',
-  },
   centerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
   },
+  horizontalContainer: {
+    flexDirection: 'row',
+  },
   profilePicture: {
     borderRadius: 50,
-    width: 100,
     height: 100,
-    marginRight: 30,
     marginLeft: 15,
-  },
-  experiencesButton: {
-    backgroundColor: '#FEF7FF',
+    marginRight: 30,
+    width: 100,
   },
 });
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({
+const ProfileHeader: FC<ProfileHeaderProps> = ({
   firstName,
   lastName,
   shortBiography,
   averageRating,
 }) => {
   const theme = useTheme();
-  const isDarkTheme = theme.dark;
+
   return (
-    <View style={{ flex: 1, marginLeft: 5 }}>
+    <View>
       <View style={styles.horizontalContainer}>
         {/* TODO FETCH THE PICTURE FROM THE API */}
         <Image
@@ -52,7 +49,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           }}
         />
         <View style={styles.centerContainer}>
-          <Text variant='headlineMedium' style={{ marginBottom: 5 }}>
+          <Text variant='headlineMedium'>
             {firstName} {lastName}
           </Text>
           <View>
@@ -70,34 +67,22 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                         : 'star-outline'
                     }
                     size={24}
-                    style={
-                      isDarkTheme ? { color: 'white' } : { color: 'black' }
-                    }
+                    style={{ color: theme.colors.onSurface }}
                   />
                 )}
               />
-              <Text
-                style={{
-                  marginTop: 'auto',
-                  marginBottom: 'auto',
-                  marginLeft: 5,
-                }}
-              >
-                {averageRating}
-              </Text>
+              <Text>{averageRating}</Text>
             </View>
           </View>
         </View>
       </View>
-      <View style={{ marginTop: 20 }}>
+      <View>
         <View style={styles.horizontalContainer}>
-          <Divider style={{ width: 3, height: '100%', marginRight: 10 }} />
-          <Text style={{ textAlign: 'left', width: '97%' }}>
-            {shortBiography}
-          </Text>
+          <Divider />
+          <Text>{shortBiography}</Text>
         </View>
       </View>
-      <View style={{ alignItems: 'flex-start' }}>
+      <View>
         <Button icon='file-document'>
           {i18n.t('profile.info.downloadResume')}
         </Button>
