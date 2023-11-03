@@ -1,90 +1,93 @@
+import Slider from '@react-native-community/slider';
 import { FC, useCallback, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import Slider from 'react-native-a11y-slider';
-import { Button, Text, TextInput, useTheme } from 'react-native-paper';
-import { DatePickerModal } from 'react-native-paper-dates';
+import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Text, TextInput, useTheme } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 
-import { useGetJobCategoriesQuery } from '@/store/slice/api';
+import DateRangePicker from '@/components/utils/DateRangePicker';
+import { JobCategory } from '@/models/types';
 import i18n from '@/utils/i18n';
 
+/**
+ * The styles for the AvailabilityForm component.
+ */
 const styles = StyleSheet.create({
-  container: {
+  cityContainer: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  cityItem: {
     flex: 1,
   },
-  contentContainer: {
-    alignItems: 'flex-start',
-    gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
-  },
-  horizontalContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 8,
-    width: '80%',
-  },
-  smallInput: {
-    width: '45%',
-  },
-  textInput: {
-    marginVertical: 8,
-    width: '80%',
-  },
-  verticalCenterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+  container: {
+    gap: 16,
   },
 });
 
+/**
+ * The data for the availability form.
+ */
 export type AvailabilityFormData = {
+  jobCategoryId: number;
   startDate: string;
   endDate: string;
-  categoryId: number;
-  category: string;
-  firstLine: string;
+  addressFirstLine: string;
   zipCode: string;
   city: string;
-  range: number[];
+  range: number;
 };
 
+/**
+ * The props for the AvailabilityForm component.
+ */
 type AvailabilityFormProps = {
+  /**
+   * The job categories.
+   */
+  jobCategories: JobCategory[];
+
+  /**
+   * The data for the form.
+   */
   formData: AvailabilityFormData;
+
+  /**
+   * The function to call when the form data is updated.
+   */
   onFormDataUpdate: (data: AvailabilityFormData) => void;
 };
 
+/**
+ * Displays the form for creating or updating an availability.
+ * @constructor
+ */
 const AvailabilityForm: FC<AvailabilityFormProps> = ({
+  jobCategories,
   formData,
   onFormDataUpdate,
 }) => {
   // Hooks
-  const { colors } = useTheme();
-  const [showDropDown, setShowDropDown] = useState(false);
+  const theme = useTheme();
 
-  // Api calls
-  const { data: categories } = useGetJobCategoriesQuery('');
-
-  // Date picker states
-  const [range, setRange] = useState({
-    startDate: new Date(formData.startDate ?? new Date()),
-    endDate: new Date(formData.endDate ?? new Date()),
+  // State
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(formData.startDate),
+    endDate: new Date(formData.endDate),
   });
 
-  const [open, setOpen] = useState(false);
+  const [jobCategoryDropdownVisible, setJobCategoryDropdownVisible] =
+    useState(false);
 
-  // Methods
-  const onDismiss = useCallback(() => {
-    setOpen(false);
-  }, [setOpen]);
+  const [rangeText, setRangeText] = useState(formData.range);
 
+  // Callbacks
   const handleInputChange = useCallback(
     (
       key: keyof AvailabilityFormData,
       value: AvailabilityFormData[typeof key],
-      isDigitOnly = false,
     ) => {
-      if (typeof value === 'string' && isDigitOnly) {
+      if (typeof value === 'string' && key === 'zipCode') {
         value = value.replace(/[^0-9]/g, '');
       }
 
@@ -96,113 +99,84 @@ const AvailabilityForm: FC<AvailabilityFormProps> = ({
     [formData, onFormDataUpdate],
   );
 
-  // On confirm of the date picker
-  const onDatePickerConfirm = useCallback(
-    ({ startDate, endDate }) => {
-      setOpen(false);
-      setRange({ startDate, endDate });
+  const handleDateRangeUpdate = React.useCallback(
+    (startDate: Date, endDate: Date) => {
+      setDateRange({ startDate, endDate });
 
-      handleInputChange('startDate', startDate.toISOString());
-      handleInputChange('endDate', endDate.toISOString());
+      onFormDataUpdate({
+        ...formData,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      });
     },
-    [handleInputChange, setOpen, setRange],
+    [formData, onFormDataUpdate, setDateRange],
   );
 
-  const dropdownChange = (value: number) => {
-    const category = categories?.find((c) => c.id === value);
-    handleInputChange('categoryId', value);
-    handleInputChange('category', category?.category);
-  };
-
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <View style={styles.verticalCenterContainer}>
-        <View style={styles.horizontalContainer}>
-          <View>
-            <Text>{i18n.t('profile.date.dateRange')}</Text>
-            <Text>
-              {`${new Date(formData.startDate).toLocaleDateString(
-                'en-US',
-              )} - ${new Date(formData.endDate).toLocaleDateString('en-US')}`}
-            </Text>
-          </View>
-          <Button
-            onPress={() => setOpen(true)}
-            uppercase={false}
-            mode='outlined'
-          >
-            {i18n.t('profile.date.pickRange')}
-          </Button>
-          <DatePickerModal
-            locale='en'
-            mode='range'
-            visible={open}
-            onDismiss={onDismiss}
-            startDate={range.startDate}
-            endDate={range.endDate}
-            onConfirm={onDatePickerConfirm}
-          />
-        </View>
-        <View>
-          {categories && (
-            <DropDown
-              label={'Category'}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
-              value={formData.categoryId}
-              setValue={(value) => {
-                dropdownChange(value);
-              }}
-              list={categories?.map((category) => ({
-                label: category.category,
-                value: category.id,
-              }))}
-            />
-          )}
-        </View>
+    <View style={styles.container}>
+      <DropDown
+        label={'Category'}
+        visible={jobCategoryDropdownVisible}
+        showDropDown={() => setJobCategoryDropdownVisible(true)}
+        onDismiss={() => setJobCategoryDropdownVisible(false)}
+        value={formData.jobCategoryId}
+        setValue={(value) => handleInputChange('jobCategoryId', value)}
+        list={jobCategories.map((category) => ({
+          label: category.category,
+          value: category.id,
+        }))}
+      />
+
+      <DateRangePicker
+        startDate={dateRange.startDate}
+        endDate={dateRange.endDate}
+        onDateRangeUpdate={handleDateRangeUpdate}
+      />
+
+      <TextInput
+        label={i18n.t('profile.address.firstLine')}
+        value={formData.addressFirstLine}
+        onChangeText={(value) => handleInputChange('addressFirstLine', value)}
+      />
+
+      <View style={styles.cityContainer}>
         <TextInput
-          label={i18n.t('profile.address.firstLine')}
-          value={formData.firstLine || ''}
-          style={styles.textInput}
-          onChangeText={(value) => handleInputChange('firstLine', value)}
+          label={i18n.t('profile.address.zipCode')}
+          value={formData.zipCode}
+          style={styles.cityItem}
+          onChangeText={(value) => handleInputChange('zipCode', value)}
+          keyboardType={'numeric'}
         />
-        <View style={styles.horizontalContainer}>
-          <TextInput
-            label={i18n.t('profile.address.zipCode')}
-            value={formData.zipCode || ''}
-            style={styles.smallInput}
-            onChangeText={(value) => handleInputChange('zipCode', value, true)}
-          />
-          <TextInput
-            label={i18n.t('profile.address.city')}
-            value={formData.city || ''}
-            style={styles.smallInput}
-            onChangeText={(value) => handleInputChange('city', value)}
-          />
-        </View>
-        <View style={styles.horizontalContainer}>
-          <Text variant='headlineSmall'>
-            {i18n.t('profile.availabilities.radiusRange', {
-              range: formData.range[0],
-            })}
-          </Text>
-        </View>
-        <Slider
-          min={1}
-          max={200}
-          values={formData.range}
-          onChange={(value: number[]) => {
-            handleInputChange('range', value);
-          }}
-          markerColor={colors.inversePrimary}
-          showLabel={false}
+
+        <TextInput
+          label={i18n.t('profile.address.city')}
+          value={formData.city}
+          style={styles.cityItem}
+          onChangeText={(value) => handleInputChange('city', value)}
         />
       </View>
-    </ScrollView>
+
+      <View>
+        <Text variant='headlineSmall'>
+          {i18n.t('profile.availabilities.radiusRange', {
+            range: rangeText,
+          })}
+        </Text>
+
+        <Slider
+          minimumValue={1}
+          maximumValue={200}
+          step={1}
+          minimumTrackTintColor={theme.colors.primary}
+          value={formData.range}
+          onValueChange={setRangeText}
+          onSlidingComplete={(value) => {
+            handleInputChange('range', value);
+            setRangeText(value);
+          }}
+        />
+      </View>
+    </View>
   );
 };
 

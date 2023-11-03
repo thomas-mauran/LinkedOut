@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
-  const appBarButtonPress = useCallback(() => {
+  const handleAppBarButtonPress = useCallback(() => {
     navigation.navigate('MiscAppBar');
   }, [navigation]);
 
-  const tabBarButtonPress = useCallback(() => {
+  const handleTabBarButtonPress = useCallback(() => {
     navigation.navigate('MiscTabBar');
   }, [navigation]);
 
@@ -77,10 +77,10 @@ const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
 
       <Divider style={styles.divider} />
       <Text variant='headlineMedium'>Navigation</Text>
-      <Button mode='contained-tonal' onPress={appBarButtonPress}>
+      <Button mode='contained-tonal' onPress={handleAppBarButtonPress}>
         RNPaper AppBar
       </Button>
-      <Button mode='contained-tonal' onPress={tabBarButtonPress}>
+      <Button mode='contained-tonal' onPress={handleTabBarButtonPress}>
         TabView & PagerView
       </Button>
     </ScrollView>

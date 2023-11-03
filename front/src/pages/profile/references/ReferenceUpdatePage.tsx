@@ -1,65 +1,73 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import ReferenceForm, {
   ReferenceFormData,
 } from '@/components/references/ReferenceForm';
 import { Reference } from '@/models/types';
-import { usePatchReferenceMutation } from '@/store/slice/api';
+import {
+  useGetReferenceQuery,
+  usePatchReferenceMutation,
+} from '@/store/slice/api';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the ReferenceUpdatePage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
-    gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
-  },
-  verticalCenterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
 
+/**
+ * The props for the ReferenceUpdatePage component.
+ */
 type ReferenceUpdatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'ReferenceUpdate'
 >;
 
+/**
+ * The parameters for the ReferenceUpdatePage route.
+ */
+export type ReferenceUpdatePageParams = {
+  /**
+   * The ID of the reference to update.
+   */
+  id: number;
+};
+
+/**
+ * Displays the page for updating a reference.
+ * @constructor
+ */
 const ReferenceUpdatePage = ({
   route,
   navigation,
 }: ReferenceUpdatePageProps) => {
-  // Api calls
+  // Route params
+  const { id: referenceId } = route.params;
+
+  // API calls
+  const { data: reference } = useGetReferenceQuery(referenceId);
   const [patchReference] = usePatchReferenceMutation();
 
-  // Constants
-  const { id, firstName, lastName, address, email, phone, company } =
-    route.params as Reference;
+  // State
+  const [formData, setFormData] = useState<ReferenceFormData | undefined>();
 
-  // Form State
-  const [formData, setFormData] = useState<ReferenceFormData>({
-    firstName: firstName ?? '',
-    lastName: lastName ?? '',
-    firstLine: address?.firstLine ?? '',
-    zipCode: address?.zipCode ?? '',
-    city: address?.city ?? '',
-    email: email ?? '',
-    phone: phone ?? '',
-    companyName: company?.name ?? '',
-  });
-
-  // Methods
-  const checkPressed = useCallback(() => {
+  // Callbacks
+  // FIXME
+  const handleConfirmPress = useCallback(() => {
     const updatedReference: Partial<Reference> = {
-      id,
+      id: referenceId,
       company: {
         name: formData.companyName,
       },
@@ -79,27 +87,47 @@ const ReferenceUpdatePage = ({
       .then(() => {
         navigation.goBack();
       });
-  }, [formData, id, patchReference, navigation]);
+  }, [formData, referenceId, patchReference, navigation]);
 
-  // To set the action buttons in the appbar for saving the changes
+  // Set the header button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
+          <Appbar.Action icon='check' onPress={handleConfirmPress} />
         </>
       ),
     });
-  }, [checkPressed, navigation, formData]);
+  }, [handleConfirmPress, navigation, formData]);
+
+  // Set the form data when the reference has been fetched
+  useEffect(() => {
+    if (reference === undefined || formData !== undefined) {
+      return;
+    }
+
+    setFormData({
+      companyName: reference.company.name,
+      firstLine: reference.address.firstLine,
+      zipCode: reference.address.zipCode,
+      city: reference.address.city,
+      email: reference.email,
+      phone: reference.phone,
+      firstName: reference.firstName,
+      lastName: reference.lastName,
+    });
+  }, [formData, reference]);
+
+  if (reference === undefined || formData === undefined) {
+    return null;
+  }
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.verticalCenterContainer}>
-        <ReferenceForm formData={formData} onFormDataUpdate={setFormData} />
-      </View>
+      <ReferenceForm formData={formData} onFormDataUpdate={setFormData} />
     </ScrollView>
   );
 };

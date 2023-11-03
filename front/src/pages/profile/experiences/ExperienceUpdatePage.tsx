@@ -1,64 +1,74 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import ExperienceForm, {
   ExperienceFormData,
 } from '@/components/experiences/ExperienceForm';
 import { Experience } from '@/models/types';
-import { usePatchExperienceMutation } from '@/store/slice/api';
+import {
+  useGetExperienceQuery,
+  usePatchExperienceMutation,
+} from '@/store/slice/api';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the ExperienceUpdatePage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
     gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
-  },
-  verticalCenterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
 
+/**
+ * The props for the ExperienceUpdatePage component.
+ */
 type ExperienceUpdatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'ExperienceUpdate'
 >;
 
+/**
+ * The parameters for the ExperienceUpdatePage route.
+ */
+export type ExperienceUpdatePageParams = {
+  /**
+   * The ID of the experience to update.
+   */
+  id: number;
+};
+
+/**
+ * Displays the page for updating an experience.
+ * @constructor
+ */
 const ExperienceUpdatePage = ({
   route,
   navigation,
 }: ExperienceUpdatePageProps) => {
-  // Api calls
+  // Route params
+  const { id: experienceId } = route.params;
+
+  // API calls
+  const { data: experience } = useGetExperienceQuery(experienceId);
   const [patchExperience] = usePatchExperienceMutation();
 
-  // Constants
-  const { id, company, job, address, startDate, endDate } =
-    route.params as Experience;
+  // State
+  const [formData, setFormData] = useState<ExperienceFormData | undefined>();
 
-  // Form State
-  const [formData, setFormData] = useState<ExperienceFormData>({
-    jobTitle: job?.title,
-    firstLine: address?.firstLine,
-    zipCode: address?.zipCode,
-    city: address?.city,
-    companyName: company?.name,
-    startDate,
-    endDate,
-  });
-
-  // Methods
-  const checkPressed = useCallback(() => {
+  // Callbacks
+  // FIXME
+  const handleConfirmPress = useCallback(() => {
     const updatedExperience: Experience = {
-      id,
+      id: experienceId,
       company: {
         name: formData.companyName,
       },
@@ -79,27 +89,46 @@ const ExperienceUpdatePage = ({
       .then(() => {
         navigation.goBack();
       });
-  }, [formData, id, patchExperience, navigation]);
+  }, [experienceId, formData, patchExperience, navigation]);
 
-  // To set the action buttons in the appbar for saving the changes
+  // Set the header button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
+          <Appbar.Action icon='check' onPress={handleConfirmPress} />
         </>
       ),
     });
-  }, [checkPressed, navigation, formData]);
+  }, [handleConfirmPress, navigation, formData]);
+
+  // Set the form data when the experience has been fetched
+  useEffect(() => {
+    if (experience === undefined || formData !== undefined) {
+      return;
+    }
+
+    setFormData({
+      jobTitle: experience.job.title,
+      startDate: experience.startDate,
+      endDate: experience.endDate,
+      companyName: experience.company.name,
+      firstLine: experience.address.firstLine,
+      zipCode: experience.address.zipCode,
+      city: experience.address.city,
+    });
+  }, [experience, formData]);
+
+  if (experience === undefined || formData === undefined) {
+    return null;
+  }
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.verticalCenterContainer}>
-        <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
-      </View>
+      <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
     </ScrollView>
   );
 };

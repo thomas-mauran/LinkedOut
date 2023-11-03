@@ -1,79 +1,130 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-import ExperiencesList from '@/components/experiences/ExperiencesList';
-import { useGetExperiencesQuery } from '@/store/slice/api';
+import ExperienceList from '@/components/experiences/ExperienceList';
+import { Experience } from '@/models/types';
+import {
+  useDeleteExperienceMutation,
+  useGetExperiencesQuery,
+} from '@/store/slice/api';
+import i18n from '@/utils/i18n';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the ExperiencesPage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
-    gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
+
+/**
+ * The props for the ExperiencesPage component.
+ */
 type ExperiencesAppPageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'Experiences'
 >;
+
 /**
- * The internal page for testing various stuff about React Native and the installed libraries.
+ * Displays the experiences page for the current user.
  * @constructor
  */
 const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
-  // Hooks
-  const { refetch } = useGetExperiencesQuery('');
+  // API calls
+  const { data: experiences, refetch } = useGetExperiencesQuery();
+  const [deleteExperience] = useDeleteExperienceMutation();
 
+  // State
   const [isEditing, setIsEditing] = useState(false);
 
-  // Methods
-  const editButtonPressed = useCallback(() => {
+  // Callbacks
+  const handleEditPress = useCallback(() => {
     setIsEditing((prev) => !prev);
   }, []);
 
-  const createButtonPressed = useCallback(() => {
+  const handleCreatePress = useCallback(() => {
     navigation.navigate('ExperienceCreate');
   }, [navigation]);
 
+  const handleEditExperiencePress = useCallback(
+    (experience: Partial<Experience>) => {
+      navigation.navigate('ExperienceUpdate', {
+        id: experience.id,
+      });
+    },
+    [navigation],
+  );
+
+  const handleDeleteExperiencePress = useCallback(
+    (experience: Partial<Experience>) => {
+      Alert.alert(
+        i18n.t('profile.experiences.delete'),
+        i18n.t('profile.experiences.deleteConfirm'),
+        [
+          {
+            text: i18n.t('common.cancel'),
+            style: 'cancel',
+          },
+          {
+            text: i18n.t('common.delete'),
+            onPress: () => deleteExperience(experience.id),
+            style: 'destructive',
+          },
+        ],
+      );
+    },
+    [deleteExperience],
+  );
+
+  // Set the header button
   useEffect(() => {
-    // Set the action buttons in the appbar for rotating the picture
     navigation.setOptions({
       headerRight: () => (
         <>
           {isEditing && (
-            <Appbar.Action icon={'plus'} onPress={createButtonPressed} />
+            <Appbar.Action icon={'plus'} onPress={handleCreatePress} />
           )}
           <Appbar.Action
             icon={isEditing === true ? 'check' : 'pencil'}
-            onPress={editButtonPressed}
+            onPress={handleEditPress}
           />
         </>
       ),
     });
-  }, [createButtonPressed, editButtonPressed, navigation, isEditing]);
+  }, [handleCreatePress, handleEditPress, navigation, isEditing]);
 
-  // Fetch data from the API
+  // Fetch data from the API when the page is focused
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       refetch();
     }, [refetch]),
   );
+
+  if (experiences === undefined) {
+    return null;
+  }
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ExperiencesList isEditing={isEditing} navigation={navigation} />
+      <ExperienceList
+        experiences={experiences}
+        isEditing={isEditing}
+        onItemEditPress={handleEditExperiencePress}
+        onItemDeletePress={handleDeleteExperiencePress}
+      />
     </ScrollView>
   );
 };

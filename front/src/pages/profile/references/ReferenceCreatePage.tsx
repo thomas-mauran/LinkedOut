@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import ReferenceForm, {
@@ -11,55 +11,50 @@ import { usePostReferenceMutation } from '@/store/slice/api';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the ReferenceCreatePage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
-    gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
-  },
-  verticalCenterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
 
+/**
+ * The props for the ReferenceCreatePage component.
+ */
 type ReferenceCreatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'ReferenceCreate'
 >;
 
-const ReferenceCreatePage = ({
-  route,
-  navigation,
-}: ReferenceCreatePageProps) => {
-  // Api calls
+/**
+ * Displays the page for creating a reference.
+ * @constructor
+ */
+const ReferenceCreatePage = ({ navigation }: ReferenceCreatePageProps) => {
+  // API calls
   const [postReference] = usePostReferenceMutation();
 
-  // Constants
-  const { id, firstName, lastName, address, email, phone, company } =
-    route.params as Reference;
-
-  // Form State
+  // State
   const [formData, setFormData] = useState<ReferenceFormData>({
-    firstName: firstName ?? '',
-    lastName: lastName ?? '',
-    firstLine: address?.firstLine ?? '',
-    zipCode: address?.zipCode ?? '',
-    city: address?.city ?? '',
-    email: email ?? '',
-    phone: phone ?? '',
-    companyName: company?.name ?? '',
+    companyName: '',
+    firstLine: '',
+    zipCode: '',
+    city: '',
+    email: '',
+    phone: '',
+    firstName: '',
+    lastName: '',
   });
 
-  // Methods
-  const checkPressed = useCallback(() => {
+  // Callbacks
+  const handleConfirmPress = useCallback(() => {
     const updatedReference: Partial<Reference> = {
-      id,
       company: {
         name: formData.companyName,
       },
@@ -79,27 +74,25 @@ const ReferenceCreatePage = ({
       .then(() => {
         navigation.goBack();
       });
-  }, [formData, id, postReference, navigation]);
+  }, [formData, postReference, navigation]);
 
-  // To set the action buttons in the appbar for saving the changes
+  // Set the header button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
+          <Appbar.Action icon='check' onPress={handleConfirmPress} />
         </>
       ),
     });
-  }, [checkPressed, navigation, formData]);
+  }, [handleConfirmPress, navigation, formData]);
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.verticalCenterContainer}>
-        <ReferenceForm formData={formData} onFormDataUpdate={setFormData} />
-      </View>
+      <ReferenceForm formData={formData} onFormDataUpdate={setFormData} />
     </ScrollView>
   );
 };

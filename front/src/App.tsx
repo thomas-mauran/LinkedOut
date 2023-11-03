@@ -46,7 +46,7 @@ const App = () => {
   // Hide the splash screen when everything is initialized
   const shouldHideSplashScreen = fontsLoaded || !!fontError;
 
-  const onNavigationContainerReady = useCallback(async () => {
+  const handleNavigationContainerReady = useCallback(async () => {
     if (shouldHideSplashScreen) {
       await SplashScreen.hideAsync();
     }
@@ -62,7 +62,7 @@ const App = () => {
         <ApiProvider api={api}>
           <NavigationContainer
             theme={theme}
-            onReady={onNavigationContainerReady}
+            onReady={handleNavigationContainerReady}
           >
             <StatusBar style='auto' />
             <RootStack.Navigator

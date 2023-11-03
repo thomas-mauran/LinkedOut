@@ -1,71 +1,142 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import { Alert, ScrollView, StyleSheet } from 'react-native';
+import { Appbar, Text } from 'react-native-paper';
 
-import EvaluationsList from '@/components/evaluations/EvaluationsList';
-import ReferencesList from '@/components/references/ReferencesList';
+import EvaluationList from '@/components/evaluations/EvaluationList';
+import ReferenceList from '@/components/references/ReferenceList';
+import { Reference } from '@/models/types';
+import {
+  useDeleteReferenceMutation,
+  useGetEvaluationsQuery,
+  useGetReferencesQuery,
+} from '@/store/slice/api';
+import i18n from '@/utils/i18n';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the ReferencesPage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
     gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
 
+/**
+ * The props for the ReferencesPage component.
+ */
 type ReferencesAppPageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'References'
 >;
 
 /**
- * The internal page for testing various stuff about React Native and the installed libraries.
+ * Displays the page for the references and reviews.
  * @constructor
  */
 const ReferencesPage = ({ navigation }: ReferencesAppPageProps) => {
+  // API calls
+  const { data: evaluations, refetch: refetchEvaluations } =
+    useGetEvaluationsQuery();
+
+  const { data: references, refetch: refetchReferences } =
+    useGetReferencesQuery();
+  const [deleteReference] = useDeleteReferenceMutation();
+
   // Hooks
   const [isEditing, setIsEditing] = useState(false);
 
-  // Methods
-  const editButtonPressed = useCallback(() => {
+  // Callbacks
+  const handleEditPress = useCallback(() => {
     setIsEditing((prev) => !prev);
   }, []);
 
-  const createButtonPressed = useCallback(() => {
-    navigation.navigate('ReferenceUpdate', {});
+  const handleCreatePress = useCallback(() => {
+    navigation.navigate('ReferenceCreate');
   }, [navigation]);
 
+  const handleEditReferencePress = useCallback(
+    (availability: Partial<Reference>) => {
+      navigation.navigate('ReferenceUpdate', {
+        id: availability.id,
+      });
+    },
+    [navigation],
+  );
+
+  const handleDeleteReferencePress = useCallback(
+    (reference: Partial<Reference>) => {
+      Alert.alert(
+        i18n.t('profile.references.delete'),
+        i18n.t('profile.references.deleteConfirm'),
+        [
+          {
+            text: i18n.t('common.cancel'),
+            style: 'cancel',
+          },
+          {
+            text: i18n.t('common.delete'),
+            onPress: () => deleteReference(reference.id),
+            style: 'destructive',
+          },
+        ],
+      );
+    },
+    [deleteReference],
+  );
+
+  // Set the header button
   useEffect(() => {
-    // Set the action buttons in the appbar for rotating the picture
     navigation.setOptions({
       headerRight: () => (
         <>
           {isEditing && (
-            <Appbar.Action icon={'plus'} onPress={createButtonPressed} />
+            <Appbar.Action icon={'plus'} onPress={handleCreatePress} />
           )}
           <Appbar.Action
             icon={isEditing === true ? 'check' : 'pencil'}
-            onPress={editButtonPressed}
+            onPress={handleEditPress}
           />
         </>
       ),
     });
-  }, [createButtonPressed, editButtonPressed, navigation, isEditing]);
+  }, [handleCreatePress, handleEditPress, navigation, isEditing]);
+
+  // Fetch data from the API when the page is focused
+  useFocusEffect(
+    useCallback(() => {
+      refetchEvaluations();
+      refetchReferences();
+    }, [refetchEvaluations, refetchReferences]),
+  );
+
+  if (evaluations === undefined || references === undefined) {
+    return null;
+  }
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ReferencesList isEditing={isEditing} navigation={navigation} />
-      <EvaluationsList />
+      <Text variant='headlineMedium'>{i18n.t('profile.info.references')}</Text>
+      <ReferenceList
+        references={references}
+        isEditing={isEditing}
+        onItemEditPress={handleEditReferencePress}
+        onItemDeletePress={handleDeleteReferencePress}
+      />
+
+      <Text variant='headlineMedium'>{i18n.t('profile.info.reviews')}</Text>
+      <EvaluationList evaluations={evaluations} />
     </ScrollView>
   );
 };

@@ -1,42 +1,47 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-import ExperienceForm from '@/components/experiences/ExperienceForm';
+import ExperienceForm, {
+  ExperienceFormData,
+} from '@/components/experiences/ExperienceForm';
 import { Experience } from '@/models/types';
 import { usePostExperienceMutation } from '@/store/slice/api';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the ExperienceCreatePage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
-    gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
-  },
-  verticalCenterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
 
+/**
+ * The props for the ExperienceCreatePage component.
+ */
 type ExperienceCreatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'ExperienceCreate'
 >;
 
+/**
+ * Displays the page for creating an experience.
+ * @constructor
+ */
 const ExperienceCreatePage = ({ navigation }: ExperienceCreatePageProps) => {
-  // Api calls
+  // API calls
   const [postExperience] = usePostExperienceMutation();
 
-  // Form State
-  const [formData, setFormData] = useState({
+  // State
+  const [formData, setFormData] = useState<ExperienceFormData>({
     jobTitle: '',
     firstLine: '',
     zipCode: '',
@@ -46,8 +51,9 @@ const ExperienceCreatePage = ({ navigation }: ExperienceCreatePageProps) => {
     endDate: null,
   });
 
-  // Methods
-  const checkPressed = useCallback(() => {
+  // Callbacks
+  // FIXME
+  const handleConfirmPress = useCallback(() => {
     const updatedExperience: Partial<Experience> = {
       company: {
         name: formData.companyName,
@@ -71,25 +77,23 @@ const ExperienceCreatePage = ({ navigation }: ExperienceCreatePageProps) => {
       });
   }, [formData, postExperience, navigation]);
 
-  // To set the action buttons in the appbar for saving the changes
+  // Set the header button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
+          <Appbar.Action icon='check' onPress={handleConfirmPress} />
         </>
       ),
     });
-  }, [checkPressed, navigation, formData]);
+  }, [handleConfirmPress, navigation, formData]);
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.verticalCenterContainer}>
-        <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
-      </View>
+      <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
     </ScrollView>
   );
 };

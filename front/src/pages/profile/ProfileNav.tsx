@@ -1,105 +1,111 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
-import { Availability, Experience, Profile, Reference } from '@/models/types';
-import InternalProfilePage from '@/pages/profile/ProfilePage';
+import ProfilePage from '@/pages/profile/ProfilePage';
 import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 import AvailabilityCreatePage from '@/pages/profile/availabilities/AvailabilityCreatePage';
-import AvailabilityUpdatePage from '@/pages/profile/availabilities/AvailabilityUpdatePage';
+import AvailabilityUpdatePage, {
+  AvailabilityUpdatePageParams,
+} from '@/pages/profile/availabilities/AvailabilityUpdatePage';
 import ExperienceCreatePage from '@/pages/profile/experiences/ExperienceCreatePage';
-import ExperienceUpdatePage from '@/pages/profile/experiences/ExperienceUpdatePage';
+import ExperienceUpdatePage, {
+  ExperienceUpdatePageParams,
+} from '@/pages/profile/experiences/ExperienceUpdatePage';
 import ExperiencesPage from '@/pages/profile/experiences/ExperiencesPage';
 import ReferenceCreatePage from '@/pages/profile/references/ReferenceCreatePage';
-import ReferenceUpdatePage from '@/pages/profile/references/ReferenceUpdatePage';
+import ReferenceUpdatePage, {
+  ReferenceUpdatePageParams,
+} from '@/pages/profile/references/ReferenceUpdatePage';
 import ReferencesPage from '@/pages/profile/references/ReferencesPage';
 import i18n from '@/utils/i18n';
 
 /**
- * The parameter list for the InternalProfileStack navigator.
+ * The parameter list for the ProfileNav navigator.
  */
-
 export type ProfileStackParamList = {
   Profile: undefined;
-  ProfileUpdate: Partial<Profile>;
-  AvailabilityUpdate: Partial<Availability>;
+  ProfileUpdate: undefined;
   AvailabilityCreate: undefined;
+  AvailabilityUpdate: AvailabilityUpdatePageParams;
   Experiences: undefined;
   ExperienceCreate: undefined;
-  ExperienceUpdate: Partial<Experience>;
+  ExperienceUpdate: ExperienceUpdatePageParams;
   References: undefined;
   ReferenceCreate: undefined;
-  ReferenceUpdate: Partial<Reference>;
+  ReferenceUpdate: ReferenceUpdatePageParams;
 };
 
-const InternalProfileStack =
-  createNativeStackNavigator<ProfileStackParamList>();
+const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 
 /**
- * The stack navigator for the internal Profileellaneous pages.
+ * The stack navigator for the profile pages.
  * @constructor
  */
-const InternalProfileNav = () => {
+const ProfileNav = () => {
   return (
-    <InternalProfileStack.Navigator
+    <ProfileStack.Navigator
       initialRouteName='Profile'
       screenOptions={{ header: (props) => <PaperNavigationBar {...props} /> }}
     >
-      <InternalProfileStack.Screen
+      <ProfileStack.Screen
         name='Profile'
-        component={InternalProfilePage}
+        component={ProfilePage}
         options={{ headerTitle: `${i18n.t('profile.info.profile')}` }}
       />
-      <InternalProfileStack.Screen
+      <ProfileStack.Screen
         name='ProfileUpdate'
         component={ProfileUpdatePage}
         options={{ headerTitle: `${i18n.t('profile.info.profile')}` }}
       />
-      <InternalProfileStack.Screen
-        name='AvailabilityUpdate'
-        component={AvailabilityUpdatePage}
-        options={{
-          headerTitle: `${i18n.t('profile.availabilities.edit')}`,
-        }}
-      />
-      <InternalProfileStack.Screen
+
+      <ProfileStack.Screen
         name='AvailabilityCreate'
         component={AvailabilityCreatePage}
         options={{
           headerTitle: `${i18n.t('profile.availabilities.create')}`,
         }}
       />
-      <InternalProfileStack.Screen
+      <ProfileStack.Screen
+        name='AvailabilityUpdate'
+        component={AvailabilityUpdatePage}
+        options={{
+          headerTitle: `${i18n.t('profile.availabilities.edit')}`,
+        }}
+      />
+
+      <ProfileStack.Screen
         name='Experiences'
         component={ExperiencesPage}
         options={{ headerTitle: `${i18n.t('profile.info.experiences')}` }}
       />
-      <InternalProfileStack.Screen
+      <ProfileStack.Screen
         name='ExperienceCreate'
         component={ExperienceCreatePage}
         options={{ headerTitle: `${i18n.t('profile.experiences.create')}` }}
       />
-      <InternalProfileStack.Screen
+      <ProfileStack.Screen
         name='ExperienceUpdate'
         component={ExperienceUpdatePage}
         options={{ headerTitle: `${i18n.t('profile.experiences.edit')}` }}
       />
-      <InternalProfileStack.Screen
+
+      <ProfileStack.Screen
         name='References'
         component={ReferencesPage}
         options={{ headerTitle: `${i18n.t('profile.info.references')}` }}
       />
-      <InternalProfileStack.Screen
+      <ProfileStack.Screen
+        name='ReferenceCreate'
+        component={ReferenceCreatePage}
+        options={{ headerTitle: `${i18n.t('profile.references.create')}` }}
+      />
+      <ProfileStack.Screen
         name='ReferenceUpdate'
         component={ReferenceUpdatePage}
         options={{ headerTitle: `${i18n.t('profile.references.edit')}` }}
       />
-      <InternalProfileStack.Screen
-        name='ReferenceCreate'
-        component={ReferenceCreatePage}
-        options={{ headerTitle: `${i18n.t('profile.references.edit')}` }}
-      />
-    </InternalProfileStack.Navigator>
+    </ProfileStack.Navigator>
   );
 };
 
-export default InternalProfileNav;
+export default ProfileNav;

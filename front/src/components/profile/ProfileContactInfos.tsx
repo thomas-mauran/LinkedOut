@@ -4,36 +4,56 @@ import { Text } from 'react-native-paper';
 
 import i18n from '@/utils/i18n';
 
-interface ProfileContactInfosProps {
-  phone: string;
-  email: string;
-}
-
+/**
+ * The styles for the ProfileContactInfos component.
+ */
 const styles = StyleSheet.create({
-  textFieldElement: {
-    marginBottom: 2,
-    marginTop: 2,
+  itemTitle: {
+    marginTop: 8,
   },
-  textFieldTitle: {
-    marginTop: 5,
+  title: {
+    marginBottom: 2,
   },
 });
 
+/**
+ * The props for the ProfileContactInfos component.
+ */
+type ProfileContactInfosProps = {
+  /**
+   * The phone number of the user.
+   */
+  phone: string;
+
+  /**
+   * The email of the user.
+   */
+  email: string;
+};
+
+/**
+ * Displays the contact information of a user.
+ * @constructor
+ */
 const ProfileContactInfos: FC<ProfileContactInfosProps> = ({
   phone,
   email,
 }) => {
   return (
     <View>
-      <Text variant='titleLarge'>{i18n.t('profile.info.contact')}</Text>
-      <Text variant='labelLarge' style={styles.textFieldTitle}>
+      <Text variant='headlineMedium' style={styles.title}>
+        {i18n.t('profile.info.contact')}
+      </Text>
+
+      <Text variant='labelLarge' style={styles.itemTitle}>
         {i18n.t('profile.info.phoneNumber')}
       </Text>
-      <Text style={styles.textFieldElement}>{phone}</Text>
-      <Text variant='labelLarge' style={styles.textFieldTitle}>
+      <Text>{phone}</Text>
+
+      <Text variant='labelLarge' style={styles.itemTitle}>
         {i18n.t('profile.info.email')}
       </Text>
-      <Text style={styles.textFieldElement}>{email}</Text>
+      <Text>{email}</Text>
     </View>
   );
 };

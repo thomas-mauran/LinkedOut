@@ -11,7 +11,17 @@
       "contact": "Contact",
       "availabilities": "Disponibilités",
       "experiences": "Expériences",
+      "experiencesCount": {
+        "zero": "Aucune expérience",
+        "one": "%{count} expérience",
+        "other": "%{count} expériences"
+      },
       "reviews": "Avis",
+      "reviewsCount": {
+        "zero": "Aucun avis",
+        "one": "%{count} avis",
+        "other": "%{count} avis"
+      },
       "phoneNumber": "Numéro de téléphone",
       "email": "Email",
       "references": "Références",
@@ -37,10 +47,10 @@
     },
     "company": {
       "company": "Entreprise",
-      "companyName": "Nom de l'entreprise"
+      "companyName": "Entreprise"
     },
     "address": {
-      "firstLine": "Rue",
+      "firstLine": "N° et libellé de la voie",
       "city": "Ville",
       "zipCode": "Code postal"
     },
@@ -55,7 +65,7 @@
     "availabilities": {
       "edit": "Mettre à jour une disponibilité",
       "create": "Créer une disponibilité",
-      "radiusRange": "Rayon de recherche (en Km): %{range}",
+      "radiusRange": "Rayon de recherche : %{range} km",
       "delete": "Supprimer la disponibilité",
       "deleteConfirm": "Voulez-vous vraiment supprimer cette disponibilité?"
     }

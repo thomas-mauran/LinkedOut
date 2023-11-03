@@ -1,77 +1,87 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import AvailabilityForm, {
   AvailabilityFormData,
 } from '@/components/availabilities/AvailabilityForm';
 import { Availability } from '@/models/types';
-import { usePatchAvailabilitiesMutation } from '@/store/slice/api';
+import {
+  useGetAvailabilityQuery,
+  useGetJobCategoriesQuery,
+  usePatchAvailabilitiesMutation,
+} from '@/store/slice/api';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the AvailabilityUpdatePage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
-    gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
-  },
-  verticalCenterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
 
+/**
+ * The props for the AvailabilityUpdatePage component.
+ */
 type AvailabilityUpdatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'AvailabilityUpdate'
 >;
 
+/**
+ * The parameters for the AvailabilityUpdatePage route.
+ */
+export type AvailabilityUpdatePageParams = {
+  /**
+   * The ID of the availability to update.
+   */
+  id: number;
+};
+
+/**
+ * Displays the page for updating an availability.
+ * @constructor
+ */
 const AvailabilityUpdatePage = ({
   route,
   navigation,
 }: AvailabilityUpdatePageProps) => {
-  // Api calls
+  // Route params
+  const { id: availabilityId } = route.params;
+
+  // API calls
+  const { data: availability } = useGetAvailabilityQuery(availabilityId);
+  const { data: jobCategories } = useGetJobCategoriesQuery();
   const [patchAvailability] = usePatchAvailabilitiesMutation();
 
-  // Constants
-  const { id, address, startDate, endDate, range, jobCategory } =
-    route.params as Availability;
+  // State
+  const [formData, setFormData] = useState<AvailabilityFormData | undefined>();
 
-  // Form State
-  const [formData, setFormData] = useState<AvailabilityFormData>({
-    firstLine: address?.firstLine,
-    zipCode: address?.zipCode,
-    city: address?.city,
-    startDate,
-    endDate,
-    range: [range ?? 0],
-    categoryId: jobCategory?.id,
-    category: jobCategory?.category,
-  });
-
-  // Methods
-  const checkPressed = useCallback(() => {
+  // Callbacks
+  // FIXME
+  const handleConfirmPress = useCallback(() => {
     const updatedAvailability: Availability = {
-      id,
+      id: availabilityId,
       address: {
-        firstLine: formData.firstLine,
+        firstLine: formData.addressFirstLine,
         zipCode: formData.zipCode,
         city: formData.city,
       },
       jobCategory: {
-        category: formData.category,
-        id: formData.categoryId,
+        id: formData.jobCategoryId,
+        category: '',
       },
       startDate: formData.startDate,
       endDate: formData.endDate,
-      range: formData.range[0],
+      range: formData.range,
     };
 
     patchAvailability(updatedAvailability)
@@ -79,27 +89,54 @@ const AvailabilityUpdatePage = ({
       .then(() => {
         navigation.goBack();
       });
-  }, [formData, id, patchAvailability, navigation]);
+  }, [availabilityId, formData, patchAvailability, navigation]);
 
-  // To set the action buttons in the appbar for saving the changes
+  // Set the header button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
+          <Appbar.Action icon='check' onPress={handleConfirmPress} />
         </>
       ),
     });
-  }, [checkPressed, navigation, formData]);
+  }, [handleConfirmPress, navigation, formData]);
+
+  // Set the form data when the availability has been fetched
+  useEffect(() => {
+    if (availability === undefined || formData !== undefined) {
+      return;
+    }
+
+    setFormData({
+      jobCategoryId: availability.jobCategory.id,
+      startDate: availability.startDate,
+      endDate: availability.endDate,
+      addressFirstLine: availability.address.firstLine,
+      zipCode: availability.address.zipCode,
+      city: availability.address.city,
+      range: availability.range,
+    });
+  }, [availability, formData]);
+
+  if (
+    availability === undefined ||
+    jobCategories === undefined ||
+    formData === undefined
+  ) {
+    return null;
+  }
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.verticalCenterContainer}>
-        <AvailabilityForm formData={formData} onFormDataUpdate={setFormData} />
-      </View>
+      <AvailabilityForm
+        jobCategories={jobCategories}
+        formData={formData}
+        onFormDataUpdate={setFormData}
+      />
     </ScrollView>
   );
 };

@@ -10,7 +10,7 @@ import {
   Reference,
 } from '@/models/types';
 
-const baseUrl = process.env.EXPO_PUBLIC_MOCK_API_URL;
+const baseUrl = process.env.EXPO_PUBLIC_API_URL;
 
 export const api = createApi({
   reducerPath: 'api',
@@ -19,8 +19,11 @@ export const api = createApi({
   }),
   endpoints: (builder) => ({
     // Availabilities
-    getAvailabilities: builder.query<Partial<Availability>[], string>({
+    getAvailabilities: builder.query<Availability[], void>({
       query: () => 'profile/availabilities/',
+    }),
+    getAvailability: builder.query<Availability, number>({
+      query: (id) => `profile/availabilities/${id}/`,
     }),
     deleteAvailabilities: builder.mutation<Partial<Availability>, number>({
       query: (id) => ({
@@ -50,8 +53,11 @@ export const api = createApi({
     }),
 
     // Experiences
-    getExperiences: builder.query<Partial<Experience>[], string>({
+    getExperiences: builder.query<Experience[], void>({
       query: () => 'profile/experiences/',
+    }),
+    getExperience: builder.query<Experience, number>({
+      query: (id) => `profile/experiences/${id}/`,
     }),
     postExperience: builder.mutation<Partial<Experience>, Partial<Experience>>({
       query: (body) => ({
@@ -77,8 +83,11 @@ export const api = createApi({
     }),
 
     // References
-    getReferences: builder.query<Partial<Reference>[], string>({
+    getReferences: builder.query<Reference[], void>({
       query: () => 'profile/references/',
+    }),
+    getReference: builder.query<Reference, number>({
+      query: (id) => `profile/references/${id}/`,
     }),
     postReference: builder.mutation<Partial<Reference>, Partial<Reference>>({
       query: (body) => ({
@@ -102,12 +111,12 @@ export const api = createApi({
     }),
 
     // Evaluations
-    getEvaluations: builder.query<Partial<Evaluation>[], string>({
+    getEvaluations: builder.query<Evaluation[], void>({
       query: () => 'profile/evaluations/',
     }),
 
     // Profile
-    getProfile: builder.query<Partial<Profile>, void>({
+    getProfile: builder.query<Profile, void>({
       query: () => 'profile/',
     }),
     patchProfile: builder.mutation<Partial<Profile>, Partial<Profile>>({
@@ -118,10 +127,8 @@ export const api = createApi({
       }),
     }),
 
-    // JOBS
-
-    // JobCategories
-    getJobCategories: builder.query<Partial<JobCategory>[], string>({
+    // Job categories
+    getJobCategories: builder.query<JobCategory[], void>({
       query: () => 'jobs/categories/',
     }),
   }),
@@ -130,8 +137,11 @@ export const api = createApi({
 export const {
   useGetProfileQuery,
   useGetAvailabilitiesQuery,
+  useGetAvailabilityQuery,
   useGetExperiencesQuery,
+  useGetExperienceQuery,
   useGetReferencesQuery,
+  useGetReferenceQuery,
   usePostExperienceMutation,
   usePatchExperienceMutation,
   useDeleteExperienceMutation,

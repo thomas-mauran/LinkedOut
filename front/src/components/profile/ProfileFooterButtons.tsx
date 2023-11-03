@@ -1,94 +1,74 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { FC, useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text, TouchableRipple, useTheme } from 'react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FC } from 'react';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 
-import { ProfileStackParamList } from '@/pages/profile/ProfileNav';
+import BigButton from '@/components/utils/BigButton';
 import i18n from '@/utils/i18n';
 
-interface ProfileFooterButtonsProps {
-  nbExperiences: number;
-  nbReviews: number;
-  navigation: NativeStackNavigationProp<ProfileStackParamList>;
-}
-
+/**
+ * The styles for the ProfileFooterButtons component.
+ */
 const styles = StyleSheet.create({
-  horizontalContainer: {
-    flexDirection: 'row',
-  },
-  textFieldElement: {
-    marginBottom: 2,
-    marginTop: 2,
-  },
-  textFieldTitle: {
-    marginTop: 5,
+  container: {
+    gap: 8,
   },
 });
 
+/**
+ * The props for the ProfileFooterButtons component.
+ */
+type ProfileFooterButtonsProps = {
+  /**
+   * The number of experiences the user has.
+   */
+  nbExperiences: number;
+
+  /**
+   * The number of reviews the user has.
+   */
+  nbReviews: number;
+
+  /**
+   * The function to call when the experiences button is pressed.
+   */
+  onExperiencesPress?: () => void;
+
+  /**
+   * The function to call when the references button is pressed.
+   */
+  onReferencesPress?: () => void;
+
+  /**
+   * The style of the container.
+   */
+  style?: ViewStyle;
+};
+
+/**
+ * Displays the buttons in the footer of the profile page.
+ * @constructor
+ */
 const ProfileFooterButtons: FC<ProfileFooterButtonsProps> = ({
   nbExperiences,
   nbReviews,
-  navigation, // Add the navigation prop
+  onExperiencesPress,
+  onReferencesPress,
+  style,
 }) => {
-  const theme = useTheme();
-
-  const experiencesButtonPressed = useCallback(() => {
-    navigation.navigate('Experiences');
-  }, [navigation]);
-
-  const referencesButtonPressed = useCallback(() => {
-    navigation.navigate('References');
-  }, [navigation]);
-
   return (
-    <View>
-      <TouchableRipple
-        style={styles.horizontalContainer}
-        onPress={experiencesButtonPressed}
-      >
-        <View>
-          <View>
-            <Text variant='labelLarge' style={styles.textFieldTitle}>
-              {i18n.t('profile.info.experiences')}
-            </Text>
-            <Text style={styles.textFieldElement}>
-              {nbExperiences} {i18n.t('profile.info.experiences')}
-            </Text>
-          </View>
+    <View style={[styles.container, style]}>
+      <BigButton
+        title={i18n.t('profile.info.experiences')}
+        subtitle={i18n.t('profile.info.experiencesCount', {
+          count: nbExperiences,
+        })}
+        onPress={onExperiencesPress}
+      />
 
-          <View>
-            <MaterialCommunityIcons
-              name='chevron-right'
-              size={24}
-              style={{ color: theme.colors.onSurface }}
-            />
-          </View>
-        </View>
-      </TouchableRipple>
-      <TouchableRipple
-        style={styles.horizontalContainer}
-        onPress={referencesButtonPressed}
-      >
-        <View>
-          <View>
-            <Text variant='labelLarge' style={styles.textFieldTitle}>
-              {i18n.t('profile.info.references')}
-            </Text>
-            <Text style={styles.textFieldElement}>
-              {nbReviews} {i18n.t('profile.info.reviews')}
-            </Text>
-          </View>
-
-          <View>
-            <MaterialCommunityIcons
-              name='chevron-right'
-              size={24}
-              style={{ color: theme.colors.onSurface }}
-            />
-          </View>
-        </View>
-      </TouchableRipple>
+      <BigButton
+        title={i18n.t('profile.info.references')}
+        subtitle={i18n.t('profile.info.reviewsCount', { count: nbReviews })}
+        onPress={onReferencesPress}
+      />
     </View>
   );
 };

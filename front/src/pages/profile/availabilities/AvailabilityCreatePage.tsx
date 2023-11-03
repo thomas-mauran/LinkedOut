@@ -1,71 +1,78 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import AvailabilityForm, {
   AvailabilityFormData,
 } from '@/components/availabilities/AvailabilityForm';
 import { Availability } from '@/models/types';
-import { usePostAvailabilitiesMutation } from '@/store/slice/api';
+import {
+  useGetJobCategoriesQuery,
+  usePostAvailabilitiesMutation,
+} from '@/store/slice/api';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
+/**
+ * The styles for the AvailabilityCreatePage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   contentContainer: {
-    alignItems: 'flex-start',
-    gap: 8,
-    justifyContent: 'flex-start',
-    padding: 8,
-  },
-  verticalCenterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
 
+/**
+ * The props for the AvailabilityCreatePage component.
+ */
 type AvailabilityCreatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'AvailabilityCreate'
 >;
 
+/**
+ * Displays the page for creating an availability.
+ * @constructor
+ */
 const AvailabilityCreatePage = ({
   navigation,
 }: AvailabilityCreatePageProps) => {
-  // Api calls
+  // API calls
+  const { data: jobCategories } = useGetJobCategoriesQuery();
   const [postAvailability] = usePostAvailabilitiesMutation();
 
-  // Form State
+  // State
   const [formData, setFormData] = useState<AvailabilityFormData>({
-    firstLine: '',
+    jobCategoryId: 0,
+    startDate: new Date().toISOString(),
+    endDate: new Date().toISOString(),
+    addressFirstLine: '',
     zipCode: '',
     city: '',
-    startDate: null,
-    endDate: null,
-    range: [0],
-    categoryId: 0,
-    category: '',
+    range: 1,
   });
 
-  // Methods
-  const checkPressed = useCallback(() => {
+  // Callbacks
+  // FIXME
+  const handleConfirmPress = useCallback(() => {
     const updatedAvailability: Partial<Availability> = {
       address: {
-        firstLine: formData.firstLine,
+        firstLine: formData.addressFirstLine,
         zipCode: formData.zipCode,
         city: formData.city,
       },
       jobCategory: {
-        category: formData.category,
-        id: formData.categoryId,
+        id: formData.jobCategoryId,
+        category: '',
       },
       startDate: formData.startDate,
       endDate: formData.endDate,
-      range: formData.range[0],
+      range: formData.range,
     };
 
     postAvailability(updatedAvailability)
@@ -75,25 +82,31 @@ const AvailabilityCreatePage = ({
       });
   }, [formData, postAvailability, navigation]);
 
-  // To set the action buttons in the appbar for saving the changes
+  // Set the header button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
+          <Appbar.Action icon='check' onPress={handleConfirmPress} />
         </>
       ),
     });
-  }, [checkPressed, navigation, formData]);
+  }, [handleConfirmPress, navigation, formData]);
+
+  if (jobCategories === undefined) {
+    return null;
+  }
 
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <View style={styles.verticalCenterContainer}>
-        <AvailabilityForm formData={formData} onFormDataUpdate={setFormData} />
-      </View>
+      <AvailabilityForm
+        jobCategories={jobCategories}
+        formData={formData}
+        onFormDataUpdate={setFormData}
+      />
     </ScrollView>
   );
 };

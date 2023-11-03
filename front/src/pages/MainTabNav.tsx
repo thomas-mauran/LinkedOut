@@ -1,7 +1,7 @@
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import ProfilePage from '@/pages/profile/ProfileNav';
+import ProfileNav from '@/pages/profile/ProfileNav';
 
 /**
  * The parameter list for the ProfileTab navigator.
@@ -22,7 +22,7 @@ const MainTabNav = () => {
     <ProfileTab.Navigator>
       <ProfileTab.Screen
         name='ProfilePage'
-        component={ProfilePage}
+        component={ProfileNav}
         options={{
           tabBarLabel: 'Profil',
           tabBarIcon: ({ color }) => (

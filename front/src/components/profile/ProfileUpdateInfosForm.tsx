@@ -1,14 +1,38 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { Appbar, Text, TextInput } from 'react-native-paper';
+import { FC, useCallback } from 'react';
+import { Image, StyleSheet, View, ViewStyle } from 'react-native';
+import { Text, TextInput } from 'react-native-paper';
 
-import { Profile } from '@/models/types';
-import { ProfileStackParamList } from '@/pages/profile/ProfileNav';
-import { usePatchProfileMutation } from '@/store/slice/api';
 import i18n from '@/utils/i18n';
 
-type ProfileUpdateInfosFormData = {
+/**
+ * The styles for the ProfileUpdateInfosForm component.
+ */
+const styles = StyleSheet.create({
+  headerContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 16,
+  },
+  nameContainer: {
+    flex: 1,
+  },
+  profilePicture: {
+    borderRadius: 48,
+    height: 96,
+    width: 96,
+  },
+  sectionTitle: {
+    marginTop: 8,
+  },
+  textInput: {
+    marginVertical: 8,
+  },
+});
+
+/**
+ * The data for the profile update infos form.
+ */
+export type ProfileUpdateInfosFormData = {
   id: number;
   firstName: string;
   lastName: string;
@@ -17,113 +41,78 @@ type ProfileUpdateInfosFormData = {
   shortBiography: string;
 };
 
-interface ProfileUpdateInfosFormProps {
-  initialFormData: ProfileUpdateInfosFormData;
-  navigation: NativeStackNavigationProp<ProfileStackParamList>;
-}
+/**
+ * The props for the ProfileUpdateInfosForm component.
+ */
+type ProfileUpdateInfosFormProps = {
+  /**
+   * The URL of the profile picture.
+   */
+  profilePictureUrl: string;
 
-const styles = StyleSheet.create({
-  horizontalContainer: {
-    flexDirection: 'row',
-  },
-  profilePicture: {
-    borderRadius: 50,
-    height: 100,
-    width: 100,
-  },
-  textInput: {
-    marginVertical: 8,
-    width: '100%',
-  },
-});
+  /**
+   * The data of the form.
+   */
+  data: ProfileUpdateInfosFormData;
+
+  /**
+   * The function to call when the form data changes.
+   */
+  onDataChange: (formData: ProfileUpdateInfosFormData) => void;
+
+  /**
+   * The style of the container.
+   */
+  style?: ViewStyle;
+};
 
 const ProfileUpdateInfosForm: FC<ProfileUpdateInfosFormProps> = ({
-  initialFormData,
-  navigation,
+  profilePictureUrl,
+  data,
+  onDataChange,
+  style,
 }) => {
-  const [patchProfile] = usePatchProfileMutation();
-
-  // Form State
-  const [formData, setFormData] = useState<ProfileUpdateInfosFormData>({
-    id: initialFormData.id,
-    firstName: initialFormData.firstName ?? '',
-    lastName: initialFormData.lastName ?? '',
-    email: initialFormData.email ?? '',
-    phone: initialFormData.phone ?? '',
-    shortBiography: initialFormData.shortBiography ?? '',
-  });
-
-  // To set the action buttons in the appbar for saving the changes
-  const checkPressed = useCallback(() => {
-    const updatedProfile: Partial<Profile> = {
-      id: formData.id,
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      shortBiography: formData.shortBiography,
-      email: formData.email,
-      phone: formData.phone,
-    };
-
-    patchProfile(updatedProfile)
-      .unwrap()
-      .then(() => {
-        navigation.goBack();
-      });
-  }, [formData, patchProfile, navigation]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: `${i18n.t('profile.info.updateProfile')}`, // Change this to your desired title
-      headerRight: () => (
-        <>
-          <Appbar.Action icon='check' onPress={checkPressed} />
-        </>
-      ),
-    });
-  }, [checkPressed, formData, navigation]);
-
-  // Methods
+  // Callbacks
   const handleInputChange = useCallback(
     (
       key: keyof ProfileUpdateInfosFormData,
       value: ProfileUpdateInfosFormData[typeof key],
-      isDigitOnly = false,
     ) => {
-      if (typeof value === 'string' && isDigitOnly) {
-        value = value.replace(/[^0-9]/g, '');
+      if (typeof value === 'string' && key === 'phone') {
+        value = value.replace(/^(.+)\+/g, '$1');
+        value = value.replace(/[^0-9+]/g, '');
       }
 
-      setFormData((prevData) => ({
-        ...prevData,
+      onDataChange({
+        ...data,
         [key]: value,
-      }));
+      });
     },
-    [setFormData],
+    [data, onDataChange],
   );
 
   return (
-    <View>
-      {/* TODO FETCH THE PICTURE FROM THE API */}
-      <View style={styles.horizontalContainer}>
-        <View>
-          <Image
-            style={styles.profilePicture}
-            source={{
-              uri: 'https://www.challenges.fr/assets/img/2021/10/03/cover-r4x3w1000-61597036b4bce-000-9nw9nv.jpg',
-            }}
-          />
-        </View>
-        <View>
+    <View style={style}>
+      <View style={styles.headerContainer}>
+        <Image
+          style={styles.profilePicture}
+          source={{
+            uri: profilePictureUrl,
+          }}
+        />
+
+        <View style={styles.nameContainer}>
           <TextInput
             label={i18n.t('profile.info.firstName')}
             style={styles.textInput}
-            value={formData.firstName || ''}
+            value={data.firstName}
             onChangeText={(value) => handleInputChange('firstName', value)}
           />
+
           <TextInput
             label={i18n.t('profile.info.lastName')}
             style={styles.textInput}
-            value={formData.lastName || ''}
+            value={data.lastName}
             onChangeText={(value) => handleInputChange('lastName', value)}
           />
         </View>
@@ -131,26 +120,29 @@ const ProfileUpdateInfosForm: FC<ProfileUpdateInfosFormProps> = ({
 
       <TextInput
         label={i18n.t('profile.info.shortBiography')}
-        value={formData.shortBiography || ''}
+        value={data.shortBiography}
         style={styles.textInput}
         multiline
-        numberOfLines={4}
+        numberOfLines={6}
         onChangeText={(value) => handleInputChange('shortBiography', value)}
       />
-      <View>
-        <Text variant='headlineMedium'>{i18n.t('profile.info.contact')}</Text>
-      </View>
+
+      <Text variant='headlineMedium' style={styles.sectionTitle}>
+        {i18n.t('profile.info.contact')}
+      </Text>
       <TextInput
         label={i18n.t('profile.info.phoneNumber')}
-        value={formData.phone || ''}
+        value={data.phone}
         style={styles.textInput}
-        onChangeText={(value) => handleInputChange('phone', value, true)}
+        onChangeText={(value) => handleInputChange('phone', value)}
+        keyboardType={'phone-pad'}
       />
       <TextInput
         label={i18n.t('profile.info.email')}
-        value={formData.email || ''}
+        value={data.email}
         style={styles.textInput}
         onChangeText={(value) => handleInputChange('email', value)}
+        keyboardType={'email-address'}
       />
     </View>
   );

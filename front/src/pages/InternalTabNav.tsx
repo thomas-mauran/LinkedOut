@@ -3,7 +3,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import InternalMiscNav from '@/pages/internal/InternalMiscNav';
 import InternalPagesPage from '@/pages/internal/InternalPagesPage';
-import ProfilePage from '@/pages/profile/ProfileNav';
+import ProfileNav from '@/pages/profile/ProfileNav';
+import i18n from '@/utils/i18n';
 
 /**
  * The parameter list for the InternalTab navigator.
@@ -46,9 +47,9 @@ const InternalTabNav = () => {
       />
       <InternalTab.Screen
         name='InternalProfile'
-        component={ProfilePage}
+        component={ProfileNav}
         options={{
-          tabBarLabel: 'Profil',
+          tabBarLabel: i18n.get('profile.info.profile'),
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name='account' color={color} size={24} />
           ),

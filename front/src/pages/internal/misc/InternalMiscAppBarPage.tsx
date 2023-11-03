@@ -29,11 +29,11 @@ const InternalMiscAppBarPage = ({
   // Picture rotation (in degrees)
   const [rotation, setRotation] = useState(0);
 
-  const rotateLeft = useCallback(() => {
+  const handleRotateLeftPress = useCallback(() => {
     setRotation((prev) => (prev - 45) % 360);
   }, []);
 
-  const rotateRight = useCallback(() => {
+  const handleRotateRightPress = useCallback(() => {
     setRotation((prev) => (prev + 45) % 360);
   }, []);
 
@@ -42,12 +42,12 @@ const InternalMiscAppBarPage = ({
     navigation.setOptions({
       headerRight: () => (
         <>
-          <Appbar.Action icon='rotate-left' onPress={rotateLeft} />
-          <Appbar.Action icon='rotate-right' onPress={rotateRight} />
+          <Appbar.Action icon='rotate-left' onPress={handleRotateLeftPress} />
+          <Appbar.Action icon='rotate-right' onPress={handleRotateRightPress} />
         </>
       ),
     });
-  }, [navigation, rotateLeft, rotateRight]);
+  }, [navigation, handleRotateLeftPress, handleRotateRightPress]);
 
   // Dynamic style for applying a rotation transform to the picture
   const transformStyle: StyleProp<ImageStyle> = {
