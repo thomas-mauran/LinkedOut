@@ -9,7 +9,7 @@ tags:
   - name: Availability
     description: Availability of a user
   - name: Reference
-    description: References (people who can recommand) of a user
+    description: References (people who can recommend) of a user
   - name: Experience
     description: Professional experiences of a user
   - name: Evaluation
