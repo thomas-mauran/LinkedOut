@@ -6,8 +6,8 @@ info:
 tags:
   - name: Profile
     description: Profile of a user
-- name: Availability
-  description: Availability of a user
+  - name: Availability
+    description: Availability of a user
   - name: Reference
     description: References (people who can recommand) of a user
   - name: Experience
@@ -188,9 +188,9 @@ paths:
                   type: integer
                   format: int64
                 example:
-                - 1
-                - 3
-                - 4
+                - ff293ca9-b8c6-4ecc-aca1-92b9c905719c
+                - cfc3eade-fde2-4048-a1d6-409da0c37637
+                - 3ad15a2e-2841-41c3-8fdd-77c04bee23db
         '401':
           description: User is not authenticated
         '403':
@@ -971,9 +971,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: dd9e6c6d-e6c3-46b6-8a57-697df0509db9
           readOnly: true
         name:
           type: string
@@ -982,9 +982,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 34802315-2120-4846-b553-847979c192a4
           readOnly: true
         title:
           type: string
@@ -998,9 +998,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: a53b64be-5599-4365-9e1d-0813977b4873
           readOnly: true
         category:
           type: string
@@ -1010,9 +1010,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 0ba7c5ad-0464-4fe8-b626-37a850000134
           readOnly: true
         firstName:
           type: string
@@ -1065,9 +1065,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: bf2b34ba-18b5-4705-8401-c7b8d0c240b2
           readOnly: true
         firstName:
           type: string
@@ -1091,9 +1091,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 32669e3f-e411-4f03-b250-9a3deaf41d1a
           readOnly: true
         startDate:
           type: string
@@ -1112,17 +1112,17 @@ components:
           - $ref: '#/components/schemas/Job'
           - readOnly: true
         jobId:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 34802315-2120-4846-b553-847979c192a4
           writeOnly: true
     Availability:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 765960ab-bbf8-4dbe-8da4-d2a16d9b8277
           readOnly: true
         startDate:
           type: string
@@ -1140,17 +1140,17 @@ components:
           - $ref: '#/components/schemas/Job'
           - readOnly: true
         jobCategoryId:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: a53b64be-5599-4365-9e1d-0813977b4873
           writeOnly: true
     Evaluation:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: b67507d1-91d8-464c-b252-a4a92ecff2eb
           readOnly: true
         employerFirstName:
           type: string
@@ -1178,9 +1178,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 32503201-c801-4aac-8b8b-18592b5ac0d7
           readOnly: true
         title:
           type: string
@@ -1209,9 +1209,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 2e311444-c7b6-4aeb-b0b1-5871099677b4
           readOnly: true
         employer:
           $ref: '#/components/schemas/Employer'
@@ -1222,19 +1222,19 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: ec6c21e1-7b9b-46a3-9a23-16d2a14d8f9c
           readOnly: true
         channelId:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: f352f9a4-38e7-4f54-9ed6-9c124a023167
           readOnly: true
         employerId:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: f2364fa2-b84f-4d34-8981-bdcbb83a688e
           readOnly: true
         direction:
           type: integer
@@ -1253,9 +1253,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 813ec247-9746-4049-b455-4ffe279f6221
           readOnly: true
         firstName:
           type: string
@@ -1278,9 +1278,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: ae81cfdc-ca96-4513-b7a3-17421a3ce4da
           readOnly: true
         score:
           type: integer
@@ -1293,9 +1293,9 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          example: 1
+          type: string
+          format: uuid
+          example: 63553a65-a021-4e06-bd82-13c0d010cb83
           readOnly: true
         title:
           type: string
@@ -1317,45 +1317,45 @@ components:
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 0ba7c5ad-0464-4fe8-b626-37a850000134
     availabilityId:
       name: availabilityId
       description: Unique identifier of a availability.
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 765960ab-bbf8-4dbe-8da4-d2a16d9b8277
     referenceId:
       name: referenceId
       description: Unique identifier of a reference.
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: bf2b34ba-18b5-4705-8401-c7b8d0c240b2
     experienceId:
       name: experienceId
       description: Unique identifier of an experience.
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 32669e3f-e411-4f03-b250-9a3deaf41d1a
     jobId:
       name: jobId
       description: Unique identifier of a job.
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 34802315-2120-4846-b553-847979c192a4
     jobCategory:
       name: jobCategory
       description: Unique identifier of a job category.
@@ -1369,9 +1369,9 @@ components:
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 34802315-2120-4846-b553-847979c192a4
     evaluationId:
       name: evaluationId
       description: Unique identifier of an evaluation.
@@ -1387,24 +1387,25 @@ components:
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 32503201-c801-4aac-8b8b-18592b5ac0d7
     employerId:
       name: employerId
       description: Unique identifier of an employer.
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 813ec247-9746-4049-b455-4ffe279f6221
     messageChannelId:
       name: messageChannelId
       description: Unique identifier of a message channel.
       in: path
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 1
+        type: string
+        format: uuid
+        example: 2e311444-c7b6-4aeb-b0b1-5871099677b4
+        
