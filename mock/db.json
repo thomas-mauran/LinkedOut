@@ -1,7 +1,7 @@
 {
   "profiles": [
     {
-      "id": 1,
+      "id": "a1a6d77e-e63f-4274-8d06-a780b5a5d028",
       "firstName": "Bernard",
       "lastName": "Tapie",
       "gender": 1,
@@ -20,7 +20,7 @@
       "nbReviews": 2
     },
     {
-      "id": 2,
+      "id": "5977517d-d26c-4149-863e-4ed4567e42f6",
       "firstName": "François",
       "lastName": "Hollande",
       "gender": 1,
@@ -42,14 +42,14 @@
   "deletionProfiles": [2],
   "availabilities": [
     {
-      "id": 1,
+      "id": "57bcc043-74c3-433e-9592-e444409e0aa1",
       "startDate": "2023-08-23",
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
       "category": "Showbiz"
     },
     {
-       "id": 2,
+       "id": "2191ad1f-c33d-47bb-bfcf-c60cf131a3b7",
        "startDate": "2023-03-14",
        "endDate": "2022-12-12",
        "geographicArea": "Paris, 16ème arrondissement",
@@ -58,7 +58,7 @@
   ],
   "references": [
     {
-      "id": 1,
+      "id": "5454cea0-a2ed-4ec4-a56c-c39fd92a71e6",
       "firstName": "Patrick",
       "lastName": "Balkany",
       "address": {
@@ -69,12 +69,12 @@
       "phone": "0680459527",
       "email": "patrick.balkany@gmail.com",
       "company": {
-        "id": 1,
+        "id": "30f08a12-f293-4e1b-bc4f-e651ab4ab41d",
         "name": "Wonder"
       }
     },
     {
-      "id": 2,
+      "id": "136ea26f-4c22-4ddd-b202-7bc2e6637825",
       "firstName": "François",
       "lastName": "Mitterand",
       "address": {
@@ -85,14 +85,14 @@
       "phone": "0635455728",
       "email": "fmiterrand@gouv.fr",
       "company": {
-        "id": 2,
+        "id": "af09f3c7-8e07-4f2b-9659-2ea562106e18",
         "name": "Government"
       }
     }
   ],
   "experiences": [
     {
-      "id": 1,
+      "id": "ec3b829a-0bda-44d3-bf47-196d70f0474a",
       "startDate": "1976-10-12",
       "endDate": "1989-05-18",
       "address": {
@@ -101,17 +101,17 @@
         "city": "Paris"
       },
       "company": {
-        "id": 3,
+        "id": "9a09de43-9464-4c66-b775-6b2453919f77",
         "name": "La rue"
       },
       "job": {
-        "id": 1,
+        "id": "ab865d5a-c107-4ad7-8651-5b116b1aaabd",
         "title": "Escroc",
         "category": "Autre"
       }
     },
     {
-      "id": 2,
+      "id": "7cdd224c-d14a-43a4-a7df-11a6a0b24858",
       "startDate": "1986-02-28",
       "endDate": "1987-02-29",
       "address": {
@@ -120,17 +120,17 @@
         "city": "Paris"
       },
       "company": {
-        "id": 4,
+        "id": "e6c8f655-e261-4f14-9523-8430a77577c6",
         "name": "TF1"
       },
       "job": {
-        "id": 2,
+        "id": "4a0c5ce9-55fe-4ed9-b006-633380a64ad1",
         "title": "Hôte de show télévisé",
         "category": "Showbiz"
       }
     },
     {
-      "id": 3,
+      "id": "2f760ca7-70dd-4064-a391-8fdd6f7c83f3",
       "startDate": "1970-10-12",
       "endDate": "1971-05-18",
       "address": {
@@ -139,11 +139,11 @@
         "city": "Montpellier"
       },
       "company": {
-        "id": 5,
+        "id": "db26513e-e9aa-42d3-9442-2fa89a82acf5",
         "name": "Black Cat"
       },
       "job": {
-        "id": 3,
+        "id": "f4f8fb0f-e7b8-4c82-b5c1-762301922955",
         "title": "Serveur en restaurant",
         "category": "Hôtels, cafés, bars, restaurants"
       }
@@ -151,7 +151,7 @@
   ],
   "jobOffers": [
     {
-      "id": 1,
+      "id": "6afbdd93-2dec-425e-9adc-5c680b4f0759",
       "title": "Femme de ménage",
       "description": "Nous recherchons des femmes de ménage saisonniers enthousiastes pour rejoindre notre équipe dynamique au restaurant L'Entrecôte.\nSi vous êtes passionné par le ménage, les produits d'entretien exceptionnels, et que vous aimez travailler dans une ambiance conviviale, nous aimerions vous rencontrer.",
       "startDate": "2023-08-23",
@@ -160,7 +160,7 @@
       "status": -1
     },
     {
-      "id": 2,
+      "id": "54c26851-9849-40be-8206-41712d9713ad",
       "title": "Serveur à l'entrecôte",
       "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
       "startDate": "2023-08-23",
@@ -169,7 +169,7 @@
       "status": -1
     },
     {
-      "id": 3,
+      "id": "250b78f4-ee21-4f6f-ad2b-a4792769975c",
       "title": "Serveur à l'entrecôte (Denied)",
       "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
       "startDate": "2023-08-23",
@@ -178,7 +178,7 @@
       "status": 2
     },
     {
-      "id": 4,
+      "id": "3df14b0e-56cd-4836-92b5-6d5d3a5f3a2a",
       "title": "Serveur à l'entrecôte (Accepted)",
       "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
       "startDate": "2023-08-23",
@@ -187,7 +187,7 @@
       "status": 1
     },
     {
-      "id": 5,
+      "id": "bf48108e-0212-42df-b1e0-2b97f2f283ef",
       "title": "Serveur à l'entrecôte (Pending)",
       "description": "Offre de serveur saisonier dans le restaurant l'entrecôte, horraires variables, bonne ambiance de travail.",
       "startDate": "2023-08-23",
@@ -198,40 +198,40 @@
   ],
   "jobs": [
     {
-      "id": 1,
+      "id": "ab865d5a-c107-4ad7-8651-5b116b1aaabd",
       "title": "Escroc",
       "category": "Autre"
     },
     {
-      "id": 2,
+      "id": "4a0c5ce9-55fe-4ed9-b006-633380a64ad1",
       "title": "Hôte de show télévisé",
       "category": "Showbiz"
     },
     {
-      "id": 3,
+      "id": "f4f8fb0f-e7b8-4c82-b5c1-762301922955",
       "title": "Serveur en restaurant",
       "category": "Hôtels, cafés, bars, restaurants"
     }
   ],
   "jobCategories": [
     {
-      "id": 1,
+      "id": "260e9256-b781-4fa9-951a-0730d59e8d98",
       "name": "Autre"
     },
     {
-      "id": 2,
+      "id": "a3b616fe-fee0-41d1-b863-8f1660218908",
       "name": "Showbiz"
     },
     {
-      "id": 3,
+      "id": "e46fd452-eed8-4318-87f1-f1179700d2e0",
       "name": "Hôtels, cafés, bars, restaurants"
     }
   ],
   "messageChannels": [
     {
-      "id": 1,
+      "id": "1857769e-f4e9-40bd-9988-cfad399a1d3e",
       "employer": {
-        "id": 1,
+        "id": "c80f53f4-0a33-4fe3-bf7f-a755c6e2235b",
         "firstName": "Nicolas",
         "lastName": "Sarkozy",
         "picture": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Flickr_-_europeanpeoplesparty_-_EPP_Summit_October_2010_(105)-(cropped).jpg",
@@ -240,9 +240,9 @@
       "lastMessage": "Salut Bernard, ton profil m'interesse."
     },
     {
-      "id": 2,
+      "id": "4f900914-f996-49a8-8909-749fdf421e5a",
       "employer": {
-        "id": 2,
+        "id": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
         "firstName": "François",
         "lastName": "Hollande",
         "picture": "https://peopleauquotidien.com/wp-content/uploads/2022/12/JTA19T-1-e1670495723208.jpg",
@@ -251,9 +251,9 @@
       "lastMessage": "Bonjour, j’aimerai vous confier une mission"
     },
     {
-      "id": 3,
+      "id": "ca5b580c-6549-4c94-bdb4-30edbcec8f14",
       "employer": {
-        "id": 3,
+        "id": "8102b0f0-c03c-4f66-bd99-a2522625d11c",
         "firstName": "John",
         "lastName": "Cena",
         "picture": "https://i.pinimg.com/736x/2d/8d/dd/2d8ddd5b89a7e067c2d3404773549a4d.jpg",
@@ -262,9 +262,9 @@
       "lastMessage": "Bonjour Tapy, do you know Bing Chilling?"
     },
     {
-      "id": 4,
+      "id": "99ab5d97-a6f6-49ff-8300-858ce4cac1d7",
       "employer": {
-        "id": 4,
+        "id": "4d40844c-4db9-45d3-bffd-18804411a69c",
         "firstName": "Noé",
         "lastName": "Tarbouret",
         "picture": "https://vectorseek.com/wp-content/uploads/2023/03/Golang-Gopher-Logo-Vector.jpg",
@@ -275,17 +275,17 @@
   ],
   "messages": [
     {
-      "id": 1,
-      "channelId": 1,
-      "employerId": 1,
+      "id": "c2c41c85-1525-4d6b-b3f7-ffe0359e4978",
+      "channelId": "1857769e-f4e9-40bd-9988-cfad399a1d3e",
+      "employerId": "c80f53f4-0a33-4fe3-bf7f-a755c6e2235b",
       "direction": 1,
       "sentAt": "2023-10-23T09:34:19Z",
       "content": "Salut Bernard, ton profil m'interesse"
     },
     {
-      "id": 2,
-      "channelId": 1,
-      "employerId": 1,
+      "id": "c6eb0448-1600-4a22-9de4-d9473d8ed8ae",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
       "direction": 0,
       "sentAt": "2023-10-26T01:34:56Z",
       "content": "Coucou Sarko, dis moi tout..."
@@ -293,28 +293,28 @@
   ],
   "employers": [
     {
-      "id": 1,
+      "id": "c80f53f4-0a33-4fe3-bf7f-a755c6e2235b",
       "firstName": "Nicolas",
       "lastName": "Sarkozy",
       "picture": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Flickr_-_europeanpeoplesparty_-_EPP_Summit_October_2010_(105)-(cropped).jpg",
       "phone": "0677096463"
     },
     {
-      "id": 2,
+      "id": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
       "firstName": "François",
       "lastName": "Hollande",
       "picture": "https://peopleauquotidien.com/wp-content/uploads/2022/12/JTA19T-1-e1670495723208.jpg",
       "phone": "0632789456"
     },
     {
-      "id": 3,
+      "id": "8102b0f0-c03c-4f66-bd99-a2522625d11c",
       "firstName": "John",
       "lastName": "Cena",
       "picture": "https://i.pinimg.com/736x/2d/8d/dd/2d8ddd5b89a7e067c2d3404773549a4d.jpg",
       "phone": "0742569874"
     },
     {
-      "id": 4,
+      "id": "4d40844c-4db9-45d3-bffd-18804411a69c",
       "firstName": "Noé",
       "lastName": "Tarbouret",
       "picture": "https://vectorseek.com/wp-content/uploads/2023/03/Golang-Gopher-Logo-Vector.jpg",
@@ -323,7 +323,7 @@
   ],
   "workerEvaluations": [
     {
-      "id": 1,
+      "id": "136ea26f-4c22-4ddd-b202-7bc2e6637825",
       "employerFirstName": "François",
       "employerLastName": "Mitterand",
       "score": 5,
@@ -331,7 +331,7 @@
       "createdAt": "2022-10-16T15:29:31Z"
     },
     {
-      "id": 2,
+      "id": "6449424a-ae28-4dd0-8c98-e4db03535e97",
       "employerFirstName": "Jacques",
       "employerLastName": "Glassman",
       "score": 1,
@@ -341,14 +341,14 @@
   ],
   "employerEvaluations": [
     {
-      "id": 1,
+      "id": "c37774d0-ffba-4554-b22a-d72ccf1bf8dd",
       "score": 2,
       "review": "François était au départ, un employeur modèle, mais il a vite montré son véritable visage..."
     }
   ],
   "notifications": [
     {
-      "id": 1,
+      "id": "82ef4ac1-ab39-4d8d-8286-ccf16f4b3311",
       "title": "Candidature refusée",
       "content": "Votre candidature à l'offre 'Serveur à l'entrecôte' à été refusée par l'employeur.",
       "sentAt": "2023-10-23T09:34:19Z"
@@ -356,23 +356,23 @@
   ],
   "companies": [
     {
-      "id": 1,
+      "id": "30f08a12-f293-4e1b-bc4f-e651ab4ab41d",
       "name": "Wonder"
     },
     {
-      "id": 2,
+      "id": "af09f3c7-8e07-4f2b-9659-2ea562106e18",
       "name": "Government"
     },
     {
-      "id": 3,
+      "id": "9a09de43-9464-4c66-b775-6b2453919f77",
       "name": "La rue"
     },
     {
-      "id": 4,
+      "id": "e6c8f655-e261-4f14-9523-8430a77577c6",
       "name": "TF1"
     },
     {
-      "id": 5,
+      "id": "db26513e-e9aa-42d3-9442-2fa89a82acf5",
       "name": "Black Cat"
     }
   ]
