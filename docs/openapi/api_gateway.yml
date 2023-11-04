@@ -1201,6 +1201,10 @@ components:
         geographicArea:
           type: string
           example: Paris, 16ème arrondissement
+        salary:
+          type: integer
+          format: int8
+          example: 1800
         status:
           type: integer
           format: int8
