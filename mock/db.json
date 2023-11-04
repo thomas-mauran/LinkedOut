@@ -157,6 +157,16 @@
       "startDate": "2023-08-23",
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
+      "salary": 1800,
+      "job": {
+        "id": "4fcc7320-a40e-492e-b716-59e4a50cbd82",
+        "title": "Femme de ménage",
+        "category": "Hôtels, cafés, bars, restaurants"
+      },
+      "company": {
+        "id": "db26513e-e9aa-42d3-9442-2fa89a82acf5",
+        "name": "Black Cat"
+      },
       "status": -1
     },
     {
@@ -166,6 +176,16 @@
       "startDate": "2023-08-23",
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
+      "salary": 2200,
+      "job": {
+        "id": "f4f8fb0f-e7b8-4c82-b5c1-762301922955",
+        "title": "Serveur en restaurant",
+        "category": "Hôtels, cafés, bars, restaurants"
+      },
+      "company": {
+        "id": "d89170af-4d52-4366-a970-672e0ebd48b4",
+        "name": "l'Entrecôte"
+      },
       "status": -1
     },
     {
@@ -175,6 +195,16 @@
       "startDate": "2023-08-23",
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
+      "salary": 2200,
+      "job": {
+        "id": "f4f8fb0f-e7b8-4c82-b5c1-762301922955",
+        "title": "Serveur en restaurant",
+        "category": "Hôtels, cafés, bars, restaurants"
+      },
+      "company": {
+        "id": "d89170af-4d52-4366-a970-672e0ebd48b4",
+        "name": "l'Entrecôte"
+      },
       "status": 2
     },
     {
@@ -184,6 +214,16 @@
       "startDate": "2023-08-23",
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
+      "salary": 2200,
+      "job": {
+        "id": "f4f8fb0f-e7b8-4c82-b5c1-762301922955",
+        "title": "Serveur en restaurant",
+        "category": "Hôtels, cafés, bars, restaurants"
+      },
+      "company": {
+        "id": "d89170af-4d52-4366-a970-672e0ebd48b4",
+        "name": "l'Entrecôte"
+      },
       "status": 1
     },
     {
@@ -193,6 +233,16 @@
       "startDate": "2023-08-23",
       "endDate": "2023-12-12",
       "geographicArea": "Paris, 16ème arrondissement",
+      "salary": 2200,
+      "job": {
+        "id": "f4f8fb0f-e7b8-4c82-b5c1-762301922955",
+        "title": "Serveur en restaurant",
+        "category": "Hôtels, cafés, bars, restaurants"
+      },
+      "company": {
+        "id": "d89170af-4d52-4366-a970-672e0ebd48b4",
+        "name": "l'Entrecôte"
+      },
       "status": 0
     }
   ],
@@ -210,6 +260,11 @@
     {
       "id": "f4f8fb0f-e7b8-4c82-b5c1-762301922955",
       "title": "Serveur en restaurant",
+      "category": "Hôtels, cafés, bars, restaurants"
+    },
+    {
+      "id": "4fcc7320-a40e-492e-b716-59e4a50cbd82",
+      "title": "Femme de ménage",
       "category": "Hôtels, cafés, bars, restaurants"
     }
   ],
@@ -374,6 +429,10 @@
     {
       "id": "db26513e-e9aa-42d3-9442-2fa89a82acf5",
       "name": "Black Cat"
+    }, 
+    {
+      "id": "d89170af-4d52-4366-a970-672e0ebd48b4",
+      "name": "l'Entrecôte"
     }
   ]
 }
