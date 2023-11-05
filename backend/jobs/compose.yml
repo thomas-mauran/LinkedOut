@@ -1,0 +1,15 @@
+services:
+  postgresql:
+    image: docker.io/bitnami/postgresql:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_PASSWORD=job
+      - POSTGRESQL_USERNAME=job
+      - POSTGRESQL_DATABASE=job
+    volumes:
+      - "postgresql_data:/bitnami/postgresql"
+
+volumes:
+  postgresql_data:
+
