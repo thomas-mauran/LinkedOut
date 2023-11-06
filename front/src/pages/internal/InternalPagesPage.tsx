@@ -1,23 +1,48 @@
-import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { FC, useCallback } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
+
+import { InternalPagesStackParamList } from '@/pages/internal/InternalPagesNav';
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     flex: 1,
-    justifyContent: 'center',
+  },
+  contentContainer: {
+    gap: 8,
+    paddingBottom: 8,
+    paddingHorizontal: 16,
   },
 });
+
+/**
+ * The props for the InternalPagesPage component.
+ */
+type InternalPagesPageProps = NativeStackScreenProps<
+  InternalPagesStackParamList,
+  'PagesMain'
+>;
 
 /**
  * The internal page that has links to all the application pages.
  * @constructor
  */
-const InternalPagesPage = () => {
+const InternalPagesPage: FC<InternalPagesPageProps> = ({ navigation }) => {
+  // Callbacks
+  const handleProfilePress = useCallback(() => {
+    navigation.navigate('PagesProfile');
+  }, [navigation]);
+
   return (
-    <View style={styles.container}>
-      <Text>This is the InternalPagesPage.tsx file</Text>
-    </View>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
+      <Button mode={'contained'} onPress={handleProfilePress}>
+        Profile
+      </Button>
+    </ScrollView>
   );
 };
 

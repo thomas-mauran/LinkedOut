@@ -2,9 +2,7 @@ import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navig
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import InternalMiscNav from '@/pages/internal/InternalMiscNav';
-import InternalPagesPage from '@/pages/internal/InternalPagesPage';
-import ProfileNav from '@/pages/profile/ProfileNav';
-import i18n from '@/utils/i18n';
+import InternalPagesNav from '@/pages/internal/InternalPagesNav';
 
 /**
  * The parameter list for the InternalTab navigator.
@@ -27,7 +25,7 @@ const InternalTabNav = () => {
     <InternalTab.Navigator>
       <InternalTab.Screen
         name='InternalPages'
-        component={InternalPagesPage}
+        component={InternalPagesNav}
         options={{
           tabBarLabel: 'Pages',
           tabBarIcon: ({ color }) => (
@@ -42,16 +40,6 @@ const InternalTabNav = () => {
           tabBarLabel: 'Miscellaneous',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name='test-tube' color={color} size={24} />
-          ),
-        }}
-      />
-      <InternalTab.Screen
-        name='InternalProfile'
-        component={ProfileNav}
-        options={{
-          tabBarLabel: i18n.get('profile.info.profile'),
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name='account' color={color} size={24} />
           ),
         }}
       />
