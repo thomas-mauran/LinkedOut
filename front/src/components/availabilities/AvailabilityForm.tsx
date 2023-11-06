@@ -1,6 +1,5 @@
 import Slider from '@react-native-community/slider';
 import { FC, useCallback, useState } from 'react';
-import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, TextInput, useTheme } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
@@ -99,7 +98,7 @@ const AvailabilityForm: FC<AvailabilityFormProps> = ({
     [formData, onFormDataUpdate],
   );
 
-  const handleDateRangeUpdate = React.useCallback(
+  const handleDateRangeUpdate = useCallback(
     (startDate: Date, endDate: Date) => {
       setDateRange({ startDate, endDate });
 

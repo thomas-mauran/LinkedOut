@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
@@ -59,7 +58,7 @@ const ExperienceForm: FC<ExperienceFormProps> = ({
   onFormDataUpdate,
 }) => {
   // State
-  const [dateRange, setDateRange] = React.useState({
+  const [dateRange, setDateRange] = useState({
     startDate: new Date(formData.startDate ?? new Date()),
     endDate: new Date(formData.endDate ?? new Date()),
   });
@@ -79,7 +78,7 @@ const ExperienceForm: FC<ExperienceFormProps> = ({
     [formData, onFormDataUpdate],
   );
 
-  const handleDateRangeUpdate = React.useCallback(
+  const handleDateRangeUpdate = useCallback(
     (startDate: Date, endDate: Date) => {
       setDateRange({ startDate, endDate });
 

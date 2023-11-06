@@ -1,6 +1,5 @@
 import { useLocales } from 'expo-localization';
-import * as React from 'react';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
@@ -54,7 +53,7 @@ const DateRangePicker: FC<DateRangePickerProps> = ({
   const locales = useLocales();
 
   // State
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   // Callbacks
   const onDatePickerModalConfirm = useCallback<RangeChange>(
