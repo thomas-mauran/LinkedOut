@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, Divider, Text } from 'react-native-paper';
 
@@ -7,6 +7,9 @@ import InternalOIDCTest from '@/components/internal/InternalOIDCTest';
 import { InternalMiscStackParamList } from '@/pages/internal/InternalMiscNav';
 import i18n from '@/utils/i18n';
 
+/**
+ * The props for the InternalMiscPage component.
+ */
 type InternalMiscPageProps = NativeStackScreenProps<
   InternalMiscStackParamList,
   'MiscMain'
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
  * The internal page for testing various stuff about React Native and the installed libraries.
  * @constructor
  */
-const InternalMiscPage = ({ navigation }: InternalMiscPageProps) => {
+const InternalMiscPage: FC<InternalMiscPageProps> = ({ navigation }) => {
   const handleAppBarButtonPress = useCallback(() => {
     navigation.navigate('MiscAppBar');
   }, [navigation]);

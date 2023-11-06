@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 /**
  * The props for the ExperiencesPage component.
  */
-type ExperiencesAppPageProps = NativeStackScreenProps<
+type ExperiencesPageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'Experiences'
 >;
@@ -39,7 +39,7 @@ type ExperiencesAppPageProps = NativeStackScreenProps<
  * Displays the experiences page for the current user.
  * @constructor
  */
-const ExperiencesPage = ({ navigation }: ExperiencesAppPageProps) => {
+const ExperiencesPage: FC<ExperiencesPageProps> = ({ navigation }) => {
   // API calls
   const { data: experiences, refetch } = useGetExperiencesQuery();
   const [deleteExperience] = useDeleteExperienceMutation();

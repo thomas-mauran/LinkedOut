@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -36,7 +36,9 @@ type ExperienceCreatePageProps = NativeStackScreenProps<
  * Displays the page for creating an experience.
  * @constructor
  */
-const ExperienceCreatePage = ({ navigation }: ExperienceCreatePageProps) => {
+const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
+  navigation,
+}) => {
   // API calls
   const [postExperience] = usePostExperienceMutation();
 

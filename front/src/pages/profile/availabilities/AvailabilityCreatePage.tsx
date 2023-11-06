@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -39,9 +39,9 @@ type AvailabilityCreatePageProps = NativeStackScreenProps<
  * Displays the page for creating an availability.
  * @constructor
  */
-const AvailabilityCreatePage = ({
+const AvailabilityCreatePage: FC<AvailabilityCreatePageProps> = ({
   navigation,
-}: AvailabilityCreatePageProps) => {
+}) => {
   // API calls
   const { data: jobCategories } = useGetJobCategoriesQuery();
   const [postAvailability] = usePostAvailabilitiesMutation();

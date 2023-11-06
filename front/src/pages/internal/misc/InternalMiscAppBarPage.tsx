@@ -1,10 +1,13 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Image, ImageStyle, StyleProp, StyleSheet, View } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import { InternalMiscStackParamList } from '@/pages/internal/InternalMiscNav';
 
+/**
+ * The props for the InternalMiscAppBarPage component.
+ */
 type InternalMiscAppBarPageProps = NativeStackScreenProps<
   InternalMiscStackParamList,
   'MiscAppBar'
@@ -23,9 +26,9 @@ const styles = StyleSheet.create({
  * The internal page for testing the custom appbar back and action buttons.
  * @constructor
  */
-const InternalMiscAppBarPage = ({
+const InternalMiscAppBarPage: FC<InternalMiscAppBarPageProps> = ({
   navigation,
-}: InternalMiscAppBarPageProps) => {
+}) => {
   // Picture rotation (in degrees)
   const [rotation, setRotation] = useState(0);
 

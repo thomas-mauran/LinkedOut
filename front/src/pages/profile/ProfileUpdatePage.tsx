@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 /**
  * The props for the ProfileUpdatePage component.
  */
-type ProfilesUpdatePageProps = NativeStackScreenProps<
+type ProfileUpdatePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'ProfileUpdate'
 >;
@@ -44,7 +44,7 @@ type ProfilesUpdatePageProps = NativeStackScreenProps<
  * Displays the page for updating the profile of the current user.
  * @constructor
  */
-const ProfilesUpdatePage = ({ navigation }: ProfilesUpdatePageProps) => {
+const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
   // API calls
   const { data: profile } = useGetProfileQuery();
   const { data: availabilities } = useGetAvailabilitiesQuery();
@@ -157,4 +157,4 @@ const ProfilesUpdatePage = ({ navigation }: ProfilesUpdatePageProps) => {
   );
 };
 
-export default ProfilesUpdatePage;
+export default ProfileUpdatePage;

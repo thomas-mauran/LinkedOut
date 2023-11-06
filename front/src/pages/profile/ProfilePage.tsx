@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 
 import ProfileContents from '@/components/profile/ProfileContents';
@@ -14,7 +14,7 @@ import { ProfileStackParamList } from './ProfileNav';
 /**
  * The props for the ProfilePage component.
  */
-type ProfileAppPageProps = NativeStackScreenProps<
+type ProfilePageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'Profile'
 >;
@@ -23,7 +23,7 @@ type ProfileAppPageProps = NativeStackScreenProps<
  * Displays the profile page for the current user.
  * @constructor
  */
-const ProfilePage = ({ navigation }: ProfileAppPageProps) => {
+const ProfilePage: FC<ProfilePageProps> = ({ navigation }) => {
   // API calls
   const { data: profile, refetch: refetchProfile } = useGetProfileQuery();
   const { data: availabilities, refetch: refetchAvailabilities } =

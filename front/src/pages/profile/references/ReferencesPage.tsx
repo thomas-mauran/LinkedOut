@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Appbar, Text } from 'react-native-paper';
 
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 /**
  * The props for the ReferencesPage component.
  */
-type ReferencesAppPageProps = NativeStackScreenProps<
+type ReferencesPageProps = NativeStackScreenProps<
   ProfileStackParamList,
   'References'
 >;
@@ -42,7 +42,7 @@ type ReferencesAppPageProps = NativeStackScreenProps<
  * Displays the page for the references and reviews.
  * @constructor
  */
-const ReferencesPage = ({ navigation }: ReferencesAppPageProps) => {
+const ReferencesPage: FC<ReferencesPageProps> = ({ navigation }) => {
   // API calls
   const { data: evaluations, refetch: refetchEvaluations } =
     useGetEvaluationsQuery();

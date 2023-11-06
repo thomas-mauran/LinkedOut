@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -49,10 +49,10 @@ export type ReferenceUpdatePageParams = {
  * Displays the page for updating a reference.
  * @constructor
  */
-const ReferenceUpdatePage = ({
+const ReferenceUpdatePage: FC<ReferenceUpdatePageProps> = ({
   route,
   navigation,
-}: ReferenceUpdatePageProps) => {
+}) => {
   // Route params
   const { id: referenceId } = route.params;
 

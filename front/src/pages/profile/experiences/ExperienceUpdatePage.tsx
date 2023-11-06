@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -50,10 +50,10 @@ export type ExperienceUpdatePageParams = {
  * Displays the page for updating an experience.
  * @constructor
  */
-const ExperienceUpdatePage = ({
+const ExperienceUpdatePage: FC<ExperienceUpdatePageProps> = ({
   route,
   navigation,
-}: ExperienceUpdatePageProps) => {
+}) => {
   // Route params
   const { id: experienceId } = route.params;
 

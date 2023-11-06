@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -36,7 +36,7 @@ type ReferenceCreatePageProps = NativeStackScreenProps<
  * Displays the page for creating a reference.
  * @constructor
  */
-const ReferenceCreatePage = ({ navigation }: ReferenceCreatePageProps) => {
+const ReferenceCreatePage: FC<ReferenceCreatePageProps> = ({ navigation }) => {
   // API calls
   const [postReference] = usePostReferenceMutation();
 

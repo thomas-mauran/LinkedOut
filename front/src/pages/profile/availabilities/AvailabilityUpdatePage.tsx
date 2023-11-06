@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
@@ -50,10 +50,10 @@ export type AvailabilityUpdatePageParams = {
  * Displays the page for updating an availability.
  * @constructor
  */
-const AvailabilityUpdatePage = ({
+const AvailabilityUpdatePage: FC<AvailabilityUpdatePageProps> = ({
   route,
   navigation,
-}: AvailabilityUpdatePageProps) => {
+}) => {
   // Route params
   const { id: availabilityId } = route.params;
 
