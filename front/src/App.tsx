@@ -1,5 +1,4 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApiProvider } from '@reduxjs/toolkit/query/react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -9,25 +8,14 @@ import { useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 
-import InternalTabNav from '@/pages/InternalTabNav';
+import RootNavigator from '@/RootNavigator';
 import { store } from '@/store/Store';
 import { DarkTheme, LightTheme } from '@/utils/theme';
 
-import MainTabNav from './pages/MainTabNav';
 import { api } from './store/slice/api';
 
 // We want to hide the splash screen ourselves
 SplashScreen.preventAutoHideAsync();
-
-/**
- * The parameter list for the RootStack navigator.
- */
-export type RootStackParamList = {
-  Internal: undefined;
-  Main: undefined;
-};
-
-const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 /**
  * The root component for this application.
@@ -65,13 +53,7 @@ const App = () => {
             onReady={handleNavigationContainerReady}
           >
             <StatusBar style='auto' />
-            <RootStack.Navigator
-              initialRouteName='Internal'
-              screenOptions={{ headerShown: false }}
-            >
-              <RootStack.Screen name='Internal' component={InternalTabNav} />
-              <RootStack.Screen name='Main' component={MainTabNav} />
-            </RootStack.Navigator>
+            <RootNavigator />
           </NavigationContainer>
         </ApiProvider>
       </PaperProvider>
