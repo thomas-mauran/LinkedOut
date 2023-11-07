@@ -1143,7 +1143,6 @@ components:
           type: integer
           format: int64
           example: 10
-          readOnly: true
         jobCategory:
           allOf:
           - $ref: '#/components/schemas/JobCategory'
