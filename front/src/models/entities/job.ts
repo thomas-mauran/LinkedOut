@@ -1,5 +1,3 @@
-import { JobCategory } from '@/models/entities/jobCategory';
-
 /**
  * A job.
  */
@@ -17,5 +15,5 @@ export type Job = {
   /**
    * The category of the job.
    */
-  category: JobCategory;
+  category: string;
 };

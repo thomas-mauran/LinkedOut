@@ -31,10 +31,10 @@ export type Experience = {
   /**
    * The company where the experience took place.
    */
-  company: Partial<Company>;
+  company: Company;
 
   /**
    * The job done during the experience.
    */
-  job: Partial<Job>;
+  job: Job;
 };

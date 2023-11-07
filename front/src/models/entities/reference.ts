@@ -38,5 +38,5 @@ export type Reference = {
   /**
    * The company where the referer works.
    */
-  company: Partial<Company>;
+  company: Company;
 };
