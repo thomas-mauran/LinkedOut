@@ -9,10 +9,9 @@ import { PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 
 import RootNavigator from '@/RootNavigator';
-import { store } from '@/store/Store';
+import { apiSlice } from '@/store/api/apiSlice';
+import { store } from '@/store/store';
 import { DarkTheme, LightTheme } from '@/utils/theme';
-
-import { api } from './store/slice/api';
 
 // We want to hide the splash screen ourselves
 SplashScreen.preventAutoHideAsync();
@@ -47,7 +46,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
-        <ApiProvider api={api}>
+        <ApiProvider api={apiSlice}>
           <NavigationContainer
             theme={theme}
             onReady={handleNavigationContainerReady}

@@ -7,7 +7,7 @@ import ExperienceForm, {
   ExperienceFormData,
 } from '@/components/experiences/ExperienceForm';
 import { Experience } from '@/models/types';
-import { usePostExperienceMutation } from '@/store/slice/api';
+import { usePostExperienceMutation } from '@/store/api/experienceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
 

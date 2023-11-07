@@ -1,0 +1,70 @@
+import { Availability } from '@/models/types';
+import { apiSlice } from '@/store/api/apiSlice';
+
+/**
+ * The extended API slice for availabilities.
+ */
+export const extendedApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAvailabilities: builder.query<Availability[], void>({
+      query: () => 'profile/availabilities/',
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({
+                type: 'Availabilities' as const,
+                id,
+              })),
+              { type: 'Availabilities', id: 'LIST' },
+            ]
+          : [{ type: 'Availabilities', id: 'LIST' }],
+    }),
+    getAvailability: builder.query<Availability, number>({
+      query: (id) => `profile/availabilities/${id}/`,
+      providesTags: (_result, _error, id) => [{ type: 'Availabilities', id }],
+    }),
+    deleteAvailabilities: builder.mutation<Partial<Availability>, number>({
+      query: (id) => ({
+        url: `profile/availabilities/${id}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_result, _error, id) => [
+        { type: 'Availabilities', id: 'LIST' },
+        { type: 'Availabilities', id },
+      ],
+    }),
+    postAvailabilities: builder.mutation<
+      Partial<Availability>,
+      Partial<Availability>
+    >({
+      query: (body) => ({
+        url: 'profile/availabilities/',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Availabilities', id: 'LIST' }],
+    }),
+    patchAvailabilities: builder.mutation<
+      Partial<Availability>,
+      Partial<Availability>
+    >({
+      query: (body) => ({
+        url: `profile/availabilities/${body.id}/`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: 'Availabilities', id: 'LIST' },
+        { type: 'Availabilities', id },
+      ],
+    }),
+  }),
+});
+
+export const {
+  useGetAvailabilitiesQuery,
+  useGetAvailabilityQuery,
+  useDeleteAvailabilitiesMutation,
+  usePostAvailabilitiesMutation,
+  usePatchAvailabilitiesMutation,
+} = extendedApiSlice;

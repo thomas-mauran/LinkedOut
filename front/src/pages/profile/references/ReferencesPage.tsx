@@ -7,11 +7,11 @@ import { Appbar, Text } from 'react-native-paper';
 import EvaluationList from '@/components/evaluations/EvaluationList';
 import ReferenceList from '@/components/references/ReferenceList';
 import { Reference } from '@/models/types';
+import { useGetEvaluationsQuery } from '@/store/api/evaluationApiSlice';
 import {
   useDeleteReferenceMutation,
-  useGetEvaluationsQuery,
   useGetReferencesQuery,
-} from '@/store/slice/api';
+} from '@/store/api/referenceApiSlice';
 import i18n from '@/utils/i18n';
 
 import { ProfileStackParamList } from '../ProfileNav';

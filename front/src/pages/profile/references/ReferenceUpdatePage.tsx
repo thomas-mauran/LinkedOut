@@ -10,7 +10,7 @@ import { Reference } from '@/models/types';
 import {
   useGetReferenceQuery,
   usePatchReferenceMutation,
-} from '@/store/slice/api';
+} from '@/store/api/referenceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
 

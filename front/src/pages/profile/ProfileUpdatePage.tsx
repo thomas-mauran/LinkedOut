@@ -11,9 +11,11 @@ import { Availability, Profile } from '@/models/types';
 import {
   useDeleteAvailabilitiesMutation,
   useGetAvailabilitiesQuery,
+} from '@/store/api/availabilityApiSlice';
+import {
   useGetProfileQuery,
   usePatchProfileMutation,
-} from '@/store/slice/api';
+} from '@/store/api/profileApiSlice';
 import i18n from '@/utils/i18n';
 
 import { ProfileStackParamList } from './ProfileNav';

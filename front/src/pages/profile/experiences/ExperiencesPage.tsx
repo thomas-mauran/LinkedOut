@@ -9,7 +9,7 @@ import { Experience } from '@/models/types';
 import {
   useDeleteExperienceMutation,
   useGetExperiencesQuery,
-} from '@/store/slice/api';
+} from '@/store/api/experienceApiSlice';
 import i18n from '@/utils/i18n';
 
 import { ProfileStackParamList } from '../ProfileNav';

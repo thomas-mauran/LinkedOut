@@ -4,10 +4,8 @@ import { FC, useCallback, useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 
 import ProfileContents from '@/components/profile/ProfileContents';
-import {
-  useGetAvailabilitiesQuery,
-  useGetProfileQuery,
-} from '@/store/slice/api';
+import { useGetAvailabilitiesQuery } from '@/store/api/availabilityApiSlice';
+import { useGetProfileQuery } from '@/store/api/profileApiSlice';
 
 import { ProfileStackParamList } from './ProfileNav';
 

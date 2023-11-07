@@ -7,10 +7,8 @@ import AvailabilityForm, {
   AvailabilityFormData,
 } from '@/components/availabilities/AvailabilityForm';
 import { Availability } from '@/models/types';
-import {
-  useGetJobCategoriesQuery,
-  usePostAvailabilitiesMutation,
-} from '@/store/slice/api';
+import { usePostAvailabilitiesMutation } from '@/store/api/availabilityApiSlice';
+import { useGetJobCategoriesQuery } from '@/store/api/jobApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
 

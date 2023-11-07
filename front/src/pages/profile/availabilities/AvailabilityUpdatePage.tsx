@@ -9,9 +9,9 @@ import AvailabilityForm, {
 import { Availability } from '@/models/types';
 import {
   useGetAvailabilityQuery,
-  useGetJobCategoriesQuery,
   usePatchAvailabilitiesMutation,
-} from '@/store/slice/api';
+} from '@/store/api/availabilityApiSlice';
+import { useGetJobCategoriesQuery } from '@/store/api/jobApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
 

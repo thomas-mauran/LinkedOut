@@ -10,7 +10,7 @@ import { Experience } from '@/models/types';
 import {
   useGetExperienceQuery,
   usePatchExperienceMutation,
-} from '@/store/slice/api';
+} from '@/store/api/experienceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
 

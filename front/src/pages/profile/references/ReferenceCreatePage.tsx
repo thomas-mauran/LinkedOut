@@ -7,7 +7,7 @@ import ReferenceForm, {
   ReferenceFormData,
 } from '@/components/references/ReferenceForm';
 import { Reference } from '@/models/types';
-import { usePostReferenceMutation } from '@/store/slice/api';
+import { usePostReferenceMutation } from '@/store/api/referenceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
 
