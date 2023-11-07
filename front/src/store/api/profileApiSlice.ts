@@ -1,4 +1,4 @@
-import { Profile } from '@/models/types';
+import { Profile } from '@/models/entities/profile';
 import { apiSlice } from '@/store/api/apiSlice';
 
 /**

@@ -6,7 +6,7 @@ import { Appbar, Text } from 'react-native-paper';
 
 import EvaluationList from '@/components/evaluations/EvaluationList';
 import ReferenceList from '@/components/references/ReferenceList';
-import { Reference } from '@/models/types';
+import { Reference } from '@/models/entities/reference';
 import { useGetEvaluationsQuery } from '@/store/api/evaluationApiSlice';
 import {
   useDeleteReferenceMutation,

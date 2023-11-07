@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import ExperienceForm, {
   ExperienceFormData,
 } from '@/components/experiences/ExperienceForm';
-import { Experience } from '@/models/types';
+import { Experience } from '@/models/entities/experience';
 import {
   useGetExperienceQuery,
   usePatchExperienceMutation,

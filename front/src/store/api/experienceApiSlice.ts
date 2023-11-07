@@ -1,4 +1,4 @@
-import { Experience } from '@/models/types';
+import { Experience } from '@/models/entities/experience';
 import { apiSlice } from '@/store/api/apiSlice';
 
 /**

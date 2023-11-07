@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 
 import ReferenceItem from '@/components/references/ReferenceItem';
-import { Reference } from '@/models/types';
+import { Reference } from '@/models/entities/reference';
 
 /**
  * The styles for the ReferenceList component.

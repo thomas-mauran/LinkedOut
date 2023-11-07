@@ -5,7 +5,7 @@ import { Text, TextInput, useTheme } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 
 import DateRangePicker from '@/components/utils/DateRangePicker';
-import { JobCategory } from '@/models/types';
+import { JobCategory } from '@/models/entities/jobCategory';
 import i18n from '@/utils/i18n';
 
 /**

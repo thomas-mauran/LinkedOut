@@ -5,7 +5,8 @@ import AvailabilityList from '@/components/availabilities/AvailabilityList';
 import ProfileContactInfos from '@/components/profile/ProfileContactInfos';
 import ProfileFooterButtons from '@/components/profile/ProfileFooterButtons';
 import ProfileHeader from '@/components/profile/header/ProfileHeader';
-import { Availability, Profile } from '@/models/types';
+import { Availability } from '@/models/entities/availability';
+import { Profile } from '@/models/entities/profile';
 
 /**
  * The styles for the ProfilePage component.

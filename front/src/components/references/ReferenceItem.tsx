@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 
 import ProfilePicturePlaceholder from '@/components/utils/ProfilePicturePlaceholder';
-import { Reference } from '@/models/types';
+import { Reference } from '@/models/entities/reference';
 
 /**
  * The styles for the ReferenceItem component.

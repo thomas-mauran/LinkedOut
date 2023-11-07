@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 
 import AvailabilityItem from '@/components/availabilities/AvailabilityItem';
-import { Availability } from '@/models/types';
+import { Availability } from '@/models/entities/availability';
 import i18n from '@/utils/i18n';
 
 /**

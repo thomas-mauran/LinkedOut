@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 
 import ExperienceItem from '@/components/experiences/ExperienceItem';
-import { Experience } from '@/models/types';
+import { Experience } from '@/models/entities/experience';
 
 /**
  * The styles for the ExperienceList component.

@@ -5,7 +5,7 @@ import { Text } from 'react-native-paper';
 
 import ProfilePicturePlaceholder from '@/components/utils/ProfilePicturePlaceholder';
 import StarRating from '@/components/utils/StarRating';
-import { Evaluation } from '@/models/types';
+import { Evaluation } from '@/models/entities/evaluation';
 
 /**
  * The styles for the EvaluationItem component.

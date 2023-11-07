@@ -7,7 +7,8 @@ import AvailabilityList from '@/components/availabilities/AvailabilityList';
 import ProfileUpdateInfosForm, {
   ProfileUpdateInfosFormData,
 } from '@/components/profile/ProfileUpdateInfosForm';
-import { Availability, Profile } from '@/models/types';
+import { Availability } from '@/models/entities/availability';
+import { Profile } from '@/models/entities/profile';
 import {
   useDeleteAvailabilitiesMutation,
   useGetAvailabilitiesQuery,

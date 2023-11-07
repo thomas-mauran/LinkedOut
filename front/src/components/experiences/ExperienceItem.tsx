@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 
-import { Experience } from '@/models/types';
+import { Experience } from '@/models/entities/experience';
 
 /**
  * The styles for the ExperienceItem component.

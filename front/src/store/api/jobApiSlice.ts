@@ -1,4 +1,4 @@
-import { JobCategory } from '@/models/types';
+import { JobCategory } from '@/models/entities/jobCategory';
 import { apiSlice } from '@/store/api/apiSlice';
 
 /**

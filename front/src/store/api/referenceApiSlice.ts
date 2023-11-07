@@ -1,4 +1,4 @@
-import { Reference } from '@/models/types';
+import { Reference } from '@/models/entities/reference';
 import { apiSlice } from '@/store/api/apiSlice';
 
 /**

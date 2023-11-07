@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 
-import { Availability } from '@/models/types';
+import { Availability } from '@/models/entities/availability';
 
 /**
  * The styles for the AvailabilityItem component.

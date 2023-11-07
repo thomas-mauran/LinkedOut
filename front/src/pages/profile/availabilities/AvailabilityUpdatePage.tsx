@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import AvailabilityForm, {
   AvailabilityFormData,
 } from '@/components/availabilities/AvailabilityForm';
-import { Availability } from '@/models/types';
+import { Availability } from '@/models/entities/availability';
 import {
   useGetAvailabilityQuery,
   usePatchAvailabilitiesMutation,

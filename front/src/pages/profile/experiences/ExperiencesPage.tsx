@@ -5,7 +5,7 @@ import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import ExperienceList from '@/components/experiences/ExperienceList';
-import { Experience } from '@/models/types';
+import { Experience } from '@/models/entities/experience';
 import {
   useDeleteExperienceMutation,
   useGetExperiencesQuery,

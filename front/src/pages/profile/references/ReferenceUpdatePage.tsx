@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import ReferenceForm, {
   ReferenceFormData,
 } from '@/components/references/ReferenceForm';
-import { Reference } from '@/models/types';
+import { Reference } from '@/models/entities/reference';
 import {
   useGetReferenceQuery,
   usePatchReferenceMutation,

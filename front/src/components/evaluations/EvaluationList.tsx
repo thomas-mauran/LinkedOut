@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 
 import EvaluationItem from '@/components/evaluations/EvaluationItem';
-import { Evaluation } from '@/models/types';
+import { Evaluation } from '@/models/entities/evaluation';
 
 /**
  * The styles for the EvaluationList component.
