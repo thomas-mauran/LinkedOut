@@ -1,3 +1,4 @@
+import { UpdateProfileDto } from '@/models/dtos/profile/updateProfileDto';
 import { Profile } from '@/models/entities/profile';
 import { apiSlice } from '@/store/api/apiSlice';
 
@@ -10,7 +11,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: () => 'profile/',
       providesTags: ['Profile'],
     }),
-    patchProfile: builder.mutation<Partial<Profile>, Partial<Profile>>({
+    patchProfile: builder.mutation<Profile, UpdateProfileDto>({
       query: (body) => ({
         url: 'profile/',
         method: 'PATCH',

@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import AvailabilityForm, {
   AvailabilityFormData,
 } from '@/components/availabilities/AvailabilityForm';
-import { Availability } from '@/models/entities/availability';
+import { UpdateAvailabilityDto } from '@/models/dtos/availability/updateAvailabilityDto';
 import {
   useGetAvailabilityQuery,
   usePatchAvailabilitiesMutation,
@@ -66,19 +66,15 @@ const AvailabilityUpdatePage: FC<AvailabilityUpdatePageProps> = ({
   const [formData, setFormData] = useState<AvailabilityFormData | undefined>();
 
   // Callbacks
-  // FIXME
   const handleConfirmPress = useCallback(() => {
-    const updatedAvailability: Availability = {
+    const updatedAvailability: UpdateAvailabilityDto = {
       id: availabilityId,
       address: {
         firstLine: formData.addressFirstLine,
         zipCode: formData.zipCode,
         city: formData.city,
       },
-      jobCategory: {
-        id: formData.jobCategoryId,
-        category: '',
-      },
+      jobCategoryId: formData.jobCategoryId,
       startDate: formData.startDate,
       endDate: formData.endDate,
       range: formData.range,

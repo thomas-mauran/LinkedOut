@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import AvailabilityForm, {
   AvailabilityFormData,
 } from '@/components/availabilities/AvailabilityForm';
-import { Availability } from '@/models/entities/availability';
+import { CreateAvailabilityDto } from '@/models/dtos/availability/createAvailabilityDto';
 import { usePostAvailabilitiesMutation } from '@/store/api/availabilityApiSlice';
 import { useGetJobCategoriesQuery } from '@/store/api/jobApiSlice';
 
@@ -56,24 +56,20 @@ const AvailabilityCreatePage: FC<AvailabilityCreatePageProps> = ({
   });
 
   // Callbacks
-  // FIXME
   const handleConfirmPress = useCallback(() => {
-    const updatedAvailability: Partial<Availability> = {
+    const newAvailability: CreateAvailabilityDto = {
       address: {
         firstLine: formData.addressFirstLine,
         zipCode: formData.zipCode,
         city: formData.city,
       },
-      jobCategory: {
-        id: formData.jobCategoryId,
-        category: '',
-      },
+      jobCategoryId: formData.jobCategoryId,
       startDate: formData.startDate,
       endDate: formData.endDate,
       range: formData.range,
     };
 
-    postAvailability(updatedAvailability)
+    postAvailability(newAvailability)
       .unwrap()
       .then(() => {
         navigation.goBack();

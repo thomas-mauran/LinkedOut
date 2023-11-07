@@ -1,3 +1,5 @@
+import { CreateExperienceDto } from '@/models/dtos/experience/createExperienceDto';
+import { UpdateExperienceDto } from '@/models/dtos/experience/updateExperienceDto';
 import { Experience } from '@/models/entities/experience';
 import { apiSlice } from '@/store/api/apiSlice';
 
@@ -23,7 +25,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (id) => `profile/experiences/${id}/`,
       providesTags: (_result, _error, id) => [{ type: 'Experiences', id }],
     }),
-    postExperience: builder.mutation<Partial<Experience>, Partial<Experience>>({
+    postExperience: builder.mutation<Experience, CreateExperienceDto>({
       query: (body) => ({
         url: 'profile/experiences/',
         method: 'POST',
@@ -31,20 +33,18 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Experiences', id: 'LIST' }],
     }),
-    patchExperience: builder.mutation<Partial<Experience>, Partial<Experience>>(
-      {
-        query: (body) => ({
-          url: `profile/experiences/${body.id}/`,
-          method: 'PATCH',
-          body,
-        }),
-        invalidatesTags: (_result, _error, { id }) => [
-          { type: 'Experiences', id: 'LIST' },
-          { type: 'Experiences', id },
-        ],
-      },
-    ),
-    deleteExperience: builder.mutation<Partial<Experience>, number>({
+    patchExperience: builder.mutation<Experience, UpdateExperienceDto>({
+      query: (body) => ({
+        url: `profile/experiences/${body.id}/`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: 'Experiences', id: 'LIST' },
+        { type: 'Experiences', id },
+      ],
+    }),
+    deleteExperience: builder.mutation<void, number>({
       query: (id) => ({
         url: `profile/experiences/${id}/`,
         method: 'DELETE',

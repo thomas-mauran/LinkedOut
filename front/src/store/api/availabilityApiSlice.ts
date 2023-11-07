@@ -1,3 +1,5 @@
+import { CreateAvailabilityDto } from '@/models/dtos/availability/createAvailabilityDto';
+import { UpdateAvailabilityDto } from '@/models/dtos/availability/updateAvailabilityDto';
 import { Availability } from '@/models/entities/availability';
 import { apiSlice } from '@/store/api/apiSlice';
 
@@ -24,30 +26,19 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         query: (id) => `profile/availabilities/${id}/`,
         providesTags: (_result, _error, id) => [{ type: 'Availabilities', id }],
       }),
-      deleteAvailabilities: builder.mutation<Partial<Availability>, number>({
-        query: (id) => ({
-          url: `profile/availabilities/${id}/`,
-          method: 'DELETE',
-        }),
-        invalidatesTags: (_result, _error, id) => [
-          { type: 'Availabilities', id: 'LIST' },
-          { type: 'Availabilities', id },
-        ],
-      }),
-      postAvailabilities: builder.mutation<
-        Partial<Availability>,
-        Partial<Availability>
-      >({
-        query: (body) => ({
-          url: 'profile/availabilities/',
-          method: 'POST',
-          body,
-        }),
-        invalidatesTags: [{ type: 'Availabilities', id: 'LIST' }],
-      }),
+      postAvailabilities: builder.mutation<Availability, CreateAvailabilityDto>(
+        {
+          query: (body) => ({
+            url: 'profile/availabilities/',
+            method: 'POST',
+            body,
+          }),
+          invalidatesTags: [{ type: 'Availabilities', id: 'LIST' }],
+        },
+      ),
       patchAvailabilities: builder.mutation<
-        Partial<Availability>,
-        Partial<Availability>
+        Availability,
+        UpdateAvailabilityDto
       >({
         query: (body) => ({
           url: `profile/availabilities/${body.id}/`,
@@ -59,6 +50,16 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           { type: 'Availabilities', id },
         ],
       }),
+      deleteAvailabilities: builder.mutation<void, number>({
+        query: (id) => ({
+          url: `profile/availabilities/${id}/`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: (_result, _error, id) => [
+          { type: 'Availabilities', id: 'LIST' },
+          { type: 'Availabilities', id },
+        ],
+      }),
     };
   },
 });
@@ -66,7 +67,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetAvailabilitiesQuery,
   useGetAvailabilityQuery,
-  useDeleteAvailabilitiesMutation,
   usePostAvailabilitiesMutation,
   usePatchAvailabilitiesMutation,
+  useDeleteAvailabilitiesMutation,
 } = extendedApiSlice;

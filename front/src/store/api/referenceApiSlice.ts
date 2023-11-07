@@ -1,3 +1,5 @@
+import { CreateReferenceDto } from '@/models/dtos/reference/createReferenceDto';
+import { UpdateReferenceDto } from '@/models/dtos/reference/updateReferenceDto';
 import { Reference } from '@/models/entities/reference';
 import { apiSlice } from '@/store/api/apiSlice';
 
@@ -23,7 +25,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (id) => `profile/references/${id}/`,
       providesTags: (_result, _error, id) => [{ type: 'References', id }],
     }),
-    postReference: builder.mutation<Partial<Reference>, Partial<Reference>>({
+    postReference: builder.mutation<Reference, CreateReferenceDto>({
       query: (body) => ({
         url: 'profile/references/',
         method: 'POST',
@@ -31,7 +33,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'References', id: 'LIST' }],
     }),
-    patchReference: builder.mutation<Partial<Reference>, Partial<Reference>>({
+    patchReference: builder.mutation<Reference, UpdateReferenceDto>({
       query: (body) => ({
         url: `profile/references/${body.id}/`,
         method: 'PATCH',
@@ -42,7 +44,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: 'References', id },
       ],
     }),
-    deleteReference: builder.mutation<Partial<Reference>, number>({
+    deleteReference: builder.mutation<void, number>({
       query: (id) => ({
         url: `profile/references/${id}/`,
         method: 'DELETE',

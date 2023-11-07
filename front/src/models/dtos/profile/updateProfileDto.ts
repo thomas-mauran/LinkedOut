@@ -1,24 +1,10 @@
 import { Address } from '@/models/entities/address';
+import { Gender } from '@/models/entities/profile';
 
 /**
- * Known genders.
+ * DTO for updating a profile.
  */
-export enum Gender {
-  UNKNOWN = 0,
-  MALE = 1,
-  FEMALE = 2,
-  UNSPECIFIED = 9,
-}
-
-/**
- * The profile of a user.
- */
-export type Profile = {
-  /**
-   * The id of the profile.
-   */
-  id: number;
-
+export type UpdateProfileDto = Partial<{
   /**
    * The first name of the user.
    */
@@ -65,24 +51,4 @@ export type Profile = {
    * The short biography of the user.
    */
   shortBiography: string;
-
-  /**
-   * Whether the user requested their profile to be deleted.
-   */
-  deletionRequested: boolean;
-
-  /**
-   * The number of experiences of the user.
-   */
-  nbExperiences: number;
-
-  /**
-   * The number of reviews of the user.
-   */
-  nbReviews: number;
-
-  /**
-   * The average rating of the user.
-   */
-  averageRating: number;
-};
+}>;

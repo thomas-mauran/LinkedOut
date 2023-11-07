@@ -7,8 +7,8 @@ import AvailabilityList from '@/components/availabilities/AvailabilityList';
 import ProfileUpdateInfosForm, {
   ProfileUpdateInfosFormData,
 } from '@/components/profile/ProfileUpdateInfosForm';
+import { UpdateProfileDto } from '@/models/dtos/profile/updateProfileDto';
 import { Availability } from '@/models/entities/availability';
-import { Profile } from '@/models/entities/profile';
 import {
   useDeleteAvailabilitiesMutation,
   useGetAvailabilitiesQuery,
@@ -61,8 +61,7 @@ const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
 
   // Callbacks
   const handleConfirmPress = useCallback(() => {
-    const updatedProfile: Partial<Profile> = {
-      id: formData.id,
+    const updatedProfile: UpdateProfileDto = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       shortBiography: formData.shortBiography,

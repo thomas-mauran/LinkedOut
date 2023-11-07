@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import ReferenceForm, {
   ReferenceFormData,
 } from '@/components/references/ReferenceForm';
-import { Reference } from '@/models/entities/reference';
+import { UpdateReferenceDto } from '@/models/dtos/reference/updateReferenceDto';
 import {
   useGetReferenceQuery,
   usePatchReferenceMutation,
@@ -64,9 +64,8 @@ const ReferenceUpdatePage: FC<ReferenceUpdatePageProps> = ({
   const [formData, setFormData] = useState<ReferenceFormData | undefined>();
 
   // Callbacks
-  // FIXME
   const handleConfirmPress = useCallback(() => {
-    const updatedReference: Partial<Reference> = {
+    const updatedReference: UpdateReferenceDto = {
       id: referenceId,
       company: {
         name: formData.companyName,

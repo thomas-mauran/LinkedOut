@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import ExperienceForm, {
   ExperienceFormData,
 } from '@/components/experiences/ExperienceForm';
-import { Experience } from '@/models/entities/experience';
+import { UpdateExperienceDto } from '@/models/dtos/experience/updateExperienceDto';
 import {
   useGetExperienceQuery,
   usePatchExperienceMutation,
@@ -65,16 +65,13 @@ const ExperienceUpdatePage: FC<ExperienceUpdatePageProps> = ({
   const [formData, setFormData] = useState<ExperienceFormData | undefined>();
 
   // Callbacks
-  // FIXME
   const handleConfirmPress = useCallback(() => {
-    const updatedExperience: Experience = {
+    const updatedExperience: UpdateExperienceDto = {
       id: experienceId,
       company: {
         name: formData.companyName,
       },
-      job: {
-        title: formData.jobTitle,
-      },
+      jobId: 1,
       address: {
         firstLine: formData.firstLine,
         zipCode: formData.zipCode,

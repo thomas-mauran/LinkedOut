@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import ExperienceForm, {
   ExperienceFormData,
 } from '@/components/experiences/ExperienceForm';
-import { Experience } from '@/models/entities/experience';
+import { CreateExperienceDto } from '@/models/dtos/experience/createExperienceDto';
 import { usePostExperienceMutation } from '@/store/api/experienceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
@@ -54,15 +54,12 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
   });
 
   // Callbacks
-  // FIXME
   const handleConfirmPress = useCallback(() => {
-    const updatedExperience: Partial<Experience> = {
+    const newExperience: CreateExperienceDto = {
       company: {
         name: formData.companyName,
       },
-      job: {
-        title: formData.jobTitle,
-      },
+      jobId: 1,
       address: {
         firstLine: formData.firstLine,
         zipCode: formData.zipCode,
@@ -72,7 +69,7 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
       endDate: formData.endDate,
     };
 
-    postExperience(updatedExperience)
+    postExperience(newExperience)
       .unwrap()
       .then(() => {
         navigation.goBack();

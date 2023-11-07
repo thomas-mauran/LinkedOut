@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import ReferenceForm, {
   ReferenceFormData,
 } from '@/components/references/ReferenceForm';
-import { Reference } from '@/models/entities/reference';
+import { CreateReferenceDto } from '@/models/dtos/reference/createReferenceDto';
 import { usePostReferenceMutation } from '@/store/api/referenceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
@@ -54,7 +54,7 @@ const ReferenceCreatePage: FC<ReferenceCreatePageProps> = ({ navigation }) => {
 
   // Callbacks
   const handleConfirmPress = useCallback(() => {
-    const updatedReference: Partial<Reference> = {
+    const newReference: CreateReferenceDto = {
       company: {
         name: formData.companyName,
       },
@@ -69,7 +69,7 @@ const ReferenceCreatePage: FC<ReferenceCreatePageProps> = ({ navigation }) => {
       lastName: formData.lastName,
     };
 
-    postReference(updatedReference)
+    postReference(newReference)
       .unwrap()
       .then(() => {
         navigation.goBack();
