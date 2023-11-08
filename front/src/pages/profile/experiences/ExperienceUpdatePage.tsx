@@ -11,9 +11,9 @@ import {
   useGetExperienceQuery,
   usePatchExperienceMutation,
 } from '@/store/api/experienceApiSlice';
+import { useGetJobsQuery } from '@/store/api/jobApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
-import { useGetJobsQuery } from '@/store/api/jobApiSlice';
 
 /**
  * The styles for the ExperienceUpdatePage component.
@@ -129,10 +129,11 @@ const ExperienceUpdatePage: FC<ExperienceUpdatePageProps> = ({
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ExperienceForm 
-      jobs={jobs}
-      formData={formData} 
-      onFormDataUpdate={setFormData} />
+      <ExperienceForm
+        jobs={jobs}
+        formData={formData}
+        onFormDataUpdate={setFormData}
+      />
     </ScrollView>
   );
 };

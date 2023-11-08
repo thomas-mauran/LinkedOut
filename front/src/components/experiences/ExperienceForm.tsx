@@ -4,8 +4,8 @@ import { TextInput } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 
 import DateRangePicker from '@/components/utils/DateRangePicker';
-import i18n from '@/utils/i18n';
 import { Job } from '@/models/entities/job';
+import i18n from '@/utils/i18n';
 
 /**
  * The styles for the ExperienceForm component.
@@ -41,8 +41,8 @@ export type ExperienceFormData = {
  */
 type ExperienceFormProps = {
   /**
- * The jobs.
- */
+   * The jobs.
+   */
   jobs: Job[];
   /**
    * The data for the form.
@@ -70,7 +70,7 @@ const ExperienceForm: FC<ExperienceFormProps> = ({
     endDate: new Date(formData.endDate ?? new Date()),
   });
   const [jobCategoryDropdownVisible, setJobCategoryDropdownVisible] =
-  useState(false);
+    useState(false);
 
   // Callbacks
   const handleInputChange = useCallback(
@@ -114,7 +114,6 @@ const ExperienceForm: FC<ExperienceFormProps> = ({
           value: job.id,
         }))}
       />
-
 
       <DateRangePicker
         startDate={dateRange.startDate}

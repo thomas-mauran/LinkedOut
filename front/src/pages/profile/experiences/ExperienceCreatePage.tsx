@@ -8,9 +8,9 @@ import ExperienceForm, {
 } from '@/components/experiences/ExperienceForm';
 import { CreateExperienceDto } from '@/models/dtos/experience/createExperienceDto';
 import { usePostExperienceMutation } from '@/store/api/experienceApiSlice';
+import { useGetJobsQuery } from '@/store/api/jobApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
-import { useGetJobsQuery } from '@/store/api/jobApiSlice';
 
 /**
  * The styles for the ExperienceCreatePage component.
@@ -98,10 +98,11 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ExperienceForm         
-      jobs={jobs}
-      formData={formData} 
-      onFormDataUpdate={setFormData} />
+      <ExperienceForm
+        jobs={jobs}
+        formData={formData}
+        onFormDataUpdate={setFormData}
+      />
     </ScrollView>
   );
 };
