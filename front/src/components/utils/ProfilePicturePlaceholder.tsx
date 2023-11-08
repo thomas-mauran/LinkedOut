@@ -1,7 +1,8 @@
 import * as Crypto from 'expo-crypto';
 import { FC, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { Text } from 'react-native-paper';
+import { palette } from '@/utils/theme';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,6 @@ const ProfilePicturePlaceholder: FC<ProfilePicturePlaceholderProps> = ({
   username,
 }) => {
   const [backgroundColor, setBackgroundColor] = useState<string>('#000000'); // Initial color, change as required
-  const theme = useTheme();
 
   useEffect(() => {
     const getColor = async () => {
@@ -42,7 +42,7 @@ const ProfilePicturePlaceholder: FC<ProfilePicturePlaceholderProps> = ({
 
   return (
     <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-      <Text style={{color: theme.colors.surface}}>{username[0]}</Text>
+      <Text style={{color: palette.primary100}}>{username[0]}</Text>
     </View>
   );
 };

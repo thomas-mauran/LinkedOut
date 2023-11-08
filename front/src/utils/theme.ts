@@ -32,7 +32,7 @@ const opacity = {
   level4: 0.38,
 };
 
-const palette = {
+export const palette = {
   primary100: '#ffffff',
   primary99: '#fffbff',
   primary98: '#fff8f5',
