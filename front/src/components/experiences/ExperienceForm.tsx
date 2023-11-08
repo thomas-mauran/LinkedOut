@@ -41,7 +41,7 @@ export type ExperienceFormData = {
  */
 type ExperienceFormProps = {
   /**
- * The job categories.
+ * The jobs.
  */
   jobs: Job[];
   /**

@@ -28,7 +28,7 @@ export type CreateExperienceDto = {
   company: Omit<Company, 'id'>;
 
   /**
-   * The job of the experience.
+   * The job id of the experience.
    */
   jobId: string;
 };
