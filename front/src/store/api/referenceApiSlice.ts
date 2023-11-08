@@ -21,7 +21,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: 'References', id: 'LIST' }],
     }),
-    getReference: builder.query<Reference, number>({
+    getReference: builder.query<Reference, string>({
       query: (id) => `profile/references/${id}/`,
       providesTags: (_result, _error, id) => [{ type: 'References', id }],
     }),
@@ -44,7 +44,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: 'References', id },
       ],
     }),
-    deleteReference: builder.mutation<void, number>({
+    deleteReference: builder.mutation<void, string>({
       query: (id) => ({
         url: `profile/references/${id}/`,
         method: 'DELETE',

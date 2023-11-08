@@ -5,7 +5,7 @@ export type Job = {
   /**
    * The id of the job.
    */
-  id: number;
+  id: string;
 
   /**
    * The title of the job.

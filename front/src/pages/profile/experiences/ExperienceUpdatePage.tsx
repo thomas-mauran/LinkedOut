@@ -13,6 +13,7 @@ import {
 } from '@/store/api/experienceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
+import { useGetJobsQuery } from '@/store/api/jobApiSlice';
 
 /**
  * The styles for the ExperienceUpdatePage component.
@@ -43,7 +44,7 @@ export type ExperienceUpdatePageParams = {
   /**
    * The ID of the experience to update.
    */
-  id: number;
+  id: string;
 };
 
 /**
@@ -60,6 +61,7 @@ const ExperienceUpdatePage: FC<ExperienceUpdatePageProps> = ({
   // API calls
   const { data: experience } = useGetExperienceQuery(experienceId);
   const [patchExperience] = usePatchExperienceMutation();
+  const { data: jobs } = useGetJobsQuery();
 
   // State
   const [formData, setFormData] = useState<ExperienceFormData | undefined>();
@@ -71,7 +73,7 @@ const ExperienceUpdatePage: FC<ExperienceUpdatePageProps> = ({
       company: {
         name: formData.companyName,
       },
-      jobId: 1,
+      jobId: formData.jobId,
       address: {
         firstLine: formData.firstLine,
         zipCode: formData.zipCode,
@@ -104,9 +106,8 @@ const ExperienceUpdatePage: FC<ExperienceUpdatePageProps> = ({
     if (experience === undefined || formData !== undefined) {
       return;
     }
-
     setFormData({
-      jobTitle: experience.job.title,
+      jobId: experience.job.id,
       startDate: experience.startDate,
       endDate: experience.endDate,
       companyName: experience.company.name,
@@ -120,12 +121,18 @@ const ExperienceUpdatePage: FC<ExperienceUpdatePageProps> = ({
     return null;
   }
 
+  if (jobs === undefined) {
+    return null;
+  }
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
+      <ExperienceForm 
+      jobs={jobs}
+      formData={formData} 
+      onFormDataUpdate={setFormData} />
     </ScrollView>
   );
 };

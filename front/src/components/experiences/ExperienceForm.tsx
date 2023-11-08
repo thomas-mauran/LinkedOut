@@ -1,9 +1,11 @@
 import { FC, useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import DropDown from 'react-native-paper-dropdown';
 
 import DateRangePicker from '@/components/utils/DateRangePicker';
 import i18n from '@/utils/i18n';
+import { Job } from '@/models/entities/job';
 
 /**
  * The styles for the ExperienceForm component.
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
  * The data for the experience form.
  */
 export type ExperienceFormData = {
-  jobTitle: string;
+  jobId: string;
   startDate: string;
   endDate: string;
   companyName: string;
@@ -38,6 +40,10 @@ export type ExperienceFormData = {
  * The props for the ExperienceForm component.
  */
 type ExperienceFormProps = {
+  /**
+ * The job categories.
+ */
+  jobs: Job[];
   /**
    * The data for the form.
    */
@@ -54,6 +60,7 @@ type ExperienceFormProps = {
  * @constructor
  */
 const ExperienceForm: FC<ExperienceFormProps> = ({
+  jobs,
   formData,
   onFormDataUpdate,
 }) => {
@@ -62,6 +69,8 @@ const ExperienceForm: FC<ExperienceFormProps> = ({
     startDate: new Date(formData.startDate ?? new Date()),
     endDate: new Date(formData.endDate ?? new Date()),
   });
+  const [jobCategoryDropdownVisible, setJobCategoryDropdownVisible] =
+  useState(false);
 
   // Callbacks
   const handleInputChange = useCallback(
@@ -93,11 +102,19 @@ const ExperienceForm: FC<ExperienceFormProps> = ({
 
   return (
     <View style={styles.container}>
-      <TextInput
-        label={i18n.t('profile.job.jobTitle')}
-        value={formData.jobTitle}
-        onChangeText={(value) => handleInputChange('jobTitle', value)}
+      <DropDown
+        label={i18n.t('profile.job.job')}
+        visible={jobCategoryDropdownVisible}
+        showDropDown={() => setJobCategoryDropdownVisible(true)}
+        onDismiss={() => setJobCategoryDropdownVisible(false)}
+        value={formData.jobId}
+        setValue={(value) => handleInputChange('jobId', value)}
+        list={jobs.map((job) => ({
+          label: job.title,
+          value: job.id,
+        }))}
       />
+
 
       <DateRangePicker
         startDate={dateRange.startDate}

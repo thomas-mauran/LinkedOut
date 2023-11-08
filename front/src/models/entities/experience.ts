@@ -9,7 +9,7 @@ export type Experience = {
   /**
    * The id of the experience.
    */
-  id: number;
+  id: string;
 
   /**
    * The start date of the experience.

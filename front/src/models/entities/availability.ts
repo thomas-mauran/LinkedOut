@@ -8,7 +8,7 @@ export type Availability = {
   /**
    * The id of the availability.
    */
-  id: number;
+  id: string;
 
   /**
    * The start date of the availability.

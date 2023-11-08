@@ -43,7 +43,7 @@ export type AvailabilityUpdatePageParams = {
   /**
    * The ID of the availability to update.
    */
-  id: number;
+  id: string;
 };
 
 /**

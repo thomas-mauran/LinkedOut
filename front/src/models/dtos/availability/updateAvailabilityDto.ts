@@ -7,5 +7,5 @@ export type UpdateAvailabilityDto = Partial<CreateAvailabilityDto> & {
   /**
    * The id of the availability.
    */
-  id: number;
+  id: string;
 };

@@ -21,7 +21,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: 'Experiences', id: 'LIST' }],
     }),
-    getExperience: builder.query<Experience, number>({
+    getExperience: builder.query<Experience, string>({
       query: (id) => `profile/experiences/${id}/`,
       providesTags: (_result, _error, id) => [{ type: 'Experiences', id }],
     }),
@@ -44,7 +44,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: 'Experiences', id },
       ],
     }),
-    deleteExperience: builder.mutation<void, number>({
+    deleteExperience: builder.mutation<void, string>({
       query: (id) => ({
         url: `profile/experiences/${id}/`,
         method: 'DELETE',

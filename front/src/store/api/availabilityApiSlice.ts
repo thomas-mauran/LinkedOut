@@ -22,7 +22,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
               ]
             : [{ type: 'Availabilities', id: 'LIST' }],
       }),
-      getAvailability: builder.query<Availability, number>({
+      getAvailability: builder.query<Availability, string>({
         query: (id) => `profile/availabilities/${id}/`,
         providesTags: (_result, _error, id) => [{ type: 'Availabilities', id }],
       }),
@@ -50,7 +50,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           { type: 'Availabilities', id },
         ],
       }),
-      deleteAvailabilities: builder.mutation<void, number>({
+      deleteAvailabilities: builder.mutation<void, string>({
         query: (id) => ({
           url: `profile/availabilities/${id}/`,
           method: 'DELETE',

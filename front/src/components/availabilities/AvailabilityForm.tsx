@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
  * The data for the availability form.
  */
 export type AvailabilityFormData = {
-  jobCategoryId: number;
+  jobCategoryId: string;
   startDate: string;
   endDate: string;
   addressFirstLine: string;

@@ -46,7 +46,7 @@ const AvailabilityCreatePage: FC<AvailabilityCreatePageProps> = ({
 
   // State
   const [formData, setFormData] = useState<AvailabilityFormData>({
-    jobCategoryId: 0,
+    jobCategoryId: '',
     startDate: new Date().toISOString(),
     endDate: new Date().toISOString(),
     addressFirstLine: '',

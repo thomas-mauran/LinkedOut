@@ -41,22 +41,38 @@
       "averageRating": 3.6
     }
   ],
-  "deletionProfiles": [2],
+  "deletionProfiles": [
+    2
+  ],
   "availabilities": [
     {
       "id": "57bcc043-74c3-433e-9592-e444409e0aa1",
       "startDate": "2023-08-23",
       "endDate": "2023-12-12",
-      "geographicArea": "Paris, 16ème arrondissement",
-      "category": "Showbiz"
+      "address": {
+        "firstLine": "52 rue des Saints-Pères",
+        "zipCode": "75107",
+        "city": "Paris"
+      },
+      "jobCategory": {
+        "id": "a3b616fe-fee0-41d1-b863-8f1660218908",
+        "category": "Showbiz"
+      }
     },
     {
-       "id": "2191ad1f-c33d-47bb-bfcf-c60cf131a3b7",
-       "startDate": "2023-03-14",
-       "endDate": "2022-12-12",
-       "geographicArea": "Paris, 16ème arrondissement",
-       "category": "Restauration"
-     }
+      "id": "2191ad1f-c33d-47bb-bfcf-c60cf131a3b7",
+      "startDate": "2023-03-14",
+      "endDate": "2022-12-12",
+      "address": {
+        "firstLine": "52 rue des Saints-Pères",
+        "zipCode": "75107",
+        "city": "Paris"
+      },
+      "jobCategory": {
+        "id": "e46fd452-eed8-4318-87f1-f1179700d2e0",
+        "category": "Hôtels, cafés, bars, restaurants"
+      }
+    }
   ],
   "references": [
     {
@@ -273,15 +289,15 @@
   "jobCategories": [
     {
       "id": "260e9256-b781-4fa9-951a-0730d59e8d98",
-      "name": "Autre"
+      "category": "Autre"
     },
     {
       "id": "a3b616fe-fee0-41d1-b863-8f1660218908",
-      "name": "Showbiz"
+      "category": "Showbiz"
     },
     {
       "id": "e46fd452-eed8-4318-87f1-f1179700d2e0",
-      "name": "Hôtels, cafés, bars, restaurants"
+      "category": "Hôtels, cafés, bars, restaurants"
     }
   ],
   "messageChannels": [

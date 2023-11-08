@@ -8,7 +8,7 @@ export type Reference = {
   /**
    * The id of the reference.
    */
-  id: number;
+  id: string;
 
   /**
    * The first name of the referer.

@@ -24,7 +24,7 @@ export type CreateAvailabilityDto = {
   /**
    * The id of the job category of the availability.
    */
-  jobCategoryId: number;
+  jobCategoryId: string;
 
   /**
    * The range around the address (in kilometers).

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
  * The data for the profile update infos form.
  */
 export type ProfileUpdateInfosFormData = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;

@@ -1,3 +1,4 @@
+import { Job } from '@/models/entities/job';
 import { JobCategory } from '@/models/entities/jobCategory';
 import { apiSlice } from '@/store/api/apiSlice';
 
@@ -19,7 +20,20 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: 'JobCategories', id: 'LIST' }],
     }),
+    getJobs: builder.query<Job[], void>({
+      query: () => 'jobs/',
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({
+                type: 'Job' as const,
+                id,
+              })),
+              { type: 'Job', id: 'LIST' },
+            ]
+          : [{ type: 'Job', id: 'LIST' }],
+    }),
   }),
 });
 
-export const { useGetJobCategoriesQuery } = extendedApiSlice;
+export const { useGetJobCategoriesQuery, useGetJobsQuery } = extendedApiSlice;

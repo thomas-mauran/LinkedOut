@@ -7,5 +7,5 @@ export type UpdateReferenceDto = Partial<CreateReferenceDto> & {
   /**
    * The id of the reference.
    */
-  id: number;
+  id: string;
 };

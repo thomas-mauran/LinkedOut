@@ -17,7 +17,7 @@ export type Profile = {
   /**
    * The id of the profile.
    */
-  id: number;
+  id: string;
 
   /**
    * The first name of the user.

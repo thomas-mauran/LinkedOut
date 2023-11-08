@@ -7,5 +7,5 @@ export type UpdateExperienceDto = Partial<CreateExperienceDto> & {
   /**
    * The id of the experience.
    */
-  id: number;
+  id: string;
 };

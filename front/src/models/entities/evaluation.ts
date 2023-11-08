@@ -5,7 +5,7 @@ export type Evaluation = {
   /**
    * The id of the evaluation.
    */
-  id: number;
+  id: string;
 
   /**
    * The first name of the employer.

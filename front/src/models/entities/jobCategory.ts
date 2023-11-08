@@ -5,7 +5,7 @@ export type JobCategory = {
   /**
    * The id of the job category.
    */
-  id: number;
+  id: string;
 
   /**
    * The name of the job category.

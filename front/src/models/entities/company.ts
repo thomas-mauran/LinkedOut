@@ -5,7 +5,7 @@ export type Company = {
   /**
    * The id of the company.
    */
-  id: number;
+  id: string;
 
   /**
    * The name of the company.

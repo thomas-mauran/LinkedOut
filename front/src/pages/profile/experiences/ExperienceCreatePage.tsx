@@ -10,6 +10,7 @@ import { CreateExperienceDto } from '@/models/dtos/experience/createExperienceDt
 import { usePostExperienceMutation } from '@/store/api/experienceApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
+import { useGetJobsQuery } from '@/store/api/jobApiSlice';
 
 /**
  * The styles for the ExperienceCreatePage component.
@@ -40,11 +41,12 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
   navigation,
 }) => {
   // API calls
+  const { data: jobs } = useGetJobsQuery();
   const [postExperience] = usePostExperienceMutation();
 
   // State
   const [formData, setFormData] = useState<ExperienceFormData>({
-    jobTitle: '',
+    jobId: '',
     firstLine: '',
     zipCode: '',
     city: '',
@@ -59,7 +61,7 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
       company: {
         name: formData.companyName,
       },
-      jobId: 1,
+      jobId: '',
       address: {
         firstLine: formData.firstLine,
         zipCode: formData.zipCode,
@@ -87,12 +89,19 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
     });
   }, [handleConfirmPress, navigation, formData]);
 
+  if (jobs === undefined) {
+    return null;
+  }
+
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <ExperienceForm formData={formData} onFormDataUpdate={setFormData} />
+      <ExperienceForm         
+      jobs={jobs}
+      formData={formData} 
+      onFormDataUpdate={setFormData} />
     </ScrollView>
   );
 };

@@ -42,7 +42,7 @@ export type ReferenceUpdatePageParams = {
   /**
    * The ID of the reference to update.
    */
-  id: number;
+  id: string;
 };
 
 /**

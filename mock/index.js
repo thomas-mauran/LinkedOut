@@ -1,5 +1,6 @@
 import fs from 'fs';
 import jsonServer from 'json-server';
+import fetch from 'node-fetch';
 
 const SERVER_PORT = 3000;
 const PROFILE_PHOTO_URL = 'https://ga.de/imgs/93/5/9/5/9/4/3/2/5/tok_7eb36f92d4b23cc7dfe601d953746972/w1512_h2177_x756_y1088_8aaef0de7b52583f.jpg';
