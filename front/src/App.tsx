@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ApiProvider } from '@reduxjs/toolkit/query/react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -8,21 +8,13 @@ import { useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 
-import InternalTabNav from '@/pages/InternalTabNav';
-import store from '@/store/Store';
+import RootNavigator from '@/RootNavigator';
+import { apiSlice } from '@/store/api/apiSlice';
+import { store } from '@/store/store';
 import { DarkTheme, LightTheme } from '@/utils/theme';
 
 // We want to hide the splash screen ourselves
 SplashScreen.preventAutoHideAsync();
-
-/**
- * The parameter list for the RootStack navigator.
- */
-export type RootStackParamList = {
-  Internal: undefined;
-};
-
-const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 /**
  * The root component for this application.
@@ -41,7 +33,7 @@ const App = () => {
   // Hide the splash screen when everything is initialized
   const shouldHideSplashScreen = fontsLoaded || !!fontError;
 
-  const onNavigationContainerReady = useCallback(async () => {
+  const handleNavigationContainerReady = useCallback(async () => {
     if (shouldHideSplashScreen) {
       await SplashScreen.hideAsync();
     }
@@ -54,15 +46,15 @@ const App = () => {
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
-        <NavigationContainer theme={theme} onReady={onNavigationContainerReady}>
-          <StatusBar style='auto' />
-          <RootStack.Navigator
-            initialRouteName='Internal'
-            screenOptions={{ headerShown: false }}
+        <ApiProvider api={apiSlice}>
+          <NavigationContainer
+            theme={theme}
+            onReady={handleNavigationContainerReady}
           >
-            <RootStack.Screen name='Internal' component={InternalTabNav} />
-          </RootStack.Navigator>
-        </NavigationContainer>
+            <StatusBar style='auto' />
+            <RootNavigator />
+          </NavigationContainer>
+        </ApiProvider>
       </PaperProvider>
     </Provider>
   );

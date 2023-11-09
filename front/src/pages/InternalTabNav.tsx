@@ -2,14 +2,16 @@ import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navig
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import InternalMiscNav from '@/pages/internal/InternalMiscNav';
-import InternalPagesPage from '@/pages/internal/InternalPagesPage';
+import InternalPagesNav from '@/pages/internal/InternalPagesNav';
 
 /**
  * The parameter list for the InternalTab navigator.
  */
+
 export type InternalTabParamList = {
   InternalPages: undefined;
   InternalMisc: undefined;
+  InternalProfile: undefined;
 };
 
 const InternalTab = createMaterialBottomTabNavigator<InternalTabParamList>();
@@ -23,7 +25,7 @@ const InternalTabNav = () => {
     <InternalTab.Navigator>
       <InternalTab.Screen
         name='InternalPages'
-        component={InternalPagesPage}
+        component={InternalPagesNav}
         options={{
           tabBarLabel: 'Pages',
           tabBarIcon: ({ color }) => (

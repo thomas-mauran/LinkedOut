@@ -9,7 +9,7 @@ tags:
   - name: Availability
     description: Availability of a user
   - name: Reference
-    description: References (people who can recommand) of a user
+    description: References (people who can recommend) of a user
   - name: Experience
     description: Professional experiences of a user
   - name: Evaluation
@@ -1061,6 +1061,11 @@ components:
           format: int64
           example: 2
           readOnly: true
+        averageRating:
+          type: number
+          format: float
+          example: 4.5
+          readOnly: true
     Reference:
       type: object
       properties:
@@ -1132,12 +1137,15 @@ components:
           type: string
           format: date
           example: 2023-03-14
-        geographicArea:
-          type: string
-          example: Paris, 16ème arrondissement
+        address:
+          $ref: '#/components/schemas/Address'
+        range:
+          type: integer
+          format: int64
+          example: 10
         jobCategory:
           allOf:
-          - $ref: '#/components/schemas/Job'
+          - $ref: '#/components/schemas/JobCategory'
           - readOnly: true
         jobCategoryId:
           type: string

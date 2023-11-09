@@ -53,7 +53,7 @@ const InternalOIDCTest = () => {
   );
 
   // Button press handlers
-  const fetchAuthedPress = useCallback(() => {
+  const handleFetchAuthedPress = useCallback(() => {
     // Fetch from a page that requires authentication
     fetch(`${apiUrl}/api/v1/authed`, {
       headers: {
@@ -69,7 +69,7 @@ const InternalOIDCTest = () => {
       .catch((error) => console.error(error));
   }, [accessToken, apiUrl]);
 
-  const loginPress = useCallback(async () => {
+  const handleLoginPress = useCallback(async () => {
     // Open the web view to the IdP login page
     const authResult = await promptAsync();
 
@@ -99,10 +99,14 @@ const InternalOIDCTest = () => {
   return (
     <View style={styles.container}>
       <Text>{oidcText}</Text>
-      <Button mode='contained-tonal' onPress={fetchAuthedPress}>
+      <Button mode='contained-tonal' onPress={handleFetchAuthedPress}>
         Fetch /api/v1/authed
       </Button>
-      <Button mode='contained-tonal' onPress={loginPress} disabled={!request}>
+      <Button
+        mode='contained-tonal'
+        onPress={handleLoginPress}
+        disabled={!request}
+      >
         Log in
       </Button>
     </View>

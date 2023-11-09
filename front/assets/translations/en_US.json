@@ -1,5 +1,73 @@
 {
   "internal": {
     "translatedText": "This text is translated to English."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "profile": {
+    "info": {
+      "contact": "Contact",
+      "availabilities": "Availabilities",
+      "experiences": "Experiences",
+      "experiencesCount": {
+        "zero": "No experience",
+        "one": "%{count} experience",
+        "other": "%{count} experiences"
+      },
+      "reviews": "Reviews",
+      "reviewsCount": {
+        "zero": "No review",
+        "one": "%{count} review",
+        "other": "%{count} reviews"
+      },
+      "phoneNumber": "Phone number",
+      "email": "Email",
+      "references": "References",
+      "downloadResume": "Download resume",
+      "information": "Information",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "shortBiography": "Biography",
+      "updateProfile": "Update profile",
+      "profile": "Profile"
+    },
+    "experiences": {
+      "edit": "Edit experience",
+      "create": "Create experience",
+      "delete": "Delete experience",
+      "deleteConfirm": "Are you sure you want to delete this experience?"
+    },
+    "references": {
+      "edit": "Edit reference",
+      "create": "Create reference",
+      "delete": "Delete reference",
+      "deleteConfirm": "Are you sure you want to delete this reference?"
+    },
+    "company": {
+      "company": "Company",
+      "companyName": "Company"
+    },
+    "address": {
+      "firstLine": "Address",
+      "city": "City",
+      "zipCode": "ZIP Code"
+    },
+    "job": {
+      "job": "Job",
+      "jobTitle": "Job"
+    },
+    "date": {
+      "dateRange": "Date range",
+      "pickRange": "Pick range"
+    },
+    "availabilities": {
+      "edit": "Edit availability",
+      "create": "Create availability",
+      "radiusRange": "Radius range: %{range} km",
+      "delete": "Delete availability",
+      "deleteConfirm": "Are you sure you want to delete this availability?"
+    }
   }
 }

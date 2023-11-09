@@ -1,5 +1,73 @@
 {
   "internal": {
     "translatedText": "Ce texte est traduit en Français."
+  },
+  "common": {
+    "cancel": "Annuler",
+    "delete": "Supprimer"
+  },
+  "profile": {
+    "info": {
+      "contact": "Contact",
+      "availabilities": "Disponibilités",
+      "experiences": "Expériences",
+      "experiencesCount": {
+        "zero": "Aucune expérience",
+        "one": "%{count} expérience",
+        "other": "%{count} expériences"
+      },
+      "reviews": "Avis",
+      "reviewsCount": {
+        "zero": "Aucun avis",
+        "one": "%{count} avis",
+        "other": "%{count} avis"
+      },
+      "phoneNumber": "Numéro de téléphone",
+      "email": "Email",
+      "references": "Références",
+      "downloadResume": "Télécharger le CV",
+      "information": "Informations",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "shortBiography": "Biographie",
+      "updateProfile": "Mettre à jour le profil",
+      "profile": "Profil"
+    },
+    "experiences": {
+      "edit": "Mettre à jour l'expérience",
+      "create": "Créer une expérience",
+      "delete": "Supprimer l'experience",
+      "deleteConfirm": "Voulez-vous vraiment supprimer cette expérience?"
+    },
+    "references": {
+      "edit": "Mettre à jour la référence",
+      "create": "Créer une référence",
+      "delete": "Supprimer la référence",
+      "deleteConfirm": "Voulez-vous vraiment supprimer cette référence?"
+    },
+    "company": {
+      "company": "Entreprise",
+      "companyName": "Entreprise"
+    },
+    "address": {
+      "firstLine": "N° et libellé de la voie",
+      "city": "Ville",
+      "zipCode": "Code postal"
+    },
+    "job": {
+      "job": "Emploi",
+      "jobTitle": "Intitulé du poste"
+    },
+    "date": {
+      "dateRange": "Période",
+      "pickRange": "Choisir une période"
+    },
+    "availabilities": {
+      "edit": "Mettre à jour une disponibilité",
+      "create": "Créer une disponibilité",
+      "radiusRange": "Rayon de recherche : %{range} km",
+      "delete": "Supprimer la disponibilité",
+      "deleteConfirm": "Voulez-vous vraiment supprimer cette disponibilité?"
+    }
   }
 }
