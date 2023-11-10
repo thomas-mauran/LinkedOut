@@ -5,9 +5,9 @@ spring:
     password: job
 
   flyway:
+    url: jdbc:postgresql://localhost:5432/job
     user: job
     password: job
-    url: jdbc:postgresql://localhost:5432/job
 
 server:
   port: 8081
