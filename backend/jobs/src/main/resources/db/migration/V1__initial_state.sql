@@ -1,40 +1,40 @@
 CREATE TABLE JobCategory (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title varchar(100) NOT NULL,
-    UNIQUE(title)
+     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+     title varchar(100) NOT NULL,
+     UNIQUE(title)
 );
 CREATE TABLE Company (
      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
      name varchar(100) NOT NULL,
-     geographicArea varchar(255),
+     geographicArea varchar(255) NOT NULL,
      UNIQUE(name, geographicArea)
 );
 
 CREATE TABLE Job (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title varchar(100) NOT NULL,
-    category UUID,
-    FOREIGN KEY (category) REFERENCES JobCategory(id),
-    UNIQUE(title,category)
+     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+     title varchar(100) NOT NULL,
+     category UUID NOT NULL,
+     FOREIGN KEY (category) REFERENCES JobCategory(id),
+     UNIQUE(title,category)
 );
 
 CREATE TABLE JobOffer (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    job UUID,
-    title varchar(100),
-    description varchar(1000),
-    start_date DATE,
-    end_date DATE,
-    company UUID,
-    salary INT,
-    FOREIGN KEY (company) REFERENCES Company(id),
-    FOREIGN KEY (job) REFERENCES Job(id)
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      job UUID NOT NULL,
+      title varchar(100) NOT NULL,
+      description varchar(1000) NOT NULL,
+      startDate DATE NOT NULL,
+      endDate DATE NOT NULL,
+      company UUID NOT NULL,
+      salary INT NOT NULL,
+      FOREIGN KEY (company) REFERENCES Company(id),
+      FOREIGN KEY (job) REFERENCES Job(id)
 );
 
 INSERT INTO
     JobCategory(id, title)
 VALUES
-(
+    (
         '504fe0a7-a862-4f1a-8ff5-67e925c73f35',
         'Agriculture, Viticulture, Pêche'
     ),
@@ -281,7 +281,7 @@ nicien.ne son et lumière',
 er.e',
         '58f2960e-8536-4454-a713-dbd78670670e'
     ),
-(
+    (
         'Responsable de maintenance',
         '58f2960e-8536-4454-a713-dbd78670670e'
     ),
@@ -314,7 +314,7 @@ er.e',
 tel',
         '58f2960e-8536-4454-a713-dbd78670670e'
     ),
-(
+    (
         'Chef.fe de rang',
         '58f2960e-8536-4454-a713-dbd78670670e'
     ),
@@ -533,7 +533,7 @@ nt.e animalier',
         'Fauconnier',
         '487e9884-e490-425c-b3e0-b5d2b0029683'
     ),
-(
+    (
         'Direct.eur.rice de parc
  d''attraction',
         '487e9884-e490-425c-b3e0-b5d2b0029683'

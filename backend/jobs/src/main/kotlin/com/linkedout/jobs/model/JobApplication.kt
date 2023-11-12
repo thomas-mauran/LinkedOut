@@ -5,9 +5,13 @@ import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 import java.util.UUID
 
-@Table(name = "jobcategory")
-data class JobCategory(
-        @Id
-        val id: UUID,
-        val title: String,
+@Table(name = "jobapplication")
+data class JobApplication(
+    @Id
+    val id: UUID? = null,
+    @Column("jobid")
+    val jobId: UUID,
+    @Column("userid")
+    val userId: UUID,
+    val status: Boolean,
 )
