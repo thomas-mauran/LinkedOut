@@ -79,9 +79,9 @@ We chose this solution instead of Kafka for it's lightweight design, low latency
 
 The message service is here to manage communications between seasonal workers and employers, allowing them to tchat using an instant messagery. This service will have persistent storage provided by a Postgresql database.
  
-### `Recommandation Service`
+### `Recommendation Service`
 
-The Recommendation Service is used to recommend job offers to seasonal workers. It will have a read access to the job and profile services and replicate the data in a graph database to find connections between related items and provide scores on the job offers for a seasonal worker.
+The Recommendation Service is used to recommend job offers to seasonal workers. It will have a read access to the job and profile services and replicate the data in a graph database (probably Neo4j) to find connections between related items and provide scores on the job offers for a seasonal worker.
 
 ## OpenAPI
 
