@@ -1,56 +1,53 @@
-# Architecture document
+# LinkedOut Architecture
 The goal of this document is to provide a clear overview of our microservice infrastructure, explain our choices and provide a clear OpenAPI definition.
 
 ## Technologies
 
-#### `Kubernetes`
+### Kubernetes
 
 Our production architecture leverages Kubernetes for container orchestration with Docker as the containerization platform. 
 This powerful combination provides scalability, flexibility, and efficient management of containerized applications.
 
-#### `Docker`
+### Docker
 
 We mianly use docker for development with many docker-composes to repliate the micro services and their databases but as said before we 
 also use Docker as the containerization platform in our kubernetes environment
 
-#### `NATS`
+### NATS
 
-We chose this solution instead of Kafka for it's lightweight design, low latency and overall simplicity. It also has a built-in mechanism 
-for doing synchronous request-reply messaging, which will be very useful for communication between the API gateway and the microservices. 
+We chose this solution instead of Kafka for its lightweight design, low latency and overall simplicity. 
 
-#### `Kotlin`
+It also has a built-in mechanism for doing synchronous request-reply messaging, which will be very useful for communication between the API gateway and the microservices. 
 
-We chose kotlin as our main backend language because we wanted to try something else than java
+### Kotlin
 
-#### `Spring boot`
+We chose Kotlin as our main language for the backend because we wanted to learn a new language that could work in the same environment that Java does.
 
-Our architecture utilizes Spring Boot for building and deploying containerized Kotlin applications. 
+### Spring
+
+Our backend uses Spring as the framework for building our microservices.
+
 Spring Boot simplifies the development process, enhances productivity, and provides a solid foundation for microservices. 
-It was also one of the mandatory elements of the app
 
-#### `React native`
+### React Native and Expo
 
-React native was kind of mandatory in this project, we could have been using flutter but since we never tried any of them React native seemed like a 
-great opportunity to complete our React dev stack.
+As for the frontend, we are using React Native to build a mobile application, which will be the primary way of interacting with LinkedOut.
 
-#### `Expo`
+We are also using Expo, which is a framework that brings build tools and rapid development for React Native-based application by providing features such as hot reload, and the generation of package files for Android and iOS. It also abstracts and exposes the services that the mobile operating system provides to the applications.
 
-Our mobile application architecture is built with the Expo framework.
-Expo simplifies the development of cross-platform mobile apps, providing tools and services that enhance the developer experience.
-It was recommanded for the development of this project
+### GitHub
 
-#### `Github`
+We use GitHub as our code host and collaboration platform since we both use it on a daily basis, and we know it the most.
 
-We chose github as our primary version controll and collaboration platform since we both use it on a daily basis.
+We will also use the CI integrated in GitHub for our CI/CD pipelines, and use its GitHub Actions to simplify this process.
 
-#### `Github Action`
+### Keycloak
 
-Github Action seemed like an obvious choise when using Github since it's great tool to create and manage pipelines for both Continuous Integration and Continuous Deployment
-
-
-#### `Keycloak`
 [Keycloak](https://www.keycloak.org/) is an open source identity and access management solution. 
-We decided to use keycloak instead of another service like to acquire more experience on it since it is becoming one of the market leader.
+
+It is used to provide a secure authentication and authorization experience for the users. 
+
+We decided to use Keycloak instead of another service like Zitadel or Auth0 to acquire more experience on it since it is one of the most popular identity providers.
 
 ### NATS vs Kafka
 
@@ -179,29 +176,28 @@ community support compared to more established solutions like Keycloak or Auth0.
 ## Services
 ![microservices](./ms.png)
 
-### `API Gateway`
+### API Gateway
 
 The API Gateway is a single entry point for all clients. 
 It provides HTTP endpoints to access the different services in the infrastructures, and does so while checking the authorization claims of the user doing the request. 
 This service works closely with the Keycloak service.
 
 
-### `Keycloak`
 
-It will allow us to provide a secure authentication and authorization service for the client. 
-
-### `Notification Service`
+### Notification Service
 
 The Notification Service is responsible for sending notifications to the users. The goal is to have a single service responsible for sending notifications to the users.
 
-### `Job Service`
+### Job Service
 
-The Job offer service is responsible for managing jobs, job offers and companies. This service is implemented in kotlin using spring r2dbc as a reactive database driver. 
-We chose r2dbc instead of jpa since being we needed to have asynchronous requests in our architecure to optimize latency. 
-Having a synchronous system would mean we can only treat one request at the time which at larger scale will not be efficient enough. 
-The service uses a postgres database to store it's data.
+The Job Service is responsible for managing jobs, job categories, job offers and companies. This service is implemented in Kotlin using Spring R2DBC as a reactive database driver. 
 
-### `Employer Service`
+We chose R2DBC instead of JPA because we need to have asynchronous requests in our architecture to optimize latency. 
+Having a synchronous system would mean we could only treat one request at a time which, at larger scale, would not be efficient enough.
+
+The service uses a Postgres database to store its data.
+
+### Employer Service
 
 The Employer Service represents the external software that employers uses to manage their job offers. 
 
@@ -210,12 +206,13 @@ On the other hand, this external software calls to LinkedOut when an employer wa
 
 Since the employer service is normally an external service, we will only implement something that mocks it.
 
-### `Profile Service`
+### Profile Service
 
-The Profile Service is responsible for managing the profiles of the users. This service will be written in Kotlin as a matter of uniformity with the other services. 
-Profiles will be stored in a Postgres database and also uses r2dbc as it's database driver.
+The Profile Service is responsible for managing the profiles of the users.
 
-### `NATS`
+Profiles will be stored in a Postgres database and also uses R2DBC as its database driver.
+
+### NATS
 
 NATS is a "Message-oriented Middleware": it allows services to communicate with each other easily. 
 
@@ -224,21 +221,22 @@ NATS is the central element in our distributed and scalable infrastructure becau
 This will allow us to manage replica sets of services easily since NATS will abstract the concrete connection to the service using its 
 mechanism of "subjects" (which are like Kafka's topics) and will load balance messages between all consumers subscribed to a subject in particular. 
 
-### `Message Service`
+### Message Service
 
-The message service is here to manage communications between seasonal workers and employers, allowing them to tchat using an instant messagery.
-This service will have persistent storage provided by a Postgresql database.
+The Message Service is here to manage communications between seasonal workers and employers, allowing them to chat using instant messaging. 
+
+This service will have persistent storage provided by a Postgres database.
  
-### `Recommendation Service`
+### Recommendation Service
 
 The Recommendation Service is used to recommend job offers to seasonal workers. 
-It will have a read access to the job and profile services and replicate the data in a graph database (probably Neo4j) to find connections 
-between related items and provide scores on the job offers for a seasonal worker.
+
+It will have read access to the job and profile services and replicate the data in a graph database (such as Neo4j) to find connections between related items and provide scores on the job offers for a seasonal worker.
 
 ## OpenAPI
 
-We decided to create an OpenAPI specification document that documents every route accessible from the API gateway for the mobile application 
-to normalize our interfaces and make the whole process easier by allowing us to architecture our API early and implement a mock server for it.
+We decided to create an OpenAPI specification document that documents every route accessible from the API gateway for the mobile application to normalize our interfaces and make the whole process easier by allowing us to architecture our API early and implement a mock server for it.
+
 The document is available [here](./openapi/api_gateway.yml). 
 
 
