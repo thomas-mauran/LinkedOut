@@ -5,13 +5,14 @@ The goal of this document is to provide a clear overview of our microservice inf
 
 ### Kubernetes
 
-Our production architecture leverages Kubernetes for container orchestration with Docker as the containerization platform. 
+Our production environment leverages Kubernetes for container orchestration. 
 This powerful combination provides scalability, flexibility, and efficient management of containerized applications.
 
 ### Docker
 
-We mianly use docker for development with many docker-composes to repliate the micro services and their databases but as said before we 
-also use Docker as the containerization platform in our kubernetes environment
+We mainly use docker in the local development environment with Docker Composes to bring up the micro services and their databases. 
+
+This solutions allows us to start our development stack regardless of the OS of the developper.
 
 ### NATS
 
@@ -19,39 +20,9 @@ We chose this solution instead of Kafka for its lightweight design, low latency 
 
 It also has a built-in mechanism for doing synchronous request-reply messaging, which will be very useful for communication between the API gateway and the microservices. 
 
-### Kotlin
+#### NATS vs Kafka
 
-We chose Kotlin as our main language for the backend because we wanted to learn a new language that could work in the same environment that Java does.
-
-### Spring
-
-Our backend uses Spring as the framework for building our microservices.
-
-Spring Boot simplifies the development process, enhances productivity, and provides a solid foundation for microservices. 
-
-### React Native and Expo
-
-As for the frontend, we are using React Native to build a mobile application, which will be the primary way of interacting with LinkedOut.
-
-We are also using Expo, which is a framework that brings build tools and rapid development for React Native-based application by providing features such as hot reload, and the generation of package files for Android and iOS. It also abstracts and exposes the services that the mobile operating system provides to the applications.
-
-### GitHub
-
-We use GitHub as our code host and collaboration platform since we both use it on a daily basis, and we know it the most.
-
-We will also use the CI integrated in GitHub for our CI/CD pipelines, and use its GitHub Actions to simplify this process.
-
-### Keycloak
-
-[Keycloak](https://www.keycloak.org/) is an open source identity and access management solution. 
-
-It is used to provide a secure authentication and authorization experience for the users. 
-
-We decided to use Keycloak instead of another service like Zitadel or Auth0 to acquire more experience on it since it is one of the most popular identity providers.
-
-### NATS vs Kafka
-
-#### NATS:
+##### NATS:
 
 **Pros:**
 - Low latency, designed for real-time messaging.
@@ -65,7 +36,7 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 - Limited features for complex event processing.
 - May not be as feature-rich as Kafka for large-scale systems.
 
-#### Kafka:
+##### Kafka:
 
 **Pros:**
 - Robust and scalable for large-scale data streaming.
@@ -79,23 +50,14 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 - Higher learning curve due to its feature richness.
 - Overhead may be unnecessary for smaller-scale projects.
 
-### Java vs Kotlin
 
-#### Java:
+### Kotlin
 
-**Pros:**
-- Widespread adoption and community support.
-- Mature ecosystem with extensive libraries and frameworks.
-- Platform independence through the Java Virtual Machine (JVM).
-- Strong static typing for early error detection.
-- Long-standing presence in enterprise development.
+We chose Kotlin as our main language for the backend because we wanted to learn a new language that could work in the same environment that Java does.
 
-**Cons:**
-- Verbosity in code, requiring more boilerplate.
-- Slower adoption of modern language features.
-- Null pointer exceptions can be a challenge.
+#### Kotlin vs Java
 
-#### Kotlin:
+##### Kotlin:
 
 **Pros:**
 - Concise syntax reduces boilerplate code.
@@ -109,9 +71,71 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 - Learning curve for developers transitioning from Java.
 - Limited presence in legacy systems.
 
-### Github vs Gitlab
+##### Java:
 
-#### GitHub:
+**Pros:**
+- Widespread adoption and community support.
+- Mature ecosystem with extensive libraries and frameworks.
+- Platform independence through the Java Virtual Machine (JVM).
+- Strong static typing for early error detection.
+- Long-standing presence in enterprise development.
+
+**Cons:**
+- Verbosity in code, requiring more boilerplate.
+- Slower adoption of modern language features.
+- Null pointer exceptions can be a challenge.
+
+### Spring
+
+Our backend uses Spring as the framework for building our microservices.
+
+Spring Boot simplifies the development process, enhances productivity, and provides a solid foundation for microservices. 
+
+### React Native and Expo
+
+As for the frontend, we are using React Native to build a mobile application, which will be the primary way of interacting with LinkedOut.
+
+We are also using Expo, which is a framework that brings build tools and rapid development for React Native-based application by providing features such as hot reload, and the generation of package files for Android and iOS. It also abstracts and exposes the services that the mobile operating system provides to the applications.
+
+#### React Native vs flutter
+
+##### React Native
+
+**Pros**
+- Large, mature community.
+- Smooth transition with JavaScript/React.
+- Easy access to native modules.
+- Flexibility for native code integration.
+- Strong industry adoption.
+
+**Cons**
+- Slightly lower performance than Flutter.
+- Communication overhead between JS and native.
+- Dependency on native modules for complex components.
+
+##### Flutter
+
+**Pros**
+- Single codebase for iOS and Android.
+- Rich, customizable interfaces.
+- Quick development with hot reload.
+- High performance with Dart language.
+- Growing community support.
+
+**Cons**
+- Learning curve for Dart.
+- Limited access to certain native modules.
+- Smaller ecosystem compared to React Native.
+
+### GitHub
+
+We use GitHub as our code host and collaboration platform since we both use it on a daily basis, and we know it the most.
+
+We will also use the CI integrated in GitHub for our CI/CD pipelines, and use its GitHub Actions to simplify this process.
+
+#### Github vs Gitlab
+
+##### GitHub:
 
 **Pros:**
 - Large community and ecosystem.
@@ -125,7 +149,7 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 - Limited built-in CI/CD features.
 - Dependency on Microsoft.
 
-#### GitLab:
+##### GitLab:
 
 **Pros:**
 - Integrated CI/CD.
@@ -139,9 +163,18 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 - Smaller community compared to GitHub.
 - Extensive feature set may overwhelm for simpler projects.
 
-### Keycloak vs Zitadel vs Auth0
 
-#### Keycloak
+### Keycloak
+
+[Keycloak](https://www.keycloak.org/) is an open source identity and access management solution. 
+
+It is used to provide a secure authentication and authorization experience for the users. 
+
+We decided to use Keycloak instead of another service like Zitadel or Auth0 to acquire more experience on it since it is one of the most popular identity providers.
+
+#### Keycloak vs Zitadel vs Auth0
+
+##### Keycloak
 **Pros:**
 - Open source
 - Widely use with a strong community
@@ -151,7 +184,7 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 - Complexity, when first trying keycloak it can be kind of complex to understand it's role and implications
 - Redhat documentation, keycloak documentation might be very hard to get through at some points due to it's documentation.
 
-#### Zitadel
+##### Zitadel
 **Pros**
 - User-Centric Approach: Zitadel is designed with a strong focus on user experience and user-centric identity management.
 - Strong Security Features: Zitadel emphasizes security and includes features such as passwordless authentication and zero-trust architecture.
@@ -162,7 +195,7 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 community support compared to more established solutions like Keycloak or Auth0.
 - Pricing: While Zitadel offers a free tier, pricing for larger enterprises might be a consideration.
 
-#### Auth0
+##### Auth0
 **Pros**
 - Ease of Use: Auth0 is known for its ease of use and quick setup. It provides a user-friendly dashboard and supports various identity scenarios out of the box.
 - Large User Base: Auth0 is widely adopted and has a large user base, leading to a robust community and extensive third-party integrations.
