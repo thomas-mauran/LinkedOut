@@ -27,16 +27,23 @@ The goal of this document is to provide a clear overview of our microservice inf
 
 ### Kubernetes
 
-Our production environment leverages Kubernetes for container orchestration. 
+Our production environment leverages Kubernetes for container orchestration.
+
 This powerful combination provides scalability, flexibility, and efficient management of containerized applications.
 
 ### Docker
 
-We mainly use docker in the local development environment with Docker Composes to bring up the micro services and their databases. 
+We use Docker in the local development environment with Docker Composes to bring up the microservices and their databases. 
 
-This solutions allows us to start our development stack regardless of the OS of the developper.
+This solution allows us to start our development stack without having to depend on the environment of the developer, and have more reproducible results.
 
 ### NATS
+
+NATS is a "Message-oriented Middleware": it allows services to communicate with each other easily. 
+
+NATS is the central element in our distributed and scalable infrastructure because it provides dynamic discovery and a message broker. 
+
+This will allow us to manage replica sets of services easily since NATS will abstract the concrete connection to the service using its mechanism of "subjects" (which are like Kafka's topics) and will load balance messages between all consumers subscribed to a subject in particular. 
 
 We chose this solution instead of Kafka for its lightweight design, low latency and overall simplicity. 
 
@@ -44,34 +51,33 @@ It also has a built-in mechanism for doing synchronous request-reply messaging, 
 
 #### NATS vs Kafka
 
-##### NATS:
+##### NATS
 
-**Pros:**
+**Pros**
 - Low latency, designed for real-time messaging.
 - Lightweight protocol minimizes overhead.
 - Horizontal scalability with clustering support.
 - Fault-tolerant, resilient in challenging network conditions.
 - Well-suited for distributed systems.
 
-**Cons:**
+**Cons**
 - Smaller community compared to Kafka.
 - Limited features for complex event processing.
 - May not be as feature-rich as Kafka for large-scale systems.
 
-##### Kafka:
+##### Kafka
 
-**Pros:**
+**Pros**
 - Robust and scalable for large-scale data streaming.
 - Durable, fault-tolerant, and high-throughput.
 - Rich ecosystem with strong community support.
 - Comprehensive features for event sourcing and complex processing.
 - Well-established in big data and enterprise environments.
 
-**Cons:**
+**Cons**
 - Requires additional resources for setup and maintenance.
 - Higher learning curve due to its feature richness.
 - Overhead may be unnecessary for smaller-scale projects.
-
 
 ### Kotlin
 
@@ -79,30 +85,30 @@ We chose Kotlin as our main language for the backend because we wanted to learn 
 
 #### Kotlin vs Java
 
-##### Kotlin:
+##### Kotlin
 
-**Pros:**
+**Pros**
 - Concise syntax reduces boilerplate code.
 - Modern language features, including null safety.
 - 100% interoperability with Java, easing migration.
 - Enhanced developer productivity.
 - Officially supported by JetBrains.
 
-**Cons:**
+**Cons**
 - Smaller community compared to Java.
 - Learning curve for developers transitioning from Java.
 - Limited presence in legacy systems.
 
-##### Java:
+##### Java
 
-**Pros:**
+**Pros**
 - Widespread adoption and community support.
 - Mature ecosystem with extensive libraries and frameworks.
 - Platform independence through the Java Virtual Machine (JVM).
 - Strong static typing for early error detection.
 - Long-standing presence in enterprise development.
 
-**Cons:**
+**Cons**
 - Verbosity in code, requiring more boilerplate.
 - Slower adoption of modern language features.
 - Null pointer exceptions can be a challenge.
@@ -155,36 +161,35 @@ We use GitHub as our code host and collaboration platform since we both use it o
 
 We will also use the CI integrated in GitHub for our CI/CD pipelines, and use its GitHub Actions to simplify this process.
 
-#### Github vs Gitlab
+#### GitHub vs GitLab
 
-##### GitHub:
+##### GitHub
 
-**Pros:**
+**Pros**
 - Large community and ecosystem.
 - User-friendly interface.
 - Robust documentation.
 - Powerful collaboration features.
 - GitHub Actions for CI/CD.
 
-**Cons:**
+**Cons**
 - Charges for private repositories.
 - Limited built-in CI/CD features.
 - Dependency on Microsoft.
 
-##### GitLab:
+##### GitLab
 
-**Pros:**
+**Pros**
 - Integrated CI/CD.
 - Free private repositories.
 - Comprehensive DevOps platform.
 - Flexible deployment options.
 - Built-in container registry.
 
-**Cons:**
+**Cons**
 - Learning curve for the interface.
 - Smaller community compared to GitHub.
 - Extensive feature set may overwhelm for simpler projects.
-
 
 ### Keycloak
 
@@ -197,36 +202,39 @@ We decided to use Keycloak instead of another service like Zitadel or Auth0 to a
 #### Keycloak vs Zitadel vs Auth0
 
 ##### Keycloak
-**Pros:**
+
+**Pros**
 - Open source
 - Widely use with a strong community
 - Wide range of features
 
 **Cons**
-- Complexity, when first trying keycloak it can be kind of complex to understand it's role and implications
-- Redhat documentation, keycloak documentation might be very hard to get through at some points due to it's documentation.
+- Complexity: when first trying Keycloak, it can be kind of complex to understand its role and implications
+- Its documentation might be very hard to get through on some topics
 
 ##### Zitadel
+
 **Pros**
-- User-Centric Approach: Zitadel is designed with a strong focus on user experience and user-centric identity management.
-- Strong Security Features: Zitadel emphasizes security and includes features such as passwordless authentication and zero-trust architecture.
-- Enterprise-Grade: Zitadel positions itself as an enterprise-grade solution, catering to the needs of larger organizations.
+- Strong focus on user experience and user-centric identity management.
+- Open source and free to use.
+- More modern and lightweight compared to Keycloak.
 
 **Cons**
-- Lesser Adoption: As of my last knowledge update in January 2022, Zitadel might have had fewer users and 
-community support compared to more established solutions like Keycloak or Auth0.
-- Pricing: While Zitadel offers a free tier, pricing for larger enterprises might be a consideration.
+- Zitadel has fewer users and community support compared to more established solutions like Keycloak or Auth0.
+- Less flexibility and customization compared to Keycloak.
 
 ##### Auth0
+
 **Pros**
-- Ease of Use: Auth0 is known for its ease of use and quick setup. It provides a user-friendly dashboard and supports various identity scenarios out of the box.
-- Large User Base: Auth0 is widely adopted and has a large user base, leading to a robust community and extensive third-party integrations.
-- Extensive Documentation: Auth0 provides thorough and well-organized documentation, making it easier for developers to implement and troubleshoot.
+- Easy to use and quick to set up.
+- Widely adopted with a large community.
+- Well-organized documentation.
 
 **Cons**
-- Pricing: Auth0's pricing might be higher compared to some other solutions, especially for large enterprises with high user counts.
-- Limited Customization in Free Tier: Some advanced features and customization options may be restricted in the free tier.
-
+- While Auth0 has a free tier, it is limited to 7,500 active users.
+- Its free tier also has limited features compared to the paid tiers.
+- Proprietary software.
+- Not self-hosted.
 
 ## Services
 ![microservices](./ms.png)
@@ -234,14 +242,22 @@ community support compared to more established solutions like Keycloak or Auth0.
 ### API Gateway
 
 The API Gateway is a single entry point for all clients. 
+
 It provides HTTP endpoints to access the different services in the infrastructures, and does so while checking the authorization claims of the user doing the request. 
-This service works closely with the Keycloak service.
 
+This service works closely with the Keycloak service to validate the tokens.
 
+### Recommendation Service
 
-### Notification Service
+The Recommendation Service is used to recommend job offers to seasonal workers. 
 
-The Notification Service is responsible for sending notifications to the users. The goal is to have a single service responsible for sending notifications to the users.
+It will have read access to the job and profile services and replicate the data in a graph database (such as Neo4j) to find connections between related items and provide scores on the job offers for a seasonal worker.
+
+### Profile Service
+
+The Profile Service is responsible for managing the profiles of the users.
+
+Profiles will be stored in a Postgres database and also uses R2DBC as its database driver.
 
 ### Job Service
 
@@ -252,6 +268,16 @@ Having a synchronous system would mean we could only treat one request at a time
 
 The service uses a Postgres database to store its data.
 
+### Notification Service
+
+The Notification Service is responsible for storing and sending notifications to the users.
+
+### Message Service
+
+The Message Service is here to manage communications between seasonal workers and employers, allowing them to chat using instant messaging. 
+
+This service will have persistent storage provided by a Postgres database.
+
 ### Employer Service
 
 The Employer Service represents the external software that employers uses to manage their job offers. 
@@ -261,41 +287,8 @@ On the other hand, this external software calls to LinkedOut when an employer wa
 
 Since the employer service is normally an external service, we will only implement something that mocks it.
 
-### Profile Service
-
-The Profile Service is responsible for managing the profiles of the users.
-
-Profiles will be stored in a Postgres database and also uses R2DBC as its database driver.
-
-### NATS
-
-NATS is a "Message-oriented Middleware": it allows services to communicate with each other easily. 
-
-NATS is the central element in our distributed and scalable infrastructure because it provides dynamic discovery and a message broker. 
-
-This will allow us to manage replica sets of services easily since NATS will abstract the concrete connection to the service using its 
-mechanism of "subjects" (which are like Kafka's topics) and will load balance messages between all consumers subscribed to a subject in particular. 
-
-### Message Service
-
-The Message Service is here to manage communications between seasonal workers and employers, allowing them to chat using instant messaging. 
-
-This service will have persistent storage provided by a Postgres database.
- 
-### Recommendation Service
-
-The Recommendation Service is used to recommend job offers to seasonal workers. 
-
-It will have read access to the job and profile services and replicate the data in a graph database (such as Neo4j) to find connections between related items and provide scores on the job offers for a seasonal worker.
-
 ## OpenAPI
 
 We decided to create an OpenAPI specification document that documents every route accessible from the API gateway for the mobile application to normalize our interfaces and make the whole process easier by allowing us to architecture our API early and implement a mock server for it.
 
 The document is available [here](./openapi/api_gateway.yml). 
-
-
-
-
-
-
