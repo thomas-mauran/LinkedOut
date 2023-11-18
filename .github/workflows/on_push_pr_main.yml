@@ -1,0 +1,14 @@
+name: Push & PR to the main branch
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lint_frontend:
+    uses: ./.github/workflows/flow_front_lint.yml
