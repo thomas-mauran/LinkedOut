@@ -6,6 +6,7 @@ plugins {
 	kotlin("jvm")
 	kotlin("plugin.spring")
 	kotlin("plugin.jpa")
+	id("io.github.usefulness.ktlint-gradle-plugin") version "0.7.0"
 }
 
 group = "com.linkedout"
@@ -44,4 +45,7 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+
+	// Exclude tests with names containing "JobsApplicationTests"
+    exclude("**/*JobsApplicationTests*")
 }

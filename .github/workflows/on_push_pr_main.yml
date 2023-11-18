@@ -12,3 +12,8 @@ on:
 jobs:
   lint_frontend:
     uses: ./.github/workflows/flow_front_lint.yml
+  lint_backend_jobs:
+    uses: ./.github/workflows/flow_backend_jobs_lint.yml
+  build_backend_jobs:
+    needs: lint_backend_jobs
+    uses: ./.github/workflows/flow_backend_jobs_build_push.yml

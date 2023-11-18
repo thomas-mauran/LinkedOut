@@ -1,0 +1,52 @@
+name: Lint backend Jobs service
+
+on:
+  workflow_call:
+    inputs:
+      app-dir-parent-path:
+        description: The parent directory of the jobs service
+        default: ./backend/
+        required: false
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: ${{ inputs.app-dir-parent-path }}
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+    - name: Setup Docker buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Log in to the Container registry
+      uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: docker/metadata-action@v4
+      name: Extract metadata (tags, labels) for Docker
+      id: meta
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/jobs-service
+        tags: |
+          type=semver,pattern={{version}}
+          latest
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        push: ${{ github.event_name != 'pull_request' }} # Don't push on PR
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        context: "{{defaultContext}}:backend"
+        file: ./jobs/Dockerfile
