@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
 @Service
-class JobCategoryService(@Autowired private val jobCategory: JobCategoryRepository) {
-    fun findAll(): Flux<JobCategory>{
+class JobCategoryService(
+    @Autowired private val jobCategory: JobCategoryRepository,
+) {
+    fun findAll(): Flux<JobCategory> {
         return jobCategory.findAll()
     }
 }
