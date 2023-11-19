@@ -8,15 +8,15 @@ import java.util.UUID
 
 @Table(name = "joboffer")
 data class JobOffer(
-        @Id
-        val id: UUID,
-        val job: UUID,
-        val title: String,
-        val description: String,
-        @Column("startdate")
-        val startDate: LocalDate,
-        @Column("enddate")
-        val endDate: LocalDate,
-        val company: UUID,
-        val salary: Int,
+    @Id
+    val id: UUID,
+    val job: UUID,
+    val title: String,
+    val description: String,
+    @Column("startdate")
+    val startDate: LocalDate,
+    @Column("enddate")
+    val endDate: LocalDate,
+    val company: UUID,
+    val salary: Int
 )

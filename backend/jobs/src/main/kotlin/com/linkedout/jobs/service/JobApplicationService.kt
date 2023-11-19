@@ -11,19 +11,23 @@ import reactor.core.publisher.Mono
 import java.util.UUID
 
 @Service
-class JobApplicationService(@Autowired private val jobApplicationRepository: JobApplicationRepository, @Autowired private val jobRepository: JobRepository ) {
-    fun apply(jobId: UUID): Mono<JobApplication>{
+class JobApplicationService(
+    @Autowired private val jobApplicationRepository: JobApplicationRepository,
+    @Autowired private val jobRepository: JobRepository
+) {
+    fun apply(jobId: UUID): Mono<JobApplication> {
         val jobExistsMono: Mono<Boolean> = jobRepository.existsById(jobId)
         println(jobExistsMono)
         return jobExistsMono.flatMap { jobExists ->
             if (jobExists) {
                 // TODO: retrieve userId
                 val userId = "581104d5-3af7-4dc0-836b-30574d64a1e8"
-                val jobApplication = JobApplication(
-                    jobId = jobId,
-                    userId = UUID.fromString(userId),
-                    status = false
-                )
+                val jobApplication =
+                    JobApplication(
+                        jobId = jobId,
+                        userId = UUID.fromString(userId),
+                        status = false
+                    )
                 // Save the job application
                 jobApplicationRepository.save(jobApplication)
             } else {

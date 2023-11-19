@@ -13,5 +13,5 @@ data class JobApplication(
     val jobId: UUID,
     @Column("userid")
     val userId: UUID,
-    val status: Boolean,
+    val status: Boolean
 )

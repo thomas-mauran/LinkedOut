@@ -9,10 +9,13 @@ import reactor.core.publisher.Mono
 import java.util.UUID
 
 @Service
-class JobOfferService(@Autowired private val jobOffer: JobOfferRepository) {
-    fun findAll(): Flux<JobOffer>{
+class JobOfferService(
+    @Autowired private val jobOffer: JobOfferRepository
+) {
+    fun findAll(): Flux<JobOffer> {
         return jobOffer.findAll()
     }
+
     fun findOne(id: UUID): Mono<JobOffer> {
         return jobOffer.findById(id)
     }

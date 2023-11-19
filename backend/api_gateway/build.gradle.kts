@@ -1,41 +1,45 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot")
-	id("io.spring.dependency-management")
-	kotlin("jvm")
-	kotlin("plugin.spring")
-	kotlin("plugin.jpa")
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
+    id("org.jlleitschuh.gradle.ktlint")
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    kotlin("plugin.jpa")
 }
 
 group = "com.linkedout"
 version = "1.0.0-SNAPSHOT"
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-actuator:3.1.5")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:3.1.5")
-	implementation("org.springframework.boot:spring-boot-starter-security:3.1.5")
-	implementation("org.springframework.boot:spring-boot-starter-validation:3.1.5")
-	implementation("org.springframework.boot:spring-boot-starter-web:3.1.5")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-actuator:3.1.5")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:3.1.5")
+    implementation("org.springframework.boot:spring-boot-starter-security:3.1.5")
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.1.5")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.1.5")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
 }
 
 tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs += "-Xjsr305=strict"
-		jvmTarget = "17"
-	}
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = "17"
+    }
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

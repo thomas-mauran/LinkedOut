@@ -1,0 +1,29 @@
+name: Push a semver tag
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  build_api_gateway:
+    name: Build & push Docker image of the API gateway
+    uses: ./.github/workflows/flow_backend_build_push.yml
+    with:
+      service-name: api_gateway
+      push-image: ${{ github.event_name != 'pull_request' }}
+      image-tags: |
+        type=sha
+        type=semver,pattern={{version}}
+        type=raw,value=latest
+
+  build_jobs_service:
+    name: Build & push Docker image of the Jobs service
+    uses: ./.github/workflows/flow_backend_build_push.yml
+    with:
+      service-name: jobs
+      push-image: ${{ github.event_name != 'pull_request' }}
+      image-tags: |
+        type=sha
+        type=semver,pattern={{version}}
+        type=raw,value=latest
