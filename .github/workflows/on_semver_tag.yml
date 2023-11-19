@@ -1,43 +1,29 @@
-name: Push & PR to the main branch
+name: Push a semver tag
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+    tags:
+      - v*.*.*
 
 jobs:
-  lint_frontend:
-    name: Lint frontend
-    uses: ./.github/workflows/flow_front_lint.yml
-
-  lint_backend:
-    name: Lint backend
-    uses: ./.github/workflows/flow_backend_lint.yml
-
   build_api_gateway:
     name: Build & push Docker image of the API gateway
-    needs: lint_backend
     uses: ./.github/workflows/flow_backend_build_push.yml
     with:
       service-name: api_gateway
       push-image: ${{ github.event_name != 'pull_request' }}
       image-tags: |
         type=sha
-        type=ref,event=branch
-        type=edge,branch=main
+        type=semver,pattern={{version}}
+        type=raw,value=latest
 
   build_jobs_service:
     name: Build & push Docker image of the Jobs service
-    needs: lint_backend
     uses: ./.github/workflows/flow_backend_build_push.yml
     with:
       service-name: jobs
       push-image: ${{ github.event_name != 'pull_request' }}
       image-tags: |
         type=sha
-        type=ref,event=branch
-        type=edge
+        type=semver,pattern={{version}}
+        type=raw,value=latest
