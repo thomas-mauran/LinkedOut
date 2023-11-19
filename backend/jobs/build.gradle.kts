@@ -3,10 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot")
 	id("io.spring.dependency-management")
+	id("org.jlleitschuh.gradle.ktlint")
 	kotlin("jvm")
 	kotlin("plugin.spring")
 	kotlin("plugin.jpa")
-	id("io.github.usefulness.ktlint-gradle-plugin") version "0.7.0"
 }
 
 group = "com.linkedout"
@@ -45,7 +45,4 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
-
-	// Exclude tests with names containing "JobsApplicationTests"
-    exclude("**/*JobsApplicationTests*")
 }
