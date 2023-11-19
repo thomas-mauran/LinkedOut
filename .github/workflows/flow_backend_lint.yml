@@ -1,33 +1,34 @@
-name: Lint backend Jobs service
+name: Lint backend
 
 on:
   workflow_call:
     inputs:
-      app-dir-path:
-        description: The directory where the jobs service is stored
-        default: ./backend/jobs
+      gradle-root-project-path:
+        description: The path to the Gradle root project
+        default: ./backend
         required: false
         type: string
-
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ inputs.app-dir-path }}
+        working-directory: ${{ inputs.gradle-root-project-path }}
     steps:
     - uses: actions/checkout@v4
+
     - name: Use Java
       uses: actions/setup-java@v3
       with:
         java-version: 17
-        distribution: temurin
+        distribution: corretto
+
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
 
     - name: Lint Kotlin
-      run: ../gradlew lintKotlin
-    
+      run: ./gradlew lintKotlin
+
     - name: Execute Gradle build
-      run: ../gradlew build
+      run: ./gradlew build -x test

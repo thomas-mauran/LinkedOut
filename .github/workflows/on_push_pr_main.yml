@@ -11,9 +11,22 @@ on:
 
 jobs:
   lint_frontend:
+    name: Lint frontend
     uses: ./.github/workflows/flow_front_lint.yml
-  lint_backend_jobs:
-    uses: ./.github/workflows/flow_backend_jobs_lint.yml
-  build_backend_jobs:
-    needs: lint_backend_jobs
-    uses: ./.github/workflows/flow_backend_jobs_build_push.yml
+
+  lint_backend:
+    name: Lint backend
+    uses: ./.github/workflows/flow_backend_lint.yml
+
+  build_jobs_service:
+    name: Build & push Docker image of Jobs service
+    needs: lint_backend
+    uses: ./.github/workflows/flow_backend_build_push.yml
+    with:
+      service-dockerfile-path: ./jobs/Dockerfile
+      service-name: jobs
+      push-image: ${{ github.event_name != 'pull_request' }}
+      image-tags: |
+        type=sha
+        type=ref,event=branch
+        type=edge,branch=main
