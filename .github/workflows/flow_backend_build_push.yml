@@ -8,10 +8,6 @@ on:
         default: ./backend
         required: false
         type: string
-      service-dockerfile-path:
-        description: The path to the Dockerfile
-        required: true
-        type: string
       service-name:
         description: The name of the service to build
         required: true
@@ -63,4 +59,4 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
         context: "{{ defaultContext }}:${{ inputs.service-build-context-path }}"
-        file: ${{ inputs.service-dockerfile-path }}
+        build-args: SERVICE_NAME=${{ inputs.service-name }}
