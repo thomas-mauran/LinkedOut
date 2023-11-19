@@ -8,5 +8,5 @@ import java.util.UUID
 data class JobCategory(
     @Id
     val id: UUID,
-    val title: String,
+    val title: String
 )

@@ -21,7 +21,7 @@ class JobsController(private val jobService: JobService, private val jobCategory
 
     @GetMapping("/{id}")
     fun getJob(
-        @PathVariable id: UUID,
+        @PathVariable id: UUID
     ): Mono<Job> {
         return jobService.findOne(id)
     }

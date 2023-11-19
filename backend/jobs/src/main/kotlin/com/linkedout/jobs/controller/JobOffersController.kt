@@ -22,14 +22,14 @@ class JobOffersController(private val jobOfferService: JobOfferService, private 
 
     @GetMapping("/{id}")
     fun getJob(
-        @PathVariable id: UUID,
+        @PathVariable id: UUID
     ): Mono<JobOffer> {
         return jobOfferService.findOne(id)
     }
 
     @PostMapping("/{id}/apply")
     fun applyToJob(
-        @PathVariable id: UUID,
+        @PathVariable id: UUID
     ): Mono<JobApplication> {
         return jobApplicationService.apply(id)
     }

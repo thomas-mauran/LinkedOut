@@ -9,5 +9,5 @@ data class Job(
     @Id
     val id: UUID,
     val title: String,
-    val category: UUID,
+    val category: UUID
 )

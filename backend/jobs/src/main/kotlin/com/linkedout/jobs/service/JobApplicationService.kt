@@ -13,7 +13,7 @@ import java.util.UUID
 @Service
 class JobApplicationService(
     @Autowired private val jobApplicationRepository: JobApplicationRepository,
-    @Autowired private val jobRepository: JobRepository,
+    @Autowired private val jobRepository: JobRepository
 ) {
     fun apply(jobId: UUID): Mono<JobApplication> {
         val jobExistsMono: Mono<Boolean> = jobRepository.existsById(jobId)
@@ -26,7 +26,7 @@ class JobApplicationService(
                     JobApplication(
                         jobId = jobId,
                         userId = UUID.fromString(userId),
-                        status = false,
+                        status = false
                     )
                 // Save the job application
                 jobApplicationRepository.save(jobApplication)

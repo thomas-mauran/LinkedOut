@@ -18,5 +18,5 @@ data class JobOffer(
     @Column("enddate")
     val endDate: LocalDate,
     val company: UUID,
-    val salary: Int,
+    val salary: Int
 )

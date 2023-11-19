@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Service
 class JobService(
-    @Autowired private val jobRepository: JobRepository,
+    @Autowired private val jobRepository: JobRepository
 ) {
     fun findAll(): Flux<Job> {
         return jobRepository.findAll()
