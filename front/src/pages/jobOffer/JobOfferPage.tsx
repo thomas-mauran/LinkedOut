@@ -1,11 +1,26 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC, useCallback } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 
 import JobOfferList from '@/components/jobOffers/JobOfferList';
 import { useGetJobOffersQuery } from '@/store/api/jobApiSlice';
 
 import { JobOfferStackParamList } from './JobOfferNav';
+
+/**
+ * The styles for the JobOfferPage component.
+ */
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    gap: 8,
+    paddingBottom: 8,
+    paddingHorizontal: 16,
+  },
+});
 
 /**
  * The props for the JobOfferPage component.
@@ -34,7 +49,14 @@ const JobOfferPage: FC<JobOfferPageProps> = () => {
     return null;
   }
 
-  return <JobOfferList jobOffers={jobOffers} />;
+  return (
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
+      <JobOfferList jobOffers={jobOffers} />
+    </ScrollView>
+  );
 };
 
 export default JobOfferPage;

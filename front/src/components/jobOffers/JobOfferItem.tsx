@@ -11,26 +11,14 @@ import { JobOffer } from '@/models/entities/jobOffer';
  */
 const styles = StyleSheet.create({
   container: {
-    gap: 6,
-    margin: 10,
+    gap: 16,
   },
   horizontalContainer: {
     flexDirection: 'row',
+    gap: 12,
   },
-  icon: {
-    marginRight: 10,
-    marginTop: 'auto',
-  },
-  item: {
-    marginTop: 8,
-  },
-  nameContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
+  sectionContainer: {
     gap: 8,
-  },
-  title: {
-    marginBottom: 2,
   },
 });
 
@@ -55,41 +43,35 @@ const JobOfferItem: FC<JobOfferItemProps> = ({ jobOffer }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.nameContainer}>
-        <View>
-          <Text
-            variant='labelLarge'
-            style={styles.title}
-          >{`${jobOffer.title}`}</Text>
-          <Text style={styles.item}>{`${jobOffer.description}`}</Text>
+      <View style={styles.sectionContainer}>
+        <Text variant='titleLarge'>{`${jobOffer.title}`}</Text>
+        <Text>{`${jobOffer.description}`}</Text>
+      </View>
+
+      <View style={styles.sectionContainer}>
+        <View style={styles.horizontalContainer}>
+          <MaterialCommunityIcons
+            name='calendar'
+            size={24}
+            style={{ color: theme.colors.onSurface }}
+          />
+          <Text variant='labelLarge'>
+            {`${new Date(jobOffer.startDate).toLocaleDateString(
+              locales[0].languageTag,
+            )} - ${new Date(jobOffer.endDate).toLocaleDateString(
+              locales[0].languageTag,
+            )}`}
+          </Text>
         </View>
-      </View>
 
-      <View style={[styles.horizontalContainer, styles.item]}>
-        <MaterialCommunityIcons
-          name='calendar'
-          size={24}
-          style={[styles.icon, { color: theme.colors.onSurface }]}
-        />
-        <Text variant='labelLarge'>
-          {`${new Date(jobOffer.startDate).toLocaleDateString(
-            locales[0].languageTag,
-          )} - ${new Date(jobOffer.endDate).toLocaleDateString(
-            locales[0].languageTag,
-          )}`}
-        </Text>
-      </View>
-
-      <View style={[styles.horizontalContainer, styles.item]}>
-        <MaterialCommunityIcons
-          name='map-marker'
-          size={24}
-          style={[styles.icon, { color: theme.colors.onSurface }]}
-        />
-        <Text
-          variant='labelLarge'
-          style={styles.item}
-        >{`${jobOffer.geographicArea}`}</Text>
+        <View style={styles.horizontalContainer}>
+          <MaterialCommunityIcons
+            name='map-marker'
+            size={24}
+            style={{ color: theme.colors.onSurface }}
+          />
+          <Text variant='labelLarge'>{`${jobOffer.geographicArea}`}</Text>
+        </View>
       </View>
     </View>
   );
