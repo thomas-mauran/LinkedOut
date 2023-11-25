@@ -1,4 +1,14 @@
 /**
+ * The status of a job offer.
+ */
+export enum JobOfferStatus {
+  NOT_APPLIED = -1,
+  APPLIED = 0,
+  ACCEPTED = 1,
+  REJECTED = 2,
+}
+
+/**
  * A job offer.
  */
 export type JobOffer = {
@@ -19,11 +29,13 @@ export type JobOffer = {
 
   /**
    * The start date of the job offer.
+   * Formatted as an ISO 8601 string.
    */
   startDate: string;
 
   /**
    * The end date of the job offer.
+   * Formatted as an ISO 8601 string.
    */
   endDate: string;
 
@@ -33,7 +45,7 @@ export type JobOffer = {
   geographicArea: string;
 
   /**
-   * The geographic area of the job offer.
+   * The status of the job offer.
    */
-  status: string;
+  status: JobOfferStatus;
 };

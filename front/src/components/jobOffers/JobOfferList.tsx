@@ -7,7 +7,7 @@ import { JobOffer } from '@/models/entities/jobOffer';
 import JobOfferItem from './JobOfferItem';
 
 /**
- * The styles for the JobOfferPage component.
+ * The styles for the JobOfferList component.
  */
 const styles = StyleSheet.create({
   divider: {
@@ -18,17 +18,17 @@ const styles = StyleSheet.create({
 });
 
 /**
- * The props for the JobOffer component.
+ * The props for the JobOfferList component.
  */
 type JobOfferProps = {
   /**
-   * The jobOffers to display.
+   * The job offers to display.
    */
   jobOffers: JobOffer[];
 };
 
 /**
- * Displays the jobOffers of a user.
+ * Displays a list of job offers.
  * @constructor
  */
 const JobOfferList: FC<JobOfferProps> = ({ jobOffers }) => {

@@ -8,7 +8,7 @@ import { useGetJobOffersQuery } from '@/store/api/jobApiSlice';
 import { JobOfferStackParamList } from './JobOfferNav';
 
 /**
- * The props for the JobOffersPage component.
+ * The props for the JobOfferPage component.
  */
 type JobOfferPageProps = NativeStackScreenProps<
   JobOfferStackParamList,
@@ -16,7 +16,7 @@ type JobOfferPageProps = NativeStackScreenProps<
 >;
 
 /**
- * Displays the JobOffers page for the current user.
+ * Displays the page of job offers for the current user.
  * @constructor
  */
 const JobOfferPage: FC<JobOfferPageProps> = () => {

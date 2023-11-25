@@ -14,7 +14,7 @@ export type JobOfferStackParamList = {
 const JobOfferStack = createNativeStackNavigator<JobOfferStackParamList>();
 
 /**
- * The stack navigator for the JobOffers pages.
+ * The stack navigator for the job offers pages.
  * @constructor
  */
 const JobOffersNav = () => {

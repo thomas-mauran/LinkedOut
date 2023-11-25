@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
  */
 type JobOfferItemProps = {
   /**
-   * The jobOffer to display.
+   * The job offer to display.
    */
   jobOffer: JobOffer;
 };
 
 /**
- * Displays an jobOffer item.
+ * Displays a job offer.
  * @constructor
  */
 const JobOfferItem: FC<JobOfferItemProps> = ({ jobOffer }) => {
@@ -79,6 +79,7 @@ const JobOfferItem: FC<JobOfferItemProps> = ({ jobOffer }) => {
           )}`}
         </Text>
       </View>
+
       <View style={[styles.horizontalContainer, styles.item]}>
         <MaterialCommunityIcons
           name='map-marker'
