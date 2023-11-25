@@ -34,6 +34,10 @@ const InternalPagesPage: FC<InternalPagesPageProps> = ({ navigation }) => {
     navigation.navigate('PagesProfile');
   }, [navigation]);
 
+  const handleJobOfferPress = useCallback(() => {
+    navigation.navigate('PagesJobOffer');
+  }, [navigation]);
+
   return (
     <ScrollView
       style={styles.container}
@@ -41,6 +45,9 @@ const InternalPagesPage: FC<InternalPagesPageProps> = ({ navigation }) => {
     >
       <Button mode={'contained'} onPress={handleProfilePress}>
         Profile
+      </Button>
+      <Button mode={'contained'} onPress={handleJobOfferPress}>
+        JobOffer
       </Button>
     </ScrollView>
   );
