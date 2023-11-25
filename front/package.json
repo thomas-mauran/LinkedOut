@@ -14,7 +14,7 @@
     "typescript:check": "tsc --noEmit"
   },
   "dependencies": {
-    "@react-native-community/slider": "^4.4.3",
+    "@react-native-community/slider": "4.4.2",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.16",
