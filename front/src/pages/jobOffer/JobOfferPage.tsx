@@ -1,10 +1,9 @@
-import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
-import JobOfferList from '@/components/jobOffers/JobOfferList';
-import { useGetJobOffersQuery } from '@/store/api/jobApiSlice';
+import JobOfferContent from '@/components/jobOffers/JobOfferContent';
+import { useGetJobOfferQuery } from '@/store/api/jobApiSlice';
 
 import { JobOfferStackParamList } from './JobOfferNav';
 
@@ -31,21 +30,26 @@ type JobOfferPageProps = NativeStackScreenProps<
 >;
 
 /**
+ * The parameters for the JobOffer route.
+ */
+export type JobOfferViewPageParams = {
+  /**
+   * The ID of the availability to update.
+   */
+  id: string;
+};
+
+/**
  * Displays the page of job offers for the current user.
  * @constructor
  */
-const JobOfferPage: FC<JobOfferPageProps> = () => {
+const JobOfferPage: FC<JobOfferPageProps> = ({ route }) => {
+  const { id: jobOfferId } = route.params;
+
   // API calls
-  const { data: jobOffers, refetch: refetchJobOffers } = useGetJobOffersQuery();
+  const { data: jobOffer } = useGetJobOfferQuery(jobOfferId);
 
-  // Fetch data from the API when the page is focused
-  useFocusEffect(
-    useCallback(() => {
-      refetchJobOffers();
-    }, [refetchJobOffers]),
-  );
-
-  if (jobOffers === undefined) {
+  if (jobOffer === undefined) {
     return null;
   }
 
@@ -54,7 +58,7 @@ const JobOfferPage: FC<JobOfferPageProps> = () => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <JobOfferList jobOffers={jobOffers} />
+      <JobOfferContent jobOffer={jobOffer} />
     </ScrollView>
   );
 };

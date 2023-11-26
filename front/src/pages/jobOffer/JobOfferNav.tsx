@@ -1,14 +1,17 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
-import JobOfferPage from '@/pages/jobOffer/JobOfferPage';
 import i18n from '@/utils/i18n';
+
+import JobOfferListPage from './JobOfferListPage';
+import JobOfferPage, { JobOfferViewPageParams } from './JobOfferPage';
 
 /**
  * The parameter list for the JobOffersNav navigator.
  */
 export type JobOfferStackParamList = {
-  JobOffer: undefined;
+  JobOfferList: undefined;
+  JobOffer: JobOfferViewPageParams;
 };
 
 const JobOfferStack = createNativeStackNavigator<JobOfferStackParamList>();
@@ -20,9 +23,14 @@ const JobOfferStack = createNativeStackNavigator<JobOfferStackParamList>();
 const JobOffersNav = () => {
   return (
     <JobOfferStack.Navigator
-      initialRouteName='JobOffer'
+      initialRouteName='JobOfferList'
       screenOptions={{ header: (props) => <PaperNavigationBar {...props} /> }}
     >
+      <JobOfferStack.Screen
+        name='JobOfferList'
+        component={JobOfferListPage}
+        options={{ headerTitle: `${i18n.t('jobOffer.info.jobOfferList')}` }}
+      />
       <JobOfferStack.Screen
         name='JobOffer'
         component={JobOfferPage}

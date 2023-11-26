@@ -21,6 +21,17 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: 'JobOffer', id: 'LIST' }],
     }),
+    getJobOffer: builder.query<JobOffer, string>({
+      query: (id) => `jobOffers/${id}/`,
+      providesTags: (_result, _error, id) => [{ type: 'JobOffer', id }],
+    }),
+    postApplyJobOffer: builder.mutation<JobOffer, string>({
+      query: (id) => ({
+        url: `jobOffers/${id}/apply`,
+        method: 'POST',
+      }),
+      invalidatesTags: [{ type: 'JobOffer', id: 'LIST' }],
+    }),
     getJobCategories: builder.query<JobCategory[], void>({
       query: () => 'jobs/categories/',
       providesTags: (result) =>
@@ -54,4 +65,6 @@ export const {
   useGetJobOffersQuery,
   useGetJobCategoriesQuery,
   useGetJobsQuery,
+  useGetJobOfferQuery,
+  usePostApplyJobOfferMutation,
 } = extendedApiSlice;
