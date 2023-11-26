@@ -19,5 +19,6 @@ export const apiSlice = createApi({
     'Profile',
     'References',
     'Job',
+    'JobOffer',
   ],
 });

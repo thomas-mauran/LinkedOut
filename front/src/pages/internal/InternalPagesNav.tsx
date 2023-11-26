@@ -4,12 +4,15 @@ import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import InternalPagesPage from '@/pages/internal/InternalPagesPage';
 import ProfileNav from '@/pages/profile/ProfileNav';
 
+import JobOffersNav from '../jobOffer/JobOfferNav';
+
 /**
  * The parameter list for the InternalPagesNav navigator.
  */
 export type InternalPagesStackParamList = {
   PagesMain: undefined;
   PagesProfile: undefined;
+  PagesJobOffer: undefined;
 };
 
 const InternalPagesStack =
@@ -33,6 +36,11 @@ const InternalPagesNav = () => {
       <InternalPagesStack.Screen
         name='PagesProfile'
         component={ProfileNav}
+        options={{ headerShown: false }}
+      />
+      <InternalPagesStack.Screen
+        name='PagesJobOffer'
+        component={JobOffersNav}
         options={{ headerShown: false }}
       />
     </InternalPagesStack.Navigator>

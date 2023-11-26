@@ -6,6 +6,11 @@
     "cancel": "Cancel",
     "delete": "Delete"
   },
+  "jobOffer": {
+    "info": {
+      "jobOffer": "Job offer"
+    }
+  },
   "profile": {
     "info": {
       "contact": "Contact",
