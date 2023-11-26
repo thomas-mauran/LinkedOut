@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 
 import JobOfferList from '@/components/jobOffers/JobOfferList';
 import { JobOffer } from '@/models/entities/jobOffer';
-import { useGetJobOffersQuery } from '@/store/api/jobApiSlice';
+import { useGetJobOffersQuery } from '@/store/api/jobOfferApiSlice';
 
 import { JobOfferStackParamList } from './JobOfferNav';
 

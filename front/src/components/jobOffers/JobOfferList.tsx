@@ -22,7 +22,7 @@ type JobOfferListProps = {
    * The function to call when an a job offer is pressed.
    */
   onItemPress?: (jobOffer: JobOffer) => void;
-  
+
   /**
    * The list of job offers to display.
    */

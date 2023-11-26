@@ -4,14 +4,14 @@ import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import i18n from '@/utils/i18n';
 
 import JobOfferListPage from './JobOfferListPage';
-import JobOfferPage, { JobOfferViewPageParams } from './JobOfferPage';
+import JobOfferPage, { JobOfferPageParams } from './JobOfferPage';
 
 /**
  * The parameter list for the JobOffersNav navigator.
  */
 export type JobOfferStackParamList = {
   JobOfferList: undefined;
-  JobOffer: JobOfferViewPageParams;
+  JobOffer: JobOfferPageParams;
 };
 
 const JobOfferStack = createNativeStackNavigator<JobOfferStackParamList>();

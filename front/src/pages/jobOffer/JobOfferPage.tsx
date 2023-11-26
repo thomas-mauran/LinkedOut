@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import JobOfferContent from '@/components/jobOffers/JobOfferContent';
-import { useGetJobOfferQuery } from '@/store/api/jobApiSlice';
+import { useGetJobOfferQuery } from '@/store/api/jobOfferApiSlice';
 
 import { JobOfferStackParamList } from './JobOfferNav';
 

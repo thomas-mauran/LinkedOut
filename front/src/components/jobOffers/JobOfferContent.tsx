@@ -5,7 +5,7 @@ import { Button, Text, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { JobOffer } from '@/models/entities/jobOffer';
-import { usePostApplyJobOfferMutation } from '@/store/api/jobApiSlice';
+import { usePostApplyJobOfferMutation } from '@/store/api/jobOfferApiSlice';
 import i18n from '@/utils/i18n';
 
 /**
@@ -105,9 +105,9 @@ const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
           </View>
         </View>
       </View>
-      
+
       <Text>{`${jobOffer.description}`}</Text>
-      
+
       <View style={styles.verticalCentered}>
         <Button
           mode={'contained-tonal'}
