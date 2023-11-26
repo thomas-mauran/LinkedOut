@@ -15,7 +15,7 @@
     "apply": {
       "apply": "Apply",
       "applyTitle": "Apply confirmation",
-      "applyConfirm": "Do you want to apply to this job"
+      "applyConfirm": "Do you want to apply to this job?"
     }
   },
   "profile": {

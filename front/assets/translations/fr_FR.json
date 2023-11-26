@@ -15,7 +15,7 @@
     "apply": {
       "apply": "Postuler",
       "applyTitle": "Confirmation de candidature",
-      "applyConfirm": "Do you want to apply to this job"
+      "applyConfirm": "Voulez-vous candidater à cette offre ?"
     }
   },
   "profile": {

@@ -8,6 +8,9 @@ import { JobOffer } from '@/models/entities/jobOffer';
 import { usePostApplyJobOfferMutation } from '@/store/api/jobApiSlice';
 import i18n from '@/utils/i18n';
 
+/**
+ * The styles for the JobOfferContent component.
+ */
 const styles = StyleSheet.create({
   button: {
     width: 200,
@@ -28,13 +31,20 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * The props for the JobOfferContent component.
+ */
 type JobOfferContentProps = {
   /**
-   * The jobOffer to display.
+   * The job offer to display.
    */
   jobOffer: JobOffer;
 };
 
+/**
+ * Displays the details about a job offer.
+ * @constructor
+ */
 const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
   // API calls
   const [applyToJobOffer] = usePostApplyJobOfferMutation();
@@ -95,7 +105,9 @@ const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
           </View>
         </View>
       </View>
+      
       <Text>{`${jobOffer.description}`}</Text>
+      
       <View style={styles.verticalCentered}>
         <Button
           mode={'contained-tonal'}

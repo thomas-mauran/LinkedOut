@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
  */
 type JobOfferItemProps = {
   /**
-   * The function to call when an a jobOffer is pressed.
+   * The function to call when an a job offer is pressed.
    */
   onItemPress?: (jobOffer: JobOffer) => void;
 

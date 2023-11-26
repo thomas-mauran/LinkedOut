@@ -9,6 +9,9 @@ import { useGetJobOffersQuery } from '@/store/api/jobApiSlice';
 
 import { JobOfferStackParamList } from './JobOfferNav';
 
+/**
+ * The styles for the JobOfferListPage component.
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,7 +32,7 @@ type JobOfferListPageProps = NativeStackScreenProps<
 >;
 
 /**
- * Displays the page with the list of jobOffers.
+ * Displays the page of job offers for the current user.
  * @constructor
  */
 const JobOfferListPage: FC<JobOfferListPageProps> = ({ navigation }) => {

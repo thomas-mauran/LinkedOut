@@ -32,18 +32,19 @@ type JobOfferPageProps = NativeStackScreenProps<
 /**
  * The parameters for the JobOffer route.
  */
-export type JobOfferViewPageParams = {
+export type JobOfferPageParams = {
   /**
-   * The ID of the jobOffer to update.
+   * The ID of the job offer to view.
    */
   id: string;
 };
 
 /**
- * Displays the page of job offers for the current user.
+ * Displays the page for a single job offer.
  * @constructor
  */
 const JobOfferPage: FC<JobOfferPageProps> = ({ route }) => {
+  // Route params
   const { id: jobOfferId } = route.params;
 
   // API calls
