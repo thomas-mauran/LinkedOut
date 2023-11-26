@@ -20,25 +20,35 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * The props for the JobOfferListPage component.
+ */
 type JobOfferListPageProps = NativeStackScreenProps<
   JobOfferStackParamList,
   'JobOfferList'
 >;
 
+/**
+ * Displays the page with the list of jobOffers.
+ * @constructor
+ */
 const JobOfferListPage: FC<JobOfferListPageProps> = ({ navigation }) => {
+  // API calls
   const { data: jobOffers, refetch: refetchJobOffers } = useGetJobOffersQuery();
 
-  useFocusEffect(
-    useCallback(() => {
-      refetchJobOffers();
-    }, [refetchJobOffers]),
-  );
-
+  // Callbacks
   const handleJobOfferPress = useCallback(
     (jobOffer: JobOffer) => {
       navigation.navigate('JobOffer', { id: jobOffer.id });
     },
     [navigation],
+  );
+
+  // Fetch data from the API when the page is focused
+  useFocusEffect(
+    useCallback(() => {
+      refetchJobOffers();
+    }, [refetchJobOffers]),
   );
 
   if (jobOffers === undefined) {

@@ -34,7 +34,7 @@ type JobOfferPageProps = NativeStackScreenProps<
  */
 export type JobOfferViewPageParams = {
   /**
-   * The ID of the availability to update.
+   * The ID of the jobOffer to update.
    */
   id: string;
 };

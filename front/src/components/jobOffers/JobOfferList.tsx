@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 
 type JobOfferListProps = {
   /**
-   * The function to call when an item of the jobOffer item is pressed.
+   * The function to call when an a jobOffer is pressed.
    */
   onItemPress?: (jobOffer: JobOffer) => void;
   /**

@@ -43,6 +43,7 @@ const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
   const locales = useLocales();
   const theme = useTheme();
 
+  // Callbacks
   const handleApplyToJobOffer = useCallback(
     (jobOffer: JobOffer) => {
       Alert.alert(
