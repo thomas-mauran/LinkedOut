@@ -1,6 +1,5 @@
 import { Job } from '@/models/entities/job';
 import { JobCategory } from '@/models/entities/jobCategory';
-import { JobOffer } from '@/models/entities/jobOffer';
 import { apiSlice } from '@/store/api/apiSlice';
 
 /**
@@ -8,19 +7,6 @@ import { apiSlice } from '@/store/api/apiSlice';
  */
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getJobOffers: builder.query<JobOffer[], void>({
-      query: () => 'jobOffers/',
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({
-                type: 'JobOffer' as const,
-                id,
-              })),
-              { type: 'JobOffer', id: 'LIST' },
-            ]
-          : [{ type: 'JobOffer', id: 'LIST' }],
-    }),
     getJobCategories: builder.query<JobCategory[], void>({
       query: () => 'jobs/categories/',
       providesTags: (result) =>
@@ -50,8 +36,4 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetJobOffersQuery,
-  useGetJobCategoriesQuery,
-  useGetJobsQuery,
-} = extendedApiSlice;
+export const { useGetJobCategoriesQuery, useGetJobsQuery } = extendedApiSlice;

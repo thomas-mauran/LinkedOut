@@ -17,26 +17,24 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * The props for the JobOfferList component.
- */
-type JobOfferProps = {
+type JobOfferListProps = {
   /**
-   * The job offers to display.
+   * The function to call when an a job offer is pressed.
+   */
+  onItemPress?: (jobOffer: JobOffer) => void;
+
+  /**
+   * The list of job offers to display.
    */
   jobOffers: JobOffer[];
 };
 
-/**
- * Displays a list of job offers.
- * @constructor
- */
-const JobOfferList: FC<JobOfferProps> = ({ jobOffers }) => {
+const JobOfferList: FC<JobOfferListProps> = ({ onItemPress, jobOffers }) => {
   return (
     <View>
       {jobOffers?.map((jobOffer) => (
         <View key={jobOffer.id}>
-          <JobOfferItem jobOffer={jobOffer} />
+          <JobOfferItem onItemPress={onItemPress} jobOffer={jobOffer} />
           <Divider style={styles.divider} />
         </View>
       ))}

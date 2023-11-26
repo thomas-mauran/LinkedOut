@@ -4,11 +4,18 @@
   },
   "common": {
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "confirm": "Confirm"
   },
   "jobOffer": {
     "info": {
+      "jobOfferList": "Job offer list",
       "jobOffer": "Job offer"
+    },
+    "apply": {
+      "apply": "Apply",
+      "applyTitle": "Apply confirmation",
+      "applyConfirm": "Do you want to apply to this job?"
     }
   },
   "profile": {
