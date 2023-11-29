@@ -1,4 +1,11 @@
 services:
+  # NATS
+  nats:
+    image: bitnami/nats:2.10.5
+    ports:
+      - 4222:4222
+      - 8222:8222
+
   # Keycloak
   keycloak_postgresql:
     image: bitnami/postgresql:16.1.0

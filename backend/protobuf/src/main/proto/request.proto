@@ -1,0 +1,13 @@
+syntax = "proto3";
+package com.linkedout.proto;
+
+import "services/jobs.proto";
+
+// Message that contains a generic request
+message Request {
+  string request_id = 1;
+
+  oneof request {
+    services.GetJobsRequest get_jobs_request = 2;
+  }
+}

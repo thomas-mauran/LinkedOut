@@ -3,7 +3,7 @@ package com.linkedout.jobs
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = ["com.linkedout"])
 class JobsApplication
 
 fun main(args: Array<String>) {

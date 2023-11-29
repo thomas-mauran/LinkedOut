@@ -1,0 +1,11 @@
+syntax = "proto3";
+package com.linkedout.proto.services;
+
+import "models/job.proto";
+
+// Get jobs
+message GetJobsRequest {}
+
+message GetJobsResponse {
+  repeated models.Job jobs = 1;
+}
