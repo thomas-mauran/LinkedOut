@@ -40,7 +40,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
+    testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder:4.0.4")
 }
 
 tasks.withType<KotlinCompile> {
