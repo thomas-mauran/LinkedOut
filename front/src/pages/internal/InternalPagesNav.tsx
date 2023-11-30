@@ -5,6 +5,7 @@ import InternalPagesPage from '@/pages/internal/InternalPagesPage';
 import ProfileNav from '@/pages/profile/ProfileNav';
 
 import JobOffersNav from '../jobOffer/JobOfferNav';
+import MessagingNav from '../messaging/MessagingNav';
 
 /**
  * The parameter list for the InternalPagesNav navigator.
@@ -13,6 +14,7 @@ export type InternalPagesStackParamList = {
   PagesMain: undefined;
   PagesProfile: undefined;
   PagesJobOffer: undefined;
+  PagesMessaging: undefined;
 };
 
 const InternalPagesStack =
@@ -41,6 +43,11 @@ const InternalPagesNav = () => {
       <InternalPagesStack.Screen
         name='PagesJobOffer'
         component={JobOffersNav}
+        options={{ headerShown: false }}
+      />
+      <InternalPagesStack.Screen
+        name='PagesMessaging'
+        component={MessagingNav}
         options={{ headerShown: false }}
       />
     </InternalPagesStack.Navigator>

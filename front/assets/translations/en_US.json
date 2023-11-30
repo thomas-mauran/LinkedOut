@@ -18,6 +18,11 @@
       "applyConfirm": "Do you want to apply to this job?"
     }
   },
+  "messaging": {
+    "info": {
+      "messageChannel": "Messages"
+    }
+  },
   "profile": {
     "info": {
       "contact": "Contact",
