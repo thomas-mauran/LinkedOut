@@ -10,12 +10,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  detect_changes:
+    name: Detect repository changes
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          backend:
+            - 'backend/**'
+          frontend:
+            - 'front/**'
+
   lint_frontend:
     name: Lint frontend
+    needs: detect_changes
+    if: ${{ needs.detect_changes.outputs.frontend == 'true' }}
     uses: ./.github/workflows/flow_front_lint.yml
 
   lint_backend:
     name: Lint backend
+    needs: detect_changes
+    if: ${{ needs.detect_changes.outputs.backend == 'true' }}
     uses: ./.github/workflows/flow_backend_lint.yml
 
   build_api_gateway:
