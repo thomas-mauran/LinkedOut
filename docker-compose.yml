@@ -1,4 +1,17 @@
 services:
+  # Postgres
+  postgres:
+    image: bitnami/postgresql:16.1.0
+    ports:
+      - 5432:5432
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+      - ./config/postgres:/docker-entrypoint-initdb.d
+
   # NATS
   nats:
     image: bitnami/nats:2.10.5
@@ -6,43 +19,43 @@ services:
       - 4222:4222
       - 8222:8222
 
-  # Keycloak
-  keycloak_postgresql:
-    image: bitnami/postgresql:16.1.0
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - POSTGRESQL_USERNAME=keycloak
-      - POSTGRESQL_PASSWORD=keycloak
-      - POSTGRESQL_DATABASE=keycloak
-    volumes:
-      - keycloak_postgresql_data:/bitnami/postgresql
-
-  keycloak:
-    image: bitnami/keycloak:22.0.5
-    ports:
-      - 8180:8080
-    environment:
-      - KEYCLOAK_DATABASE_HOST=keycloak_postgresql
-      - KEYCLOAK_DATABASE_NAME=keycloak
-      - KEYCLOAK_DATABASE_USER=keycloak
-      - KEYCLOAK_DATABASE_PASSWORD=keycloak
-    depends_on:
-      - keycloak_postgresql
-
-  keycloak_config:
-    image: bitnami/keycloak-config-cli:5.9.0
-    environment:
-      - KEYCLOAK_URL=http://keycloak:8080
-      - KEYCLOAK_USER=user
-      - KEYCLOAK_PASSWORD=bitnami
-      - KEYCLOAK_AVAILABILITYCHECK_ENABLED=true
-      - KEYCLOAK_AVAILABILITYCHECK_TIMEOUT=120s
-      - IMPORT_FILES_LOCATIONS=/config/*
-    volumes:
-      - ./config/keycloak:/config
-    depends_on:
-      - keycloak
+  # # Keycloak
+  # keycloak_postgresql:
+  #   image: bitnami/postgresql:16.1.0
+  #   environment:
+  #     - ALLOW_EMPTY_PASSWORD=yes
+  #     - POSTGRESQL_USERNAME=keycloak
+  #     - POSTGRESQL_PASSWORD=keycloak
+  #     - POSTGRESQL_DATABASE=keycloak
+  #   volumes:
+  #     - keycloak_postgresql_data:/bitnami/postgresql
+  #
+  # keycloak:
+  #   image: bitnami/keycloak:22.0.5
+  #   ports:
+  #     - 8180:8080
+  #   environment:
+  #     - KEYCLOAK_DATABASE_HOST=keycloak_postgresql
+  #     - KEYCLOAK_DATABASE_NAME=keycloak
+  #     - KEYCLOAK_DATABASE_USER=keycloak
+  #     - KEYCLOAK_DATABASE_PASSWORD=keycloak
+  #   depends_on:
+  #     - keycloak_postgresql
+  #
+  # keycloak_config:
+  #   image: bitnami/keycloak-config-cli:5.9.0
+  #   environment:
+  #     - KEYCLOAK_URL=http://keycloak:8080
+  #     - KEYCLOAK_USER=user
+  #     - KEYCLOAK_PASSWORD=bitnami
+  #     - KEYCLOAK_AVAILABILITYCHECK_ENABLED=true
+  #     - KEYCLOAK_AVAILABILITYCHECK_TIMEOUT=120s
+  #     - IMPORT_FILES_LOCATIONS=/config/*
+  #   volumes:
+  #     - ./config/keycloak:/config
+  #   depends_on:
+  #     - keycloak
 
 volumes:
-  keycloak_postgresql_data:
-
+  postgresql_data:
+  # keycloak_postgresql_data:
