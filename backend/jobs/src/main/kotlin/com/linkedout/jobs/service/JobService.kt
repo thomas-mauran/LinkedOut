@@ -1,5 +1,6 @@
 package com.linkedout.jobs.service
 
+import com.linkedout.jobs.dto.JobWithCategory
 import com.linkedout.jobs.model.Job
 import com.linkedout.jobs.repository.JobRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,8 +13,8 @@ import java.util.UUID
 class JobService(
     @Autowired private val jobRepository: JobRepository
 ) {
-    fun findAll(): Flux<Job> {
-        return jobRepository.findAll()
+    fun findAllWithCategory(): Flux<JobWithCategory> {
+        return jobRepository.findAllWithCategory()
     }
 
     fun findOne(id: UUID): Mono<Job> {

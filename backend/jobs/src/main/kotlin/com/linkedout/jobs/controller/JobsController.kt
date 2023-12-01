@@ -14,11 +14,6 @@ import java.util.UUID
 @RestController
 @RequestMapping("/jobs")
 class JobsController(private val jobService: JobService, private val jobCategoryService: JobCategoryService) {
-    @GetMapping
-    fun getJobs(): Flux<Job> {
-        return jobService.findAll()
-    }
-
     @GetMapping("/{id}")
     fun getJob(
         @PathVariable id: UUID

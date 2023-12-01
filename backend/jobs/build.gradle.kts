@@ -21,12 +21,18 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator:3.1.5")
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc:3.1.5")
-    implementation("org.springframework.boot:spring-boot-starter-validation:3.1.5")
-    implementation("org.springframework.boot:spring-boot-starter-webflux:3.1.5")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.1.5")
-    implementation("org.springframework:spring-jdbc:6.0.13")
+    implementation(project(":common"))
+    implementation(project(":protobuf"))
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework:spring-jdbc")
+    implementation("org.springframework.cloud:spring-cloud-stream:4.0.4")
+    implementation("io.nats:jnats:2.17.1")
+    implementation("io.nats:nats-spring:0.5.6")
+    implementation("io.nats:nats-spring-cloud-stream-binder:0.5.3")
     implementation("org.flywaydb:flyway-core:9.22.3")
     implementation("org.postgresql:r2dbc-postgresql:1.0.2.RELEASE")
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
@@ -34,6 +40,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder:4.0.4")
 }
 
 tasks.withType<KotlinCompile> {

@@ -4,6 +4,8 @@ ARG SERVICE_NAME
 WORKDIR /app
 
 COPY ./$SERVICE_NAME ./$SERVICE_NAME
+COPY ./common ./common
+COPY ./protobuf ./protobuf
 COPY ./gradle ./gradle
 COPY ./gradle.properties .
 COPY ./gradlew .
