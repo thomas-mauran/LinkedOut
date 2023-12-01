@@ -44,26 +44,17 @@ jobs:
     if: ${{ needs.detect_changes.outputs.backend == 'true' }}
     uses: ./.github/workflows/flow_backend_lint.yml
 
-  build_api_gateway:
-    name: Build & push Docker image of the API gateway
+  build_push_backend:
+    name: Build & push Docker image of the "${{ matrix.service }}" service
     needs: lint_backend
     uses: ./.github/workflows/flow_backend_build_push.yml
+    strategy:
+      matrix:
+        service: [api_gateway, jobs]
     with:
-      service-name: api_gateway
+      service-name: ${{ matrix.service }}
       push-image: ${{ github.event_name != 'pull_request' }}
       image-tags: |
         type=sha
         type=ref,event=branch
         type=edge,branch=main
-
-  build_jobs_service:
-    name: Build & push Docker image of the Jobs service
-    needs: lint_backend
-    uses: ./.github/workflows/flow_backend_build_push.yml
-    with:
-      service-name: jobs
-      push-image: ${{ github.event_name != 'pull_request' }}
-      image-tags: |
-        type=sha
-        type=ref,event=branch
-        type=edge
