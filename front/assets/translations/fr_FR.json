@@ -18,6 +18,11 @@
       "applyConfirm": "Voulez-vous candidater à cette offre ?"
     }
   },
+  "messaging": {
+    "info": {
+      "messageChannel": "Messages"
+    }
+  },
   "profile": {
     "info": {
       "contact": "Contact",

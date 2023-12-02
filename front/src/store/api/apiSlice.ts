@@ -20,5 +20,6 @@ export const apiSlice = createApi({
     'References',
     'Job',
     'JobOffer',
+    'MessageChannel',
   ],
 });
