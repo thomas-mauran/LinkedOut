@@ -1,3 +1,5 @@
+import { Employer } from './employer';
+
 /**
  * Message channel.
  */
@@ -10,28 +12,7 @@ export type MessageChannel = {
   /**
    * Employer object.
    */
-
-  employer: {
-    /**
-     * The first name of the employer.
-     */
-    firstName: string;
-
-    /**
-     * The last name of the employer.
-     */
-    lastName: string;
-
-    /**
-     * The profile picture of the employer.
-     */
-    picture: string;
-
-    /**
-     * The mobile phone of the employer.
-     */
-    phone: string;
-  };
+  employer: Employer;
 
   /**
    * The last message of the message channel.

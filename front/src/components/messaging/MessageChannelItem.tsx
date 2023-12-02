@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
   },
+  verticalCenter: {
+    marginBottom: 'auto',
+    marginTop: 'auto',
+  },
 });
 
 /**
@@ -57,7 +61,7 @@ const MessageChannelItem: FC<MessageChannelItemProps> = ({
             uri: messageChannel.employer?.picture,
           }}
         />
-        <View>
+        <View style={styles.verticalCenter}>
           <Text
             variant='labelLarge'
             style={styles.nameText}

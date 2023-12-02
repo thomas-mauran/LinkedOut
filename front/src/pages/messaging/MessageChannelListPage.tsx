@@ -39,8 +39,6 @@ const MessageChannelListPage: FC<MessagingListPageProps> = () => {
   const { data: messageChannels, refetch: refetchMessageChannels } =
     useGetMessageChannelsQuery();
 
-  // Callbacks
-
   // Fetch data from the API when the page is focused
   useFocusEffect(
     useCallback(() => {
