@@ -25,6 +25,7 @@ repositories {
 dependencies {
     implementation(project(":protobuf"))
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework:spring-web")
     implementation("org.springframework:spring-messaging")
     implementation("io.nats:jnats:2.17.1")
     implementation("com.google.protobuf:protobuf-kotlin:3.25.0")

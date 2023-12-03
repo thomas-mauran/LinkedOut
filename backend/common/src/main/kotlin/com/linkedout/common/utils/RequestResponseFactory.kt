@@ -2,24 +2,26 @@ package com.linkedout.common.utils
 
 import com.linkedout.proto.RequestOuterClass
 import com.linkedout.proto.ResponseOuterClass
-import java.util.UUID
+import org.springframework.http.HttpStatus
 
 class RequestResponseFactory private constructor() {
     companion object {
-        fun newRequest(): RequestOuterClass.Request.Builder {
+        fun newRequest(requestId: String): RequestOuterClass.Request.Builder {
             return RequestOuterClass.Request.newBuilder()
-                .setRequestId(UUID.randomUUID().toString())
+                .setRequestId(requestId)
         }
 
         fun newSuccessfulResponse(): ResponseOuterClass.Response.Builder {
             return ResponseOuterClass.Response.newBuilder()
-                .setSuccess(true)
         }
 
-        fun newFailedResponse(message: String): ResponseOuterClass.Response.Builder {
+        fun newFailedResponse(message: String, errorCode: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR): ResponseOuterClass.Response.Builder {
             return ResponseOuterClass.Response.newBuilder()
-                .setSuccess(false)
-                .setErrorMessage(message)
+                .setError(
+                    ResponseOuterClass.Error.newBuilder()
+                        .setErrorMessage(message)
+                        .setErrorCode(errorCode.value())
+                )
         }
     }
 }

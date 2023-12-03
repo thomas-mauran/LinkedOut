@@ -1,0 +1,7 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+message JobCategory {
+  string id = 1;
+  string category = 2;
+}

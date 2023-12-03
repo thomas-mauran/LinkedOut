@@ -2,10 +2,27 @@ syntax = "proto3";
 package com.linkedout.proto.services;
 
 import "models/job.proto";
+import "models/jobCategory.proto";
 
 // Get jobs
 message GetJobsRequest {}
 
 message GetJobsResponse {
   repeated models.Job jobs = 1;
+}
+
+// Get a job
+message GetJobRequest {
+  string id = 1;
+}
+
+message GetJobResponse {
+  models.Job job = 1;
+}
+
+// Get job categories
+message GetJobCategoriesRequest {}
+
+message GetJobCategoriesResponse {
+  repeated models.JobCategory categories = 1;
 }

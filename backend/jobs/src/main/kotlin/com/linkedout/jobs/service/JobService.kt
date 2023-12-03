@@ -1,7 +1,6 @@
 package com.linkedout.jobs.service
 
 import com.linkedout.jobs.dto.JobWithCategory
-import com.linkedout.jobs.model.Job
 import com.linkedout.jobs.repository.JobRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -17,7 +16,7 @@ class JobService(
         return jobRepository.findAllWithCategory()
     }
 
-    fun findOne(id: UUID): Mono<Job> {
-        return jobRepository.findById(id)
+    fun findOneWithCategory(id: UUID): Mono<JobWithCategory> {
+        return jobRepository.findOneWithCategory(id)
     }
 }

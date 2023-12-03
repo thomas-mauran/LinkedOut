@@ -3,7 +3,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/realms/linkedout
+          issuer-uri: https://auth.linkedout.cluster-2020-5.dopolytech.fr/realms/linkedout-dev
 
 server:
   port: 9090
@@ -18,3 +18,7 @@ app:
     jobs:
       subjects:
         findAll: jobs.findAll
+        findOne: jobs.findOne
+    jobCategories:
+      subjects:
+        findAll: jobs.findAllCategories

@@ -4,12 +4,18 @@ package com.linkedout.proto;
 import "services/jobs.proto";
 
 // Message that contains a generic response
+message Error {
+  string error_message = 1;
+  uint32 error_code = 2;
+}
+
 message Response {
   string request_id = 1;
-  bool success = 2;
 
   oneof response {
-    string error_message = 3;
-    services.GetJobsResponse get_jobs_response = 4;
+    Error error = 2;
+    services.GetJobsResponse get_jobs_response = 3;
+    services.GetJobResponse get_job_response = 4;
+    services.GetJobCategoriesResponse get_job_categories_response = 5;
   }
 }
