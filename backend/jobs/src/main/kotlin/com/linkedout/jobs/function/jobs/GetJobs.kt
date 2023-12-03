@@ -1,4 +1,4 @@
-package com.linkedout.jobs.stream.function.jobs
+package com.linkedout.jobs.function.jobs
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.jobs.service.JobService
@@ -6,16 +6,14 @@ import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import java.util.*
 import java.util.function.Function
 
 @Component
-class GetJob(private val jobService: JobService) : Function<Request, Response> {
+class GetJobs(private val jobService: JobService) : Function<Request, Response> {
     override fun apply(t: Request): Response {
-        // Get the job from the database
-        val responseMono = jobService.findOneWithCategory(UUID.fromString(t.getGetJobRequest().id))
+        // Get all the jobs from the database
+        val responseMono = jobService.findAllWithCategory()
             .map { job ->
                 JobOuterClass.Job.newBuilder()
                     .setId(job.id)
@@ -23,10 +21,12 @@ class GetJob(private val jobService: JobService) : Function<Request, Response> {
                     .setCategory(job.category)
                     .build()
             }
-            .map { job ->
-                Jobs.GetJobResponse.newBuilder()
-                    .setJob(job)
-                    .build()
+            .reduce(Jobs.GetJobsResponse.newBuilder()) { builder, job ->
+                builder.addJobs(job)
+                builder
+            }
+            .map { builder ->
+                builder.build()
             }
 
         // Block until the response is ready
@@ -35,10 +35,12 @@ class GetJob(private val jobService: JobService) : Function<Request, Response> {
         } catch (e: Exception) {
             return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
         }
-            ?: return RequestResponseFactory.newFailedResponse("Job not found", HttpStatus.NOT_FOUND).build()
+            ?: return RequestResponseFactory.newSuccessfulResponse()
+                .setGetJobsResponse(Jobs.GetJobsResponse.getDefaultInstance())
+                .build()
 
         return RequestResponseFactory.newSuccessfulResponse()
-            .setGetJobResponse(response)
+            .setGetJobsResponse(response)
             .build()
     }
 }

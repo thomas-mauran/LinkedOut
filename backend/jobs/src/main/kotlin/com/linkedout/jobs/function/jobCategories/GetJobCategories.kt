@@ -1,4 +1,4 @@
-package com.linkedout.jobs.stream.function.jobCategories
+package com.linkedout.jobs.function.jobCategories
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.jobs.service.JobCategoryService
