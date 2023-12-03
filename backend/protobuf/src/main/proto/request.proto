@@ -9,5 +9,7 @@ message Request {
 
   oneof request {
     services.GetJobsRequest get_jobs_request = 2;
+    services.GetJobRequest get_job_request = 3;
+    services.GetJobCategoriesRequest get_job_categories_request = 4;
   }
 }
