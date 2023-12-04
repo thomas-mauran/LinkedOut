@@ -9,9 +9,6 @@ plugins {
     kotlin("plugin.jpa")
 }
 
-group = "com.linkedout"
-version = "1.0.0-SNAPSHOT"
-
 java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
