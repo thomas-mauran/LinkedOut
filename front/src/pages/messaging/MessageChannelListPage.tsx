@@ -4,6 +4,7 @@ import { FC, useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import MessagingList from '@/components/messaging/MessageChannelList';
+import { MessageChannel } from '@/models/entities/messageChannel';
 import { useGetMessageChannelsQuery } from '@/store/api/messagingApiSlice';
 
 import { MessagingStackParamList } from './MessagingNav';
@@ -34,10 +35,18 @@ type MessagingListPageProps = NativeStackScreenProps<
  * Displays the page of message channels for the current user.
  * @constructor
  */
-const MessageChannelListPage: FC<MessagingListPageProps> = () => {
+const MessageChannelListPage: FC<MessagingListPageProps> = ({ navigation }) => {
   // API calls
   const { data: messageChannels, refetch: refetchMessageChannels } =
     useGetMessageChannelsQuery();
+
+  // Callbacks
+  const handleMessageChannelPress = useCallback(
+    (messageChannel: MessageChannel) => {
+      navigation.navigate('MessageChannel', { id: messageChannel.id });
+    },
+    [navigation],
+  );
 
   // Fetch data from the API when the page is focused
   useFocusEffect(
@@ -55,7 +64,10 @@ const MessageChannelListPage: FC<MessagingListPageProps> = () => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <MessagingList messageChannels={messageChannels} />
+      <MessagingList
+        onItemPress={handleMessageChannelPress}
+        messageChannels={messageChannels}
+      />
     </ScrollView>
   );
 };
