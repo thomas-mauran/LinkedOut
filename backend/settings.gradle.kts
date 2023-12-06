@@ -19,4 +19,5 @@ rootProject.name = "linkedout-backend"
 include("api_gateway")
 include("common")
 include("jobs")
+include("messaging")
 include("protobuf")
