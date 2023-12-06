@@ -10,9 +10,9 @@ import i18n from '@/utils/i18n';
  */
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     flexDirection: 'row',
     gap: 10,
-    alignItems: 'center',
   },
   textInput: {
     flex: 1,
@@ -52,7 +52,7 @@ const MessageTextInput: FC<MessageTextInputProps> = ({ messageChannelId }) => {
       <IconButton
         icon='send-outline'
         onPress={onSendPress}
-        style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
+        style={{ backgroundColor: theme.colors.primary }}
         iconColor={theme.colors.onPrimary}
       />
     </View>

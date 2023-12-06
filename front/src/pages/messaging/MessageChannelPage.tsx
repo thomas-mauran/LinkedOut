@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC, useCallback, useEffect } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import MessageChannelContent from '@/components/messaging/MessageChannelContent';
 import {
@@ -15,10 +15,8 @@ import { MessagingStackParamList } from './MessagingNav';
  * The styles for the MessageChannelPage component.
  */
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   contentContainer: {
+    flex: 1,
     paddingBottom: 8,
     paddingHorizontal: 16,
   },
@@ -77,10 +75,7 @@ const MessageChannelPage: FC<MessageChannelPageProps> = ({
   }
 
   return (
-    <View
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
+    <View style={styles.contentContainer}>
       <MessageChannelContent
         messageChannel={messageChannel}
         messages={messages}

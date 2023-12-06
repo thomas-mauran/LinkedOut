@@ -3,8 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Message } from '@/models/entities/message';
 
-import MessageBubbleEmployer from './MessageBubbleEmployer';
-import MessageBubbleWorker from './MessageBubbleWorker';
+import MessageBubble from './MessageBubble';
 
 /**
  * The styles for the MessageList component.
@@ -12,6 +11,9 @@ import MessageBubbleWorker from './MessageBubbleWorker';
 const styles = StyleSheet.create({
   container: {
     gap: 10,
+  },
+  messageBubbleContainer: {
+    marginBottom: 30,
   },
 });
 
@@ -26,12 +28,8 @@ const MessageList: FC<MessageListProps> = ({ messages }) => {
   return (
     <ScrollView style={styles.container}>
       {messages?.map((message) => (
-        <View key={message.id}>
-          {message.direction == 0 ? (
-            <MessageBubbleWorker message={message} />
-          ) : (
-            <MessageBubbleEmployer message={message} />
-          )}
+        <View key={message.id} style={styles.messageBubbleContainer}>
+          <MessageBubble message={message} />
         </View>
       ))}
     </ScrollView>

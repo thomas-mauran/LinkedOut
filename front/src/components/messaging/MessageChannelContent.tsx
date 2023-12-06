@@ -12,6 +12,7 @@ import MessageTextInput from './MessageTextInput';
  */
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     gap: 16,
   },
 });

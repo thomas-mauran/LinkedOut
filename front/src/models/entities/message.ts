@@ -1,4 +1,12 @@
 /**
+ * The direction of a message.
+ */
+export enum MessageDirection {
+  WorkerToEmployer = 0,
+  EmployerToWorker = 1,
+}
+
+/**
  * Message channel.
  */
 export type Message = {
@@ -19,10 +27,8 @@ export type Message = {
 
   /**
    * The direction of the message.
-   * 0 (Seasonal worker ⇒ Employer)
-   * 1 (Employer ⇒ Seasonal worker)
    */
-  direction: number;
+  direction: MessageDirection;
 
   /**
    * The timestamp of the message.
