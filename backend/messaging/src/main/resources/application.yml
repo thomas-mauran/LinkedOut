@@ -1,0 +1,13 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432
+    username: messaging
+    password: messaging
+
+  flyway:
+    url: jdbc:postgresql://localhost:5432/messaging
+    user: messaging
+    password: messaging
+
+server:
+  port: 8082
