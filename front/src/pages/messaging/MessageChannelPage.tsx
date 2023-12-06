@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    height: '100%',
     paddingBottom: 8,
     paddingHorizontal: 16,
   },
@@ -78,7 +77,7 @@ const MessageChannelPage: FC<MessageChannelPageProps> = ({
   }
 
   return (
-    <ScrollView
+    <View
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
@@ -86,7 +85,7 @@ const MessageChannelPage: FC<MessageChannelPageProps> = ({
         messageChannel={messageChannel}
         messages={messages}
       />
-    </ScrollView>
+    </View>
   );
 };
 

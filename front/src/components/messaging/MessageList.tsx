@@ -12,9 +12,6 @@ import MessageBubbleWorker from './MessageBubbleWorker';
 const styles = StyleSheet.create({
   container: {
     gap: 10,
-    height: '80%',
-    marginBottom: 60,
-    width: '100%',
   },
 });
 

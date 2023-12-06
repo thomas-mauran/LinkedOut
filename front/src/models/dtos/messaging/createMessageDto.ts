@@ -1,7 +1,7 @@
 /**
  * DTO for creating a new message in a message channel.
  */
-export type CreateMessage = {
+export type CreateMessageDto = {
   /**
    * The channel id.
    */

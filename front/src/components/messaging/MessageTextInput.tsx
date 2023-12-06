@@ -10,18 +10,12 @@ import i18n from '@/utils/i18n';
  */
 const styles = StyleSheet.create({
   container: {
-    bottom: 0,
     flexDirection: 'row',
     gap: 10,
-    position: 'absolute',
-    width: '100%',
-  },
-  sendButton: {
-    borderRadius: 50,
-    padding: 10,
+    alignItems: 'center',
   },
   textInput: {
-    width: '85%',
+    flex: 1,
   },
 });
 
@@ -50,12 +44,13 @@ const MessageTextInput: FC<MessageTextInputProps> = ({ messageChannelId }) => {
     <View style={styles.container}>
       <TextInput
         style={styles.textInput}
-        label={i18n.t('messaging.info.textInputPlaceholer')}
+        placeholder={i18n.t('messaging.info.textInputPlaceholer')}
         value={content}
         onChangeText={setContent}
+        mode={'outlined'}
       />
       <IconButton
-        icon='arrow-right-bold'
+        icon='send-outline'
         onPress={onSendPress}
         style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
         iconColor={theme.colors.onPrimary}
