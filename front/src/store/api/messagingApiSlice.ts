@@ -1,4 +1,4 @@
-import { CreateMessage } from '@/models/dtos/messaging/createMessageDto';
+import { CreateMessageDto } from '@/models/dtos/messaging/createMessageDto';
 import { Message } from '@/models/entities/message';
 import { MessageChannel } from '@/models/entities/messageChannel';
 import { apiSlice } from '@/store/api/apiSlice';
@@ -38,7 +38,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: 'Message', id: 'LIST' }],
     }),
-    postMessage: builder.mutation<Message, CreateMessage>({
+    postMessage: builder.mutation<Message, CreateMessageDto>({
       query: (body) => ({
         url: `messaging/${body.id}/messages`,
         method: 'POST',
