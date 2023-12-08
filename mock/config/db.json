@@ -357,11 +357,80 @@
     },
     {
       "id": "c6eb0448-1600-4a22-9de4-d9473d8ed8ae",
+      "channelId": "1857769e-f4e9-40bd-9988-cfad399a1d3e",
+      "employerId": "c80f53f4-0a33-4fe3-bf7f-a755c6e2235b",
+      "direction": 0,
+      "sentAt": "2023-10-26T01:34:56Z",
+      "content": "Coucou Sarko, dis moi tout..."
+    },
+    {
+      "id": "531e9298-f885-4659-9e32-d5bf795cf62b",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
+      "direction": 1,
+      "sentAt": "2023-10-23T09:34:19Z",
+      "content": "Bonsoir Bernard, laissez moi vous présenter à un très chère ami ce week end"
+    },
+    {
+      "id": "e4ab22c0-4e45-4ac9-844f-384def880b1b",
       "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
       "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
       "direction": 0,
       "sentAt": "2023-10-26T01:34:56Z",
-      "content": "Coucou Sarko, dis moi tout..."
+      "content": "Avec plaisir Monsieur Hollande, une de vos connaissances ?"
+    },
+    {
+      "id": "d7f8f1e1-7e67-48f7-9f70-95ff3f0f531c",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
+      "direction": 1,
+      "sentAt": "2023-10-28T14:45:22Z",
+      "content": "Oui, c'est un vieil ami de l'université. Vous allez certainement apprécier sa compagnie !"
+    },
+    {
+      "id": "a41e0b53-d29d-41a4-8272-d38aaf2c0a01",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
+      "direction": 0,
+      "sentAt": "2023-11-02T09:12:34Z",
+      "content": "C'est génial ! J'ai hâte de faire sa connaissance. Où et quand est-ce que nous allons nous retrouver ce week-end ?"
+    },
+    {
+      "id": "7a8b6a41-71b0-4ef3-87c9-5c78ac1ae6f7",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
+      "direction": 1,
+      "sentAt": "2023-11-04T18:20:10Z",
+      "content": "Parfait ! Que diriez-vous de vous retrouver samedi soir au restaurant Le Bon Vivant à 19h ?"
+    },
+    {
+      "id": "1fb13e98-9321-4d22-b2e3-9a22a4617684",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
+      "direction": 0,
+      "sentAt": "2023-11-06T12:45:55Z",
+      "content": "C'est une excellente idée ! Le Bon Vivant est l'un de mes endroits préférés. À samedi à 19h alors !"
+    },
+    {
+      "id": "ad9dcfb8-a247-4df8-8971-3d31ce1bffa8",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
+      "direction": 0,
+      "sentAt": "2023-11-06T12:45:55Z",
+      "content": "C'est une excellente idée ! Le Bon Vivant est l'un de mes endroits préférés. À samedi à 19h alors !"
+    },
+    {
+      "id": "c89932bd-fea3-4d39-9df6-e2c6afcfb178",
+      "channelId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "employerId": "0dc07c97-fc40-4ac2-a9f6-0b0bbbe6057e",
+      "direction": 0,
+      "sentAt": "2023-11-06T12:45:55Z",
+      "content": "C'est une excellente idée ! Le Bon Vivant est l'un de mes endroits préférés. À samedi à 19h alors !"
+    },
+    {
+      "content": "dasdasdasdasdasd",
+      "messagingId": "4f900914-f996-49a8-8909-749fdf421e5a",
+      "id": "lP6TCi2"
     }
   ],
   "employers": [
@@ -447,7 +516,7 @@
     {
       "id": "db26513e-e9aa-42d3-9442-2fa89a82acf5",
       "name": "Black Cat"
-    }, 
+    },
     {
       "id": "d89170af-4d52-4366-a970-672e0ebd48b4",
       "name": "l'Entrecôte"

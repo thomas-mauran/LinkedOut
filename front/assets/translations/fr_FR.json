@@ -20,7 +20,8 @@
   },
   "messaging": {
     "info": {
-      "messageChannel": "Messages"
+      "messageChannel": "Messages",
+      "textInputPlaceholer": "Votre message"
     }
   },
   "profile": {

@@ -4,12 +4,16 @@ import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import i18n from '@/utils/i18n';
 
 import MessagingListPage from './MessageChannelListPage';
+import MessageChannelPage, {
+  MessageChannelPageParams,
+} from './MessageChannelPage';
 
 /**
  * The parameter list for the MessagingNav navigator.
  */
 export type MessagingStackParamList = {
   MessageChannelList: undefined;
+  MessageChannel: MessageChannelPageParams;
 };
 
 const MessagingStack = createNativeStackNavigator<MessagingStackParamList>();
@@ -27,6 +31,11 @@ const MessagingNav = () => {
       <MessagingStack.Screen
         name='MessageChannelList'
         component={MessagingListPage}
+        options={{ headerTitle: `${i18n.t('messaging.info.messageChannel')}` }}
+      />
+      <MessagingStack.Screen
+        name='MessageChannel'
+        component={MessageChannelPage}
         options={{ headerTitle: `${i18n.t('messaging.info.messageChannel')}` }}
       />
     </MessagingStack.Navigator>

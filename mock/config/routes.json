@@ -13,7 +13,6 @@
   "/jobOffers/:jobOfferId": "/jobOffers/:jobOfferId",
   "/messaging": "/messageChannels",
   "/messaging/:messageChannelId": "/messageChannels/:messageChannelId",
-  "/messaging/:messageChannelId/messages": "/messages",
   "/employers/:employerId": "/employers/:employerId",
   "/employers/:employerId/evaluations": "/employerEvaluations/:employerId",
   "/employers/:employerId/messaging": "/messageChannels/:employerId",
