@@ -1,4 +1,4 @@
-package com.linkedout.jobs
+package com.linkedout.messaging
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

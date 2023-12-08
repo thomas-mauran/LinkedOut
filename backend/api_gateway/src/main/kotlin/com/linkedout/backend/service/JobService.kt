@@ -20,7 +20,7 @@ class JobService(private val natsService: NatsService, @Value("\${app.services.j
             throw Exception("Invalid response")
         }
 
-        val getJobsResponse = response.getGetJobsResponse()
+        val getJobsResponse = response.getJobsResponse
 
         return Flux.fromIterable(getJobsResponse.jobsList)
             .map { job ->
@@ -34,7 +34,6 @@ class JobService(private val natsService: NatsService, @Value("\${app.services.j
             .setGetJobRequest(
                 GetJobRequest.newBuilder()
                     .setId(id)
-                    .build()
             )
             .build()
 
@@ -45,7 +44,7 @@ class JobService(private val natsService: NatsService, @Value("\${app.services.j
             throw Exception("Invalid response")
         }
 
-        val getJobResponse = response.getGetJobResponse()
+        val getJobResponse = response.getJobResponse
         return Mono.just(Job(getJobResponse.job.id, getJobResponse.job.title, getJobResponse.job.category))
     }
 }

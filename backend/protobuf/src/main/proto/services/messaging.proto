@@ -1,0 +1,13 @@
+syntax = "proto3";
+package com.linkedout.proto.services;
+
+import "models/messageChannel.proto";
+
+// Get message channels of a user
+message GetUserMessageChannelsRequest {
+    string userId = 1;
+}
+
+message GetUserMessageChannelsResponse {
+    repeated models.MessageChannel messageChannels = 1;
+}
