@@ -10,10 +10,7 @@ import MessageBubble from './MessageBubble';
  */
 const styles = StyleSheet.create({
   container: {
-    gap: 10,
-  },
-  messageBubbleContainer: {
-    marginBottom: 30,
+    gap: 30,
   },
 });
 
@@ -26,9 +23,9 @@ type MessageListProps = {
 
 const MessageList: FC<MessageListProps> = ({ messages }) => {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {messages?.map((message) => (
-        <View key={message.id} style={styles.messageBubbleContainer}>
+        <View key={message.id}>
           <MessageBubble message={message} />
         </View>
       ))}
