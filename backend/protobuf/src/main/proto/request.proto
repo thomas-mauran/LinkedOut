@@ -3,6 +3,7 @@ package com.linkedout.proto;
 
 import "services/jobs.proto";
 import "services/messaging.proto";
+import "services/employer.proto";
 
 // Message that contains a generic request
 message Request {
@@ -14,5 +15,6 @@ message Request {
     services.GetJobCategoriesRequest get_job_categories_request = 4;
     services.GetUserMessageChannelsRequest get_user_message_channels_request = 5;
     services.GetUserMessageChannelByIdRequest get_user_message_channel_by_id_request = 6;
+    services.GetEmployerRequest get_employer_request = 7;
   }
 }

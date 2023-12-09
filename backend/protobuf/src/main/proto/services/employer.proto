@@ -1,0 +1,13 @@
+syntax = "proto3";
+package com.linkedout.proto.services;
+
+import "models/employer.proto";
+
+// Get an employer
+message GetEmployerRequest {
+  string id = 1;
+}
+
+message GetEmployerResponse {
+  models.Employer employer = 1;
+}
