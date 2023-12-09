@@ -16,7 +16,7 @@ import java.security.Principal
 class MessagingController(private val messageChannelsService: MessageChannelsService) {
     @GetMapping
     open fun getMessageChannelsOfUser(request: ServerHttpRequest, principal: Principal): Flux<MessageChannel> {
-        return messageChannelsService.findAllChannelsOfUser(request.id, principal.name)
+        return Flux.fromIterable(messageChannelsService.findAllChannelsOfUser(request.id, principal.name))
     }
 
     @GetMapping("/{channelId}")
@@ -25,6 +25,6 @@ class MessagingController(private val messageChannelsService: MessageChannelsSer
         principal: Principal,
         @PathVariable channelId: String
     ): Mono<MessageChannel> {
-        return messageChannelsService.findOneChannelOfUser(request.id, principal.name, channelId)
+        return Mono.just(messageChannelsService.findOneChannelOfUser(request.id, principal.name, channelId))
     }
 }
