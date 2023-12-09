@@ -4,6 +4,7 @@ import com.linkedout.messaging.model.MessageChannel
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import java.util.UUID
 
 interface MessageChannelRepository : ReactiveCrudRepository<MessageChannel, UUID> {
@@ -14,4 +15,13 @@ interface MessageChannelRepository : ReactiveCrudRepository<MessageChannel, UUID
     """
     )
     fun findAllWithSeasonworkerId(seasonworkerId: UUID): Flux<MessageChannel>
+
+    @Query(
+        """
+        SELECT * FROM messagechannel
+        WHERE seasonworkerid = :seasonworkerId
+        AND id = :messageChannelId
+    """
+    )
+    fun findOneWithSeasonworkerId(seasonworkerId: UUID, messageChannelId: UUID): Mono<MessageChannel>
 }

@@ -19,5 +19,6 @@ message Response {
     services.GetJobResponse get_job_response = 4;
     services.GetJobCategoriesResponse get_job_categories_response = 5;
     services.GetUserMessageChannelsResponse get_user_message_channels_response = 6;
+    services.GetUserMessageChannelByIdResponse get_user_message_channel_by_id_response = 7;
   }
 }
