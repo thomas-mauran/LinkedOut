@@ -29,3 +29,4 @@ app:
     employer:
       subjects:
         findOne: employer.findOne
+        findMultiple: employer.findMultiple

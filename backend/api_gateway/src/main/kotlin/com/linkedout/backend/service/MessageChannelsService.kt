@@ -36,12 +36,15 @@ class MessageChannelsService(
 
         val getUserMessageChannelsResponse = response.getUserMessageChannelsResponse
 
+        // Get the employers from the employer service
+        val employers = employerService.findMultiple(requestId, getUserMessageChannelsResponse.messageChannelsList.map { it.employerId })
+        val employersById = employers.associateBy { it.id }
+
         return Flux.fromIterable(getUserMessageChannelsResponse.messageChannelsList)
             .map { messageChannel ->
-                // TODO: Get the employer from the employer service
                 MessageChannel(
                     messageChannel.id,
-                    Employer("<TODO>", "<TODO>", "<TODO>", "<TODO>", "<TODO>"),
+                    employersById.getOrDefault(messageChannel.employerId, Employer("", "", "", "", "")),
                     messageChannel.lastMessage
                 )
             }

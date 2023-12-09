@@ -11,3 +11,12 @@ message GetEmployerRequest {
 message GetEmployerResponse {
   models.Employer employer = 1;
 }
+
+// Get multiple employers
+message GetMultipleEmployersRequest {
+  repeated string ids = 1;
+}
+
+message GetMultipleEmployersResponse {
+  repeated models.Employer employers = 1;
+}
