@@ -1,4 +1,4 @@
-package com.linkedout.messaging.function.messaging
+package com.linkedout.messaging.function.messageChannels
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.messaging.service.MessageChannelService
@@ -11,7 +11,7 @@ import java.util.UUID
 import java.util.function.Function
 
 @Component
-class FindAllUserMessageChannels(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
+class GetChannelsOfUser(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
     override fun apply(t: Request): Response {
         // Get the message channels from the database
         val responseMono = messageChannelService.findAllWithSeasonworkerId(UUID.fromString(t.getUserMessageChannelsRequest.userId))

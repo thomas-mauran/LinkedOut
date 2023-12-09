@@ -1,4 +1,4 @@
-package com.linkedout.messaging.function.messaging
+package com.linkedout.messaging.function.messageChannels
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.messaging.service.MessageChannelService
@@ -12,7 +12,7 @@ import java.util.*
 import java.util.function.Function
 
 @Component
-class FindOneUserMessageChannel(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
+class GetChannelOfUser(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
     override fun apply(t: Request): Response {
         // Get the message channel from the database
         val request = t.getUserMessageChannelByIdRequest
