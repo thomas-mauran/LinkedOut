@@ -18,6 +18,7 @@ plugins {
 rootProject.name = "linkedout-backend"
 include("api_gateway")
 include("common")
+include("employer")
 include("jobs")
 include("messaging")
 include("protobuf")

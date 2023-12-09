@@ -11,7 +11,7 @@ jobs:
     uses: ./.github/workflows/flow_backend_build_push.yml
     strategy:
       matrix:
-        service: [api_gateway, jobs, messaging]
+        service: [api_gateway, jobs, messaging, employer]
     with:
       service-name: ${{ matrix.service }}
       push-image: ${{ github.event_name != 'pull_request' }}
