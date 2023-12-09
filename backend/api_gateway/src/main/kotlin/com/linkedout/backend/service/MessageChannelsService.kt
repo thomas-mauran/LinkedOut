@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono
 @Service
 class MessageChannelsService(
     private val natsService: NatsService,
+    private val employerService: EmployerService,
     @Value("\${app.services.messageChannels.subjects.findAllOfUser}") private val findAllOfUsersSubject: String,
     @Value("\${app.services.messageChannels.subjects.findOneOfUser}") private val findOneOfUserSubject: String
 ) {
@@ -64,11 +65,14 @@ class MessageChannelsService(
         }
 
         val getUserMessageChannelByIdResponse = response.getUserMessageChannelByIdResponse
-        // TODO: Get the employer from the employer service
+
+        // Get the employer from the employer service
+        val employer = employerService.findOne(requestId, getUserMessageChannelByIdResponse.messageChannel.employerId)
+
         return Mono.just(
             MessageChannel(
                 getUserMessageChannelByIdResponse.messageChannel.id,
-                Employer("<TODO>", "<TODO>", "<TODO>", "<TODO>", "<TODO>"),
+                employer,
                 getUserMessageChannelByIdResponse.messageChannel.lastMessage
             )
         )
