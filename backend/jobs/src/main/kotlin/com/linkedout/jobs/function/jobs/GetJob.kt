@@ -8,14 +8,14 @@ import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 import java.util.function.Function
 
 @Component
 class GetJob(private val jobService: JobService) : Function<Request, Response> {
     override fun apply(t: Request): Response {
         // Get the job from the database
-        val responseMono = jobService.findOneWithCategory(UUID.fromString(t.getGetJobRequest().id))
+        val responseMono = jobService.findOneWithCategory(UUID.fromString(t.getJobRequest.id))
             .map { job ->
                 JobOuterClass.Job.newBuilder()
                     .setId(job.id)
