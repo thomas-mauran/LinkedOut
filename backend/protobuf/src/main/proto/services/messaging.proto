@@ -1,23 +1,73 @@
 syntax = "proto3";
 package com.linkedout.proto.services;
 
+import "models/message.proto";
 import "models/messageChannel.proto";
 
 // Get message channels of a user
 message GetUserMessageChannelsRequest {
-    string userId = 1;
+    string user_id = 1;
 }
 
 message GetUserMessageChannelsResponse {
-    repeated models.MessageChannel messageChannels = 1;
+    repeated models.MessageChannel message_channels = 1;
 }
 
-// Get a message channel of a user by id
-message GetUserMessageChannelByIdRequest {
-    string userId = 1;
-    string messageChannelId = 2;
+// Get a message channel of a user
+message GetUserMessageChannelRequest {
+    string user_id = 1;
+    string message_channel_id = 2;
 }
 
-message GetUserMessageChannelByIdResponse {
-    models.MessageChannel messageChannel = 1;
+message GetUserMessageChannelResponse {
+    models.MessageChannel message_channel = 1;
+}
+
+// Get messages of a message channel and user
+message GetUserMessagesRequest {
+    string user_id = 1;
+    string message_channel_id = 2;
+}
+
+message GetUserMessagesResponse {
+    string message_channel_id = 1;
+    string employer_id = 2;
+    repeated models.Message messages = 3;
+}
+
+// Send a message to a message channel
+message SendMessageRequest {
+    string user_id = 1;
+    string message_channel_id = 2;
+    string content = 3;
+    models.Message.Direction direction = 4;
+}
+
+message SendMessageResponse {
+    string message_channel_id = 1;
+    string employer_id = 2;
+    models.Message message = 3;
+}
+
+// Get a message channel of a user with a specific employer
+message GetUserMessageChannelWithEmployerRequest {
+    string user_id = 1;
+    string employer_id = 2;
+}
+
+message GetUserMessageChannelWithEmployerResponse {
+    models.MessageChannel message_channel = 1;
+}
+
+// Send a message to an employer
+message SendMessageToEmployerRequest {
+    string user_id = 1;
+    string employer_id = 2;
+    string content = 3;
+}
+
+message SendMessageToEmployerResponse {
+    string message_channel_id = 1;
+    string employer_id = 2;
+    models.Message message = 3;
 }

@@ -20,9 +20,14 @@ message Response {
     services.GetJobResponse get_job_response = 4;
     services.GetJobCategoriesResponse get_job_categories_response = 5;
     services.GetUserMessageChannelsResponse get_user_message_channels_response = 6;
-    services.GetUserMessageChannelByIdResponse get_user_message_channel_by_id_response = 7;
+    services.GetUserMessageChannelResponse get_user_message_channel_response = 7;
     services.GetEmployerResponse get_employer_response = 8;
-    services.GetCompaniesResponse get_companies_response = 9;
-    services.GetCompanyResponse get_company_response = 10;
-  }
+    services.GetMultipleEmployersResponse get_multiple_employers_response = 9;
+    services.GetUserMessagesResponse get_user_messages_response = 10;
+    services.SendMessageResponse send_message_response = 11;
+    services.GetUserMessageChannelWithEmployerResponse get_user_message_channel_with_employer_response = 12;
+    services.SendMessageToEmployerResponse send_message_to_employer_response = 13;
+    services.GetCompaniesResponse get_companies_response = 14;
+    services.GetCompanyResponse get_company_response = 15;
+    }
 }

@@ -6,12 +6,14 @@ import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.services.Jobs.GetJobRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 @Service
-class JobService(private val natsService: NatsService, @Value("\${app.services.jobs.subjects.findAll}") private val findAllSubject: String, @Value("\${app.services.jobs.subjects.findOne}") private val findOneSubject: String) {
-    fun findAll(requestId: String): Flux<Job> {
+class JobService(
+    private val natsService: NatsService,
+    @Value("\${app.services.jobs.subjects.findAll}") private val findAllSubject: String,
+    @Value("\${app.services.jobs.subjects.findOne}") private val findOneSubject: String
+) {
+    fun findAll(requestId: String): List<Job> {
         // Request jobs from the jobs service
         val response = natsService.requestWithReply(findAllSubject, RequestResponseFactory.newRequest(requestId).build())
 
@@ -22,13 +24,12 @@ class JobService(private val natsService: NatsService, @Value("\${app.services.j
 
         val getJobsResponse = response.getJobsResponse
 
-        return Flux.fromIterable(getJobsResponse.jobsList)
-            .map { job ->
-                Job(job.id, job.title, job.category)
-            }
+        return getJobsResponse.jobsList.map { job ->
+            Job(job.id, job.title, job.category)
+        }
     }
 
-    fun findOne(requestId: String, id: String): Mono<Job> {
+    fun findOne(requestId: String, id: String): Job {
         // Request jobs from the jobs service
         val request = RequestResponseFactory.newRequest(requestId)
             .setGetJobRequest(
@@ -45,6 +46,6 @@ class JobService(private val natsService: NatsService, @Value("\${app.services.j
         }
 
         val getJobResponse = response.getJobResponse
-        return Mono.just(Job(getJobResponse.job.id, getJobResponse.job.title, getJobResponse.job.category))
+        return Job(getJobResponse.job.id, getJobResponse.job.title, getJobResponse.job.category)
     }
 }

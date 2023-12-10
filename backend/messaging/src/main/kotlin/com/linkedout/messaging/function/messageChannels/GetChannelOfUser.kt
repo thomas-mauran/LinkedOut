@@ -5,7 +5,7 @@ import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.models.MessageChannelOuterClass
-import com.linkedout.proto.services.Messaging.GetUserMessageChannelByIdResponse
+import com.linkedout.proto.services.Messaging.GetUserMessageChannelResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import java.util.*
@@ -15,18 +15,17 @@ import java.util.function.Function
 class GetChannelOfUser(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
     override fun apply(t: Request): Response {
         // Get the message channel from the database
-        val request = t.getUserMessageChannelByIdRequest
+        val request = t.getUserMessageChannelRequest
         val responseMono = messageChannelService.findOneWithSeasonworkerId(UUID.fromString(request.userId), UUID.fromString(request.messageChannelId))
             .map { messageChannel ->
-                // TODO: Get the last message
                 MessageChannelOuterClass.MessageChannel.newBuilder()
                     .setId(messageChannel.id.toString())
                     .setEmployerId(messageChannel.employerId.toString())
-                    .setLastMessage("<TODO>")
+                    .setLastMessage(messageChannel.lastMessage ?: "")
                     .build()
             }
             .map { messageChannel ->
-                GetUserMessageChannelByIdResponse.newBuilder()
+                GetUserMessageChannelResponse.newBuilder()
                     .setMessageChannel(messageChannel)
                     .build()
             }
@@ -40,7 +39,7 @@ class GetChannelOfUser(private val messageChannelService: MessageChannelService)
             ?: return RequestResponseFactory.newFailedResponse("Message channel not found", HttpStatus.NOT_FOUND).build()
 
         return RequestResponseFactory.newSuccessfulResponse()
-            .setGetUserMessageChannelByIdResponse(response)
+            .setGetUserMessageChannelResponse(response)
             .build()
     }
 }

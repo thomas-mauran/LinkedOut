@@ -30,3 +30,13 @@ app:
       subjects:
         findAllOfUser: messaging.findAllChannelsOfUser
         findOneOfUser: messaging.findOneChannelOfUser
+        findOneOfUserWithEmployer: messaging.findOneChannelOfUserWithEmployer
+    messages:
+      subjects:
+        findAllOfUserInChannel: messaging.findAllMessagesOfUserInChannel
+        sendMessage: messaging.sendMessage
+        sendMessageToEmployer: messaging.sendMessageToEmployer
+    employer:
+      subjects:
+        findOne: employer.findOne
+        findMultiple: employer.findMultiple

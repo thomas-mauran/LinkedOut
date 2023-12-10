@@ -13,6 +13,6 @@ import reactor.core.publisher.Flux
 class JobCategoriesController(private val jobCategoryService: JobCategoryService) {
     @GetMapping
     open fun getJobCategories(request: ServerHttpRequest): Flux<JobCategory> {
-        return jobCategoryService.findAll(request.id)
+        return Flux.fromIterable(jobCategoryService.findAll(request.id))
     }
 }
