@@ -6,31 +6,31 @@ import "models/messageChannel.proto";
 
 // Get message channels of a user
 message GetUserMessageChannelsRequest {
-    string userId = 1;
+    string user_id = 1;
 }
 
 message GetUserMessageChannelsResponse {
-    repeated models.MessageChannel messageChannels = 1;
+    repeated models.MessageChannel message_channels = 1;
 }
 
 // Get a message channel of a user by id
 message GetUserMessageChannelByIdRequest {
-    string userId = 1;
-    string messageChannelId = 2;
+    string user_id = 1;
+    string message_channel_id = 2;
 }
 
 message GetUserMessageChannelByIdResponse {
-    models.MessageChannel messageChannel = 1;
+    models.MessageChannel message_channel = 1;
 }
 
 // Get messages of a message channel and user
 message GetUserMessagesRequest {
-    string userId = 1;
-    string messageChannelId = 2;
+    string user_id = 1;
+    string message_channel_id = 2;
 }
 
 message GetUserMessagesResponse {
-    string messageChannelId = 1;
-    string employerId = 2;
+    string message_channel_id = 1;
+    string employer_id = 2;
     repeated models.Message messages = 3;
 }
