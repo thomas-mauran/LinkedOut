@@ -20,4 +20,9 @@ class MessageChannelService(private val messageChannelRepository: MessageChannel
     fun findOneWithSeasonworkerIdAndEmployerId(seasonworkerId: UUID, employerId: UUID): Mono<MessageChannel> {
         return messageChannelRepository.findOneWithSeasonworkerIdAndEmployerId(seasonworkerId, employerId)
     }
+
+    fun ensureExists(seasonworkerId: UUID, employerId: UUID): Mono<MessageChannel> {
+        return messageChannelRepository.findOneWithSeasonworkerIdAndEmployerId(seasonworkerId, employerId)
+            .switchIfEmpty(messageChannelRepository.saveChannel(seasonworkerId, employerId))
+    }
 }

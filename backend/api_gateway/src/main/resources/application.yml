@@ -31,6 +31,7 @@ app:
       subjects:
         findAllOfUserInChannel: messaging.findAllMessagesOfUserInChannel
         sendMessage: messaging.sendMessage
+        sendMessageToEmployer: messaging.sendMessageToEmployer
     employer:
       subjects:
         findOne: employer.findOne

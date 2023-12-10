@@ -58,3 +58,16 @@ message GetUserMessageChannelWithEmployerRequest {
 message GetUserMessageChannelWithEmployerResponse {
     models.MessageChannel message_channel = 1;
 }
+
+// Send a message to an employer
+message SendMessageToEmployerRequest {
+    string user_id = 1;
+    string employer_id = 2;
+    string content = 3;
+}
+
+message SendMessageToEmployerResponse {
+    string message_channel_id = 1;
+    string employer_id = 2;
+    models.Message message = 3;
+}

@@ -33,4 +33,13 @@ interface MessageChannelRepository : ReactiveCrudRepository<MessageChannel, UUID
     """
     )
     fun findOneWithSeasonworkerIdAndEmployerId(seasonworkerId: UUID, employerId: UUID): Mono<MessageChannel>
+
+    @Query(
+        """
+        INSERT INTO messagechannel (seasonworkerid, employerid)
+        VALUES (:seasonworkerId, :employerId)
+        RETURNING *
+    """
+    )
+    fun saveChannel(seasonworkerId: UUID, employerId: UUID): Mono<MessageChannel>
 }
