@@ -14,8 +14,9 @@ message Request {
     services.GetJobRequest get_job_request = 3;
     services.GetJobCategoriesRequest get_job_categories_request = 4;
     services.GetUserMessageChannelsRequest get_user_message_channels_request = 5;
-    services.GetUserMessageChannelByIdRequest get_user_message_channel_by_id_request = 6;
+    services.GetUserMessageChannelRequest get_user_message_channel_request = 6;
     services.GetEmployerRequest get_employer_request = 7;
     services.GetMultipleEmployersRequest get_multiple_employers_request = 8;
+    services.GetUserMessagesRequest get_user_messages_request = 9;
   }
 }
