@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+message Message {
+  enum Direction {
+    ToEmployer = 0;
+    ToSeasonworker = 1;
+  }
+
+  string id = 1;
+  Direction direction = 2;
+  uint64 sent_at = 3;
+  string content = 4;
+}
