@@ -22,5 +22,6 @@ message Response {
     services.GetUserMessageChannelsResponse get_user_message_channels_response = 6;
     services.GetUserMessageChannelByIdResponse get_user_message_channel_by_id_response = 7;
     services.GetEmployerResponse get_employer_response = 8;
+    services.GetMultipleEmployersResponse get_multiple_employers_response = 9;
   }
 }

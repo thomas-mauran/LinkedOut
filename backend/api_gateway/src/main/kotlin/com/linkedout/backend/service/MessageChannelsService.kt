@@ -8,16 +8,15 @@ import com.linkedout.proto.services.Messaging
 import com.linkedout.proto.services.Messaging.GetUserMessageChannelsRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 @Service
 class MessageChannelsService(
     private val natsService: NatsService,
+    private val employerService: EmployerService,
     @Value("\${app.services.messageChannels.subjects.findAllOfUser}") private val findAllOfUsersSubject: String,
     @Value("\${app.services.messageChannels.subjects.findOneOfUser}") private val findOneOfUserSubject: String
 ) {
-    fun findAllChannelsOfUser(requestId: String, userId: String): Flux<MessageChannel> {
+    fun findAllChannelsOfUser(requestId: String, userId: String): List<MessageChannel> {
         // Request message channels from the messaging service
         val request = RequestResponseFactory.newRequest(requestId)
             .setGetUserMessageChannelsRequest(
@@ -35,18 +34,20 @@ class MessageChannelsService(
 
         val getUserMessageChannelsResponse = response.getUserMessageChannelsResponse
 
-        return Flux.fromIterable(getUserMessageChannelsResponse.messageChannelsList)
-            .map { messageChannel ->
-                // TODO: Get the employer from the employer service
-                MessageChannel(
-                    messageChannel.id,
-                    Employer("<TODO>", "<TODO>", "<TODO>", "<TODO>", "<TODO>"),
-                    messageChannel.lastMessage
-                )
-            }
+        // Get the employers from the employer service
+        val employers = employerService.findMultiple(requestId, getUserMessageChannelsResponse.messageChannelsList.map { it.employerId })
+        val employersById = employers.associateBy { it.id }
+
+        return getUserMessageChannelsResponse.messageChannelsList.map { messageChannel ->
+            MessageChannel(
+                messageChannel.id,
+                employersById.getOrDefault(messageChannel.employerId, Employer("", "", "", "", "")),
+                messageChannel.lastMessage
+            )
+        }
     }
 
-    fun findOneChannelOfUser(requestId: String, userId: String, channelId: String): Mono<MessageChannel> {
+    fun findOneChannelOfUser(requestId: String, userId: String, channelId: String): MessageChannel {
         // Request message channel from the messaging service
         val request = RequestResponseFactory.newRequest(requestId)
             .setGetUserMessageChannelByIdRequest(
@@ -64,13 +65,14 @@ class MessageChannelsService(
         }
 
         val getUserMessageChannelByIdResponse = response.getUserMessageChannelByIdResponse
-        // TODO: Get the employer from the employer service
-        return Mono.just(
-            MessageChannel(
-                getUserMessageChannelByIdResponse.messageChannel.id,
-                Employer("<TODO>", "<TODO>", "<TODO>", "<TODO>", "<TODO>"),
-                getUserMessageChannelByIdResponse.messageChannel.lastMessage
-            )
+
+        // Get the employer from the employer service
+        val employer = employerService.findOne(requestId, getUserMessageChannelByIdResponse.messageChannel.employerId)
+
+        return MessageChannel(
+            getUserMessageChannelByIdResponse.messageChannel.id,
+            employer,
+            getUserMessageChannelByIdResponse.messageChannel.lastMessage
         )
     }
 }

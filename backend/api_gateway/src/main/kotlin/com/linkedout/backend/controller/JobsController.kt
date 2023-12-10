@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono
 open class JobsController(private val jobService: JobService) {
     @GetMapping
     open fun getJobs(request: ServerHttpRequest): Flux<Job> {
-        return jobService.findAll(request.id)
+        return Flux.fromIterable(jobService.findAll(request.id))
     }
 
     @GetMapping("/{id}")
@@ -23,6 +23,6 @@ open class JobsController(private val jobService: JobService) {
         @PathVariable id: String,
         request: ServerHttpRequest
     ): Mono<Job> {
-        return jobService.findOne(request.id, id)
+        return Mono.just(jobService.findOne(request.id, id))
     }
 }
