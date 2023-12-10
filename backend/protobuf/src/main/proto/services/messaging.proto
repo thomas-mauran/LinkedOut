@@ -48,3 +48,13 @@ message SendMessageResponse {
     string employer_id = 2;
     models.Message message = 3;
 }
+
+// Get a message channel of a user with a specific employer
+message GetUserMessageChannelWithEmployerRequest {
+    string user_id = 1;
+    string employer_id = 2;
+}
+
+message GetUserMessageChannelWithEmployerResponse {
+    models.MessageChannel message_channel = 1;
+}

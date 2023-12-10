@@ -26,6 +26,7 @@ app:
       subjects:
         findAllOfUser: messaging.findAllChannelsOfUser
         findOneOfUser: messaging.findOneChannelOfUser
+        findOneOfUserWithEmployer: messaging.findOneChannelOfUserWithEmployer
     messages:
       subjects:
         findAllOfUserInChannel: messaging.findAllMessagesOfUserInChannel

@@ -16,4 +16,8 @@ class MessageChannelService(private val messageChannelRepository: MessageChannel
     fun findOneWithSeasonworkerId(seasonworkerId: UUID, messageChannelId: UUID): Mono<MessageChannel> {
         return messageChannelRepository.findOneWithSeasonworkerId(seasonworkerId, messageChannelId)
     }
+
+    fun findOneWithSeasonworkerIdAndEmployerId(seasonworkerId: UUID, employerId: UUID): Mono<MessageChannel> {
+        return messageChannelRepository.findOneWithSeasonworkerIdAndEmployerId(seasonworkerId, employerId)
+    }
 }

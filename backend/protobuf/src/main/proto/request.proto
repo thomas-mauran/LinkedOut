@@ -19,5 +19,6 @@ message Request {
     services.GetMultipleEmployersRequest get_multiple_employers_request = 8;
     services.GetUserMessagesRequest get_user_messages_request = 9;
     services.SendMessageRequest send_message_request = 10;
+    services.GetUserMessageChannelWithEmployerRequest get_user_message_channel_with_employer_request = 11;
   }
 }
