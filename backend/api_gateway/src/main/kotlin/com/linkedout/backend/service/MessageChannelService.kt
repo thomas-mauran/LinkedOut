@@ -14,7 +14,8 @@ class MessageChannelService(
     private val natsService: NatsService,
     private val employerService: EmployerService,
     @Value("\${app.services.messageChannels.subjects.findAllOfUser}") private val findAllOfUsersSubject: String,
-    @Value("\${app.services.messageChannels.subjects.findOneOfUser}") private val findOneOfUserSubject: String
+    @Value("\${app.services.messageChannels.subjects.findOneOfUser}") private val findOneOfUserSubject: String,
+    @Value("\${app.services.messageChannels.subjects.findOneOfUserWithEmployer}") private val findOneOfUserWithEmployerSubject: String
 ) {
     fun findAllChannelsOfUser(requestId: String, userId: String): List<MessageChannel> {
         // Request message channels from the messaging service
@@ -65,6 +66,35 @@ class MessageChannelService(
         }
 
         val getUserMessageChannelByIdResponse = response.getUserMessageChannelResponse
+
+        // Get the employer from the employer service
+        val employer = employerService.findOne(requestId, getUserMessageChannelByIdResponse.messageChannel.employerId)
+
+        return MessageChannel(
+            getUserMessageChannelByIdResponse.messageChannel.id,
+            employer,
+            getUserMessageChannelByIdResponse.messageChannel.lastMessage
+        )
+    }
+
+    fun findOneChannelOfUserWithEmployer(requestId: String, userId: String, employerId: String): MessageChannel {
+        // Request message channel from the messaging service
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setGetUserMessageChannelWithEmployerRequest(
+                Messaging.GetUserMessageChannelWithEmployerRequest.newBuilder()
+                    .setUserId(userId)
+                    .setEmployerId(employerId)
+            )
+            .build()
+
+        val response = natsService.requestWithReply(findOneOfUserWithEmployerSubject, request)
+
+        // Handle the response
+        if (!response.hasGetUserMessageChannelWithEmployerResponse()) {
+            throw Exception("Invalid response")
+        }
+
+        val getUserMessageChannelByIdResponse = response.getUserMessageChannelWithEmployerResponse
 
         // Get the employer from the employer service
         val employer = employerService.findOne(requestId, getUserMessageChannelByIdResponse.messageChannel.employerId)

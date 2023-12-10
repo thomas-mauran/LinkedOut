@@ -4,30 +4,30 @@ import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.MessageChannelOuterClass.MessageChannel
-import com.linkedout.proto.services.Messaging.GetUserMessageChannelsResponse
+import com.linkedout.proto.models.MessageChannelOuterClass
+import com.linkedout.proto.services.Messaging
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import java.util.UUID
+import java.util.*
 import java.util.function.Function
 
 @Component
-class GetChannelsOfUser(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
+class GetChannelOfUserWithEmployer(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
     override fun apply(t: Request): Response {
-        // Get the message channels from the database
-        val responseMono = messageChannelService.findAllWithSeasonworkerId(UUID.fromString(t.getUserMessageChannelsRequest.userId))
+        // Get the message channel from the database
+        val request = t.getUserMessageChannelWithEmployerRequest
+        val responseMono = messageChannelService.findOneWithSeasonworkerIdAndEmployerId(UUID.fromString(request.userId), UUID.fromString(request.employerId))
             .map { messageChannel ->
-                MessageChannel.newBuilder()
+                MessageChannelOuterClass.MessageChannel.newBuilder()
                     .setId(messageChannel.id.toString())
                     .setEmployerId(messageChannel.employerId.toString())
                     .setLastMessage(messageChannel.lastMessage ?: "")
                     .build()
             }
-            .reduce(GetUserMessageChannelsResponse.newBuilder()) { builder, messageChannel ->
-                builder.addMessageChannels(messageChannel)
-                builder
-            }
-            .map { builder ->
-                builder.build()
+            .map { messageChannel ->
+                Messaging.GetUserMessageChannelWithEmployerResponse.newBuilder()
+                    .setMessageChannel(messageChannel)
+                    .build()
             }
 
         // Block until the response is ready
@@ -36,12 +36,10 @@ class GetChannelsOfUser(private val messageChannelService: MessageChannelService
         } catch (e: Exception) {
             return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
         }
-            ?: return RequestResponseFactory.newSuccessfulResponse()
-                .setGetUserMessageChannelsResponse(GetUserMessageChannelsResponse.getDefaultInstance())
-                .build()
+            ?: return RequestResponseFactory.newFailedResponse("Message channel not found", HttpStatus.NOT_FOUND).build()
 
         return RequestResponseFactory.newSuccessfulResponse()
-            .setGetUserMessageChannelsResponse(response)
+            .setGetUserMessageChannelWithEmployerResponse(response)
             .build()
     }
 }
