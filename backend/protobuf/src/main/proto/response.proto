@@ -3,6 +3,7 @@ package com.linkedout.proto;
 
 import "services/jobs.proto";
 import "services/messaging.proto";
+import "services/employer.proto";
 
 // Message that contains a generic response
 message Error {
@@ -20,7 +21,8 @@ message Response {
     services.GetJobCategoriesResponse get_job_categories_response = 5;
     services.GetUserMessageChannelsResponse get_user_message_channels_response = 6;
     services.GetUserMessageChannelByIdResponse get_user_message_channel_by_id_response = 7;
-    services.GetCompaniesResponse get_companies_response = 8;
-    services.GetCompanyResponse get_company_response = 9;
+    services.GetEmployerResponse get_employer_response = 8;
+    services.GetCompaniesResponse get_companies_response = 9;
+    services.GetCompanyResponse get_company_response = 10;
   }
 }

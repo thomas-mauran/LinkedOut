@@ -13,3 +13,11 @@ CREATE USER messaging
 
 CREATE DATABASE messaging
     OWNER 'messaging';
+
+-- Employer service
+CREATE USER employer
+    WITH LOGIN
+    PASSWORD 'employer';
+
+CREATE DATABASE employer
+    OWNER 'employer';
