@@ -12,7 +12,7 @@ import java.util.UUID
 
 @Service
 class CompanyService(
-    @Autowired private val companyRepository: CompanyRepository
+    private val companyRepository: CompanyRepository
 ) {
     fun findAll(): Flux<Company> {
         return companyRepository.findAll()
