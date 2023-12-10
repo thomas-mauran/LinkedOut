@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
-class MessageChannelsService(
+class MessageChannelService(
     private val natsService: NatsService,
     private val employerService: EmployerService,
     @Value("\${app.services.messageChannels.subjects.findAllOfUser}") private val findAllOfUsersSubject: String,

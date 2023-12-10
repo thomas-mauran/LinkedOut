@@ -2,7 +2,7 @@ package com.linkedout.backend.controller
 
 import com.linkedout.backend.model.Message
 import com.linkedout.backend.model.MessageChannel
-import com.linkedout.backend.service.MessageChannelsService
+import com.linkedout.backend.service.MessageChannelService
 import com.linkedout.backend.service.MessageService
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,12 +16,12 @@ import java.security.Principal
 @RestController
 @RequestMapping("/api/v1/messaging")
 class MessagingController(
-    private val messageChannelsService: MessageChannelsService,
+    private val messageChannelService: MessageChannelService,
     private val messageService: MessageService
 ) {
     @GetMapping
     open fun getMessageChannelsOfUser(request: ServerHttpRequest, principal: Principal): Flux<MessageChannel> {
-        return Flux.fromIterable(messageChannelsService.findAllChannelsOfUser(request.id, principal.name))
+        return Flux.fromIterable(messageChannelService.findAllChannelsOfUser(request.id, principal.name))
     }
 
     @GetMapping("/{channelId}")
@@ -30,7 +30,7 @@ class MessagingController(
         principal: Principal,
         @PathVariable channelId: String
     ): Mono<MessageChannel> {
-        return Mono.just(messageChannelsService.findOneChannelOfUser(request.id, principal.name, channelId))
+        return Mono.just(messageChannelService.findOneChannelOfUser(request.id, principal.name, channelId))
     }
 
     @GetMapping("/{channelId}/messages")
