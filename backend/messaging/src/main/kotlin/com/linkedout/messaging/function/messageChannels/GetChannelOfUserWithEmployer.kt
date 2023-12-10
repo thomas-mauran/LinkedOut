@@ -18,11 +18,10 @@ class GetChannelOfUserWithEmployer(private val messageChannelService: MessageCha
         val request = t.getUserMessageChannelWithEmployerRequest
         val responseMono = messageChannelService.findOneWithSeasonworkerIdAndEmployerId(UUID.fromString(request.userId), UUID.fromString(request.employerId))
             .map { messageChannel ->
-                // TODO: Get the last message
                 MessageChannelOuterClass.MessageChannel.newBuilder()
                     .setId(messageChannel.id.toString())
                     .setEmployerId(messageChannel.employerId.toString())
-                    .setLastMessage("<TODO>")
+                    .setLastMessage(messageChannel.lastMessage ?: "")
                     .build()
             }
             .map { messageChannel ->

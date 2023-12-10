@@ -1,6 +1,7 @@
 package com.linkedout.messaging.repository
 
 import com.linkedout.messaging.model.MessageChannel
+import com.linkedout.messaging.model.MessageChannelWithLastMessage
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Flux
@@ -10,20 +11,34 @@ import java.util.UUID
 interface MessageChannelRepository : ReactiveCrudRepository<MessageChannel, UUID> {
     @Query(
         """
-        SELECT * FROM messagechannel
-        WHERE seasonworkerid = :seasonworkerId
+        SELECT mc.*, m.message AS lastmessage
+        FROM messagechannel mc
+        LEFT JOIN message m ON m.created = (
+            SELECT MAX(m2.created)
+            FROM message m2
+            WHERE m2.messagechannelid = mc.id
+            GROUP BY m2.messagechannelid
+        )
+        WHERE mc.seasonworkerid = :seasonworkerId
     """
     )
-    fun findAllWithSeasonworkerId(seasonworkerId: UUID): Flux<MessageChannel>
+    fun findAllAndLastMessageWithSeasonworkerId(seasonworkerId: UUID): Flux<MessageChannelWithLastMessage>
 
     @Query(
         """
-        SELECT * FROM messagechannel
-        WHERE seasonworkerid = :seasonworkerId
-        AND id = :messageChannelId
+        SELECT mc.*, m.message AS lastmessage
+        FROM messagechannel mc
+        LEFT JOIN message m ON m.created = (
+            SELECT MAX(m2.created)
+            FROM message m2
+            WHERE m2.messagechannelid = mc.id
+            GROUP BY m2.messagechannelid
+        )
+        WHERE mc.seasonworkerid = :seasonworkerId
+        AND mc.id = :messageChannelId
     """
     )
-    fun findOneWithSeasonworkerId(seasonworkerId: UUID, messageChannelId: UUID): Mono<MessageChannel>
+    fun findOneAndLastMessageWithSeasonworkerId(seasonworkerId: UUID, messageChannelId: UUID): Mono<MessageChannelWithLastMessage>
 
     @Query(
         """
@@ -33,6 +48,22 @@ interface MessageChannelRepository : ReactiveCrudRepository<MessageChannel, UUID
     """
     )
     fun findOneWithSeasonworkerIdAndEmployerId(seasonworkerId: UUID, employerId: UUID): Mono<MessageChannel>
+
+    @Query(
+        """
+        SELECT mc.*, m.message AS lastmessage
+        FROM messagechannel mc
+        LEFT JOIN message m ON m.created = (
+            SELECT MAX(m2.created)
+            FROM message m2
+            WHERE m2.messagechannelid = mc.id
+            GROUP BY m2.messagechannelid
+        )
+        WHERE mc.seasonworkerid = :seasonworkerId
+        AND mc.employerid = :employerId
+    """
+    )
+    fun findOneAndLastMessageWithSeasonworkerIdAndEmployerId(seasonworkerId: UUID, employerId: UUID): Mono<MessageChannelWithLastMessage>
 
     @Query(
         """

@@ -16,11 +16,10 @@ class GetChannelsOfUser(private val messageChannelService: MessageChannelService
         // Get the message channels from the database
         val responseMono = messageChannelService.findAllWithSeasonworkerId(UUID.fromString(t.getUserMessageChannelsRequest.userId))
             .map { messageChannel ->
-                // TODO: Get the last message
                 MessageChannel.newBuilder()
                     .setId(messageChannel.id.toString())
                     .setEmployerId(messageChannel.employerId.toString())
-                    .setLastMessage("<TODO>")
+                    .setLastMessage(messageChannel.lastMessage ?: "")
                     .build()
             }
             .reduce(GetUserMessageChannelsResponse.newBuilder()) { builder, messageChannel ->
