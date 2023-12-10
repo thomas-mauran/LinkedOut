@@ -22,6 +22,10 @@ app:
     jobCategories:
       subjects:
         findAll: jobs.findAllCategories
+    companies:
+      subjects:
+        findAll: jobs.findAllCompanies
+        findOne: jobs.findOneCompany
     messageChannels:
       subjects:
         findAllOfUser: messaging.findAllChannelsOfUser
