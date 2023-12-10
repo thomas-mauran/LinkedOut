@@ -18,7 +18,7 @@ class JobCategoryService(private val natsService: NatsService, @Value("\${app.se
             throw Exception("Invalid response")
         }
 
-        val getJobCategoriesResponse = response.getGetJobCategoriesResponse()
+        val getJobCategoriesResponse = response.getJobCategoriesResponse
 
         return Flux.fromIterable(getJobCategoriesResponse.categoriesList)
             .map { jobCategory ->

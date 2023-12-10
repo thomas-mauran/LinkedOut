@@ -1,0 +1,8 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+message MessageChannel {
+  string id = 1;
+  string employer_id = 2;
+  string last_message = 3;
+}
