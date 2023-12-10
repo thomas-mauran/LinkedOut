@@ -50,8 +50,8 @@ class MessageChannelService(
     fun findOneChannelOfUser(requestId: String, userId: String, channelId: String): MessageChannel {
         // Request message channel from the messaging service
         val request = RequestResponseFactory.newRequest(requestId)
-            .setGetUserMessageChannelByIdRequest(
-                Messaging.GetUserMessageChannelByIdRequest.newBuilder()
+            .setGetUserMessageChannelRequest(
+                Messaging.GetUserMessageChannelRequest.newBuilder()
                     .setUserId(userId)
                     .setMessageChannelId(channelId)
             )
@@ -60,11 +60,11 @@ class MessageChannelService(
         val response = natsService.requestWithReply(findOneOfUserSubject, request)
 
         // Handle the response
-        if (!response.hasGetUserMessageChannelByIdResponse()) {
+        if (!response.hasGetUserMessageChannelResponse()) {
             throw Exception("Invalid response")
         }
 
-        val getUserMessageChannelByIdResponse = response.getUserMessageChannelByIdResponse
+        val getUserMessageChannelByIdResponse = response.getUserMessageChannelResponse
 
         // Get the employer from the employer service
         val employer = employerService.findOne(requestId, getUserMessageChannelByIdResponse.messageChannel.employerId)

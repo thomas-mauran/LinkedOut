@@ -13,13 +13,13 @@ message GetUserMessageChannelsResponse {
     repeated models.MessageChannel message_channels = 1;
 }
 
-// Get a message channel of a user by id
-message GetUserMessageChannelByIdRequest {
+// Get a message channel of a user
+message GetUserMessageChannelRequest {
     string user_id = 1;
     string message_channel_id = 2;
 }
 
-message GetUserMessageChannelByIdResponse {
+message GetUserMessageChannelResponse {
     models.MessageChannel message_channel = 1;
 }
 
