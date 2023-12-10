@@ -3,6 +3,7 @@ package com.linkedout.messaging.function.messages
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.messaging.service.MessageService
+import com.linkedout.messaging.utils.MessageDirection
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.models.MessageOuterClass
@@ -35,11 +36,11 @@ class SendMessage(
 
         // Insert the message into the database
         val responseMono = try {
-            messageService.saveMessage(userId, messageChannelId, request.content, request.directionValue)
+            messageService.saveMessage(userId, messageChannelId, request.content, MessageDirection.fromProto(request.direction))
                 .map { message ->
                     MessageOuterClass.Message.newBuilder()
                         .setId(message.id.toString())
-                        .setDirectionValue(message.direction)
+                        .setDirection(MessageDirection.toProto(message.direction))
                         .setSentAt(message.created.toEpochSecond(ZoneOffset.UTC) * 1000)
                         .setContent(message.message)
                         .build()
