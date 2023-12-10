@@ -3,6 +3,8 @@ package com.linkedout.proto.services;
 
 import "models/job.proto";
 import "models/jobCategory.proto";
+import "models/jobOffer.proto";
+import "models/company.proto";
 
 // Get jobs
 message GetJobsRequest {}
@@ -25,4 +27,20 @@ message GetJobCategoriesRequest {}
 
 message GetJobCategoriesResponse {
   repeated models.JobCategory categories = 1;
+}
+
+// Get a company
+message GetCompanyRequest {
+  string id = 1;
+}
+
+message GetCompanyResponse {
+  models.Company company = 1;
+}
+
+// Get companies
+message GetCompaniesRequest {}
+
+message GetCompaniesResponse {
+  repeated models.Company companies = 1;
 }

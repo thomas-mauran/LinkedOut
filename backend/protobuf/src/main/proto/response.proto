@@ -27,5 +27,7 @@ message Response {
     services.SendMessageResponse send_message_response = 11;
     services.GetUserMessageChannelWithEmployerResponse get_user_message_channel_with_employer_response = 12;
     services.SendMessageToEmployerResponse send_message_to_employer_response = 13;
-  }
+    services.GetCompaniesResponse get_companies_response = 14;
+    services.GetCompanyResponse get_company_response = 15;
+    }
 }

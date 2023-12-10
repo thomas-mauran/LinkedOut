@@ -21,5 +21,7 @@ message Request {
     services.SendMessageRequest send_message_request = 10;
     services.GetUserMessageChannelWithEmployerRequest get_user_message_channel_with_employer_request = 11;
     services.SendMessageToEmployerRequest send_message_to_employer_request = 12;
-  }
+    services.GetCompaniesRequest get_companies_request = 13;
+    services.GetCompanyRequest get_company_request = 14;  
+    }
 }
