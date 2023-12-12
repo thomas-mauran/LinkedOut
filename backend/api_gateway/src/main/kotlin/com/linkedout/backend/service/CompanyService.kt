@@ -7,7 +7,6 @@ import com.linkedout.proto.services.Jobs.GetCompanyRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 @Service
 class CompanyService(
@@ -16,7 +15,7 @@ class CompanyService(
     @Value("\${app.services.companies.subjects.findOne}") private val findOneSubject: String
 ) {
     fun findAll(requestId: String): Flux<Company> {
-        // Request compagnies from the jobs service
+        // Request companies from the jobs service
         val response = natsService.requestWithReply(findAllSubject, RequestResponseFactory.newRequest(requestId).build())
 
         // Handle the response
@@ -32,7 +31,7 @@ class CompanyService(
             }
     }
 
-    fun findOne(requestId: String, id: String): Mono<Company> {
+    fun findOne(requestId: String, id: String): Company {
         // Request compagny from the jobs service
         val request = RequestResponseFactory.newRequest(requestId)
             .setGetCompanyRequest(
@@ -49,6 +48,7 @@ class CompanyService(
         }
 
         val getCompany = response.getCompanyResponse
-        return Mono.just(Company(getCompany.company.id, getCompany.company.name))
+        return Company(getCompany.company.id, getCompany.company.name)
     }
+
 }

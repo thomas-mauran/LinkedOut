@@ -17,7 +17,6 @@ class JobApplicationService(
 ) {
     fun apply(jobId: UUID): Mono<JobApplication> {
         val jobExistsMono: Mono<Boolean> = jobRepository.existsById(jobId)
-        println(jobExistsMono)
         return jobExistsMono.flatMap { jobExists ->
             if (jobExists) {
                 // TODO: retrieve userId
