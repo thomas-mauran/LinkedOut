@@ -1,6 +1,7 @@
 package com.linkedout.jobs.function.jobs
 
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.common.utils.handleRequestError
 import com.linkedout.jobs.service.JobService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
@@ -13,9 +14,9 @@ import java.util.function.Function
 
 @Component
 class GetJob(private val jobService: JobService) : Function<Request, Response> {
-    override fun apply(t: Request): Response {
+    override fun apply(t: Request): Response = handleRequestError {
         // Get the job from the database
-        val responseMono = jobService.findOneWithCategory(UUID.fromString(t.getJobRequest.id))
+        val reactiveResponse = jobService.findOneWithCategory(UUID.fromString(t.getJobRequest.id))
             .map { job ->
                 JobOuterClass.Job.newBuilder()
                     .setId(job.id)
@@ -30,11 +31,7 @@ class GetJob(private val jobService: JobService) : Function<Request, Response> {
             }
 
         // Block until the response is ready
-        val response = try {
-            responseMono.block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val response = reactiveResponse.block()
             ?: return RequestResponseFactory.newFailedResponse("Job not found", HttpStatus.NOT_FOUND).build()
 
         return RequestResponseFactory.newSuccessfulResponse()

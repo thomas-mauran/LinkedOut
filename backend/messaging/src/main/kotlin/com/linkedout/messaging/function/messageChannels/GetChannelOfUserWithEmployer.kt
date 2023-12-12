@@ -1,6 +1,7 @@
 package com.linkedout.messaging.function.messageChannels
 
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.common.utils.handleRequestError
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
@@ -13,10 +14,10 @@ import java.util.function.Function
 
 @Component
 class GetChannelOfUserWithEmployer(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
-    override fun apply(t: Request): Response {
+    override fun apply(t: Request): Response = handleRequestError {
         // Get the message channel from the database
         val request = t.getUserMessageChannelWithEmployerRequest
-        val responseMono = messageChannelService.findOneWithSeasonworkerIdAndEmployerId(UUID.fromString(request.userId), UUID.fromString(request.employerId))
+        val reactiveResponse = messageChannelService.findOneWithSeasonworkerIdAndEmployerId(UUID.fromString(request.userId), UUID.fromString(request.employerId))
             .map { messageChannel ->
                 MessageChannelOuterClass.MessageChannel.newBuilder()
                     .setId(messageChannel.id.toString())
@@ -31,11 +32,7 @@ class GetChannelOfUserWithEmployer(private val messageChannelService: MessageCha
             }
 
         // Block until the response is ready
-        val response = try {
-            responseMono.block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val response = reactiveResponse.block()
             ?: return RequestResponseFactory.newFailedResponse("Message channel not found", HttpStatus.NOT_FOUND).build()
 
         return RequestResponseFactory.newSuccessfulResponse()
