@@ -22,6 +22,15 @@ message GetJobResponse {
   models.Job job = 1;
 }
 
+// Get multiple jobs
+message GetMultipleJobsRequest {
+  repeated string ids = 1;
+}
+
+message GetMultipleJobsResponse {
+  repeated models.Job jobs = 1;
+}
+
 // Get job categories
 message GetJobCategoriesRequest {}
 
@@ -43,4 +52,29 @@ message GetCompaniesRequest {}
 
 message GetCompaniesResponse {
   repeated models.Company companies = 1;
+}
+
+// Get multiple companies
+message GetMultipleCompaniesRequest {
+  repeated string ids = 1;
+}
+
+message GetMultipleCompaniesResponse {
+  repeated models.Company companies = 1;
+}
+
+// Get job offers
+message GetJobOffersRequest {}
+
+message GetJobOffersResponse {
+  repeated models.JobOffer jobOffers = 1;
+}
+
+// Get a job offer
+message GetJobOfferRequest {
+  string id = 1;
+}
+
+message GetJobOfferResponse {
+  models.JobOffer jobOffer = 1;
 }

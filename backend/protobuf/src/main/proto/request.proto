@@ -22,6 +22,10 @@ message Request {
     services.GetUserMessageChannelWithEmployerRequest get_user_message_channel_with_employer_request = 11;
     services.SendMessageToEmployerRequest send_message_to_employer_request = 12;
     services.GetCompaniesRequest get_companies_request = 13;
-    services.GetCompanyRequest get_company_request = 14;  
-    }
+    services.GetCompanyRequest get_company_request = 14;
+    services.GetJobOffersRequest get_job_offers_request = 15;
+    services.GetMultipleJobsRequest get_multiple_jobs_request = 16;
+    services.GetMultipleCompaniesRequest get_multiple_companies_request = 17;
+    services.GetJobOfferRequest get_job_offer_request = 18;
+  }
 }

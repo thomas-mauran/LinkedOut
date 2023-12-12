@@ -19,6 +19,10 @@ app:
       subjects:
         findAll: jobs.findAll
         findOne: jobs.findOne
+    jobOffers:
+      subjects:
+        findAll: jobs.findAllJobOffers
+        findOne: jobs.findOneJobOffer
     jobCategories:
       subjects:
         findAll: jobs.findAllCategories
