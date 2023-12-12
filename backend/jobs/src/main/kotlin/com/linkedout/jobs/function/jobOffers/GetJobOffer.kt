@@ -2,15 +2,12 @@ package com.linkedout.jobs.function.jobOffers
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.jobs.service.JobOfferService
-import com.linkedout.jobs.service.JobService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.models.CompanyOuterClass
-import com.linkedout.proto.models.JobCategoryOuterClass
 import com.linkedout.proto.models.JobOfferOuterClass
 import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import java.util.UUID
 import java.util.function.Function
@@ -18,7 +15,7 @@ import java.util.function.Function
 @Component
 class GetJobOffer(private val jobOfferService: JobOfferService) : Function<Request, Response> {
     override fun apply(t: Request): Response {
-        // Get the job from the database
+        // Get the job offer from the database
         val responseMono = jobOfferService.findOne(UUID.fromString(t.getJobOfferRequest.id))
             .map { jobOffer ->
                 JobOfferOuterClass.JobOffer.newBuilder()
@@ -29,12 +26,14 @@ class GetJobOffer(private val jobOfferService: JobOfferService) : Function<Reque
                     .setEndDate(jobOffer.endDate.toString())
                     .setGeographicArea(jobOffer.geographicArea)
                     .setSalary(jobOffer.salary)
-                    .setCompany(CompanyOuterClass.Company.newBuilder()
-                        .setId(jobOffer.companyId.toString())
-                        .setName(jobOffer.companyName))
+                    .setCompany(
+                        CompanyOuterClass.Company.newBuilder()
+                            .setId(jobOffer.companyId)
+                            .setName(jobOffer.companyName)
+                    )
                     .setJob(
                         JobOuterClass.Job.newBuilder()
-                            .setId(jobOffer.jobId.toString())
+                            .setId(jobOffer.jobId)
                             .setTitle(jobOffer.jobTitle)
                             .setCategory(jobOffer.jobCategoryTitle)
                     )

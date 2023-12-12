@@ -50,5 +50,4 @@ class CompanyService(
         val getCompany = response.getCompanyResponse
         return Company(getCompany.company.id, getCompany.company.name)
     }
-
 }

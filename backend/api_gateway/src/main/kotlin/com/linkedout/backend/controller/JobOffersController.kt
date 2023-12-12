@@ -1,6 +1,5 @@
 package com.linkedout.backend.controller
 
-import com.linkedout.backend.model.Job
 import com.linkedout.backend.model.JobOffer
 import com.linkedout.backend.service.JobOfferService
 import org.springframework.http.server.reactive.ServerHttpRequest

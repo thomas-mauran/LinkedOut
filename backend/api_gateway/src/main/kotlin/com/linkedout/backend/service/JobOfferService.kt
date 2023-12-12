@@ -1,6 +1,8 @@
 package com.linkedout.backend.service
 
-import com.linkedout.backend.model.*
+import com.linkedout.backend.model.Company
+import com.linkedout.backend.model.Job
+import com.linkedout.backend.model.JobOffer
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.services.Jobs
@@ -17,7 +19,7 @@ class JobOfferService(
     @Value("\${app.services.jobOffers.subjects.findOne}") private val findOneSubject: String
 ) {
     fun findAll(requestId: String): List<JobOffer> {
-        // Request job categories from the jobs service
+        // Request job offers from the job service
         val response = natsService.requestWithReply(findAllSubject, RequestResponseFactory.newRequest(requestId).build())
 
         // Handle the response
@@ -25,11 +27,9 @@ class JobOfferService(
             throw Exception("Invalid response")
         }
 
-
         val getJobOffersResponse = response.getJobOffersResponse
 
         // TODO: Implement status with join table
-        println("tesssssssst" + getJobOffersResponse)
 
         return getJobOffersResponse.jobOffersList.map { jobOffer ->
             JobOffer(
@@ -46,7 +46,7 @@ class JobOfferService(
                 ),
                 Company(
                     jobOffer.company.id,
-                    jobOffer.company.name,
+                    jobOffer.company.name
                 ),
                 jobOffer.salary,
                 jobOffer.status
@@ -55,7 +55,7 @@ class JobOfferService(
     }
 
     fun findOne(requestId: String, id: String): JobOffer {
-        // Request the job offer channel from the job offer service
+        // Request the job offer from the job offer service
         val request = RequestResponseFactory.newRequest(requestId)
             .setGetJobOfferRequest(
                 Jobs.GetJobOfferRequest.newBuilder()
@@ -87,7 +87,7 @@ class JobOfferService(
             ),
             Company(
                 getJobOfferResponse.jobOffer.company.id,
-                getJobOfferResponse.jobOffer.company.name,
+                getJobOfferResponse.jobOffer.company.name
             ),
             getJobOfferResponse.jobOffer.salary,
             getJobOfferResponse.jobOffer.status

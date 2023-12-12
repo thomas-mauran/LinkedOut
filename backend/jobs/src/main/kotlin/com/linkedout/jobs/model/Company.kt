@@ -8,5 +8,5 @@ import java.util.UUID
 data class Company(
     @Id
     val id: UUID,
-    val name: String,
+    val name: String
 )

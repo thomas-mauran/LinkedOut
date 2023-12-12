@@ -29,5 +29,5 @@ data class JobOfferWithJobAndCompany(
     @Column("jobtitle")
     val jobTitle: String,
     @Column("status")
-    val jobOfferStatus: Int,
+    val jobOfferStatus: Int
 )
