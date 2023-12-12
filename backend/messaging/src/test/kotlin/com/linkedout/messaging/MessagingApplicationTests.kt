@@ -1,4 +1,4 @@
-package com.linkedout.jobs
+package com.linkedout.messaging
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
