@@ -30,4 +30,8 @@ class NatsService(@Value("\${nats.spring.server}") private val natsUrl: String, 
 
         return response
     }
+
+    fun request(subject: String, request: Request) {
+        nc.publish(subject, request.toByteArray())
+    }
 }

@@ -44,3 +44,6 @@ app:
       subjects:
         findOne: employer.findOne
         findMultiple: employer.findMultiple
+    notifications:
+      subjects:
+        sendTo: notifications.sendTo

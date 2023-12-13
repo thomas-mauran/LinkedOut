@@ -4,6 +4,7 @@ package com.linkedout.proto;
 import "services/jobs.proto";
 import "services/messaging.proto";
 import "services/employer.proto";
+import "services/notification.proto";
 
 // Message that contains a generic request
 message Request {
@@ -27,5 +28,6 @@ message Request {
     services.GetMultipleJobsRequest get_multiple_jobs_request = 16;
     services.GetMultipleCompaniesRequest get_multiple_companies_request = 17;
     services.GetJobOfferRequest get_job_offer_request = 18;
+    services.SendNotificationToRequest send_notification_to_request = 19;
   }
 }

@@ -1,0 +1,11 @@
+syntax = "proto3";
+package com.linkedout.proto.services;
+
+import "models/notification.proto";
+
+// Send a notification to a user
+message SendNotificationToRequest {
+  string user_id = 1;
+  string title = 2;
+  string content = 3;
+}
