@@ -24,7 +24,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework:spring-jdbc")
     implementation("org.springframework.cloud:spring-cloud-stream:4.0.4")
     implementation("io.nats:jnats:2.17.1")
