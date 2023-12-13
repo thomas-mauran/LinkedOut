@@ -48,3 +48,4 @@ app:
       subjects:
         sendTo: notifications.sendTo
         findAllOfUser: notifications.findAllOfUser
+        deleteAllOfUser: notifications.deleteAllOfUser

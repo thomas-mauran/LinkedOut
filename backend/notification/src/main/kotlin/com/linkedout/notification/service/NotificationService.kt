@@ -18,4 +18,8 @@ class NotificationService(
     fun findBySeasonWorkerId(seasonworkerId: UUID): Flux<Notification> {
         return notificationRepository.findBySeasonWorkerId(seasonworkerId)
     }
+
+    fun deleteBySeasonWorkerId(seasonworkerId: UUID): Mono<Void> {
+        return notificationRepository.deleteBySeasonWorkerId(seasonworkerId)
+    }
 }

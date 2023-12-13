@@ -30,5 +30,6 @@ message Request {
     services.GetJobOfferRequest get_job_offer_request = 18;
     services.SendNotificationToRequest send_notification_to_request = 19;
     services.GetUserNotificationsRequest get_user_notifications_request = 20;
+    services.DeleteUserNotificationsRequest delete_user_notifications_request = 21;
   }
 }

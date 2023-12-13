@@ -25,4 +25,12 @@ interface NotificationRepository : ReactiveCrudRepository<Notification, UUID> {
     """
     )
     fun findBySeasonWorkerId(seasonworkerId: UUID): Flux<Notification>
+
+    @Query(
+        """
+        DELETE FROM notification
+        WHERE seasonworkerid = :seasonworkerId
+    """
+    )
+    fun deleteBySeasonWorkerId(seasonworkerId: UUID): Mono<Void>
 }

@@ -13,7 +13,8 @@ import com.linkedout.backend.model.Notification as NotificationModel
 class NotificationService(
     private val natsService: NatsService,
     @Value("\${app.services.notifications.subjects.sendTo}") private val sendToSubject: String,
-    @Value("\${app.services.notifications.subjects.findAllOfUser}") private val findAllOfUserSubject: String
+    @Value("\${app.services.notifications.subjects.findAllOfUser}") private val findAllOfUserSubject: String,
+    @Value("\${app.services.notifications.subjects.deleteAllOfUser}") private val deleteAllOfUserSubject: String
 ) {
     fun sendTo(requestId: String, userId: String, title: String, content: String) {
         // Send the notification to the notification service
@@ -57,5 +58,17 @@ class NotificationService(
                 DateTimeFormatter.ISO_INSTANT.format(date.toInstant())
             )
         }
+    }
+
+    fun deleteAllOfUser(requestId: String, userId: String) {
+        // Send the request to the notification service
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setDeleteUserNotificationsRequest(
+                Notification.DeleteUserNotificationsRequest.newBuilder()
+                    .setUserId(userId)
+            )
+            .build()
+
+        natsService.requestWithReply(deleteAllOfUserSubject, request)
     }
 }

@@ -851,6 +851,17 @@ paths:
                   $ref: '#/components/schemas/Notification'
         '401':
           description: User is not authenticated
+    delete:
+      tags:
+        - Notification
+      summary: Clear the notifications of the logged-in user.
+      description: Can only be used by logged-in users.
+      operationId: deleteAllNotifications
+      responses:
+        '200':
+          description: Notifications deleted successfully
+        '401':
+          description: User is not authenticated
   # Job
   /jobs:
     get:
@@ -1426,4 +1437,4 @@ components:
         type: string
         format: uuid
         example: 2e311444-c7b6-4aeb-b0b1-5871099677b4
-        
+

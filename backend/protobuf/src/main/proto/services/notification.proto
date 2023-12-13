@@ -18,3 +18,10 @@ message GetUserNotificationsRequest {
 message GetUserNotificationsResponse {
   repeated models.Notification notifications = 1;
 }
+
+// Delete all notifications of a user
+message DeleteUserNotificationsRequest {
+  string user_id = 1;
+}
+
+message DeleteUserNotificationsResponse {}
