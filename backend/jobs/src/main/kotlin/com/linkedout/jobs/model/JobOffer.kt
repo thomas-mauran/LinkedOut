@@ -10,13 +10,15 @@ import java.util.UUID
 data class JobOffer(
     @Id
     val id: UUID,
-    val job: UUID,
     val title: String,
     val description: String,
     @Column("startdate")
     val startDate: LocalDate,
     @Column("enddate")
     val endDate: LocalDate,
+    val geographicArea: String,
+    val job: UUID,
     val company: UUID,
-    val salary: Int
+    val salary: Int,
+    val status: Int
 )
