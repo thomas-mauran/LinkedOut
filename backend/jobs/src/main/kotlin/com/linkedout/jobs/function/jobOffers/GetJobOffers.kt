@@ -1,8 +1,8 @@
 package com.linkedout.jobs.function.jobOffers
 
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.common.utils.handleRequestError
 import com.linkedout.jobs.service.JobOfferService
-import com.linkedout.jobs.service.JobService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.models.CompanyOuterClass
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component
 import java.util.function.Function
 
 @Component
-class GetJobOffers(private val jobOfferService: JobOfferService, private val jobService: JobService) : Function<Request, Response> {
-    override fun apply(t: Request): Response {
+class GetJobOffers(private val jobOfferService: JobOfferService) : Function<Request, Response> {
+    override fun apply(t: Request): Response = handleRequestError {
         // Get all the job offers from the database
-        val responseMono = jobOfferService.findAll()
+        val reactiveResponse = jobOfferService.findAll()
             .map { jobOffer ->
                 JobOfferOuterClass.JobOffer.newBuilder()
                     .setId(jobOffer.jobOfferId)
@@ -50,11 +50,7 @@ class GetJobOffers(private val jobOfferService: JobOfferService, private val job
             }
 
         // Block until the response is ready
-        val response = try {
-            responseMono.block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val response = reactiveResponse.block()
             ?: return RequestResponseFactory.newSuccessfulResponse()
                 .setGetJobOffersResponse(Jobs.GetJobOffersResponse.getDefaultInstance())
                 .build()

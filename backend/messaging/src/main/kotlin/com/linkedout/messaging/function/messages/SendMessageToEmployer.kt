@@ -1,6 +1,7 @@
 package com.linkedout.messaging.function.messages
 
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.common.utils.handleRequestError
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.messaging.service.MessageService
 import com.linkedout.messaging.utils.MessageDirection
@@ -19,49 +20,36 @@ class SendMessageToEmployer(
     private val messageService: MessageService,
     private val messageChannelService: MessageChannelService
 ) : Function<Request, Response> {
-    override fun apply(t: Request): Response {
+    override fun apply(t: Request): Response = handleRequestError {
         // Extract the request
         val request = t.sendMessageToEmployerRequest
         val userId = UUID.fromString(request.userId)
         val employerId = UUID.fromString(request.employerId)
 
         // Ensure that the message channel exists in the database
-        val messageChannel = try {
-            messageChannelService.ensureExists(userId, employerId)
-                .block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val messageChannel = messageChannelService.ensureExists(userId, employerId).block()
             ?: return RequestResponseFactory.newFailedResponse("Message channel could not be created").build()
 
         // Insert the message into the database
-        val responseMono = try {
-            messageService.saveMessage(userId, messageChannel.id, request.content, MessageDirection.ToEmployer)
-                .map { message ->
-                    MessageOuterClass.Message.newBuilder()
-                        .setId(message.id.toString())
-                        .setDirection(MessageDirection.toProto(message.direction))
-                        .setSentAt(message.created.toEpochSecond(ZoneOffset.UTC) * 1000)
-                        .setContent(message.message)
-                        .build()
-                }
-                .map { builder ->
-                    SendMessageToEmployerResponse.newBuilder()
-                        .setMessageChannelId(messageChannel.id.toString())
-                        .setEmployerId(messageChannel.employerId.toString())
-                        .setMessage(builder)
-                        .build()
-                }
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val reactiveResponse = messageService.saveMessage(userId, messageChannel.id, request.content, MessageDirection.ToEmployer)
+            .map { message ->
+                MessageOuterClass.Message.newBuilder()
+                    .setId(message.id.toString())
+                    .setDirection(MessageDirection.toProto(message.direction))
+                    .setSentAt(message.created.toEpochSecond(ZoneOffset.UTC) * 1000)
+                    .setContent(message.message)
+                    .build()
+            }
+            .map { builder ->
+                SendMessageToEmployerResponse.newBuilder()
+                    .setMessageChannelId(messageChannel.id.toString())
+                    .setEmployerId(messageChannel.employerId.toString())
+                    .setMessage(builder)
+                    .build()
+            }
 
         // Block until the response is ready
-        val response = try {
-            responseMono.block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val response = reactiveResponse.block()
             ?: return RequestResponseFactory.newFailedResponse("Unable to send the message", HttpStatus.INTERNAL_SERVER_ERROR).build()
 
         return RequestResponseFactory.newSuccessfulResponse()

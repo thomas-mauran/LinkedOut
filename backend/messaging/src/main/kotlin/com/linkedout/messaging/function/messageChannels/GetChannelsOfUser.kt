@@ -1,6 +1,7 @@
 package com.linkedout.messaging.function.messageChannels
 
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.common.utils.handleRequestError
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
@@ -12,9 +13,9 @@ import java.util.function.Function
 
 @Component
 class GetChannelsOfUser(private val messageChannelService: MessageChannelService) : Function<Request, Response> {
-    override fun apply(t: Request): Response {
+    override fun apply(t: Request): Response = handleRequestError {
         // Get the message channels from the database
-        val responseMono = messageChannelService.findAllWithSeasonworkerId(UUID.fromString(t.getUserMessageChannelsRequest.userId))
+        val reactiveResponse = messageChannelService.findAllWithSeasonworkerId(UUID.fromString(t.getUserMessageChannelsRequest.userId))
             .map { messageChannel ->
                 MessageChannel.newBuilder()
                     .setId(messageChannel.id.toString())
@@ -31,11 +32,7 @@ class GetChannelsOfUser(private val messageChannelService: MessageChannelService
             }
 
         // Block until the response is ready
-        val response = try {
-            responseMono.block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val response = reactiveResponse.block()
             ?: return RequestResponseFactory.newSuccessfulResponse()
                 .setGetUserMessageChannelsResponse(GetUserMessageChannelsResponse.getDefaultInstance())
                 .build()

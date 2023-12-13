@@ -1,6 +1,7 @@
 package com.linkedout.messaging.function.messages
 
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.common.utils.handleRequestError
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.messaging.service.MessageService
 import com.linkedout.messaging.utils.MessageDirection
@@ -18,23 +19,18 @@ class GetMessagesOfUser(
     private val messageService: MessageService,
     private val messageChannelService: MessageChannelService
 ) : Function<Request, Response> {
-    override fun apply(t: Request): Response {
+    override fun apply(t: Request): Response = handleRequestError {
         // Extract the request
         val request = t.getUserMessagesRequest
         val userId = UUID.fromString(request.userId)
         val messageChannelId = UUID.fromString(request.messageChannelId)
 
         // Get the message channel from the database
-        val messageChannel = try {
-            messageChannelService.findOneWithSeasonworkerId(userId, messageChannelId)
-                .block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val messageChannel = messageChannelService.findOneWithSeasonworkerId(userId, messageChannelId).block()
             ?: return RequestResponseFactory.newFailedResponse("Message channel not found").build()
 
         // Get the messages from the database
-        val responseMono = messageService.findAllWithSeasonworkerIdAndMessageChannelId(userId, messageChannelId)
+        val reactiveResponse = messageService.findAllWithSeasonworkerIdAndMessageChannelId(userId, messageChannelId)
             .map { message ->
                 Message.newBuilder()
                     .setId(message.id.toString())
@@ -54,11 +50,7 @@ class GetMessagesOfUser(
             }
 
         // Block until the response is ready
-        val response = try {
-            responseMono.block()
-        } catch (e: Exception) {
-            return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
-        }
+        val response = reactiveResponse.block()
             ?: return RequestResponseFactory.newSuccessfulResponse()
                 .setGetUserMessagesResponse(GetUserMessagesResponse.getDefaultInstance())
                 .build()
