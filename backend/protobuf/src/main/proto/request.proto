@@ -29,5 +29,6 @@ message Request {
     services.GetMultipleCompaniesRequest get_multiple_companies_request = 17;
     services.GetJobOfferRequest get_job_offer_request = 18;
     services.SendNotificationToRequest send_notification_to_request = 19;
+    services.GetUserNotificationsRequest get_user_notifications_request = 20;
   }
 }

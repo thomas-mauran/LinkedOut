@@ -47,3 +47,4 @@ app:
     notifications:
       subjects:
         sendTo: notifications.sendTo
+        findAllOfUser: notifications.findAllOfUser

@@ -9,3 +9,12 @@ message SendNotificationToRequest {
   string title = 2;
   string content = 3;
 }
+
+// Get all notifications of a user
+message GetUserNotificationsRequest {
+  string user_id = 1;
+}
+
+message GetUserNotificationsResponse {
+  repeated models.Notification notifications = 1;
+}
