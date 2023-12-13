@@ -4,6 +4,7 @@ package com.linkedout.proto;
 import "services/jobs.proto";
 import "services/messaging.proto";
 import "services/employer.proto";
+import "services/notification.proto";
 
 // Message that contains a generic response
 message Error {
@@ -33,5 +34,7 @@ message Response {
     services.GetMultipleJobsResponse get_multiple_jobs_response = 17;
     services.GetMultipleCompaniesResponse get_multiple_companies_response = 18;
     services.GetJobOfferResponse get_job_offer_response = 19;
+    services.GetUserNotificationsResponse get_user_notifications_response = 20;
+    services.DeleteUserNotificationsResponse delete_user_notifications_response = 21;
   }
 }

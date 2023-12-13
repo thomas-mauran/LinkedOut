@@ -21,3 +21,11 @@ CREATE USER employer
 
 CREATE DATABASE employer
     OWNER 'employer';
+
+-- Notification service
+CREATE USER notification
+    WITH LOGIN
+    PASSWORD 'notification';
+
+CREATE DATABASE notification
+    OWNER 'notification';

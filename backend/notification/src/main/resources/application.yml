@@ -1,0 +1,13 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432
+    username: notification
+    password: notification
+
+  flyway:
+    url: jdbc:postgresql://localhost:5432/notification
+    user: notification
+    password: notification
+
+server:
+  port: 8084
