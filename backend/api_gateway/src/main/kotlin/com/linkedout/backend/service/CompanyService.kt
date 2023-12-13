@@ -6,7 +6,6 @@ import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.services.Jobs.GetCompanyRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
 
 @Service
 class CompanyService(

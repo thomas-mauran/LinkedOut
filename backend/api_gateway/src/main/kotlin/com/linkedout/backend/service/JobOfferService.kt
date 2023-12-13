@@ -30,7 +30,6 @@ class JobOfferService(
         val getJobOffersResponse = response.getJobOffersResponse
 
         // TODO: Implement status with join table
-
         return getJobOffersResponse.jobOffersList.map { jobOffer ->
             JobOffer(
                 jobOffer.id,
