@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/api/v1/jobOffers")
 class JobOffersController(private val jobOffersService: JobOfferService) {
     @GetMapping
-    open fun getJobOffers(request: ServerHttpRequest): Flux<JobOffer> {
-        return Flux.fromIterable(jobOffersService.findAll(request.id))
+    open fun getJobOffers(request: ServerHttpRequest): List<JobOffer> {
+        return jobOffersService.findAll(request.id)
     }
 
     @GetMapping("/{id}")

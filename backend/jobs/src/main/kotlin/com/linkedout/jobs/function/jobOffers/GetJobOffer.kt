@@ -8,6 +8,7 @@ import com.linkedout.proto.models.CompanyOuterClass
 import com.linkedout.proto.models.JobOfferOuterClass
 import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import java.util.UUID
 import java.util.function.Function
@@ -52,9 +53,8 @@ class GetJobOffer(private val jobOfferService: JobOfferService) : Function<Reque
         } catch (e: Exception) {
             return RequestResponseFactory.newFailedResponse(e.message ?: "Unknown error").build()
         }
-            ?: return RequestResponseFactory.newSuccessfulResponse()
-                .setGetJobOfferResponse(Jobs.GetJobOfferResponse.getDefaultInstance())
-                .build()
+            ?: return RequestResponseFactory.newFailedResponse("Job offer not found", HttpStatus.NOT_FOUND).build()
+
         return RequestResponseFactory.newSuccessfulResponse()
             .setGetJobOfferResponse(response)
             .build()

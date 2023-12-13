@@ -14,7 +14,7 @@ class CompanyService(
     @Value("\${app.services.companies.subjects.findAll}") private val findAllSubject: String,
     @Value("\${app.services.companies.subjects.findOne}") private val findOneSubject: String
 ) {
-    fun findAll(requestId: String): Flux<Company> {
+    fun findAll(requestId: String): List<Company> {
         // Request companies from the jobs service
         val response = natsService.requestWithReply(findAllSubject, RequestResponseFactory.newRequest(requestId).build())
 
@@ -25,14 +25,14 @@ class CompanyService(
 
         val getCompaniesResponse = response.getCompaniesResponse
 
-        return Flux.fromIterable(getCompaniesResponse.companiesList)
+        return getCompaniesResponse.companiesList
             .map { company ->
                 Company(company.id, company.name)
             }
     }
 
     fun findOne(requestId: String, id: String): Company {
-        // Request compagny from the jobs service
+        // Request company from the jobs service
         val request = RequestResponseFactory.newRequest(requestId)
             .setGetCompanyRequest(
                 GetCompanyRequest.newBuilder()

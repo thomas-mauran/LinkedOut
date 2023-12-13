@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono
 open class CompaniesController(private val companyService: CompanyService) {
     @GetMapping
     open fun getJobs(request: ServerHttpRequest): Flux<Company> {
-        return companyService.findAll(request.id)
+        return Flux.fromIterable(companyService.findAll(request.id))
     }
 
     @GetMapping("/{id}")
