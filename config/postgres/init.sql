@@ -29,3 +29,11 @@ CREATE USER notification
 
 CREATE DATABASE notification
     OWNER 'notification';
+
+-- Profile service
+CREATE USER profile
+    WITH LOGIN
+    PASSWORD 'profile';
+
+CREATE DATABASE profile
+    OWNER 'profile';

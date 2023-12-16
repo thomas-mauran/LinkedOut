@@ -1,0 +1,13 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432
+    username: profile
+    password: profile
+
+  flyway:
+    url: jdbc:postgresql://localhost:5432/profile
+    user: profile
+    password: profile
+
+server:
+  port: 8083
