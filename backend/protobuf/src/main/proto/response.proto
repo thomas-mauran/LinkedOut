@@ -5,6 +5,7 @@ import "services/jobs.proto";
 import "services/messaging.proto";
 import "services/employer.proto";
 import "services/notification.proto";
+import "services/profile.proto";
 
 // Message that contains a generic response
 message Error {
@@ -36,5 +37,11 @@ message Response {
     services.GetJobOfferResponse get_job_offer_response = 19;
     services.GetUserNotificationsResponse get_user_notifications_response = 20;
     services.DeleteUserNotificationsResponse delete_user_notifications_response = 21;
+    services.DeleteProfileResponse delete_profile_response = 22;
+    services.GetUserProfileResponse get_user_profile_response = 23;
+    services.GetProfilesRequestingDeletionResponse get_profiles_requesting_deletion_response = 24;
+    services.RequestUserProfileDeletionResponse request_user_profile_deletion_response = 25;
+    services.SetUserProfileResponse set_user_profile_response = 26;
+    services.UpdateUserProfileResponse update_user_profile_response = 27;
   }
 }

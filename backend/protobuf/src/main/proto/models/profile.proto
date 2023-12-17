@@ -1,0 +1,25 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+import "models/address.proto";
+
+message Profile {
+  enum Gender {
+    Unknown = 0;
+    Male = 1;
+    Female = 2;
+    Unspecified = 9;
+  }
+
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  Gender gender = 4;
+  uint64 birthday = 5;
+  string nationality = 6;
+  Address address = 7;
+  string phone = 8;
+  string email = 9;
+  string short_bio = 10;
+  bool deletion_requested = 11;
+}

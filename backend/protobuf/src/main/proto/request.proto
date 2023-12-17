@@ -5,6 +5,7 @@ import "services/jobs.proto";
 import "services/messaging.proto";
 import "services/employer.proto";
 import "services/notification.proto";
+import "services/profile.proto";
 
 // Message that contains a generic request
 message Request {
@@ -31,5 +32,11 @@ message Request {
     services.SendNotificationToRequest send_notification_to_request = 19;
     services.GetUserNotificationsRequest get_user_notifications_request = 20;
     services.DeleteUserNotificationsRequest delete_user_notifications_request = 21;
+    services.DeleteProfileRequest delete_profile_request = 22;
+    services.GetUserProfileRequest get_user_profile_request = 23;
+    services.GetProfilesRequestingDeletionRequest get_profiles_requesting_deletion_request = 24;
+    services.RequestUserProfileDeletionRequest request_user_profile_deletion_request = 25;
+    services.SetUserProfileRequest set_user_profile_request = 26;
+    services.UpdateUserProfileRequest update_user_profile_request = 27;
   }
 }

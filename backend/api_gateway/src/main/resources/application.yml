@@ -49,3 +49,11 @@ app:
         sendTo: notifications.sendTo
         findAllOfUser: notifications.findAllOfUser
         deleteAllOfUser: notifications.deleteAllOfUser
+    profile:
+      subjects:
+        deleteOne: profile.deleteOne
+        findOneOfUser: profile.findOneOfUser
+        findAllRequestingDeletion: profile.findAllRequestingDeletion
+        requestDeletionOfUser: profile.requestProfileDeletionOfUser
+        saveOneOfUser: profile.saveOneOfUser
+        updateOneOfUser: profile.updateOneOfUser

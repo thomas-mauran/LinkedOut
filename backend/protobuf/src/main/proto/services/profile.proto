@@ -1,0 +1,71 @@
+syntax = "proto3";
+package com.linkedout.proto.services;
+
+import "models/profile.proto";
+
+// Delete a profile
+message DeleteProfileRequest {
+  string id = 1;
+}
+
+message DeleteProfileResponse {}
+
+// Get the profile of a user
+message GetUserProfileRequest {
+  string user_id = 1;
+}
+
+message GetUserProfileResponse {
+  models.Profile profile = 1;
+  int64 nb_experiences = 2;
+  int64 nb_reviews = 3;
+  double average_rating = 4;
+}
+
+// Get the profiles requesting to be deleted
+message GetProfilesRequestingDeletionRequest {}
+
+message GetProfilesRequestingDeletionResponse {
+  repeated models.Profile profiles = 1;
+}
+
+// Request a profile to be deleted by a user
+message RequestUserProfileDeletionRequest {
+  string user_id = 1;
+}
+
+message RequestUserProfileDeletionResponse {}
+
+// Set a profile
+message UpdateProfileDto {
+  optional string first_name = 1;
+  optional string last_name = 2;
+  optional models.Profile.Gender gender = 3;
+  optional uint64 birthday = 4;
+  optional string nationality = 5;
+  optional string address_first_line = 6;
+  optional string address_zip = 7;
+  optional string address_city = 8;
+  optional string phone = 9;
+  optional string email = 10;
+  optional string short_bio = 11;
+}
+
+message SetUserProfileRequest {
+  string user_id = 1;
+  UpdateProfileDto profile = 2;
+}
+
+message SetUserProfileResponse {
+  models.Profile profile = 1;
+}
+
+// Update a profile
+message UpdateUserProfileRequest {
+  string user_id = 1;
+  UpdateProfileDto profile = 2;
+}
+
+message UpdateUserProfileResponse {
+  models.Profile profile = 1;
+}
