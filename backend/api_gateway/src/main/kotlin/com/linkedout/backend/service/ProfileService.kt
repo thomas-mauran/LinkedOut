@@ -7,6 +7,8 @@ import com.linkedout.backend.model.Address
 import com.linkedout.backend.model.Profile
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.dto.profile.SetProfileDtoOuterClass
+import com.linkedout.proto.dto.profile.UpdateProfileDtoOuterClass
 import com.linkedout.proto.services.Profile.DeleteProfileRequest
 import com.linkedout.proto.services.Profile.GetProfilesRequestingDeletionRequest
 import com.linkedout.proto.services.Profile.GetUserProfileRequest
@@ -17,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.format.DateTimeFormatter
 import java.util.*
-import com.linkedout.proto.services.Profile.UpdateProfileDto as UpdateProfileDtoProto
 
 @Service
 class ProfileService(
@@ -77,7 +78,7 @@ class ProfileService(
                 SetUserProfileRequest.newBuilder()
                     .setUserId(userId)
                     .setProfile(
-                        UpdateProfileDtoProto.newBuilder()
+                        SetProfileDtoOuterClass.SetProfileDto.newBuilder()
                             .setFirstName(dto.firstName)
                             .setLastName(dto.lastName)
                             .setGenderValue(dto.gender)
@@ -124,7 +125,7 @@ class ProfileService(
 
     fun updateOne(requestId: String, userId: String, dto: UpdateProfileDto): Profile {
         // Update the profile using the profile service
-        val protoDtoBuilder = UpdateProfileDtoProto.newBuilder()
+        val protoDtoBuilder = UpdateProfileDtoOuterClass.UpdateProfileDto.newBuilder()
         if (dto.firstName != null) protoDtoBuilder.setFirstName(dto.firstName)
         if (dto.lastName != null) protoDtoBuilder.setLastName(dto.lastName)
         if (dto.gender != null) protoDtoBuilder.setGenderValue(dto.gender)

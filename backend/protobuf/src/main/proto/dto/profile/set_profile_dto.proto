@@ -1,0 +1,19 @@
+syntax = "proto3";
+package com.linkedout.proto.dto.profile;
+
+import "models/profile.proto";
+
+message SetProfileDto {
+  string first_name = 1;
+  string last_name = 2;
+  models.Profile.Gender gender = 3;
+  uint64 birthday = 4;
+  string nationality = 5;
+  string address_first_line = 6;
+  string address_zip = 7;
+  string address_city = 8;
+  string phone = 9;
+  string email = 10;
+  string short_bio = 11;
+}
+
