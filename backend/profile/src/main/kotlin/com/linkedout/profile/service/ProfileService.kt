@@ -1,7 +1,7 @@
 package com.linkedout.profile.service
 
-import com.linkedout.profile.dto.CreateProfileDto
-import com.linkedout.profile.dto.UpdateProfileDto
+import com.linkedout.profile.dto.profile.CreateProfileDto
+import com.linkedout.profile.dto.profile.UpdateProfileDto
 import com.linkedout.profile.model.Profile
 import com.linkedout.profile.repository.ProfileRepository
 import org.springframework.stereotype.Service

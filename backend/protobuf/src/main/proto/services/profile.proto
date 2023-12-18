@@ -1,7 +1,10 @@
 syntax = "proto3";
 package com.linkedout.proto.services;
 
+import "dto/availability/create_availability_dto.proto";
+import "dto/availability/update_availability_dto.proto";
 import "models/profile.proto";
+import "models/availability.proto";
 
 // Delete a profile
 message DeleteProfileRequest {
@@ -68,4 +71,52 @@ message UpdateUserProfileRequest {
 
 message UpdateUserProfileResponse {
   models.Profile profile = 1;
+}
+
+// Create an availability for a user
+message CreateUserAvailabilityRequest {
+  string user_id = 1;
+  dto.availability.CreateAvailabilityDto availability = 2;
+}
+
+message CreateUserAvailabilityResponse {
+  models.Availability availability = 1;
+}
+
+// Delete an availability for a user
+message DeleteUserAvailabilityRequest {
+  string user_id = 1;
+  string availability_id = 2;
+}
+
+message DeleteUserAvailabilityResponse {}
+
+// Get the availabilities of a user
+message GetUserAvailabilitiesRequest {
+  string user_id = 1;
+}
+
+message GetUserAvailabilitiesResponse {
+  repeated models.Availability availabilities = 1;
+}
+
+// Get an availability of a user
+message GetUserAvailabilityRequest {
+  string user_id = 1;
+  string availability_id = 2;
+}
+
+message GetUserAvailabilityResponse {
+  models.Availability availability = 1;
+}
+
+// Update an availability for a user
+message UpdateUserAvailabilityRequest {
+  string user_id = 1;
+  string availability_id = 2;
+  dto.availability.UpdateAvailabilityDto availability = 3;
+}
+
+message UpdateUserAvailabilityResponse {
+  models.Availability availability = 1;
 }

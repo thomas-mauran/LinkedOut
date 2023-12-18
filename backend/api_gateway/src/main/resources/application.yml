@@ -26,6 +26,8 @@ app:
     jobCategories:
       subjects:
         findAll: jobs.findAllCategories
+        findMultiple: jobs.findMultipleCategories
+        findOne: jobs.findOneCategory
     companies:
       subjects:
         findAll: jobs.findAllCompanies
@@ -57,3 +59,10 @@ app:
         requestDeletionOfUser: profile.requestProfileDeletionOfUser
         saveOneOfUser: profile.saveOneOfUser
         updateOneOfUser: profile.updateOneOfUser
+    availability:
+      subjects:
+        createOneOfUser: availability.createOneOfUser
+        deleteOneOfUser: availability.deleteOneOfUser
+        findAllOfUser: availability.findAllOfUser
+        findOneOfUser: availability.findOneOfUser
+        updateOneOfUser: availability.updateOneOfUser

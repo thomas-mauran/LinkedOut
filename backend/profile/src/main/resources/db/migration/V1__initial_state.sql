@@ -14,4 +14,17 @@ CREATE TABLE profile
     email              VARCHAR(256) NOT NULL,
     short_bio          VARCHAR(256) NOT NULL,
     deletion_requested BOOLEAN      NOT NULL DEFAULT FALSE
-)
+);
+
+CREATE TABLE availability
+(
+    id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id            UUID         NOT NULL,
+    start_date         DATE         NOT NULL,
+    end_date           DATE         NOT NULL,
+    address_first_line VARCHAR(128) NOT NULL,
+    address_zip        VARCHAR(20)  NOT NULL,
+    address_city       VARCHAR(64)  NOT NULL,
+    range              INT          NOT NULL,
+    job_category_id    UUID         NOT NULL
+);

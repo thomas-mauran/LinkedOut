@@ -61,7 +61,7 @@ class ProfileController(
     }
 
     @DeleteMapping("/{profileId}")
-//    @PreAuthorize("hasRole('client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     open fun deleteProfile(
         request: ServerHttpRequest,
         @PathVariable profileId: String

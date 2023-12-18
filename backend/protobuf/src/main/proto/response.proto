@@ -43,5 +43,12 @@ message Response {
     services.RequestUserProfileDeletionResponse request_user_profile_deletion_response = 25;
     services.SetUserProfileResponse set_user_profile_response = 26;
     services.UpdateUserProfileResponse update_user_profile_response = 27;
+    services.CreateUserAvailabilityResponse create_user_availability_response = 28;
+    services.DeleteUserAvailabilityResponse delete_user_availability_response = 29;
+    services.GetUserAvailabilitiesResponse get_user_availabilities_response = 30;
+    services.GetUserAvailabilityResponse get_user_availability_response = 31;
+    services.UpdateUserAvailabilityResponse update_user_availability_response = 32;
+    services.GetMultipleJobCategoriesResponse get_multiple_job_categories_response = 33;
+    services.GetJobCategoryResponse get_job_category_response = 34;
   }
 }

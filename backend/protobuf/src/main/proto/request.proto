@@ -38,5 +38,13 @@ message Request {
     services.RequestUserProfileDeletionRequest request_user_profile_deletion_request = 25;
     services.SetUserProfileRequest set_user_profile_request = 26;
     services.UpdateUserProfileRequest update_user_profile_request = 27;
+    services.CreateUserAvailabilityRequest create_user_availability_request = 28;
+    services.DeleteUserAvailabilityRequest delete_user_availability_request = 29;
+    services.GetUserAvailabilitiesRequest get_user_availabilities_request = 30;
+    services.GetUserAvailabilityRequest get_user_availability_request = 31;
+    services.UpdateUserAvailabilityRequest update_user_availability_request = 32;
+    services.GetMultipleJobCategoriesRequest get_multiple_job_categories_request = 33;
+    services.GetMultipleJobCategoriesResponse get_multiple_job_categories_response = 34;
+    services.GetJobCategoryRequest get_job_category_request = 35;
   }
 }

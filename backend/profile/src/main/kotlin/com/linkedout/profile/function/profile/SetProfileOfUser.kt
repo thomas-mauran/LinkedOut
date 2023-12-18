@@ -2,14 +2,13 @@ package com.linkedout.profile.function.profile
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
-import com.linkedout.profile.dto.CreateProfileDto
+import com.linkedout.profile.dto.profile.CreateProfileDto
 import com.linkedout.profile.service.ProfileService
 import com.linkedout.profile.utils.ProfileGender
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.models.AddressOuterClass
 import com.linkedout.proto.models.ProfileOuterClass
-import com.linkedout.proto.services.Profile
 import com.linkedout.proto.services.Profile.SetUserProfileResponse
 import org.springframework.stereotype.Component
 import java.time.LocalDate

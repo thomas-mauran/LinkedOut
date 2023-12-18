@@ -2,7 +2,7 @@ package com.linkedout.profile.function.profile
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
-import com.linkedout.profile.dto.UpdateProfileDto
+import com.linkedout.profile.dto.profile.UpdateProfileDto
 import com.linkedout.profile.service.ProfileService
 import com.linkedout.profile.utils.ProfileGender
 import com.linkedout.proto.RequestOuterClass.Request

@@ -78,3 +78,21 @@ message GetJobOfferRequest {
 message GetJobOfferResponse {
   models.JobOffer jobOffer = 1;
 }
+
+// Get multiple job categories
+message GetMultipleJobCategoriesRequest {
+  repeated string ids = 1;
+}
+
+message GetMultipleJobCategoriesResponse {
+  repeated models.JobCategory categories = 1;
+}
+
+// Get a job category
+message GetJobCategoryRequest {
+  string id = 1;
+}
+
+message GetJobCategoryResponse {
+  models.JobCategory category = 1;
+}

@@ -1,4 +1,4 @@
-package com.linkedout.profile.dto
+package com.linkedout.profile.dto.profile
 
 import java.time.LocalDate
 
