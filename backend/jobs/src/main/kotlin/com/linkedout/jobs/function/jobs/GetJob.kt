@@ -2,10 +2,10 @@ package com.linkedout.jobs.function.jobs
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.jobs.converter.jobs.JobWithCategoryToProto
 import com.linkedout.jobs.service.JobService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -18,11 +18,7 @@ class GetJob(private val jobService: JobService) : Function<Request, Response> {
         // Get the job from the database
         val reactiveResponse = jobService.findOneWithCategory(UUID.fromString(t.getJobRequest.id))
             .map { job ->
-                JobOuterClass.Job.newBuilder()
-                    .setId(job.id)
-                    .setTitle(job.title)
-                    .setCategory(job.category)
-                    .build()
+                JobWithCategoryToProto().convert(job)
             }
             .map { job ->
                 Jobs.GetJobResponse.newBuilder()

@@ -2,10 +2,10 @@ package com.linkedout.employer.function.employer
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.employer.converter.employer.EmployerToProto
 import com.linkedout.employer.service.EmployerService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.EmployerOuterClass
 import com.linkedout.proto.services.Employer.GetEmployerResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -18,13 +18,7 @@ class GetEmployer(private val employerService: EmployerService) : Function<Reque
         // Get the employer from the database
         val reactiveResponse = employerService.findOne(UUID.fromString(t.getEmployerRequest.id))
             .map { employer ->
-                EmployerOuterClass.Employer.newBuilder()
-                    .setId(employer.id.toString())
-                    .setFirstName(employer.firstName)
-                    .setLastName(employer.lastName)
-                    .setPicture(employer.picture)
-                    .setPhone(employer.phone)
-                    .build()
+                EmployerToProto().convert(employer)
             }
             .map { employer ->
                 GetEmployerResponse.newBuilder()

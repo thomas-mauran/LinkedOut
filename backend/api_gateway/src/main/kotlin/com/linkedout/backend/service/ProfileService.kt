@@ -1,14 +1,15 @@
 package com.linkedout.backend.service
 
-import com.linkedout.backend.dto.profile.CreateProfileDto
+import com.linkedout.backend.converter.profile.SetProfileDtoToProto
+import com.linkedout.backend.converter.profile.UpdateProfileDtoToProto
 import com.linkedout.backend.dto.profile.ProfileWithStatsDto
+import com.linkedout.backend.dto.profile.SetProfileDto
 import com.linkedout.backend.dto.profile.UpdateProfileDto
 import com.linkedout.backend.model.Address
 import com.linkedout.backend.model.Profile
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
-import com.linkedout.proto.dto.profile.SetProfileDtoOuterClass
-import com.linkedout.proto.dto.profile.UpdateProfileDtoOuterClass
+import com.linkedout.proto.models.ProfileOuterClass
 import com.linkedout.proto.services.Profile.DeleteProfileRequest
 import com.linkedout.proto.services.Profile.GetProfilesRequestingDeletionRequest
 import com.linkedout.proto.services.Profile.GetUserProfileRequest
@@ -71,26 +72,13 @@ class ProfileService(
         )
     }
 
-    fun setOne(requestId: String, userId: String, dto: CreateProfileDto): Profile {
+    fun setOne(requestId: String, userId: String, dto: SetProfileDto): Profile {
         // Set the profile using the profile service
         val request = RequestResponseFactory.newRequest(requestId)
             .setSetUserProfileRequest(
                 SetUserProfileRequest.newBuilder()
                     .setUserId(userId)
-                    .setProfile(
-                        SetProfileDtoOuterClass.SetProfileDto.newBuilder()
-                            .setFirstName(dto.firstName)
-                            .setLastName(dto.lastName)
-                            .setGenderValue(dto.gender)
-                            .setBirthday(dto.birthday.toEpochDay())
-                            .setNationality(dto.nationality)
-                            .setAddressFirstLine(dto.address.firstLine)
-                            .setAddressZip(dto.address.zipCode)
-                            .setAddressCity(dto.address.city)
-                            .setPhone(dto.phone)
-                            .setEmail(dto.email)
-                            .setShortBio(dto.shortBiography)
-                    )
+                    .setProfile(SetProfileDtoToProto().convert(dto))
             )
             .build()
 
@@ -102,50 +90,16 @@ class ProfileService(
         }
 
         val setUserProfileResponse = response.setUserProfileResponse
-        val birthday = Date(setUserProfileResponse.profile.birthday)
-
-        return Profile(
-            setUserProfileResponse.profile.id,
-            setUserProfileResponse.profile.firstName,
-            setUserProfileResponse.profile.lastName,
-            setUserProfileResponse.profile.genderValue,
-            DateTimeFormatter.ISO_INSTANT.format(birthday.toInstant()),
-            setUserProfileResponse.profile.nationality,
-            Address(
-                setUserProfileResponse.profile.address.firstLine,
-                setUserProfileResponse.profile.address.zipCode,
-                setUserProfileResponse.profile.address.city
-            ),
-            setUserProfileResponse.profile.phone,
-            setUserProfileResponse.profile.email,
-            setUserProfileResponse.profile.shortBio,
-            setUserProfileResponse.profile.deletionRequested
-        )
+        return convertProfileFromProto(setUserProfileResponse.profile)
     }
 
     fun updateOne(requestId: String, userId: String, dto: UpdateProfileDto): Profile {
         // Update the profile using the profile service
-        val protoDtoBuilder = UpdateProfileDtoOuterClass.UpdateProfileDto.newBuilder()
-        if (dto.firstName != null) protoDtoBuilder.setFirstName(dto.firstName)
-        if (dto.lastName != null) protoDtoBuilder.setLastName(dto.lastName)
-        if (dto.gender != null) protoDtoBuilder.setGenderValue(dto.gender)
-        if (dto.birthday != null) protoDtoBuilder.setBirthday(dto.birthday.toEpochDay())
-        if (dto.nationality != null) protoDtoBuilder.setNationality(dto.nationality)
-        if (dto.phone != null) protoDtoBuilder.setPhone(dto.phone)
-        if (dto.email != null) protoDtoBuilder.setEmail(dto.email)
-        if (dto.shortBiography != null) protoDtoBuilder.setShortBio(dto.shortBiography)
-
-        if (dto.address != null) {
-            protoDtoBuilder.setAddressFirstLine(dto.address.firstLine)
-            protoDtoBuilder.setAddressZip(dto.address.zipCode)
-            protoDtoBuilder.setAddressCity(dto.address.city)
-        }
-
         val request = RequestResponseFactory.newRequest(requestId)
             .setUpdateUserProfileRequest(
                 UpdateUserProfileRequest.newBuilder()
                     .setUserId(userId)
-                    .setProfile(protoDtoBuilder)
+                    .setProfile(UpdateProfileDtoToProto().convert(dto))
             )
             .build()
 
@@ -157,25 +111,7 @@ class ProfileService(
         }
 
         val updateUserProfileResponse = response.updateUserProfileResponse
-        val birthday = Date(updateUserProfileResponse.profile.birthday)
-
-        return Profile(
-            updateUserProfileResponse.profile.id,
-            updateUserProfileResponse.profile.firstName,
-            updateUserProfileResponse.profile.lastName,
-            updateUserProfileResponse.profile.genderValue,
-            DateTimeFormatter.ISO_INSTANT.format(birthday.toInstant()),
-            updateUserProfileResponse.profile.nationality,
-            Address(
-                updateUserProfileResponse.profile.address.firstLine,
-                updateUserProfileResponse.profile.address.zipCode,
-                updateUserProfileResponse.profile.address.city
-            ),
-            updateUserProfileResponse.profile.phone,
-            updateUserProfileResponse.profile.email,
-            updateUserProfileResponse.profile.shortBio,
-            updateUserProfileResponse.profile.deletionRequested
-        )
+        return convertProfileFromProto(updateUserProfileResponse.profile)
     }
 
     fun requestDeletion(requestId: String, userId: String) {
@@ -210,26 +146,8 @@ class ProfileService(
 
         val getProfilesRequestingDeletionResponse = response.getProfilesRequestingDeletionResponse
 
-        return getProfilesRequestingDeletionResponse.profilesList.map {
-            val birthday = Date(it.birthday)
-
-            Profile(
-                it.id,
-                it.firstName,
-                it.lastName,
-                it.genderValue,
-                DateTimeFormatter.ISO_INSTANT.format(birthday.toInstant()),
-                it.nationality,
-                Address(
-                    it.address.firstLine,
-                    it.address.zipCode,
-                    it.address.city
-                ),
-                it.phone,
-                it.email,
-                it.shortBio,
-                it.deletionRequested
-            )
+        return getProfilesRequestingDeletionResponse.profilesList.map { profile ->
+            convertProfileFromProto(profile)
         }
     }
 
@@ -248,5 +166,27 @@ class ProfileService(
         if (!response.hasDeleteProfileResponse()) {
             throw Exception("Invalid response")
         }
+    }
+
+    private fun convertProfileFromProto(source: ProfileOuterClass.Profile): Profile {
+        val birthday = Date(source.birthday)
+
+        return Profile(
+            source.id,
+            source.firstName,
+            source.lastName,
+            source.genderValue,
+            DateTimeFormatter.ISO_INSTANT.format(birthday.toInstant()),
+            source.nationality,
+            Address(
+                source.address.firstLine,
+                source.address.zipCode,
+                source.address.city
+            ),
+            source.phone,
+            source.email,
+            source.shortBio,
+            source.deletionRequested
+        )
     }
 }

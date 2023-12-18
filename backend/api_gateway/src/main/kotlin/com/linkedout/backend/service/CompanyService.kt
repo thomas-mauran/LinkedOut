@@ -3,6 +3,7 @@ package com.linkedout.backend.service
 import com.linkedout.backend.model.Company
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.models.CompanyOuterClass
 import com.linkedout.proto.services.Jobs.GetCompanyRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -26,7 +27,7 @@ class CompanyService(
 
         return getCompaniesResponse.companiesList
             .map { company ->
-                Company(company.id, company.name)
+                convertCompanyFromProto(company)
             }
     }
 
@@ -47,6 +48,10 @@ class CompanyService(
         }
 
         val getCompany = response.getCompanyResponse
-        return Company(getCompany.company.id, getCompany.company.name)
+        return convertCompanyFromProto(getCompany.company)
+    }
+
+    private fun convertCompanyFromProto(source: CompanyOuterClass.Company): Company {
+        return Company(source.id, source.name)
     }
 }

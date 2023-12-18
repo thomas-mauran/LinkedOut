@@ -3,7 +3,7 @@ package com.linkedout.backend.dto.profile
 import com.linkedout.backend.model.Address
 import java.time.LocalDate
 
-data class CreateProfileDto(
+data class SetProfileDto(
     val firstName: String,
     val lastName: String,
     val gender: Int,

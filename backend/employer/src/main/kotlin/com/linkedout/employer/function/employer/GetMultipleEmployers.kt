@@ -2,10 +2,10 @@ package com.linkedout.employer.function.employer
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.employer.converter.employer.EmployerToProto
 import com.linkedout.employer.service.EmployerService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.EmployerOuterClass
 import com.linkedout.proto.services.Employer.GetMultipleEmployersResponse
 import org.springframework.stereotype.Component
 import java.util.UUID
@@ -21,13 +21,7 @@ class GetMultipleEmployers(private val employerService: EmployerService) : Funct
 
         val reactiveResponse = employerService.findMultiple(ids)
             .map { employer ->
-                EmployerOuterClass.Employer.newBuilder()
-                    .setId(employer.id.toString())
-                    .setFirstName(employer.firstName)
-                    .setLastName(employer.lastName)
-                    .setPicture(employer.picture)
-                    .setPhone(employer.phone)
-                    .build()
+                EmployerToProto().convert(employer)
             }
             .reduce(GetMultipleEmployersResponse.newBuilder()) { builder, employer ->
                 builder.addEmployers(employer)

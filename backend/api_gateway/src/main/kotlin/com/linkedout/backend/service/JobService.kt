@@ -3,6 +3,7 @@ package com.linkedout.backend.service
 import com.linkedout.backend.model.Job
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs.GetJobRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -25,7 +26,7 @@ class JobService(
         val getJobsResponse = response.getJobsResponse
 
         return getJobsResponse.jobsList.map { job ->
-            Job(job.id, job.title, job.category)
+            convertJobFromProto(job)
         }
     }
 
@@ -46,6 +47,10 @@ class JobService(
         }
 
         val getJobResponse = response.getJobResponse
-        return Job(getJobResponse.job.id, getJobResponse.job.title, getJobResponse.job.category)
+        return convertJobFromProto(getJobResponse.job)
+    }
+
+    private fun convertJobFromProto(source: JobOuterClass.Job): Job {
+        return Job(source.id, source.title, source.category)
     }
 }

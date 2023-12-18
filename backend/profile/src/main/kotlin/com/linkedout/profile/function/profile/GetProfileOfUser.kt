@@ -2,17 +2,13 @@ package com.linkedout.profile.function.profile
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.profile.converter.profile.ProfileToProto
 import com.linkedout.profile.service.ProfileService
-import com.linkedout.profile.utils.ProfileGender
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.AddressOuterClass
-import com.linkedout.proto.models.ProfileOuterClass.Profile
 import com.linkedout.proto.services.Profile.GetUserProfileResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import java.time.LocalTime
-import java.time.ZoneOffset
 import java.util.*
 import java.util.function.Function
 
@@ -26,24 +22,7 @@ class GetProfileOfUser(private val profileService: ProfileService) : Function<Re
         // Get the profile from the database
         val reactiveResponse = profileService.findOneOfUser(userId)
             .map { profile ->
-                Profile.newBuilder()
-                    .setId(profile.id.toString())
-                    .setFirstName(profile.firstName)
-                    .setLastName(profile.lastName)
-                    .setGender(ProfileGender.toProto(profile.gender))
-                    .setBirthday(profile.birthday.toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC) * 1000)
-                    .setNationality(profile.nationality)
-                    .setAddress(
-                        AddressOuterClass.Address.newBuilder()
-                            .setFirstLine(profile.addressFirstLine)
-                            .setZipCode(profile.addressZip)
-                            .setCity(profile.addressCity)
-                    )
-                    .setPhone(profile.phone)
-                    .setEmail(profile.email)
-                    .setShortBio(profile.shortBio)
-                    .setDeletionRequested(profile.deletionRequested)
-                    .build()
+                ProfileToProto().convert(profile)
             }
             .map { profile ->
                 // TODO: Set nb_experiences, nb_reviews, average_rating

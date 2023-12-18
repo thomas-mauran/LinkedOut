@@ -2,16 +2,15 @@ package com.linkedout.messaging.function.messages
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.messaging.converter.messages.MessageToProto
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.messaging.service.MessageService
 import com.linkedout.messaging.utils.MessageDirection
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.MessageOuterClass
 import com.linkedout.proto.services.Messaging.SendMessageToEmployerResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import java.time.ZoneOffset
 import java.util.*
 import java.util.function.Function
 
@@ -33,12 +32,7 @@ class SendMessageToEmployer(
         // Insert the message into the database
         val reactiveResponse = messageService.saveMessage(userId, messageChannel.id, request.content, MessageDirection.ToEmployer)
             .map { message ->
-                MessageOuterClass.Message.newBuilder()
-                    .setId(message.id.toString())
-                    .setDirection(MessageDirection.toProto(message.direction))
-                    .setSentAt(message.created.toEpochSecond(ZoneOffset.UTC) * 1000)
-                    .setContent(message.message)
-                    .build()
+                MessageToProto().convert(message)
             }
             .map { builder ->
                 SendMessageToEmployerResponse.newBuilder()

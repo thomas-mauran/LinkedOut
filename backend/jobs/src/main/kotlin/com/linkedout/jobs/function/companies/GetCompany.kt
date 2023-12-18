@@ -2,10 +2,10 @@ package com.linkedout.jobs.function.companies
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.jobs.converter.companies.CompanyToProto
 import com.linkedout.jobs.service.CompanyService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.CompanyOuterClass
 import com.linkedout.proto.services.Jobs
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -18,10 +18,7 @@ class GetCompany(private val companyService: CompanyService) : Function<Request,
         // Get the company from the database
         val reactiveResponse = companyService.findOne(UUID.fromString(t.getCompanyRequest.id))
             .map { company ->
-                CompanyOuterClass.Company.newBuilder()
-                    .setId(company.id.toString())
-                    .setName(company.name)
-                    .build()
+                CompanyToProto().convert(company)
             }
             .map { company ->
                 Jobs.GetCompanyResponse.newBuilder()

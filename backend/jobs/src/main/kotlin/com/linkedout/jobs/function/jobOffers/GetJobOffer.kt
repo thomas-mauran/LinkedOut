@@ -2,12 +2,10 @@ package com.linkedout.jobs.function.jobOffers
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.jobs.converter.jobOffers.JobOfferWithJobAndCompanyToProto
 import com.linkedout.jobs.service.JobOfferService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.CompanyOuterClass
-import com.linkedout.proto.models.JobOfferOuterClass
-import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -20,27 +18,7 @@ class GetJobOffer(private val jobOfferService: JobOfferService) : Function<Reque
         // Get the job offer from the database
         val reactiveResponse = jobOfferService.findOne(UUID.fromString(t.getJobOfferRequest.id))
             .map { jobOffer ->
-                JobOfferOuterClass.JobOffer.newBuilder()
-                    .setId(jobOffer.jobOfferId)
-                    .setTitle(jobOffer.title)
-                    .setDescription(jobOffer.description)
-                    .setStartDate(jobOffer.startDate.toString())
-                    .setEndDate(jobOffer.endDate.toString())
-                    .setGeographicArea(jobOffer.geographicArea)
-                    .setSalary(jobOffer.salary)
-                    .setCompany(
-                        CompanyOuterClass.Company.newBuilder()
-                            .setId(jobOffer.companyId)
-                            .setName(jobOffer.companyName)
-                    )
-                    .setJob(
-                        JobOuterClass.Job.newBuilder()
-                            .setId(jobOffer.jobId)
-                            .setTitle(jobOffer.jobTitle)
-                            .setCategory(jobOffer.jobCategoryTitle)
-                    )
-                    .setStatus(jobOffer.jobOfferStatus)
-                    .build()
+                JobOfferWithJobAndCompanyToProto().convert(jobOffer)
             }
             .map { jobOffer ->
                 Jobs.GetJobOfferResponse.newBuilder()

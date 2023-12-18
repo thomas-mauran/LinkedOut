@@ -2,16 +2,12 @@ package com.linkedout.profile.function.profile
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.profile.converter.profile.ProfileToProto
 import com.linkedout.profile.service.ProfileService
-import com.linkedout.profile.utils.ProfileGender
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.AddressOuterClass
-import com.linkedout.proto.models.ProfileOuterClass
 import com.linkedout.proto.services.Profile.GetProfilesRequestingDeletionResponse
 import org.springframework.stereotype.Component
-import java.time.LocalTime
-import java.time.ZoneOffset
 import java.util.function.Function
 
 @Component
@@ -20,24 +16,7 @@ class GetProfilesRequestingDeletion(private val profileService: ProfileService) 
         // Get the companies from the database
         val reactiveResponse = profileService.findAllPendingDeletion()
             .map { profile ->
-                ProfileOuterClass.Profile.newBuilder()
-                    .setId(profile.id.toString())
-                    .setFirstName(profile.firstName)
-                    .setLastName(profile.lastName)
-                    .setGender(ProfileGender.toProto(profile.gender))
-                    .setBirthday(profile.birthday.toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC) * 1000)
-                    .setNationality(profile.nationality)
-                    .setAddress(
-                        AddressOuterClass.Address.newBuilder()
-                            .setFirstLine(profile.addressFirstLine)
-                            .setZipCode(profile.addressZip)
-                            .setCity(profile.addressCity)
-                    )
-                    .setPhone(profile.phone)
-                    .setEmail(profile.email)
-                    .setShortBio(profile.shortBio)
-                    .setDeletionRequested(profile.deletionRequested)
-                    .build()
+                ProfileToProto().convert(profile)
             }.reduce(GetProfilesRequestingDeletionResponse.newBuilder()) { builder, profile ->
                 builder.addProfiles(profile)
                 builder

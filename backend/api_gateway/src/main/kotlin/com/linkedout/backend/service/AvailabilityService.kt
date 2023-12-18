@@ -1,5 +1,7 @@
 package com.linkedout.backend.service
 
+import com.linkedout.backend.converter.availability.CreateAvailabilityDtoToProto
+import com.linkedout.backend.converter.availability.UpdateAvailabilityDtoToProto
 import com.linkedout.backend.dto.availability.CreateAvailabilityDto
 import com.linkedout.backend.dto.availability.UpdateAvailabilityDto
 import com.linkedout.backend.model.Address
@@ -7,9 +9,7 @@ import com.linkedout.backend.model.Availability
 import com.linkedout.backend.model.JobCategory
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
-import com.linkedout.proto.dto.availability.CreateAvailabilityDtoOuterClass
-import com.linkedout.proto.dto.availability.UpdateAvailabilityDtoOuterClass
-import com.linkedout.proto.models.AddressOuterClass
+import com.linkedout.proto.models.AvailabilityOuterClass
 import com.linkedout.proto.services.Profile
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -54,23 +54,9 @@ class AvailabilityService(
 
         return getUserAvailabilitiesResponse.availabilitiesList
             .map { availability ->
-                val startDate = Date(availability.startDate)
-                val endDate = Date(availability.endDate)
-
-                Availability(
-                    availability.id,
-                    DateTimeFormatter.ISO_INSTANT.format(startDate.toInstant()),
-                    DateTimeFormatter.ISO_INSTANT.format(endDate.toInstant()),
-                    Address(
-                        availability.address.firstLine,
-                        availability.address.zipCode,
-                        availability.address.city
-                    ),
-                    availability.range,
-                    jobCategoriesById[availability.jobCategoryId] ?: JobCategory(
-                        availability.jobCategoryId,
-                        ""
-                    )
+                convertAvailabilityFromProto(
+                    availability,
+                    jobCategoriesById.getOrDefault(availability.jobCategoryId, JobCategory(availability.jobCategoryId, ""))
                 )
             }
     }
@@ -81,19 +67,7 @@ class AvailabilityService(
             .setCreateUserAvailabilityRequest(
                 Profile.CreateUserAvailabilityRequest.newBuilder()
                     .setUserId(userId)
-                    .setAvailability(
-                        CreateAvailabilityDtoOuterClass.CreateAvailabilityDto.newBuilder()
-                            .setStartDate(dto.startDate.toEpochDay())
-                            .setEndDate(dto.endDate.toEpochDay())
-                            .setAddress(
-                                AddressOuterClass.Address.newBuilder()
-                                    .setFirstLine(dto.address.firstLine)
-                                    .setZipCode(dto.address.zipCode)
-                                    .setCity(dto.address.city)
-                            )
-                            .setRange(dto.range)
-                            .setJobCategoryId(dto.jobCategoryId)
-                    )
+                    .setAvailability(CreateAvailabilityDtoToProto().convert(dto))
             )
             .build()
 
@@ -105,43 +79,19 @@ class AvailabilityService(
         }
 
         val createUserAvailabilityResponse = response.createUserAvailabilityResponse
-        val startDate = Date(createUserAvailabilityResponse.availability.startDate)
-        val endDate = Date(createUserAvailabilityResponse.availability.endDate)
+        val jobCategory = jobCategoryService.findOne(requestId, createUserAvailabilityResponse.availability.jobCategoryId)
 
-        return Availability(
-            createUserAvailabilityResponse.availability.id,
-            DateTimeFormatter.ISO_INSTANT.format(startDate.toInstant()),
-            DateTimeFormatter.ISO_INSTANT.format(endDate.toInstant()),
-            Address(
-                createUserAvailabilityResponse.availability.address.firstLine,
-                createUserAvailabilityResponse.availability.address.zipCode,
-                createUserAvailabilityResponse.availability.address.city
-            ),
-            createUserAvailabilityResponse.availability.range,
-            jobCategoryService.findOne(requestId, createUserAvailabilityResponse.availability.jobCategoryId)
-        )
+        return convertAvailabilityFromProto(createUserAvailabilityResponse.availability, jobCategory)
     }
 
     fun updateOneOfUser(requestId: String, userId: String, availabilityId: String, dto: UpdateAvailabilityDto): Availability {
         // Update the availability using the profile service
-        val protoDto = UpdateAvailabilityDtoOuterClass.UpdateAvailabilityDto.newBuilder()
-        if (dto.startDate != null) protoDto.setStartDate(dto.startDate.toEpochDay())
-        if (dto.endDate != null) protoDto.setEndDate(dto.endDate.toEpochDay())
-        if (dto.range != null) protoDto.setRange(dto.range)
-        if (dto.jobCategoryId != null) protoDto.setJobCategoryId(dto.jobCategoryId)
-
-        if (dto.address != null) {
-            protoDto.setAddressFirstLine(dto.address.firstLine)
-            protoDto.setAddressZip(dto.address.zipCode)
-            protoDto.setAddressCity(dto.address.city)
-        }
-
         val request = RequestResponseFactory.newRequest(requestId)
             .setUpdateUserAvailabilityRequest(
                 Profile.UpdateUserAvailabilityRequest.newBuilder()
                     .setUserId(userId)
                     .setAvailabilityId(availabilityId)
-                    .setAvailability(protoDto)
+                    .setAvailability(UpdateAvailabilityDtoToProto().convert(dto))
             )
             .build()
 
@@ -153,21 +103,9 @@ class AvailabilityService(
         }
 
         val updateUserAvailabilityResponse = response.updateUserAvailabilityResponse
-        val startDate = Date(updateUserAvailabilityResponse.availability.startDate)
-        val endDate = Date(updateUserAvailabilityResponse.availability.endDate)
+        val jobCategory = jobCategoryService.findOne(requestId, updateUserAvailabilityResponse.availability.jobCategoryId)
 
-        return Availability(
-            updateUserAvailabilityResponse.availability.id,
-            DateTimeFormatter.ISO_INSTANT.format(startDate.toInstant()),
-            DateTimeFormatter.ISO_INSTANT.format(endDate.toInstant()),
-            Address(
-                updateUserAvailabilityResponse.availability.address.firstLine,
-                updateUserAvailabilityResponse.availability.address.zipCode,
-                updateUserAvailabilityResponse.availability.address.city
-            ),
-            updateUserAvailabilityResponse.availability.range,
-            jobCategoryService.findOne(requestId, updateUserAvailabilityResponse.availability.jobCategoryId)
-        )
+        return convertAvailabilityFromProto(updateUserAvailabilityResponse.availability, jobCategory)
     }
 
     fun findOneOfUser(requestId: String, userId: String, availabilityId: String): Availability {
@@ -188,21 +126,9 @@ class AvailabilityService(
         }
 
         val getUserAvailabilityResponse = response.getUserAvailabilityResponse
-        val startDate = Date(getUserAvailabilityResponse.availability.startDate)
-        val endDate = Date(getUserAvailabilityResponse.availability.endDate)
+        val jobCategory = jobCategoryService.findOne(requestId, getUserAvailabilityResponse.availability.jobCategoryId)
 
-        return Availability(
-            getUserAvailabilityResponse.availability.id,
-            DateTimeFormatter.ISO_INSTANT.format(startDate.toInstant()),
-            DateTimeFormatter.ISO_INSTANT.format(endDate.toInstant()),
-            Address(
-                getUserAvailabilityResponse.availability.address.firstLine,
-                getUserAvailabilityResponse.availability.address.zipCode,
-                getUserAvailabilityResponse.availability.address.city
-            ),
-            getUserAvailabilityResponse.availability.range,
-            jobCategoryService.findOne(requestId, getUserAvailabilityResponse.availability.jobCategoryId)
-        )
+        return convertAvailabilityFromProto(getUserAvailabilityResponse.availability, jobCategory)
     }
 
     fun deleteOneOfUser(requestId: String, userId: String, availabilityId: String) {
@@ -221,5 +147,23 @@ class AvailabilityService(
         if (!response.hasDeleteUserAvailabilityResponse()) {
             throw Exception("Invalid response")
         }
+    }
+
+    private fun convertAvailabilityFromProto(source: AvailabilityOuterClass.Availability, jobCategory: JobCategory): Availability {
+        val startDate = Date(source.startDate)
+        val endDate = Date(source.endDate)
+
+        return Availability(
+            source.id,
+            DateTimeFormatter.ISO_INSTANT.format(startDate.toInstant()),
+            DateTimeFormatter.ISO_INSTANT.format(endDate.toInstant()),
+            Address(
+                source.address.firstLine,
+                source.address.zipCode,
+                source.address.city
+            ),
+            source.range,
+            jobCategory
+        )
     }
 }

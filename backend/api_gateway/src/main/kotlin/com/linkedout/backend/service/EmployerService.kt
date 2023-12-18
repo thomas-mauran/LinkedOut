@@ -3,6 +3,7 @@ package com.linkedout.backend.service
 import com.linkedout.backend.model.Employer
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.models.EmployerOuterClass
 import com.linkedout.proto.services.Employer.GetEmployerRequest
 import com.linkedout.proto.services.Employer.GetMultipleEmployersRequest
 import org.springframework.beans.factory.annotation.Value
@@ -31,13 +32,7 @@ class EmployerService(
         }
 
         val getEmployerResponse = response.getEmployerResponse
-        return Employer(
-            getEmployerResponse.employer.id,
-            getEmployerResponse.employer.firstName,
-            getEmployerResponse.employer.lastName,
-            getEmployerResponse.employer.picture,
-            getEmployerResponse.employer.phone
-        )
+        return convertEmployerFromProto(getEmployerResponse.employer)
     }
 
     fun findMultiple(requestId: String, ids: Iterable<String>): List<Employer> {
@@ -58,13 +53,17 @@ class EmployerService(
 
         val getMultipleEmployersResponse = response.getMultipleEmployersResponse
         return getMultipleEmployersResponse.employersList.map { employer ->
-            Employer(
-                employer.id,
-                employer.firstName,
-                employer.lastName,
-                employer.picture,
-                employer.phone
-            )
+            convertEmployerFromProto(employer)
         }
+    }
+
+    private fun convertEmployerFromProto(source: EmployerOuterClass.Employer): Employer {
+        return Employer(
+            source.id,
+            source.firstName,
+            source.lastName,
+            source.picture,
+            source.phone
+        )
     }
 }

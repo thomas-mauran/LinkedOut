@@ -1,11 +1,12 @@
 package com.linkedout.profile.dto.profile
 
+import com.linkedout.profile.utils.ProfileGender
 import java.time.LocalDate
 
-data class CreateProfileDto(
+data class SetProfileDto(
     val firstName: String,
     val lastName: String,
-    val gender: Int,
+    val gender: ProfileGender,
     val birthday: LocalDate,
     val nationality: String,
     val addressFirstLine: String,

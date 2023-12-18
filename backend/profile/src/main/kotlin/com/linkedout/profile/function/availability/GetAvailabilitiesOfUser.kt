@@ -2,15 +2,12 @@ package com.linkedout.profile.function.availability
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.profile.converter.availability.AvailabilityToProto
 import com.linkedout.profile.service.AvailabilityService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.AddressOuterClass.Address
-import com.linkedout.proto.models.AvailabilityOuterClass.Availability
 import com.linkedout.proto.services.Profile.GetUserAvailabilitiesResponse
 import org.springframework.stereotype.Component
-import java.time.LocalTime
-import java.time.ZoneOffset
 import java.util.UUID
 import java.util.function.Function
 
@@ -24,19 +21,7 @@ class GetAvailabilitiesOfUser(private val availabilityService: AvailabilityServi
         // Get the companies from the database
         val reactiveResponse = availabilityService.findByUserId(userId)
             .map { availability ->
-                Availability.newBuilder()
-                    .setId(availability.id.toString())
-                    .setStartDate(availability.startDate.toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC) * 1000)
-                    .setEndDate(availability.endDate.toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC) * 1000)
-                    .setAddress(
-                        Address.newBuilder()
-                            .setFirstLine(availability.addressFirstLine)
-                            .setZipCode(availability.addressZip)
-                            .setCity(availability.addressCity)
-                    )
-                    .setRange(availability.range)
-                    .setJobCategoryId(availability.jobCategoryId.toString())
-                    .build()
+                AvailabilityToProto().convert(availability)
             }.reduce(GetUserAvailabilitiesResponse.newBuilder()) { builder, availability ->
                 builder.addAvailabilities(availability)
                 builder

@@ -1,7 +1,7 @@
 package com.linkedout.backend.controller
 
-import com.linkedout.backend.dto.profile.CreateProfileDto
 import com.linkedout.backend.dto.profile.ProfileWithStatsDto
+import com.linkedout.backend.dto.profile.SetProfileDto
 import com.linkedout.backend.dto.profile.UpdateProfileDto
 import com.linkedout.backend.model.Profile
 import com.linkedout.backend.service.ProfileService
@@ -34,7 +34,7 @@ class ProfileController(
     open fun setProfile(
         request: ServerHttpRequest,
         principal: Principal,
-        @RequestBody body: CreateProfileDto
+        @RequestBody body: SetProfileDto
     ): Mono<Profile> {
         return Mono.just(profileService.setOne(request.id, principal.name, body))
     }

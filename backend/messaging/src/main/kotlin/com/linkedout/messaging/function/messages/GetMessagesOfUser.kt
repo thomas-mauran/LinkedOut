@@ -2,15 +2,13 @@ package com.linkedout.messaging.function.messages
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.messaging.converter.messages.MessageToProto
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.messaging.service.MessageService
-import com.linkedout.messaging.utils.MessageDirection
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.MessageOuterClass.Message
 import com.linkedout.proto.services.Messaging.GetUserMessagesResponse
 import org.springframework.stereotype.Component
-import java.time.ZoneOffset
 import java.util.*
 import java.util.function.Function
 
@@ -32,12 +30,7 @@ class GetMessagesOfUser(
         // Get the messages from the database
         val reactiveResponse = messageService.findAllWithSeasonworkerIdAndMessageChannelId(userId, messageChannelId)
             .map { message ->
-                Message.newBuilder()
-                    .setId(message.id.toString())
-                    .setDirection(MessageDirection.toProto(message.direction))
-                    .setSentAt(message.created.toEpochSecond(ZoneOffset.UTC) * 1000)
-                    .setContent(message.message)
-                    .build()
+                MessageToProto().convert(message)
             }
             .reduce(GetUserMessagesResponse.newBuilder()) { builder, message ->
                 builder.addMessages(message)

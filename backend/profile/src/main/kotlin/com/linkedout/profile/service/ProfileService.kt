@@ -1,6 +1,6 @@
 package com.linkedout.profile.service
 
-import com.linkedout.profile.dto.profile.CreateProfileDto
+import com.linkedout.profile.dto.profile.SetProfileDto
 import com.linkedout.profile.dto.profile.UpdateProfileDto
 import com.linkedout.profile.model.Profile
 import com.linkedout.profile.repository.ProfileRepository
@@ -17,7 +17,7 @@ class ProfileService(
         return profileRepository.findOneByUserId(seasonworkerId)
     }
 
-    fun setOneOfUser(seasonworkerId: UUID, profile: CreateProfileDto): Mono<Profile> {
+    fun setOneOfUser(seasonworkerId: UUID, profile: SetProfileDto): Mono<Profile> {
         return profileRepository.setOneByUserId(
             seasonworkerId,
             profile.firstName,

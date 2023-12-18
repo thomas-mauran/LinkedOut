@@ -1,6 +1,7 @@
 package com.linkedout.profile.repository
 
 import com.linkedout.profile.model.Profile
+import com.linkedout.profile.utils.ProfileGender
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Flux
@@ -42,7 +43,7 @@ interface ProfileRepository : ReactiveCrudRepository<Profile, UUID> {
         userId: UUID,
         firstName: String,
         lastName: String,
-        gender: Int,
+        gender: ProfileGender,
         birthday: LocalDate,
         nationality: String,
         addressFirstLine: String,
@@ -77,7 +78,7 @@ interface ProfileRepository : ReactiveCrudRepository<Profile, UUID> {
         userId: UUID,
         firstName: String?,
         lastName: String?,
-        gender: Int?,
+        gender: ProfileGender?,
         birthday: LocalDate?,
         nationality: String?,
         addressFirstLine: String?,

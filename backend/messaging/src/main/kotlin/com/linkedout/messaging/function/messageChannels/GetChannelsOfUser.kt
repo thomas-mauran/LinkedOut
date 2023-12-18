@@ -2,10 +2,10 @@ package com.linkedout.messaging.function.messageChannels
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.messaging.converter.messageChannels.MessageChannelWithLastMessageToProto
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.MessageChannelOuterClass.MessageChannel
 import com.linkedout.proto.services.Messaging.GetUserMessageChannelsResponse
 import org.springframework.stereotype.Component
 import java.util.UUID
@@ -17,11 +17,7 @@ class GetChannelsOfUser(private val messageChannelService: MessageChannelService
         // Get the message channels from the database
         val reactiveResponse = messageChannelService.findAllWithSeasonworkerId(UUID.fromString(t.getUserMessageChannelsRequest.userId))
             .map { messageChannel ->
-                MessageChannel.newBuilder()
-                    .setId(messageChannel.id.toString())
-                    .setEmployerId(messageChannel.employerId.toString())
-                    .setLastMessage(messageChannel.lastMessage ?: "")
-                    .build()
+                MessageChannelWithLastMessageToProto().convert(messageChannel)
             }
             .reduce(GetUserMessageChannelsResponse.newBuilder()) { builder, messageChannel ->
                 builder.addMessageChannels(messageChannel)

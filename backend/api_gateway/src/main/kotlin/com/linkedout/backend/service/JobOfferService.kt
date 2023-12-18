@@ -5,6 +5,7 @@ import com.linkedout.backend.model.Job
 import com.linkedout.backend.model.JobOffer
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.models.JobOfferOuterClass
 import com.linkedout.proto.services.Jobs
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -13,8 +14,6 @@ import java.time.LocalDate
 @Service
 class JobOfferService(
     private val natsService: NatsService,
-    private val jobService: JobService,
-    private val companyService: CompanyService,
     @Value("\${app.services.jobOffers.subjects.findAll}") private val findAllSubject: String,
     @Value("\${app.services.jobOffers.subjects.findOne}") private val findOneSubject: String
 ) {
@@ -31,25 +30,7 @@ class JobOfferService(
 
         // TODO: Implement status with join table
         return getJobOffersResponse.jobOffersList.map { jobOffer ->
-            JobOffer(
-                jobOffer.id,
-                jobOffer.title,
-                jobOffer.description,
-                LocalDate.parse(jobOffer.startDate),
-                LocalDate.parse(jobOffer.endDate),
-                jobOffer.geographicArea,
-                Job(
-                    jobOffer.job.id,
-                    jobOffer.job.title,
-                    jobOffer.job.category
-                ),
-                Company(
-                    jobOffer.company.id,
-                    jobOffer.company.name
-                ),
-                jobOffer.salary,
-                jobOffer.status
-            )
+            convertJobOfferFromProto(jobOffer)
         }
     }
 
@@ -70,26 +51,29 @@ class JobOfferService(
         }
 
         // TODO: Implement status with join table
-
         val getJobOfferResponse = response.getJobOfferResponse
+        return convertJobOfferFromProto(getJobOfferResponse.jobOffer)
+    }
+
+    private fun convertJobOfferFromProto(source: JobOfferOuterClass.JobOffer): JobOffer {
         return JobOffer(
-            getJobOfferResponse.jobOffer.id,
-            getJobOfferResponse.jobOffer.title,
-            getJobOfferResponse.jobOffer.description,
-            LocalDate.parse(getJobOfferResponse.jobOffer.startDate),
-            LocalDate.parse(getJobOfferResponse.jobOffer.endDate),
-            getJobOfferResponse.jobOffer.geographicArea,
+            source.id,
+            source.title,
+            source.description,
+            LocalDate.parse(source.startDate),
+            LocalDate.parse(source.endDate),
+            source.geographicArea,
             Job(
-                getJobOfferResponse.jobOffer.job.id,
-                getJobOfferResponse.jobOffer.job.title,
-                getJobOfferResponse.jobOffer.job.category
+                source.job.id,
+                source.job.title,
+                source.job.category
             ),
             Company(
-                getJobOfferResponse.jobOffer.company.id,
-                getJobOfferResponse.jobOffer.company.name
+                source.company.id,
+                source.company.name
             ),
-            getJobOfferResponse.jobOffer.salary,
-            getJobOfferResponse.jobOffer.status
+            source.salary,
+            source.status
         )
     }
 }

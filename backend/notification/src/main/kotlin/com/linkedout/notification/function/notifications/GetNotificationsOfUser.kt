@@ -2,13 +2,12 @@ package com.linkedout.notification.function.notifications
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.notification.converter.notifications.NotificationToProto
 import com.linkedout.notification.service.NotificationService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.NotificationOuterClass
 import com.linkedout.proto.services.Notification.GetUserNotificationsResponse
 import org.springframework.stereotype.Component
-import java.time.ZoneOffset
 import java.util.*
 import java.util.function.Function
 
@@ -22,12 +21,7 @@ class GetNotificationsOfUser(private val notificationService: NotificationServic
         // Get the notifications from the database
         val reactiveResponse = notificationService.findBySeasonWorkerId(userId)
             .map { notification ->
-                NotificationOuterClass.Notification.newBuilder()
-                    .setId(notification.id.toString())
-                    .setCreatedAt(notification.created.toEpochSecond(ZoneOffset.UTC) * 1000)
-                    .setTitle(notification.title)
-                    .setContent(notification.content)
-                    .build()
+                NotificationToProto().convert(notification)
             }
             .reduce(GetUserNotificationsResponse.newBuilder()) { builder, notification ->
                 builder.addNotifications(notification)

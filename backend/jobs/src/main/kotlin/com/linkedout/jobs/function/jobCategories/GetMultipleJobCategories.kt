@@ -2,10 +2,10 @@ package com.linkedout.jobs.function.jobCategories
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.jobs.converter.jobCategories.JobCategoryToProto
 import com.linkedout.jobs.service.JobCategoryService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.JobCategoryOuterClass
 import com.linkedout.proto.services.Jobs.GetMultipleJobCategoriesResponse
 import org.springframework.stereotype.Component
 import java.util.UUID
@@ -23,10 +23,7 @@ class GetMultipleJobCategories(private val jobCategoryService: JobCategoryServic
         // Get the requested job categories from the database
         val reactiveResponse = jobCategoryService.findMultiple(jobCategoryIds)
             .map { jobCategory ->
-                JobCategoryOuterClass.JobCategory.newBuilder()
-                    .setId(jobCategory.id.toString())
-                    .setCategory(jobCategory.title)
-                    .build()
+                JobCategoryToProto().convert(jobCategory)
             }
             .reduce(GetMultipleJobCategoriesResponse.newBuilder()) { builder, jobCategory ->
                 builder.addCategories(jobCategory)

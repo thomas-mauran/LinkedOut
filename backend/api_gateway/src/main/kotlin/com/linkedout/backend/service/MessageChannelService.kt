@@ -4,6 +4,7 @@ import com.linkedout.backend.model.Employer
 import com.linkedout.backend.model.MessageChannel
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.models.MessageChannelOuterClass
 import com.linkedout.proto.services.Messaging
 import com.linkedout.proto.services.Messaging.GetUserMessageChannelsRequest
 import org.springframework.beans.factory.annotation.Value
@@ -40,10 +41,9 @@ class MessageChannelService(
         val employersById = employers.associateBy { it.id }
 
         return getUserMessageChannelsResponse.messageChannelsList.map { messageChannel ->
-            MessageChannel(
-                messageChannel.id,
-                employersById.getOrDefault(messageChannel.employerId, Employer("", "", "", "", "")),
-                messageChannel.lastMessage
+            convertMessageChannelFromProto(
+                messageChannel,
+                employersById.getOrDefault(messageChannel.employerId, Employer(messageChannel.employerId, "", "", "", ""))
             )
         }
     }
@@ -69,12 +69,7 @@ class MessageChannelService(
 
         // Get the employer from the employer service
         val employer = employerService.findOne(requestId, getUserMessageChannelByIdResponse.messageChannel.employerId)
-
-        return MessageChannel(
-            getUserMessageChannelByIdResponse.messageChannel.id,
-            employer,
-            getUserMessageChannelByIdResponse.messageChannel.lastMessage
-        )
+        return convertMessageChannelFromProto(getUserMessageChannelByIdResponse.messageChannel, employer)
     }
 
     fun findOneChannelOfUserWithEmployer(requestId: String, userId: String, employerId: String): MessageChannel {
@@ -98,11 +93,14 @@ class MessageChannelService(
 
         // Get the employer from the employer service
         val employer = employerService.findOne(requestId, getUserMessageChannelByIdResponse.messageChannel.employerId)
+        return convertMessageChannelFromProto(getUserMessageChannelByIdResponse.messageChannel, employer)
+    }
 
+    private fun convertMessageChannelFromProto(source: MessageChannelOuterClass.MessageChannel, employer: Employer): MessageChannel {
         return MessageChannel(
-            getUserMessageChannelByIdResponse.messageChannel.id,
+            source.id,
             employer,
-            getUserMessageChannelByIdResponse.messageChannel.lastMessage
+            source.lastMessage
         )
     }
 }
