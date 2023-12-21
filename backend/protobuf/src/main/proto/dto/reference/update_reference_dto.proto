@@ -1,0 +1,15 @@
+syntax = "proto3";
+package com.linkedout.proto.dto.reference;
+
+import "models/address.proto";
+
+message UpdateReferenceDto {
+  optional string first_name = 1;
+  optional string last_name = 2;
+  optional string address_first_line = 3;
+  optional string address_zip = 4;
+  optional string address_city = 5;
+  optional string phone = 6;
+  optional string email = 7;
+  optional string company_id = 8;
+}

@@ -18,7 +18,7 @@ class GetAvailabilitiesOfUser(private val availabilityService: AvailabilityServi
         val request = t.getUserAvailabilitiesRequest
         val userId = UUID.fromString(request.userId)
 
-        // Get the companies from the database
+        // Get the availabilities from the database
         val reactiveResponse = availabilityService.findByUserId(userId)
             .map { availability ->
                 AvailabilityToProto().convert(availability)

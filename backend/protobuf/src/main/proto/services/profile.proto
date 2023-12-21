@@ -5,8 +5,11 @@ import "dto/availability/create_availability_dto.proto";
 import "dto/availability/update_availability_dto.proto";
 import "dto/profile/set_profile_dto.proto";
 import "dto/profile/update_profile_dto.proto";
-import "models/profile.proto";
+import "dto/reference/create_reference_dto.proto";
+import "dto/reference/update_reference_dto.proto";
 import "models/availability.proto";
+import "models/profile.proto";
+import "models/reference.proto";
 
 // Delete a profile
 message DeleteProfileRequest {
@@ -107,4 +110,52 @@ message UpdateUserAvailabilityRequest {
 
 message UpdateUserAvailabilityResponse {
   models.Availability availability = 1;
+}
+
+// Create an reference for a user
+message CreateUserReferenceRequest {
+  string user_id = 1;
+  dto.reference.CreateReferenceDto reference = 2;
+}
+
+message CreateUserReferenceResponse {
+  models.Reference reference = 1;
+}
+
+// Delete an reference for a user
+message DeleteUserReferenceRequest {
+  string user_id = 1;
+  string reference_id = 2;
+}
+
+message DeleteUserReferenceResponse {}
+
+// Get the references of a user
+message GetUserReferencesRequest {
+  string user_id = 1;
+}
+
+message GetUserReferencesResponse {
+  repeated models.Reference references = 1;
+}
+
+// Get an reference of a user
+message GetUserReferenceRequest {
+  string user_id = 1;
+  string reference_id = 2;
+}
+
+message GetUserReferenceResponse {
+  models.Reference reference = 1;
+}
+
+// Update an reference for a user
+message UpdateUserReferenceRequest {
+  string user_id = 1;
+  string reference_id = 2;
+  dto.reference.UpdateReferenceDto reference = 3;
+}
+
+message UpdateUserReferenceResponse {
+  models.Reference reference = 1;
 }

@@ -46,5 +46,11 @@ message Request {
     services.GetMultipleJobCategoriesRequest get_multiple_job_categories_request = 33;
     services.GetMultipleJobCategoriesResponse get_multiple_job_categories_response = 34;
     services.GetJobCategoryRequest get_job_category_request = 35;
+    services.CreateUserReferenceRequest create_user_reference_request = 36;
+    services.DeleteUserReferenceRequest delete_user_reference_request = 37;
+    services.GetUserReferencesRequest get_user_references_request = 38;
+    services.GetUserReferenceRequest get_user_reference_request = 39;
+    services.UpdateUserReferenceRequest update_user_reference_request = 40;
+    services.EnsureCompanyRequest ensure_company_request = 41;
   }
 }

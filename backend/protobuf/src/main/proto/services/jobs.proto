@@ -63,6 +63,15 @@ message GetMultipleCompaniesResponse {
   repeated models.Company companies = 1;
 }
 
+// Ensure that a company exists
+message EnsureCompanyRequest {
+  string name = 1;
+}
+
+message EnsureCompanyResponse {
+  models.Company company = 1;
+}
+
 // Get job offers
 message GetJobOffersRequest {}
 

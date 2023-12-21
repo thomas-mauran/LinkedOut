@@ -50,5 +50,11 @@ message Response {
     services.UpdateUserAvailabilityResponse update_user_availability_response = 32;
     services.GetMultipleJobCategoriesResponse get_multiple_job_categories_response = 33;
     services.GetJobCategoryResponse get_job_category_response = 34;
+    services.CreateUserReferenceResponse create_user_reference_response = 35;
+    services.DeleteUserReferenceResponse delete_user_reference_response = 36;
+    services.GetUserReferencesResponse get_user_references_response = 37;
+    services.GetUserReferenceResponse get_user_reference_response = 38;
+    services.UpdateUserReferenceResponse update_user_reference_response = 39;
+    services.EnsureCompanyResponse ensure_company_response = 40;
   }
 }

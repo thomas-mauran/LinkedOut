@@ -20,7 +20,7 @@ class CreateAvailabilityOfUser(private val availabilityService: AvailabilityServ
         val userId = UUID.fromString(request.userId)
         val requestDto = CreateAvailabilityDtoFromProto().convert(request.availability)
 
-        // Get the companies from the database
+        // Create the availability
         val reactiveResponse = availabilityService.saveOneOfUser(userId, requestDto)
             .map { availability ->
                 AvailabilityToProto().convert(availability)

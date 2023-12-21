@@ -31,7 +31,9 @@ app:
     companies:
       subjects:
         findAll: jobs.findAllCompanies
+        findMultiple: jobs.findMultipleCompanies
         findOne: jobs.findOneCompany
+        ensureExists: jobs.ensureCompanyExists
     messageChannels:
       subjects:
         findAllOfUser: messaging.findAllChannelsOfUser
@@ -66,3 +68,10 @@ app:
         findAllOfUser: availability.findAllOfUser
         findOneOfUser: availability.findOneOfUser
         updateOneOfUser: availability.updateOneOfUser
+    reference:
+        subjects:
+          createOneOfUser: reference.createOneOfUser
+          deleteOneOfUser: reference.deleteOneOfUser
+          findAllOfUser: reference.findAllOfUser
+          findOneOfUser: reference.findOneOfUser
+          updateOneOfUser: reference.updateOneOfUser

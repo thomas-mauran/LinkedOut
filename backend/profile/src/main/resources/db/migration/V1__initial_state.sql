@@ -28,3 +28,17 @@ CREATE TABLE availability
     range              INT          NOT NULL,
     job_category_id    UUID         NOT NULL
 );
+
+CREATE TABLE reference
+(
+    id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id            UUID         NOT NULL,
+    first_name         VARCHAR(64)  NOT NULL,
+    last_name          VARCHAR(64)  NOT NULL,
+    address_first_line VARCHAR(128) NOT NULL,
+    address_zip        VARCHAR(20)  NOT NULL,
+    address_city       VARCHAR(64)  NOT NULL,
+    phone              VARCHAR(20)  NOT NULL,
+    email              VARCHAR(256) NOT NULL,
+    company_id         UUID         NOT NULL
+);
