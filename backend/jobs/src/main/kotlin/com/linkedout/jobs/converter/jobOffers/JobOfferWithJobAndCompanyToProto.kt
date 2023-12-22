@@ -6,8 +6,8 @@ import com.linkedout.proto.models.JobOfferOuterClass
 import com.linkedout.proto.models.JobOuterClass
 import org.springframework.core.convert.converter.Converter
 
-class JobOfferWithJobAndCompanyToProto : Converter<JobOfferWithJobAndCompany, JobOfferOuterClass.JobOffer> {
-    override fun convert(source: JobOfferWithJobAndCompany): JobOfferOuterClass.JobOffer {
+class JobOfferWithJobAndCompanyToProto : Converter<JobOfferWithJobAndCompany, JobOfferOuterClass.JobOffer.Builder> {
+    override fun convert(source: JobOfferWithJobAndCompany): JobOfferOuterClass.JobOffer.Builder {
         return JobOfferOuterClass.JobOffer.newBuilder()
             .setId(source.jobOfferId)
             .setTitle(source.title)
@@ -28,6 +28,5 @@ class JobOfferWithJobAndCompanyToProto : Converter<JobOfferWithJobAndCompany, Jo
                     .setCategory(source.jobCategoryTitle)
             )
             .setStatus(source.jobOfferStatus)
-            .build()
     }
 }

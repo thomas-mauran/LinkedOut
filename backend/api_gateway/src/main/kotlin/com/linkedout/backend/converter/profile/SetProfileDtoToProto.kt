@@ -4,8 +4,8 @@ import com.linkedout.backend.dto.profile.SetProfileDto
 import com.linkedout.proto.dto.profile.SetProfileDtoOuterClass
 import org.springframework.core.convert.converter.Converter
 
-class SetProfileDtoToProto : Converter<SetProfileDto, SetProfileDtoOuterClass.SetProfileDto> {
-    override fun convert(source: SetProfileDto): SetProfileDtoOuterClass.SetProfileDto {
+class SetProfileDtoToProto : Converter<SetProfileDto, SetProfileDtoOuterClass.SetProfileDto.Builder> {
+    override fun convert(source: SetProfileDto): SetProfileDtoOuterClass.SetProfileDto.Builder {
         return SetProfileDtoOuterClass.SetProfileDto.newBuilder()
             .setFirstName(source.firstName)
             .setLastName(source.lastName)
@@ -18,6 +18,5 @@ class SetProfileDtoToProto : Converter<SetProfileDto, SetProfileDtoOuterClass.Se
             .setPhone(source.phone)
             .setEmail(source.email)
             .setShortBio(source.shortBiography)
-            .build()
     }
 }

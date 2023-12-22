@@ -4,8 +4,8 @@ import com.linkedout.backend.dto.availability.UpdateAvailabilityDto
 import com.linkedout.proto.dto.availability.UpdateAvailabilityDtoOuterClass
 import org.springframework.core.convert.converter.Converter
 
-class UpdateAvailabilityDtoToProto : Converter<UpdateAvailabilityDto, UpdateAvailabilityDtoOuterClass.UpdateAvailabilityDto> {
-    override fun convert(source: UpdateAvailabilityDto): UpdateAvailabilityDtoOuterClass.UpdateAvailabilityDto {
+class UpdateAvailabilityDtoToProto : Converter<UpdateAvailabilityDto, UpdateAvailabilityDtoOuterClass.UpdateAvailabilityDto.Builder> {
+    override fun convert(source: UpdateAvailabilityDto): UpdateAvailabilityDtoOuterClass.UpdateAvailabilityDto.Builder {
         val targetBuilder = UpdateAvailabilityDtoOuterClass.UpdateAvailabilityDto.newBuilder()
         if (source.startDate != null) targetBuilder.setStartDate(source.startDate.toEpochDay())
         if (source.endDate != null) targetBuilder.setEndDate(source.endDate.toEpochDay())
@@ -18,6 +18,6 @@ class UpdateAvailabilityDtoToProto : Converter<UpdateAvailabilityDto, UpdateAvai
             targetBuilder.setAddressCity(source.address.city)
         }
 
-        return targetBuilder.build()
+        return targetBuilder
     }
 }

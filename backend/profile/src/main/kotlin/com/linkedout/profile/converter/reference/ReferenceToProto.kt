@@ -5,8 +5,8 @@ import com.linkedout.proto.models.AddressOuterClass
 import com.linkedout.proto.models.ReferenceOuterClass
 import org.springframework.core.convert.converter.Converter
 
-class ReferenceToProto : Converter<Reference, ReferenceOuterClass.Reference> {
-    override fun convert(source: Reference): ReferenceOuterClass.Reference {
+class ReferenceToProto : Converter<Reference, ReferenceOuterClass.Reference.Builder> {
+    override fun convert(source: Reference): ReferenceOuterClass.Reference.Builder {
         return ReferenceOuterClass.Reference.newBuilder()
             .setId(source.id.toString())
             .setFirstName(source.firstName)
@@ -20,6 +20,5 @@ class ReferenceToProto : Converter<Reference, ReferenceOuterClass.Reference> {
             .setPhone(source.phone)
             .setEmail(source.email)
             .setCompanyId(source.companyId.toString())
-            .build()
     }
 }

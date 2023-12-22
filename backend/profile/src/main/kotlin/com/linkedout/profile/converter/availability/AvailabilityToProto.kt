@@ -7,8 +7,8 @@ import org.springframework.core.convert.converter.Converter
 import java.time.LocalTime
 import java.time.ZoneOffset
 
-class AvailabilityToProto : Converter<Availability, AvailabilityOuterClass.Availability> {
-    override fun convert(source: Availability): AvailabilityOuterClass.Availability {
+class AvailabilityToProto : Converter<Availability, AvailabilityOuterClass.Availability.Builder> {
+    override fun convert(source: Availability): AvailabilityOuterClass.Availability.Builder {
         return AvailabilityOuterClass.Availability.newBuilder()
             .setId(source.id.toString())
             .setStartDate(source.startDate.toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC) * 1000)
@@ -21,6 +21,5 @@ class AvailabilityToProto : Converter<Availability, AvailabilityOuterClass.Avail
             )
             .setRange(source.range)
             .setJobCategoryId(source.jobCategoryId.toString())
-            .build()
     }
 }

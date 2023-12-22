@@ -5,8 +5,8 @@ import com.linkedout.proto.dto.availability.CreateAvailabilityDtoOuterClass
 import com.linkedout.proto.models.AddressOuterClass
 import org.springframework.core.convert.converter.Converter
 
-class CreateAvailabilityDtoToProto : Converter<CreateAvailabilityDto, CreateAvailabilityDtoOuterClass.CreateAvailabilityDto> {
-    override fun convert(source: CreateAvailabilityDto): CreateAvailabilityDtoOuterClass.CreateAvailabilityDto {
+class CreateAvailabilityDtoToProto : Converter<CreateAvailabilityDto, CreateAvailabilityDtoOuterClass.CreateAvailabilityDto.Builder> {
+    override fun convert(source: CreateAvailabilityDto): CreateAvailabilityDtoOuterClass.CreateAvailabilityDto.Builder {
         return CreateAvailabilityDtoOuterClass.CreateAvailabilityDto.newBuilder()
             .setStartDate(source.startDate.toEpochDay())
             .setEndDate(source.endDate.toEpochDay())
@@ -18,6 +18,5 @@ class CreateAvailabilityDtoToProto : Converter<CreateAvailabilityDto, CreateAvai
             )
             .setRange(source.range)
             .setJobCategoryId(source.jobCategoryId)
-            .build()
     }
 }

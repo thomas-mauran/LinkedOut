@@ -8,8 +8,8 @@ import org.springframework.core.convert.converter.Converter
 import java.time.LocalTime
 import java.time.ZoneOffset
 
-class ProfileToProto : Converter<Profile, ProfileOuterClass.Profile> {
-    override fun convert(source: Profile): ProfileOuterClass.Profile {
+class ProfileToProto : Converter<Profile, ProfileOuterClass.Profile.Builder> {
+    override fun convert(source: Profile): ProfileOuterClass.Profile.Builder {
         return ProfileOuterClass.Profile.newBuilder()
             .setId(source.id.toString())
             .setFirstName(source.firstName)
@@ -27,6 +27,5 @@ class ProfileToProto : Converter<Profile, ProfileOuterClass.Profile> {
             .setEmail(source.email)
             .setShortBio(source.shortBio)
             .setDeletionRequested(source.deletionRequested)
-            .build()
     }
 }

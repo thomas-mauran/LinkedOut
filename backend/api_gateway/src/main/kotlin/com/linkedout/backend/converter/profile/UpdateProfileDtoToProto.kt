@@ -4,8 +4,8 @@ import com.linkedout.backend.dto.profile.UpdateProfileDto
 import com.linkedout.proto.dto.profile.UpdateProfileDtoOuterClass
 import org.springframework.core.convert.converter.Converter
 
-class UpdateProfileDtoToProto : Converter<UpdateProfileDto, UpdateProfileDtoOuterClass.UpdateProfileDto> {
-    override fun convert(source: UpdateProfileDto): UpdateProfileDtoOuterClass.UpdateProfileDto {
+class UpdateProfileDtoToProto : Converter<UpdateProfileDto, UpdateProfileDtoOuterClass.UpdateProfileDto.Builder> {
+    override fun convert(source: UpdateProfileDto): UpdateProfileDtoOuterClass.UpdateProfileDto.Builder {
         val targetBuilder = UpdateProfileDtoOuterClass.UpdateProfileDto.newBuilder()
         if (source.firstName != null) targetBuilder.setFirstName(source.firstName)
         if (source.lastName != null) targetBuilder.setLastName(source.lastName)
@@ -22,6 +22,6 @@ class UpdateProfileDtoToProto : Converter<UpdateProfileDto, UpdateProfileDtoOute
             targetBuilder.setAddressCity(source.address.city)
         }
 
-        return targetBuilder.build()
+        return targetBuilder
     }
 }
