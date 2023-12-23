@@ -62,6 +62,9 @@ class AvailabilityService(
     }
 
     fun createOneOfUser(requestId: String, userId: String, dto: CreateAvailabilityDto): Availability {
+        // Get the job category
+        val jobCategory = jobCategoryService.findOne(requestId, dto.jobCategoryId)
+
         // Create the availability using the profile service
         val request = RequestResponseFactory.newRequest(requestId)
             .setCreateUserAvailabilityRequest(
@@ -79,12 +82,13 @@ class AvailabilityService(
         }
 
         val createUserAvailabilityResponse = response.createUserAvailabilityResponse
-        val jobCategory = jobCategoryService.findOne(requestId, createUserAvailabilityResponse.availability.jobCategoryId)
-
         return convertAvailabilityFromProto(createUserAvailabilityResponse.availability, jobCategory)
     }
 
     fun updateOneOfUser(requestId: String, userId: String, availabilityId: String, dto: UpdateAvailabilityDto): Availability {
+        // Get the job category
+        var jobCategory = if (dto.jobCategoryId != null) jobCategoryService.findOne(requestId, dto.jobCategoryId) else null
+
         // Update the availability using the profile service
         val request = RequestResponseFactory.newRequest(requestId)
             .setUpdateUserAvailabilityRequest(
@@ -103,7 +107,7 @@ class AvailabilityService(
         }
 
         val updateUserAvailabilityResponse = response.updateUserAvailabilityResponse
-        val jobCategory = jobCategoryService.findOne(requestId, updateUserAvailabilityResponse.availability.jobCategoryId)
+        if (jobCategory == null) jobCategory = jobCategoryService.findOne(requestId, updateUserAvailabilityResponse.availability.jobCategoryId)
 
         return convertAvailabilityFromProto(updateUserAvailabilityResponse.availability, jobCategory)
     }

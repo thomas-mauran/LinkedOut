@@ -52,5 +52,10 @@ message Request {
     services.GetUserReferenceRequest get_user_reference_request = 39;
     services.UpdateUserReferenceRequest update_user_reference_request = 40;
     services.EnsureCompanyRequest ensure_company_request = 41;
+    services.CreateUserExperienceRequest create_user_experience_request = 42;
+    services.DeleteUserExperienceRequest delete_user_experience_request = 43;
+    services.GetUserExperiencesRequest get_user_experiences_request = 44;
+    services.GetUserExperienceRequest get_user_experience_request = 45;
+    services.UpdateUserExperienceRequest update_user_experience_request = 46;
   }
 }

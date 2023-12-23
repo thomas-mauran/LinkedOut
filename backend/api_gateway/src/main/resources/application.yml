@@ -18,6 +18,7 @@ app:
     jobs:
       subjects:
         findAll: jobs.findAll
+        findMultiple: jobs.findMultiple
         findOne: jobs.findOne
     jobOffers:
       subjects:
@@ -69,9 +70,16 @@ app:
         findOneOfUser: availability.findOneOfUser
         updateOneOfUser: availability.updateOneOfUser
     reference:
-        subjects:
-          createOneOfUser: reference.createOneOfUser
-          deleteOneOfUser: reference.deleteOneOfUser
-          findAllOfUser: reference.findAllOfUser
-          findOneOfUser: reference.findOneOfUser
-          updateOneOfUser: reference.updateOneOfUser
+      subjects:
+        createOneOfUser: reference.createOneOfUser
+        deleteOneOfUser: reference.deleteOneOfUser
+        findAllOfUser: reference.findAllOfUser
+        findOneOfUser: reference.findOneOfUser
+        updateOneOfUser: reference.updateOneOfUser
+    experience:
+      subjects:
+        createOneOfUser: experience.createOneOfUser
+        deleteOneOfUser: experience.deleteOneOfUser
+        findAllOfUser: experience.findAllOfUser
+        findOneOfUser: experience.findOneOfUser
+        updateOneOfUser: experience.updateOneOfUser

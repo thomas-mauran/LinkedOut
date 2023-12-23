@@ -42,3 +42,16 @@ CREATE TABLE reference
     email              VARCHAR(256) NOT NULL,
     company_id         UUID         NOT NULL
 );
+
+CREATE TABLE experience
+(
+    id                         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id                    UUID         NOT NULL,
+    start_date                 DATE         NOT NULL,
+    end_date                   DATE         NOT NULL,
+    company_address_first_line VARCHAR(128) NOT NULL,
+    company_address_zip        VARCHAR(20)  NOT NULL,
+    company_address_city       VARCHAR(64)  NOT NULL,
+    company_id                 UUID         NOT NULL,
+    job_id                     UUID         NOT NULL
+);

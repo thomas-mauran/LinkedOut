@@ -3,11 +3,14 @@ package com.linkedout.proto.services;
 
 import "dto/availability/create_availability_dto.proto";
 import "dto/availability/update_availability_dto.proto";
+import "dto/experience/create_experience_dto.proto";
+import "dto/experience/update_experience_dto.proto";
 import "dto/profile/set_profile_dto.proto";
 import "dto/profile/update_profile_dto.proto";
 import "dto/reference/create_reference_dto.proto";
 import "dto/reference/update_reference_dto.proto";
 import "models/availability.proto";
+import "models/experience.proto";
 import "models/profile.proto";
 import "models/reference.proto";
 
@@ -112,7 +115,7 @@ message UpdateUserAvailabilityResponse {
   models.Availability availability = 1;
 }
 
-// Create an reference for a user
+// Create a reference for a user
 message CreateUserReferenceRequest {
   string user_id = 1;
   dto.reference.CreateReferenceDto reference = 2;
@@ -122,7 +125,7 @@ message CreateUserReferenceResponse {
   models.Reference reference = 1;
 }
 
-// Delete an reference for a user
+// Delete a reference for a user
 message DeleteUserReferenceRequest {
   string user_id = 1;
   string reference_id = 2;
@@ -139,7 +142,7 @@ message GetUserReferencesResponse {
   repeated models.Reference references = 1;
 }
 
-// Get an reference of a user
+// Get a reference of a user
 message GetUserReferenceRequest {
   string user_id = 1;
   string reference_id = 2;
@@ -149,7 +152,7 @@ message GetUserReferenceResponse {
   models.Reference reference = 1;
 }
 
-// Update an reference for a user
+// Update a reference for a user
 message UpdateUserReferenceRequest {
   string user_id = 1;
   string reference_id = 2;
@@ -158,4 +161,52 @@ message UpdateUserReferenceRequest {
 
 message UpdateUserReferenceResponse {
   models.Reference reference = 1;
+}
+
+// Create an experience for a user
+message CreateUserExperienceRequest {
+  string user_id = 1;
+  dto.experience.CreateExperienceDto experience = 2;
+}
+
+message CreateUserExperienceResponse {
+  models.Experience experience = 1;
+}
+
+// Delete an experience for a user
+message DeleteUserExperienceRequest {
+  string user_id = 1;
+  string experience_id = 2;
+}
+
+message DeleteUserExperienceResponse {}
+
+// Get the experiences of a user
+message GetUserExperiencesRequest {
+  string user_id = 1;
+}
+
+message GetUserExperiencesResponse {
+  repeated models.Experience experiences = 1;
+}
+
+// Get an experience of a user
+message GetUserExperienceRequest {
+  string user_id = 1;
+  string experience_id = 2;
+}
+
+message GetUserExperienceResponse {
+  models.Experience experience = 1;
+}
+
+// Update an experience for a user
+message UpdateUserExperienceRequest {
+  string user_id = 1;
+  string experience_id = 2;
+  dto.experience.UpdateExperienceDto experience = 3;
+}
+
+message UpdateUserExperienceResponse {
+  models.Experience experience = 1;
 }

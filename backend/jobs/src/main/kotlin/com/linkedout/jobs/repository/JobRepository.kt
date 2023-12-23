@@ -23,6 +23,16 @@ interface JobRepository : ReactiveCrudRepository<Job, UUID> {
         SELECT j.id id, j.title title, jc.title category 
         FROM job j
         JOIN jobcategory jc ON j.category = jc.id
+        WHERE j.id IN (:ids)
+        """
+    )
+    fun findMultipleWithCategory(ids: Iterable<UUID>): Flux<JobWithCategory>
+
+    @Query(
+        """
+        SELECT j.id id, j.title title, jc.title category 
+        FROM job j
+        JOIN jobcategory jc ON j.category = jc.id
         WHERE j.id = :id
         """
     )

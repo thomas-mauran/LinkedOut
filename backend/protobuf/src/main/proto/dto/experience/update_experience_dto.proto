@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.linkedout.proto.dto.experience;
+
+import "models/address.proto";
+
+message UpdateExperienceDto {
+  optional uint64 start_date = 1;
+  optional uint64 end_date = 2;
+  optional string address_first_line = 3;
+  optional string address_zip = 4;
+  optional string address_city = 5;
+  optional string company_id = 6;
+  optional string job_id = 7;
+}

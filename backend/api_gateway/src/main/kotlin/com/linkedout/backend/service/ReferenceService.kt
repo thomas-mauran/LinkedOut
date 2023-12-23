@@ -112,9 +112,7 @@ class ReferenceService(
         }
 
         val updateUserReferenceResponse = response.updateUserReferenceResponse
-        if (company == null) {
-            company = companyService.findOne(requestId, updateUserReferenceResponse.reference.companyId)
-        }
+        if (company == null) company = companyService.findOne(requestId, updateUserReferenceResponse.reference.companyId)
 
         return convertReferenceFromProto(updateUserReferenceResponse.reference, company)
     }

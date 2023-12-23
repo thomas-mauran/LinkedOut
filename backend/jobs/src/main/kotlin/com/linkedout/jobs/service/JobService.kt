@@ -16,6 +16,10 @@ class JobService(
         return jobRepository.findAllWithCategory()
     }
 
+    fun findMultipleWithCategory(ids: Iterable<UUID>): Flux<JobWithCategory> {
+        return jobRepository.findMultipleWithCategory(ids)
+    }
+
     fun findOneWithCategory(id: UUID): Mono<JobWithCategory> {
         return jobRepository.findOneWithCategory(id)
     }
