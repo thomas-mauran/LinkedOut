@@ -1,6 +1,7 @@
 package com.linkedout.backend.service
 
-import com.linkedout.backend.model.*
+import com.linkedout.backend.model.EmployeeEvaluation
+import com.linkedout.backend.model.Employer
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.models.EmployeeEvaluationOuterClass
