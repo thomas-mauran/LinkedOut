@@ -57,5 +57,7 @@ message Request {
     services.GetUserExperiencesRequest get_user_experiences_request = 44;
     services.GetUserExperienceRequest get_user_experience_request = 45;
     services.UpdateUserExperienceRequest update_user_experience_request = 46;
+    services.GetUserEvaluationsRequest get_user_evaluations_request = 48;
+    services.GetUserEvaluationRequest get_user_evaluation_request = 47;
   }
 }

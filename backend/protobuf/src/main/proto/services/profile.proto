@@ -10,6 +10,7 @@ import "dto/profile/update_profile_dto.proto";
 import "dto/reference/create_reference_dto.proto";
 import "dto/reference/update_reference_dto.proto";
 import "models/availability.proto";
+import "models/employee_evaluation.proto";
 import "models/experience.proto";
 import "models/profile.proto";
 import "models/reference.proto";
@@ -209,4 +210,23 @@ message UpdateUserExperienceRequest {
 
 message UpdateUserExperienceResponse {
   models.Experience experience = 1;
+}
+
+// Get the evaluations of a user
+message GetUserEvaluationsRequest {
+  string user_id = 1;
+}
+
+message GetUserEvaluationsResponse {
+  repeated models.EmployeeEvaluation evaluations = 1;
+}
+
+// Get an evaluation of a user
+message GetUserEvaluationRequest {
+  string user_id = 1;
+  string evaluation_id = 2;
+}
+
+message GetUserEvaluationResponse {
+  models.EmployeeEvaluation evaluation = 1;
 }

@@ -61,5 +61,7 @@ message Response {
     services.GetUserExperiencesResponse get_user_experiences_response = 43;
     services.GetUserExperienceResponse get_user_experience_response = 44;
     services.UpdateUserExperienceResponse update_user_experience_response = 45;
+    services.GetUserEvaluationsResponse get_user_evaluations_response = 46;
+    services.GetUserEvaluationResponse get_user_evaluation_response = 47;
   }
 }

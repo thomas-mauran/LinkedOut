@@ -83,3 +83,7 @@ app:
         findAllOfUser: experience.findAllOfUser
         findOneOfUser: experience.findOneOfUser
         updateOneOfUser: experience.updateOneOfUser
+    evaluation:
+      subjects:
+        findAllOfUser: evaluation.findAllOfUser
+        findOneOfUser: evaluation.findOneOfUser
