@@ -25,10 +25,16 @@ class GetProfileOfUser(private val profileService: ProfileService) : Function<Re
                 ProfileToProto().convert(profile)
             }
             .map { profile ->
-                // TODO: Set nb_experiences, nb_reviews, average_rating
                 GetUserProfileResponse.newBuilder()
                     .setProfile(profile)
-                    .build()
+            }
+            .zipWith(profileService.getProfileStatsOfUser(userId)) { profile, stats ->
+                profile.setNbExperiences(stats.nbExperiences)
+                    .setNbReviews(stats.nbReviews)
+                    .setAverageRating(stats.avgRating)
+            }
+            .map { profile ->
+                profile.build()
             }
 
         // Block until the response is ready

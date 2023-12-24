@@ -1,6 +1,7 @@
 package com.linkedout.profile.repository
 
 import com.linkedout.profile.model.Profile
+import com.linkedout.profile.model.ProfileStats
 import com.linkedout.profile.utils.ProfileGender
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
@@ -107,4 +108,19 @@ interface ProfileRepository : ReactiveCrudRepository<Profile, UUID> {
     """
     )
     fun findAllPendingDeletion(): Flux<Profile>
+
+    @Query(
+        """
+        SELECT (SELECT COUNT(*)
+        FROM experience
+        WHERE user_id = :userId) as nb_experiences,
+       (SELECT COUNT(*)
+        FROM evaluation
+        WHERE user_id = :userId) as nb_reviews,
+       (SELECT AVG(score)
+        FROM evaluation
+        WHERE user_id = :userId) as avg_rating;
+    """
+    )
+    fun getProfileStatsOfUser(userId: UUID): Mono<ProfileStats>
 }

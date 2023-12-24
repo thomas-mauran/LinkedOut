@@ -3,6 +3,7 @@ package com.linkedout.profile.service
 import com.linkedout.profile.dto.profile.SetProfileDto
 import com.linkedout.profile.dto.profile.UpdateProfileDto
 import com.linkedout.profile.model.Profile
+import com.linkedout.profile.model.ProfileStats
 import com.linkedout.profile.repository.ProfileRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -61,5 +62,9 @@ class ProfileService(
 
     fun deleteOne(profileId: UUID): Mono<Void> {
         return profileRepository.deleteById(profileId)
+    }
+
+    fun getProfileStatsOfUser(userId: UUID): Mono<ProfileStats> {
+        return profileRepository.getProfileStatsOfUser(userId)
     }
 }
