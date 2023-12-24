@@ -63,5 +63,8 @@ message Response {
     services.UpdateUserExperienceResponse update_user_experience_response = 45;
     services.GetUserEvaluationsResponse get_user_evaluations_response = 46;
     services.GetUserEvaluationResponse get_user_evaluation_response = 47;
+    services.CreateEmployerEvaluationResponse create_employer_evaluation_response = 48;
+    services.GetEmployerEvaluationResponse get_employer_evaluation_response = 49;
+    services.DeleteEmployerEvaluationResponse delete_employer_evaluation_response = 50;
   }
 }

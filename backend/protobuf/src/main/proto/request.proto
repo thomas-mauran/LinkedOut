@@ -59,5 +59,8 @@ message Request {
     services.UpdateUserExperienceRequest update_user_experience_request = 46;
     services.GetUserEvaluationsRequest get_user_evaluations_request = 48;
     services.GetUserEvaluationRequest get_user_evaluation_request = 47;
+    services.CreateEmployerEvaluationRequest create_employer_evaluation_request = 49;
+    services.GetEmployerEvaluationRequest get_employer_evaluation_request = 50;
+    services.DeleteEmployerEvaluationRequest delete_employer_evaluation_request = 51;
   }
 }

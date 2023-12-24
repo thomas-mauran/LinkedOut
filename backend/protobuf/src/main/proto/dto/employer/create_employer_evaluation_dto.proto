@@ -1,0 +1,7 @@
+syntax = "proto3";
+package com.linkedout.proto.dto.employer;
+
+message CreateEmployerEvaluationDto {
+  int32 score = 1;
+  string comment = 2;
+}
