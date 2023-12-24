@@ -63,6 +63,15 @@ message GetMultipleCompaniesResponse {
   repeated models.Company companies = 1;
 }
 
+// Ensure that a company exists
+message EnsureCompanyRequest {
+  string name = 1;
+}
+
+message EnsureCompanyResponse {
+  models.Company company = 1;
+}
+
 // Get job offers
 message GetJobOffersRequest {}
 
@@ -77,4 +86,22 @@ message GetJobOfferRequest {
 
 message GetJobOfferResponse {
   models.JobOffer jobOffer = 1;
+}
+
+// Get multiple job categories
+message GetMultipleJobCategoriesRequest {
+  repeated string ids = 1;
+}
+
+message GetMultipleJobCategoriesResponse {
+  repeated models.JobCategory categories = 1;
+}
+
+// Get a job category
+message GetJobCategoryRequest {
+  string id = 1;
+}
+
+message GetJobCategoryResponse {
+  models.JobCategory category = 1;
 }

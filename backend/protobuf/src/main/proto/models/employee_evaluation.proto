@@ -1,0 +1,10 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+message EmployeeEvaluation {
+  string id = 1;
+  string employer_id = 2;
+  uint32 score = 3;
+  string comment = 4;
+  uint64 created_at = 5;
+}

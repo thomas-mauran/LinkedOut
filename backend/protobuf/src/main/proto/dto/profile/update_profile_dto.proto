@@ -1,0 +1,19 @@
+syntax = "proto3";
+package com.linkedout.proto.dto.profile;
+
+import "models/profile.proto";
+
+message UpdateProfileDto {
+  optional string first_name = 1;
+  optional string last_name = 2;
+  optional models.Profile.Gender gender = 3;
+  optional uint64 birthday = 4;
+  optional string nationality = 5;
+  optional string address_first_line = 6;
+  optional string address_zip = 7;
+  optional string address_city = 8;
+  optional string phone = 9;
+  optional string email = 10;
+  optional string short_bio = 11;
+}
+

@@ -18,6 +18,7 @@ app:
     jobs:
       subjects:
         findAll: jobs.findAll
+        findMultiple: jobs.findMultiple
         findOne: jobs.findOne
     jobOffers:
       subjects:
@@ -26,10 +27,14 @@ app:
     jobCategories:
       subjects:
         findAll: jobs.findAllCategories
+        findMultiple: jobs.findMultipleCategories
+        findOne: jobs.findOneCategory
     companies:
       subjects:
         findAll: jobs.findAllCompanies
+        findMultiple: jobs.findMultipleCompanies
         findOne: jobs.findOneCompany
+        ensureExists: jobs.ensureCompanyExists
     messageChannels:
       subjects:
         findAllOfUser: messaging.findAllChannelsOfUser
@@ -49,3 +54,36 @@ app:
         sendTo: notifications.sendTo
         findAllOfUser: notifications.findAllOfUser
         deleteAllOfUser: notifications.deleteAllOfUser
+    profile:
+      subjects:
+        deleteOne: profile.deleteOne
+        findOneOfUser: profile.findOneOfUser
+        findAllRequestingDeletion: profile.findAllRequestingDeletion
+        requestDeletionOfUser: profile.requestProfileDeletionOfUser
+        saveOneOfUser: profile.saveOneOfUser
+        updateOneOfUser: profile.updateOneOfUser
+    availability:
+      subjects:
+        createOneOfUser: availability.createOneOfUser
+        deleteOneOfUser: availability.deleteOneOfUser
+        findAllOfUser: availability.findAllOfUser
+        findOneOfUser: availability.findOneOfUser
+        updateOneOfUser: availability.updateOneOfUser
+    reference:
+      subjects:
+        createOneOfUser: reference.createOneOfUser
+        deleteOneOfUser: reference.deleteOneOfUser
+        findAllOfUser: reference.findAllOfUser
+        findOneOfUser: reference.findOneOfUser
+        updateOneOfUser: reference.updateOneOfUser
+    experience:
+      subjects:
+        createOneOfUser: experience.createOneOfUser
+        deleteOneOfUser: experience.deleteOneOfUser
+        findAllOfUser: experience.findAllOfUser
+        findOneOfUser: experience.findOneOfUser
+        updateOneOfUser: experience.updateOneOfUser
+    evaluation:
+      subjects:
+        findAllOfUser: evaluation.findAllOfUser
+        findOneOfUser: evaluation.findOneOfUser

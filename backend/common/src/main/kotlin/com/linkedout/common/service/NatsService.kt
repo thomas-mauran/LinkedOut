@@ -20,7 +20,7 @@ class NatsService(@Value("\${nats.spring.server}") private val natsUrl: String, 
 
     fun requestWithReply(subject: String, request: Request): Response {
         val rawResponse = nc.request(subject, request.toByteArray(), timeout)
-            ?: throw ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "No response from service")
+            ?: throw ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "No response from service for subject \"$subject\"")
 
         val response = Response.parseFrom(rawResponse.data)
 

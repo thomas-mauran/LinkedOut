@@ -1,0 +1,8 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+message Address {
+  string first_line = 1;
+  string zip_code = 2;
+  string city = 3;
+}

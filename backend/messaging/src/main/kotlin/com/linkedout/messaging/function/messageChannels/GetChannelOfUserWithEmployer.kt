@@ -2,10 +2,10 @@ package com.linkedout.messaging.function.messageChannels
 
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
+import com.linkedout.messaging.converter.messageChannels.MessageChannelWithLastMessageToProto
 import com.linkedout.messaging.service.MessageChannelService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
-import com.linkedout.proto.models.MessageChannelOuterClass
 import com.linkedout.proto.services.Messaging
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -19,11 +19,7 @@ class GetChannelOfUserWithEmployer(private val messageChannelService: MessageCha
         val request = t.getUserMessageChannelWithEmployerRequest
         val reactiveResponse = messageChannelService.findOneWithSeasonworkerIdAndEmployerId(UUID.fromString(request.userId), UUID.fromString(request.employerId))
             .map { messageChannel ->
-                MessageChannelOuterClass.MessageChannel.newBuilder()
-                    .setId(messageChannel.id.toString())
-                    .setEmployerId(messageChannel.employerId.toString())
-                    .setLastMessage(messageChannel.lastMessage ?: "")
-                    .build()
+                MessageChannelWithLastMessageToProto().convert(messageChannel)
             }
             .map { messageChannel ->
                 Messaging.GetUserMessageChannelWithEmployerResponse.newBuilder()

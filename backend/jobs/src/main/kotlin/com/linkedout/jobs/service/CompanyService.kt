@@ -15,7 +15,15 @@ class CompanyService(
         return companyRepository.findAll()
     }
 
+    fun findMultiple(ids: Iterable<UUID>): Flux<Company> {
+        return companyRepository.findAllById(ids)
+    }
+
     fun findOne(id: UUID): Mono<Company> {
         return companyRepository.findById(id)
+    }
+
+    fun ensureExists(name: String): Mono<Company> {
+        return companyRepository.ensureExists(name)
     }
 }

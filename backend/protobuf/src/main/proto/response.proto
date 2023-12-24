@@ -5,6 +5,7 @@ import "services/jobs.proto";
 import "services/messaging.proto";
 import "services/employer.proto";
 import "services/notification.proto";
+import "services/profile.proto";
 
 // Message that contains a generic response
 message Error {
@@ -36,5 +37,31 @@ message Response {
     services.GetJobOfferResponse get_job_offer_response = 19;
     services.GetUserNotificationsResponse get_user_notifications_response = 20;
     services.DeleteUserNotificationsResponse delete_user_notifications_response = 21;
+    services.DeleteProfileResponse delete_profile_response = 22;
+    services.GetUserProfileResponse get_user_profile_response = 23;
+    services.GetProfilesRequestingDeletionResponse get_profiles_requesting_deletion_response = 24;
+    services.RequestUserProfileDeletionResponse request_user_profile_deletion_response = 25;
+    services.SetUserProfileResponse set_user_profile_response = 26;
+    services.UpdateUserProfileResponse update_user_profile_response = 27;
+    services.CreateUserAvailabilityResponse create_user_availability_response = 28;
+    services.DeleteUserAvailabilityResponse delete_user_availability_response = 29;
+    services.GetUserAvailabilitiesResponse get_user_availabilities_response = 30;
+    services.GetUserAvailabilityResponse get_user_availability_response = 31;
+    services.UpdateUserAvailabilityResponse update_user_availability_response = 32;
+    services.GetMultipleJobCategoriesResponse get_multiple_job_categories_response = 33;
+    services.GetJobCategoryResponse get_job_category_response = 34;
+    services.CreateUserReferenceResponse create_user_reference_response = 35;
+    services.DeleteUserReferenceResponse delete_user_reference_response = 36;
+    services.GetUserReferencesResponse get_user_references_response = 37;
+    services.GetUserReferenceResponse get_user_reference_response = 38;
+    services.UpdateUserReferenceResponse update_user_reference_response = 39;
+    services.EnsureCompanyResponse ensure_company_response = 40;
+    services.CreateUserExperienceResponse create_user_experience_response = 41;
+    services.DeleteUserExperienceResponse delete_user_experience_response = 42;
+    services.GetUserExperiencesResponse get_user_experiences_response = 43;
+    services.GetUserExperienceResponse get_user_experience_response = 44;
+    services.UpdateUserExperienceResponse update_user_experience_response = 45;
+    services.GetUserEvaluationsResponse get_user_evaluations_response = 46;
+    services.GetUserEvaluationResponse get_user_evaluation_response = 47;
   }
 }

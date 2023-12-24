@@ -1,0 +1,13 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+import "models/address.proto";
+
+message Experience {
+  string id = 1;
+  uint64 start_date = 2;
+  uint64 end_date = 3;
+  Address address = 4;
+  string company_id = 5;
+  string job_id = 6;
+}

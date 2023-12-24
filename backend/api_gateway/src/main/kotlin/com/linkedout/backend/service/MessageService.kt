@@ -37,15 +37,10 @@ class MessageService(
         val getUserMessagesResponse = response.getUserMessagesResponse
 
         return getUserMessagesResponse.messagesList.map { message ->
-            val date = Date(message.sentAt)
-
-            Message(
-                message.id,
+            convertMessageFromProto(
+                message,
                 getUserMessagesResponse.messageChannelId,
-                getUserMessagesResponse.employerId,
-                message.directionValue,
-                DateTimeFormatter.ISO_INSTANT.format(date.toInstant()),
-                message.content
+                getUserMessagesResponse.employerId
             )
         }
     }
@@ -70,15 +65,10 @@ class MessageService(
         }
 
         val sendMessageResponse = response.sendMessageResponse
-        val sentAt = Date(sendMessageResponse.message.sentAt)
-
-        return Message(
-            sendMessageResponse.message.id,
+        return convertMessageFromProto(
+            sendMessageResponse.message,
             sendMessageResponse.messageChannelId,
-            sendMessageResponse.employerId,
-            sendMessageResponse.message.directionValue,
-            DateTimeFormatter.ISO_INSTANT.format(sentAt.toInstant()),
-            sendMessageResponse.message.content
+            sendMessageResponse.employerId
         )
     }
 
@@ -101,15 +91,23 @@ class MessageService(
         }
 
         val sendMessageToEmployerResponse = response.sendMessageToEmployerResponse
-        val sentAt = Date(sendMessageToEmployerResponse.message.sentAt)
+        return convertMessageFromProto(
+            sendMessageToEmployerResponse.message,
+            sendMessageToEmployerResponse.messageChannelId,
+            sendMessageToEmployerResponse.employerId
+        )
+    }
+
+    private fun convertMessageFromProto(source: MessageOuterClass.Message, messageChannelId: String, employerId: String): Message {
+        val sentAt = Date(source.sentAt)
 
         return Message(
-            sendMessageToEmployerResponse.message.id,
-            sendMessageToEmployerResponse.messageChannelId,
-            sendMessageToEmployerResponse.employerId,
-            sendMessageToEmployerResponse.message.directionValue,
+            source.id,
+            messageChannelId,
+            employerId,
+            source.directionValue,
             DateTimeFormatter.ISO_INSTANT.format(sentAt.toInstant()),
-            sendMessageToEmployerResponse.message.content
+            source.content
         )
     }
 }

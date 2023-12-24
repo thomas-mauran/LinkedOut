@@ -1,0 +1,232 @@
+syntax = "proto3";
+package com.linkedout.proto.services;
+
+import "dto/availability/create_availability_dto.proto";
+import "dto/availability/update_availability_dto.proto";
+import "dto/experience/create_experience_dto.proto";
+import "dto/experience/update_experience_dto.proto";
+import "dto/profile/set_profile_dto.proto";
+import "dto/profile/update_profile_dto.proto";
+import "dto/reference/create_reference_dto.proto";
+import "dto/reference/update_reference_dto.proto";
+import "models/availability.proto";
+import "models/employee_evaluation.proto";
+import "models/experience.proto";
+import "models/profile.proto";
+import "models/reference.proto";
+
+// Delete a profile
+message DeleteProfileRequest {
+  string id = 1;
+}
+
+message DeleteProfileResponse {}
+
+// Get the profile of a user
+message GetUserProfileRequest {
+  string user_id = 1;
+}
+
+message GetUserProfileResponse {
+  models.Profile profile = 1;
+  int64 nb_experiences = 2;
+  int64 nb_reviews = 3;
+  double average_rating = 4;
+}
+
+// Get the profiles requesting to be deleted
+message GetProfilesRequestingDeletionRequest {}
+
+message GetProfilesRequestingDeletionResponse {
+  repeated models.Profile profiles = 1;
+}
+
+// Request a profile to be deleted by a user
+message RequestUserProfileDeletionRequest {
+  string user_id = 1;
+}
+
+message RequestUserProfileDeletionResponse {}
+
+// Set a profile
+message SetUserProfileRequest {
+  string user_id = 1;
+  dto.profile.SetProfileDto profile = 2;
+}
+
+message SetUserProfileResponse {
+  models.Profile profile = 1;
+}
+
+// Update a profile
+message UpdateUserProfileRequest {
+  string user_id = 1;
+  dto.profile.UpdateProfileDto profile = 2;
+}
+
+message UpdateUserProfileResponse {
+  models.Profile profile = 1;
+}
+
+// Create an availability for a user
+message CreateUserAvailabilityRequest {
+  string user_id = 1;
+  dto.availability.CreateAvailabilityDto availability = 2;
+}
+
+message CreateUserAvailabilityResponse {
+  models.Availability availability = 1;
+}
+
+// Delete an availability for a user
+message DeleteUserAvailabilityRequest {
+  string user_id = 1;
+  string availability_id = 2;
+}
+
+message DeleteUserAvailabilityResponse {}
+
+// Get the availabilities of a user
+message GetUserAvailabilitiesRequest {
+  string user_id = 1;
+}
+
+message GetUserAvailabilitiesResponse {
+  repeated models.Availability availabilities = 1;
+}
+
+// Get an availability of a user
+message GetUserAvailabilityRequest {
+  string user_id = 1;
+  string availability_id = 2;
+}
+
+message GetUserAvailabilityResponse {
+  models.Availability availability = 1;
+}
+
+// Update an availability for a user
+message UpdateUserAvailabilityRequest {
+  string user_id = 1;
+  string availability_id = 2;
+  dto.availability.UpdateAvailabilityDto availability = 3;
+}
+
+message UpdateUserAvailabilityResponse {
+  models.Availability availability = 1;
+}
+
+// Create a reference for a user
+message CreateUserReferenceRequest {
+  string user_id = 1;
+  dto.reference.CreateReferenceDto reference = 2;
+}
+
+message CreateUserReferenceResponse {
+  models.Reference reference = 1;
+}
+
+// Delete a reference for a user
+message DeleteUserReferenceRequest {
+  string user_id = 1;
+  string reference_id = 2;
+}
+
+message DeleteUserReferenceResponse {}
+
+// Get the references of a user
+message GetUserReferencesRequest {
+  string user_id = 1;
+}
+
+message GetUserReferencesResponse {
+  repeated models.Reference references = 1;
+}
+
+// Get a reference of a user
+message GetUserReferenceRequest {
+  string user_id = 1;
+  string reference_id = 2;
+}
+
+message GetUserReferenceResponse {
+  models.Reference reference = 1;
+}
+
+// Update a reference for a user
+message UpdateUserReferenceRequest {
+  string user_id = 1;
+  string reference_id = 2;
+  dto.reference.UpdateReferenceDto reference = 3;
+}
+
+message UpdateUserReferenceResponse {
+  models.Reference reference = 1;
+}
+
+// Create an experience for a user
+message CreateUserExperienceRequest {
+  string user_id = 1;
+  dto.experience.CreateExperienceDto experience = 2;
+}
+
+message CreateUserExperienceResponse {
+  models.Experience experience = 1;
+}
+
+// Delete an experience for a user
+message DeleteUserExperienceRequest {
+  string user_id = 1;
+  string experience_id = 2;
+}
+
+message DeleteUserExperienceResponse {}
+
+// Get the experiences of a user
+message GetUserExperiencesRequest {
+  string user_id = 1;
+}
+
+message GetUserExperiencesResponse {
+  repeated models.Experience experiences = 1;
+}
+
+// Get an experience of a user
+message GetUserExperienceRequest {
+  string user_id = 1;
+  string experience_id = 2;
+}
+
+message GetUserExperienceResponse {
+  models.Experience experience = 1;
+}
+
+// Update an experience for a user
+message UpdateUserExperienceRequest {
+  string user_id = 1;
+  string experience_id = 2;
+  dto.experience.UpdateExperienceDto experience = 3;
+}
+
+message UpdateUserExperienceResponse {
+  models.Experience experience = 1;
+}
+
+// Get the evaluations of a user
+message GetUserEvaluationsRequest {
+  string user_id = 1;
+}
+
+message GetUserEvaluationsResponse {
+  repeated models.EmployeeEvaluation evaluations = 1;
+}
+
+// Get an evaluation of a user
+message GetUserEvaluationRequest {
+  string user_id = 1;
+  string evaluation_id = 2;
+}
+
+message GetUserEvaluationResponse {
+  models.EmployeeEvaluation evaluation = 1;
+}

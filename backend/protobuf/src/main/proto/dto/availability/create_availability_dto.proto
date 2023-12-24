@@ -1,0 +1,12 @@
+syntax = "proto3";
+package com.linkedout.proto.dto.availability;
+
+import "models/address.proto";
+
+message CreateAvailabilityDto {
+  uint64 start_date = 1;
+  uint64 end_date = 2;
+  models.Address address = 3;
+  uint32 range = 4;
+  string job_category_id = 5;
+}

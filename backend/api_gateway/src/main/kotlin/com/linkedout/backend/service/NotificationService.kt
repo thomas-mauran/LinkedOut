@@ -2,6 +2,7 @@ package com.linkedout.backend.service
 
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.models.NotificationOuterClass
 import com.linkedout.proto.services.Notification
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -49,14 +50,7 @@ class NotificationService(
         val getUserNotificationsResponse = response.getUserNotificationsResponse
 
         return getUserNotificationsResponse.notificationsList.map { notification ->
-            val date = Date(notification.createdAt)
-
-            NotificationModel(
-                notification.id,
-                notification.title,
-                notification.content,
-                DateTimeFormatter.ISO_INSTANT.format(date.toInstant())
-            )
+            convertNotificationFromProto(notification)
         }
     }
 
@@ -70,5 +64,16 @@ class NotificationService(
             .build()
 
         natsService.requestWithReply(deleteAllOfUserSubject, request)
+    }
+
+    private fun convertNotificationFromProto(source: NotificationOuterClass.Notification): NotificationModel {
+        val sentAt = Date(source.createdAt)
+
+        return NotificationModel(
+            source.id,
+            source.title,
+            source.content,
+            DateTimeFormatter.ISO_INSTANT.format(sentAt.toInstant())
+        )
     }
 }

@@ -1,0 +1,13 @@
+syntax = "proto3";
+package com.linkedout.proto.models;
+
+import "models/address.proto";
+
+message Availability {
+  string id = 1;
+  uint64 start_date = 2;
+  uint64 end_date = 3;
+  Address address = 4;
+  uint32 range = 5;
+  string job_category_id = 6;
+}
