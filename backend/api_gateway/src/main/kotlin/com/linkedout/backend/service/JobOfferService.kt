@@ -7,6 +7,7 @@ import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.models.JobOfferOuterClass
 import com.linkedout.proto.services.Jobs
+import com.linkedout.proto.services.Jobs.ApplyToJobOfferRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -14,45 +15,69 @@ import java.time.LocalDate
 @Service
 class JobOfferService(
     private val natsService: NatsService,
-    @Value("\${app.services.jobOffers.subjects.findAll}") private val findAllSubject: String,
-    @Value("\${app.services.jobOffers.subjects.findOne}") private val findOneSubject: String
+    @Value("\${app.services.jobOffers.subjects.findAllForUser}") private val findAllSubject: String,
+    @Value("\${app.services.jobOffers.subjects.findOneForUser}") private val findOneSubject: String,
+    @Value("\${app.services.jobOffers.subjects.applyTo}") private val applyToSubject: String
 ) {
-    fun findAll(requestId: String): List<JobOffer> {
+    fun findAll(requestId: String, userId: String): List<JobOffer> {
         // Request job offers from the job service
-        val response = natsService.requestWithReply(findAllSubject, RequestResponseFactory.newRequest(requestId).build())
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setGetUserJobOffersRequest(
+                Jobs.GetUserJobOffersRequest.newBuilder()
+                    .setUserId(userId)
+            )
+            .build()
+
+        val response = natsService.requestWithReply(findAllSubject, request)
 
         // Handle the response
-        if (!response.hasGetJobOffersResponse()) {
+        if (!response.hasGetUserJobOffersResponse()) {
             throw Exception("Invalid response")
         }
 
-        val getJobOffersResponse = response.getJobOffersResponse
-
-        // TODO: Implement status with join table
-        return getJobOffersResponse.jobOffersList.map { jobOffer ->
+        val getUserJobOffersResponse = response.getUserJobOffersResponse
+        return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
             convertJobOfferFromProto(jobOffer)
         }
     }
 
-    fun findOne(requestId: String, id: String): JobOffer {
+    fun findOne(requestId: String, userId: String, jobOfferId: String): JobOffer {
         // Request the job offer from the job offer service
         val request = RequestResponseFactory.newRequest(requestId)
-            .setGetJobOfferRequest(
-                Jobs.GetJobOfferRequest.newBuilder()
-                    .setId(id)
+            .setGetUserJobOfferRequest(
+                Jobs.GetUserJobOfferRequest.newBuilder()
+                    .setUserId(userId)
+                    .setJobOfferId(jobOfferId)
             )
             .build()
 
         val response = natsService.requestWithReply(findOneSubject, request)
 
         // Handle the response
-        if (!response.hasGetJobOfferResponse()) {
+        if (!response.hasGetUserJobOfferResponse()) {
             throw Exception("Invalid response")
         }
 
-        // TODO: Implement status with join table
-        val getJobOfferResponse = response.getJobOfferResponse
-        return convertJobOfferFromProto(getJobOfferResponse.jobOffer)
+        val getUserJobOfferResponse = response.getUserJobOfferResponse
+        return convertJobOfferFromProto(getUserJobOfferResponse.jobOffer)
+    }
+
+    fun applyToJobOffer(requestId: String, userId: String, jobOfferId: String) {
+        // Apply to the job offer using the job offer service
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setApplyToJobOfferRequest(
+                ApplyToJobOfferRequest.newBuilder()
+                    .setUserId(userId)
+                    .setJobOfferId(jobOfferId)
+            )
+            .build()
+
+        val response = natsService.requestWithReply(applyToSubject, request)
+
+        // Handle the response
+        if (!response.hasApplyToJobOfferResponse()) {
+            throw Exception("Invalid response")
+        }
     }
 
     private fun convertJobOfferFromProto(source: JobOfferOuterClass.JobOffer): JobOffer {
@@ -73,7 +98,7 @@ class JobOfferService(
                 source.company.name
             ),
             source.salary,
-            source.status
+            source.statusValue
         )
     }
 }

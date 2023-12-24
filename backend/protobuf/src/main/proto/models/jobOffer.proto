@@ -4,6 +4,13 @@ import "models/job.proto";
 import "models/company.proto";
 
 message JobOffer {
+  enum Status {
+    PENDING = 0;
+    NOT_APPLIED = -1;
+    ACCEPTED = 1;
+    REJECTED = 2;
+  }
+
   string id = 1;
   string title = 2;
   string description = 3;
@@ -13,5 +20,5 @@ message JobOffer {
   int32 salary = 7;
   Job job = 8;
   Company company = 9;
-  int32 status = 10;
+  Status status = 10;
 }

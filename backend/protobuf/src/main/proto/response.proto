@@ -31,10 +31,10 @@ message Response {
     services.SendMessageToEmployerResponse send_message_to_employer_response = 13;
     services.GetCompaniesResponse get_companies_response = 14;
     services.GetCompanyResponse get_company_response = 15;
-    services.GetJobOffersResponse get_job_offers_response = 16;
+    services.GetUserJobOffersResponse get_user_job_offers_response = 16;
     services.GetMultipleJobsResponse get_multiple_jobs_response = 17;
     services.GetMultipleCompaniesResponse get_multiple_companies_response = 18;
-    services.GetJobOfferResponse get_job_offer_response = 19;
+    services.GetUserJobOfferResponse get_user_job_offer_response = 19;
     services.GetUserNotificationsResponse get_user_notifications_response = 20;
     services.DeleteUserNotificationsResponse delete_user_notifications_response = 21;
     services.DeleteProfileResponse delete_profile_response = 22;
@@ -63,5 +63,6 @@ message Response {
     services.UpdateUserExperienceResponse update_user_experience_response = 45;
     services.GetUserEvaluationsResponse get_user_evaluations_response = 46;
     services.GetUserEvaluationResponse get_user_evaluation_response = 47;
+    services.ApplyToJobOfferResponse apply_to_job_offer_response = 48;
   }
 }

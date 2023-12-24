@@ -72,21 +72,32 @@ message EnsureCompanyResponse {
   models.Company company = 1;
 }
 
-// Get job offers
-message GetJobOffersRequest {}
+// Get job offers for a user
+message GetUserJobOffersRequest {
+  string user_id = 1;
+}
 
-message GetJobOffersResponse {
+message GetUserJobOffersResponse {
   repeated models.JobOffer jobOffers = 1;
 }
 
-// Get a job offer
-message GetJobOfferRequest {
-  string id = 1;
+// Get a job offer for a user
+message GetUserJobOfferRequest {
+  string user_id = 1;
+  string job_offer_id = 2;
 }
 
-message GetJobOfferResponse {
+message GetUserJobOfferResponse {
   models.JobOffer jobOffer = 1;
 }
+
+// Apply to a job offer for a user
+message ApplyToJobOfferRequest {
+  string user_id = 1;
+  string job_offer_id = 2;
+}
+
+message ApplyToJobOfferResponse {}
 
 // Get multiple job categories
 message GetMultipleJobCategoriesRequest {

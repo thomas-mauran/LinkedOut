@@ -13,15 +13,21 @@ import java.util.UUID
 import java.util.function.Function
 
 @Component
-class GetJobOffer(private val jobOfferService: JobOfferService) : Function<Request, Response> {
+class GetJobOfferForUser(private val jobOfferService: JobOfferService) : Function<Request, Response> {
     override fun apply(t: Request): Response = handleRequestError {
+        // Extract the request
+        val request = t.getUserJobOfferRequest
+        val userId = UUID.fromString(request.userId)
+        val jobOfferId = UUID.fromString(request.jobOfferId)
+
         // Get the job offer from the database
-        val reactiveResponse = jobOfferService.findOne(UUID.fromString(t.getJobOfferRequest.id))
+        val reactiveResponse = jobOfferService.findOneForUser(userId, jobOfferId)
             .map { jobOffer ->
                 JobOfferWithJobAndCompanyToProto().convert(jobOffer)
+                    .setStatusValue(jobOffer.jobApplicationStatus)
             }
             .map { jobOffer ->
-                Jobs.GetJobOfferResponse.newBuilder()
+                Jobs.GetUserJobOfferResponse.newBuilder()
                     .setJobOffer(jobOffer)
                     .build()
             }
@@ -31,7 +37,7 @@ class GetJobOffer(private val jobOfferService: JobOfferService) : Function<Reque
             ?: return RequestResponseFactory.newFailedResponse("Job offer not found", HttpStatus.NOT_FOUND).build()
 
         return RequestResponseFactory.newSuccessfulResponse()
-            .setGetJobOfferResponse(response)
+            .setGetUserJobOfferResponse(response)
             .build()
     }
 }
