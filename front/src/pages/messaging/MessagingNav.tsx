@@ -3,10 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import i18n from '@/utils/i18n';
 
-import MessagingListPage from './MessageChannelListPage';
 import MessageChannelPage, {
   MessageChannelPageParams,
 } from './MessageChannelPage';
+import MessageTabBarNav from './MessageTabBarNav';
 
 /**
  * The parameter list for the MessagingNav navigator.
@@ -14,6 +14,7 @@ import MessageChannelPage, {
 export type MessagingStackParamList = {
   MessageChannelList: undefined;
   MessageChannel: MessageChannelPageParams;
+  MessageTabBar: undefined;
 };
 
 const MessagingStack = createNativeStackNavigator<MessagingStackParamList>();
@@ -25,18 +26,20 @@ const MessagingStack = createNativeStackNavigator<MessagingStackParamList>();
 const MessagingNav = () => {
   return (
     <MessagingStack.Navigator
-      initialRouteName='MessageChannelList'
-      screenOptions={{ header: (props) => <PaperNavigationBar {...props} /> }}
+      initialRouteName='MessageTabBar'
+      screenOptions={{
+        header: (props) => <PaperNavigationBar {...props} />,
+        headerShown: false,
+      }}
     >
-      <MessagingStack.Screen
-        name='MessageChannelList'
-        component={MessagingListPage}
-        options={{ headerTitle: `${i18n.t('messaging.info.messageChannel')}` }}
-      />
       <MessagingStack.Screen
         name='MessageChannel'
         component={MessageChannelPage}
         options={{ headerTitle: `${i18n.t('messaging.info.messageChannel')}` }}
+      />
+      <MessagingStack.Screen
+        name='MessageTabBar'
+        component={MessageTabBarNav}
       />
     </MessagingStack.Navigator>
   );
