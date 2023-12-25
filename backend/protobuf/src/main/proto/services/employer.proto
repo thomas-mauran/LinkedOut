@@ -1,7 +1,9 @@
 syntax = "proto3";
 package com.linkedout.proto.services;
 
+import "dto/employer/create_employer_evaluation_dto.proto";
 import "models/employer.proto";
+import "models/employer_evaluation.proto";
 
 // Get an employer
 message GetEmployerRequest {
@@ -20,3 +22,32 @@ message GetMultipleEmployersRequest {
 message GetMultipleEmployersResponse {
   repeated models.Employer employers = 1;
 }
+
+// Create a evaluation
+message CreateEmployerEvaluationRequest {
+  string user_id = 1;
+  string employer_id = 2;
+  dto.employer.CreateEmployerEvaluationDto evaluation = 3;
+}
+
+message CreateEmployerEvaluationResponse {
+  models.EmployerEvaluation evaluation = 1;
+}
+
+// Get a evaluation
+message GetEmployerEvaluationRequest {
+  string user_id = 1;
+  string employer_id = 2;
+}
+
+message GetEmployerEvaluationResponse {
+  models.EmployerEvaluation evaluation = 1;
+}
+
+// Delete a evaluation from a user
+message DeleteEmployerEvaluationRequest {
+  string user_id = 1;
+  string employer_id = 2;
+}
+
+message DeleteEmployerEvaluationResponse {}

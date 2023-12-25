@@ -50,6 +50,9 @@ app:
       subjects:
         findOne: employer.findOne
         findMultiple: employer.findMultiple
+        createEvaluation: employer.createEvaluation
+        deleteEvaluation: employer.deleteEvaluation
+        findOneEvaluation: employer.findOneEvaluation
     notifications:
       subjects:
         sendTo: notifications.sendTo

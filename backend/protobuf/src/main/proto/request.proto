@@ -60,5 +60,8 @@ message Request {
     services.GetUserEvaluationsRequest get_user_evaluations_request = 48;
     services.GetUserEvaluationRequest get_user_evaluation_request = 47;
     services.ApplyToJobOfferRequest apply_to_job_offer_request = 49;
+    services.CreateEmployerEvaluationRequest create_employer_evaluation_request = 50;
+    services.GetEmployerEvaluationRequest get_employer_evaluation_request = 51;
+    services.DeleteEmployerEvaluationRequest delete_employer_evaluation_request = 52;
   }
 }
