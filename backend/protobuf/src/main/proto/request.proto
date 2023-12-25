@@ -25,10 +25,10 @@ message Request {
     services.SendMessageToEmployerRequest send_message_to_employer_request = 12;
     services.GetCompaniesRequest get_companies_request = 13;
     services.GetCompanyRequest get_company_request = 14;
-    services.GetJobOffersRequest get_job_offers_request = 15;
+    services.GetUserJobOffersRequest get_user_job_offers_request = 15;
     services.GetMultipleJobsRequest get_multiple_jobs_request = 16;
     services.GetMultipleCompaniesRequest get_multiple_companies_request = 17;
-    services.GetJobOfferRequest get_job_offer_request = 18;
+    services.GetUserJobOfferRequest get_user_job_offer_request = 18;
     services.SendNotificationToRequest send_notification_to_request = 19;
     services.GetUserNotificationsRequest get_user_notifications_request = 20;
     services.DeleteUserNotificationsRequest delete_user_notifications_request = 21;
@@ -59,8 +59,9 @@ message Request {
     services.UpdateUserExperienceRequest update_user_experience_request = 46;
     services.GetUserEvaluationsRequest get_user_evaluations_request = 48;
     services.GetUserEvaluationRequest get_user_evaluation_request = 47;
-    services.CreateEmployerEvaluationRequest create_employer_evaluation_request = 49;
-    services.GetEmployerEvaluationRequest get_employer_evaluation_request = 50;
-    services.DeleteEmployerEvaluationRequest delete_employer_evaluation_request = 51;
+    services.ApplyToJobOfferRequest apply_to_job_offer_request = 49;
+    services.CreateEmployerEvaluationRequest create_employer_evaluation_request = 50;
+    services.GetEmployerEvaluationRequest get_employer_evaluation_request = 51;
+    services.DeleteEmployerEvaluationRequest delete_employer_evaluation_request = 52;
   }
 }

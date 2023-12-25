@@ -22,8 +22,9 @@ app:
         findOne: jobs.findOne
     jobOffers:
       subjects:
-        findAll: jobs.findAllJobOffers
-        findOne: jobs.findOneJobOffer
+        findAllForUser: jobs.findAllJobOffersForUser
+        findOneForUser: jobs.findOneJobOfferForUser
+        applyTo: jobs.applyToJobOffer
     jobCategories:
       subjects:
         findAll: jobs.findAllCategories

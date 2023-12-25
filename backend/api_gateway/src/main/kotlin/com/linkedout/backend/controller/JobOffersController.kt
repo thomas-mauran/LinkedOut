@@ -5,24 +5,37 @@ import com.linkedout.backend.service.JobOfferService
 import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.security.Principal
 
 @RestController
 @RequestMapping("/api/v1/jobOffers")
 class JobOffersController(private val jobOffersService: JobOfferService) {
     @GetMapping
-    open fun getJobOffers(request: ServerHttpRequest): Flux<JobOffer> {
-        return Flux.fromIterable(jobOffersService.findAll(request.id))
+    open fun getJobOffers(request: ServerHttpRequest, principal: Principal): Flux<JobOffer> {
+        return Flux.fromIterable(jobOffersService.findAll(request.id, principal.name))
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{jobOfferId}")
     open fun getJobOffer(
-        @PathVariable id: String,
-        request: ServerHttpRequest
+        request: ServerHttpRequest,
+        principal: Principal,
+        @PathVariable jobOfferId: String
     ): Mono<JobOffer> {
-        return Mono.just(jobOffersService.findOne(request.id, id))
+        return Mono.just(jobOffersService.findOne(request.id, principal.name, jobOfferId))
+    }
+
+    @PostMapping("/{jobOfferId}/apply")
+    open fun applyToJobOffer(
+        request: ServerHttpRequest,
+        principal: Principal,
+        @PathVariable jobOfferId: String
+    ): Mono<Unit> {
+        jobOffersService.applyToJobOffer(request.id, principal.name, jobOfferId)
+        return Mono.empty()
     }
 }

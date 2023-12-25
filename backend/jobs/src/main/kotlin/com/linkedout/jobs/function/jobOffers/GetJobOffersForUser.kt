@@ -8,18 +8,24 @@ import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.services.Jobs
 import org.springframework.stereotype.Component
+import java.util.UUID
 import java.util.function.Function
 
 @Component
-class GetJobOffers(private val jobOfferService: JobOfferService) : Function<Request, Response> {
+class GetJobOffersForUser(private val jobOfferService: JobOfferService) : Function<Request, Response> {
     override fun apply(t: Request): Response = handleRequestError {
+        // Extract the request
+        val request = t.getUserJobOffersRequest
+        val userId = UUID.fromString(request.userId)
+
         // Get all the job offers from the database
-        val reactiveResponse = jobOfferService.findAll()
+        val reactiveResponse = jobOfferService.findAllForUser(userId)
             .map { jobOffer ->
                 JobOfferWithJobAndCompanyToProto().convert(jobOffer)
+                    .setStatusValue(jobOffer.jobApplicationStatus)
             }
             .filter { it != null }
-            .reduce(Jobs.GetJobOffersResponse.newBuilder()) { builder, jobOffer ->
+            .reduce(Jobs.GetUserJobOffersResponse.newBuilder()) { builder, jobOffer ->
                 builder.addJobOffers(jobOffer)
                 builder
             }
@@ -30,11 +36,11 @@ class GetJobOffers(private val jobOfferService: JobOfferService) : Function<Requ
         // Block until the response is ready
         val response = reactiveResponse.block()
             ?: return RequestResponseFactory.newSuccessfulResponse()
-                .setGetJobOffersResponse(Jobs.GetJobOffersResponse.getDefaultInstance())
+                .setGetUserJobOffersResponse(Jobs.GetUserJobOffersResponse.getDefaultInstance())
                 .build()
 
         return RequestResponseFactory.newSuccessfulResponse()
-            .setGetJobOffersResponse(response)
+            .setGetUserJobOffersResponse(response)
             .build()
     }
 }

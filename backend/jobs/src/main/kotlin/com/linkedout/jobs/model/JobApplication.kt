@@ -9,9 +9,9 @@ import java.util.UUID
 data class JobApplication(
     @Id
     val id: UUID? = null,
-    @Column("jobid")
-    val jobId: UUID,
+    @Column("offerid")
+    val jobOfferId: UUID,
     @Column("userid")
     val userId: UUID,
-    val status: Boolean
+    val status: Int
 )

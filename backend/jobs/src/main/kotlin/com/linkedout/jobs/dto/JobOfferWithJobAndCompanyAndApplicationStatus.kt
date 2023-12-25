@@ -3,7 +3,7 @@ package com.linkedout.jobs.dto
 import org.springframework.data.relational.core.mapping.Column
 import java.time.LocalDate
 
-data class JobOfferWithJobAndCompany(
+data class JobOfferWithJobAndCompanyAndApplicationStatus(
     @Column("jobofferid")
     val jobOfferId: String,
     @Column("jobid")
@@ -28,6 +28,6 @@ data class JobOfferWithJobAndCompany(
     val jobCategoryTitle: String,
     @Column("jobtitle")
     val jobTitle: String,
-    @Column("status")
-    val jobOfferStatus: Int
+    @Column("jobapplicationstatus")
+    val jobApplicationStatus: Int
 )

@@ -19,6 +19,5 @@ data class JobOffer(
     val geographicArea: String,
     val job: UUID,
     val company: UUID,
-    val salary: Int,
-    val status: Int
+    val salary: Int
 )

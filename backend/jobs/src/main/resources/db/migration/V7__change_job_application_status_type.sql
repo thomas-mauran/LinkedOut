@@ -1,0 +1,4 @@
+ALTER TABLE jobapplication
+    ALTER COLUMN status DROP DEFAULT,
+    ALTER COLUMN status TYPE INT USING CAST(status AS INT),
+    ALTER COLUMN status SET DEFAULT 0;
