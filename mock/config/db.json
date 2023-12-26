@@ -494,6 +494,12 @@
       "title": "Candidature refusée",
       "content": "Votre candidature à l'offre 'Serveur à l'entrecôte' à été refusée par l'employeur.",
       "sentAt": "2023-10-23T09:34:19Z"
+    },
+    {
+      "id": "12ef4ac1-ab39-4d8d-8286-ccf16f4b3311",
+      "title": "Candidature acceptée",
+      "content": "Votre candidature à l'offre 'Femme de ménage' à été acceptée par l'employeur.",
+      "sentAt": "2023-09-23T09:34:19Z"
     }
   ],
   "companies": [
