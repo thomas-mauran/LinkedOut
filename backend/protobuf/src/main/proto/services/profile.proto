@@ -230,3 +230,37 @@ message GetUserEvaluationRequest {
 message GetUserEvaluationResponse {
   models.EmployeeEvaluation evaluation = 1;
 }
+
+// Get the profile picture of a user
+message GetUserProfilePictureRequest {
+  string user_id = 1;
+}
+
+message GetUserProfilePictureResponse {
+  bytes picture = 1;
+}
+
+// Set the profile picture of a user
+message SetUserProfilePictureRequest {
+  string user_id = 1;
+  bytes picture = 2;
+}
+
+message SetUserProfilePictureResponse {}
+
+// Get the CV of a user
+message GetUserCvRequest {
+  string user_id = 1;
+}
+
+message GetUserCvResponse {
+  bytes cv = 1;
+}
+
+// Set the CV of a user
+message SetUserCvRequest {
+  string user_id = 1;
+  bytes cv = 2;
+}
+
+message SetUserCvResponse {}

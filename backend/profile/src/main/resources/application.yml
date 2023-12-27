@@ -11,3 +11,7 @@ spring:
 
 server:
   port: 8085
+
+s3:
+  endpoint: https://s3-api.linkedout.cluster-2020-5.dopolytech.fr/
+  bucket: linkedout
