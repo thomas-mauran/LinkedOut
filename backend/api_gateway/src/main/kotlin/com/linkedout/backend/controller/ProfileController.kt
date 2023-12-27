@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -68,5 +69,47 @@ class ProfileController(
     ): Mono<Unit> {
         profileService.deleteOne(request.id, profileId)
         return Mono.empty()
+    }
+
+    @PostMapping("/cv")
+    open fun uploadCv(
+        request: ServerHttpRequest,
+        principal: Principal,
+        @RequestPart file: ByteArray
+    ): Mono<Unit> {
+        profileService.setOneCv(request.id, principal.name, file)
+        return Mono.empty()
+    }
+
+    @GetMapping(
+        value = ["/cv"],
+        produces = ["application/pdf"]
+    )
+    open fun downloadCv(
+        request: ServerHttpRequest,
+        principal: Principal
+    ): Mono<ByteArray> {
+        return Mono.just(profileService.findOneCv(request.id, principal.name))
+    }
+
+    @PostMapping("/photo")
+    open fun uploadPhoto(
+        request: ServerHttpRequest,
+        principal: Principal,
+        @RequestPart file: ByteArray
+    ): Mono<Unit> {
+        profileService.setOneProfilePicture(request.id, principal.name, file)
+        return Mono.empty()
+    }
+
+    @GetMapping(
+        value = ["/photo"],
+        produces = ["image/png"]
+    )
+    open fun downloadPhoto(
+        request: ServerHttpRequest,
+        principal: Principal
+    ): Mono<ByteArray> {
+        return Mono.just(profileService.findOneProfilePicture(request.id, principal.name))
     }
 }

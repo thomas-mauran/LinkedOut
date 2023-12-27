@@ -66,6 +66,10 @@ app:
         requestDeletionOfUser: profile.requestProfileDeletionOfUser
         saveOneOfUser: profile.saveOneOfUser
         updateOneOfUser: profile.updateOneOfUser
+        findOneCvOfUser: profile.findOneCvOfUser
+        saveOneCvOfUser: profile.saveOneCvOfUser
+        findOneProfilePictureOfUser: profile.findOneProfilePictureOfUser
+        saveOneProfilePictureOfUser: profile.saveOneProfilePictureOfUser
     availability:
       subjects:
         createOneOfUser: availability.createOneOfUser

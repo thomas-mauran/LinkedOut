@@ -3,6 +3,7 @@ package com.linkedout.common.utils
 import com.linkedout.proto.RequestOuterClass
 import com.linkedout.proto.ResponseOuterClass
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
 
 class RequestResponseFactory private constructor() {
     companion object {
@@ -15,7 +16,7 @@ class RequestResponseFactory private constructor() {
             return ResponseOuterClass.Response.newBuilder()
         }
 
-        fun newFailedResponse(message: String, errorCode: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR): ResponseOuterClass.Response.Builder {
+        fun newFailedResponse(message: String, errorCode: HttpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR): ResponseOuterClass.Response.Builder {
             return ResponseOuterClass.Response.newBuilder()
                 .setError(
                     ResponseOuterClass.Error.newBuilder()

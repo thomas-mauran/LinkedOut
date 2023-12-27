@@ -33,6 +33,7 @@ dependencies {
     implementation("org.postgresql:r2dbc-postgresql:1.0.2.RELEASE")
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.20")
+    implementation("io.minio:minio:8.5.7")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

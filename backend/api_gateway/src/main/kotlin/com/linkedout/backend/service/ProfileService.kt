@@ -1,5 +1,6 @@
 package com.linkedout.backend.service
 
+import com.google.protobuf.ByteString
 import com.linkedout.backend.converter.profile.SetProfileDtoToProto
 import com.linkedout.backend.converter.profile.UpdateProfileDtoToProto
 import com.linkedout.backend.dto.profile.ProfileWithStatsDto
@@ -12,8 +13,12 @@ import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.models.ProfileOuterClass
 import com.linkedout.proto.services.Profile.DeleteProfileRequest
 import com.linkedout.proto.services.Profile.GetProfilesRequestingDeletionRequest
+import com.linkedout.proto.services.Profile.GetUserCvRequest
+import com.linkedout.proto.services.Profile.GetUserProfilePictureRequest
 import com.linkedout.proto.services.Profile.GetUserProfileRequest
 import com.linkedout.proto.services.Profile.RequestUserProfileDeletionRequest
+import com.linkedout.proto.services.Profile.SetUserCvRequest
+import com.linkedout.proto.services.Profile.SetUserProfilePictureRequest
 import com.linkedout.proto.services.Profile.SetUserProfileRequest
 import com.linkedout.proto.services.Profile.UpdateUserProfileRequest
 import org.springframework.beans.factory.annotation.Value
@@ -29,7 +34,11 @@ class ProfileService(
     @Value("\${app.services.profile.subjects.findAllRequestingDeletion}") private val findAllRequestingDeletionSubject: String,
     @Value("\${app.services.profile.subjects.requestDeletionOfUser}") private val requestDeletionOfUserSubject: String,
     @Value("\${app.services.profile.subjects.saveOneOfUser}") private val saveOneOfUserSubject: String,
-    @Value("\${app.services.profile.subjects.updateOneOfUser}") private val updateOneOfUserSubject: String
+    @Value("\${app.services.profile.subjects.updateOneOfUser}") private val updateOneOfUserSubject: String,
+    @Value("\${app.services.profile.subjects.findOneCvOfUser}") private val findOneCvOfUserSubject: String,
+    @Value("\${app.services.profile.subjects.saveOneCvOfUser}") private val saveOneCvOfUserSubject: String,
+    @Value("\${app.services.profile.subjects.findOneProfilePictureOfUser}") private val findOneProfilePictureOfUserSubject: String,
+    @Value("\${app.services.profile.subjects.saveOneProfilePictureOfUser}") private val saveOneProfilePictureOfUserSubject: String
 ) {
     fun findOne(requestId: String, userId: String): ProfileWithStatsDto {
         // Request profile from the profile service
@@ -164,6 +173,82 @@ class ProfileService(
 
         // Handle the response
         if (!response.hasDeleteProfileResponse()) {
+            throw Exception("Invalid response")
+        }
+    }
+
+    fun findOneCv(requestId: String, userId: String): ByteArray {
+        // Request a CV from the profile service
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setGetUserCvRequest(
+                GetUserCvRequest.newBuilder()
+                    .setUserId(userId)
+            )
+            .build()
+
+        val response = natsService.requestWithReply(findOneCvOfUserSubject, request)
+
+        // Handle the response
+        if (!response.hasGetUserCvResponse()) {
+            throw Exception("Invalid response")
+        }
+
+        val getUserCvResponse = response.getUserCvResponse
+        return getUserCvResponse.cv.toByteArray()
+    }
+
+    fun setOneCv(requestId: String, userId: String, cv: ByteArray) {
+        // Set a CV using the profile service
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setSetUserCvRequest(
+                SetUserCvRequest.newBuilder()
+                    .setUserId(userId)
+                    .setCv(ByteString.copyFrom(cv))
+            )
+            .build()
+
+        val response = natsService.requestWithReply(saveOneCvOfUserSubject, request)
+
+        // Handle the response
+        if (!response.hasSetUserCvResponse()) {
+            throw Exception("Invalid response")
+        }
+    }
+
+    fun findOneProfilePicture(requestId: String, userId: String): ByteArray {
+        // Request a profile picture from the profile service
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setGetUserProfilePictureRequest(
+                GetUserProfilePictureRequest.newBuilder()
+                    .setUserId(userId)
+            )
+            .build()
+
+        val response = natsService.requestWithReply(findOneProfilePictureOfUserSubject, request)
+
+        // Handle the response
+        if (!response.hasGetUserProfilePictureResponse()) {
+            throw Exception("Invalid response")
+        }
+
+        val getUserProfilePictureResponse = response.getUserProfilePictureResponse
+        return getUserProfilePictureResponse.picture.toByteArray()
+    }
+
+    fun setOneProfilePicture(requestId: String, userId: String, picture: ByteArray) {
+        // Set a profile picture using the profile service
+        val request = RequestResponseFactory.newRequest(requestId)
+            .setSetUserProfilePictureRequest(
+                SetUserProfilePictureRequest.newBuilder()
+                    .setUserId(userId)
+                    .setPicture(ByteString.copyFrom(picture))
+            )
+            .build()
+
+        val response = natsService.requestWithReply(saveOneProfilePictureOfUserSubject, request)
+
+        // Handle the response
+        if (!response.hasSetUserProfilePictureResponse()) {
             throw Exception("Invalid response")
         }
     }

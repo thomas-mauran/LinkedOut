@@ -63,5 +63,9 @@ message Request {
     services.CreateEmployerEvaluationRequest create_employer_evaluation_request = 50;
     services.GetEmployerEvaluationRequest get_employer_evaluation_request = 51;
     services.DeleteEmployerEvaluationRequest delete_employer_evaluation_request = 52;
+    services.GetUserProfilePictureRequest get_user_profile_picture_request = 53;
+    services.SetUserProfilePictureRequest set_user_profile_picture_request = 54;
+    services.GetUserCvRequest get_user_cv_request = 55;
+    services.SetUserCvRequest set_user_cv_request = 56;
   }
 }

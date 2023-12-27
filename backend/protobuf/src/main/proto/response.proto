@@ -67,5 +67,9 @@ message Response {
     services.CreateEmployerEvaluationResponse create_employer_evaluation_response = 49;
     services.GetEmployerEvaluationResponse get_employer_evaluation_response = 50;
     services.DeleteEmployerEvaluationResponse delete_employer_evaluation_response = 51;
+    services.GetUserProfilePictureResponse get_user_profile_picture_response = 52;
+    services.SetUserProfilePictureResponse set_user_profile_picture_response = 53;
+    services.GetUserCvResponse get_user_cv_response = 54;
+    services.SetUserCvResponse set_user_cv_response = 55;
   }
 }
