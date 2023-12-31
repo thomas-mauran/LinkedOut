@@ -35,7 +35,10 @@ const MessagingNav = () => {
       <MessagingStack.Screen
         name='MessageChannel'
         component={MessageChannelPage}
-        options={{ headerTitle: `${i18n.t('messaging.info.messageChannel')}` }}
+        options={{
+          headerTitle: `${i18n.t('messaging.info.messageChannel')}`,
+          headerShown: true, // Show header for this screen
+        }}
       />
       <MessagingStack.Screen
         name='MessageTabBar'
