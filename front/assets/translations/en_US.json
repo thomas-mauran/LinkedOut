@@ -7,6 +7,12 @@
     "delete": "Delete",
     "confirm": "Confirm"
   },
+  "employer": {
+    "evaluation": "Employer evaluation",
+    "giveAReview": "Give a review",
+    "review": "Describe your experience at this job",
+    "sendEvaluation": "Send my evaluation"
+  },
   "jobOffer": {
     "info": {
       "jobOfferList": "Job offer list",

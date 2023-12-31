@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Text, TouchableRipple } from 'react-native-paper';
 
+import { Employer } from '@/models/entities/employer';
 import { MessageChannel } from '@/models/entities/messageChannel';
 
 /**
@@ -33,9 +34,14 @@ const styles = StyleSheet.create({
  */
 type MessageChannelItemProps = {
   /**
-   * The function to call when an a message channel is pressed.
+   * The function to call when a message channel is pressed.
    */
   onItemPress?: (messageChannel: MessageChannel) => void;
+
+  /**
+   * The function to call when the profile picture is pressed.
+   */
+  onProfilePress?: (employerId: Employer) => void;
 
   /**
    * The message channel to display.
@@ -49,17 +55,22 @@ type MessageChannelItemProps = {
  */
 const MessageChannelItem: FC<MessageChannelItemProps> = ({
   onItemPress,
+  onProfilePress,
   messageChannel,
 }) => {
   return (
     <TouchableRipple onPress={() => onItemPress?.(messageChannel)}>
       <View style={[styles.container, styles.horizontalContainer]}>
-        <Image
-          style={styles.profilePicture}
-          source={{
-            uri: messageChannel.employer?.picture,
-          }}
-        />
+        <TouchableRipple
+          onPress={() => onProfilePress(messageChannel.employer)}
+        >
+          <Image
+            style={styles.profilePicture}
+            source={{
+              uri: messageChannel.employer?.picture,
+            }}
+          />
+        </TouchableRipple>
         <View style={styles.verticalCenter}>
           <Text
             variant='labelLarge'
