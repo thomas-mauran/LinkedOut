@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
  */
 type StarRatingSelectorProps = {
   /**
+   * Whether the stars are editable.
+   */
+  editable?: boolean;
+  /**
    * The rating to display as stars.
    */
   rating: number;
@@ -40,6 +44,7 @@ type StarRatingSelectorProps = {
 };
 
 const StarRatingSelector: FC<StarRatingSelectorProps> = ({
+  editable = true, // Default to true if not provided
   rating,
   onStarPress,
 }) => {
@@ -68,16 +73,22 @@ const StarRatingSelector: FC<StarRatingSelectorProps> = ({
   }, [rating]);
 
   const handleStarPress = (index: number) => {
-    setSelectedStars(index + 1);
-    if (onStarPress) {
-      onStarPress(index + 1);
+    if (editable) {
+      setSelectedStars(index + 1);
+      if (onStarPress) {
+        onStarPress(index + 1);
+      }
     }
   };
 
   return (
     <View style={styles.container}>
       {starArray.map((star, index) => (
-        <TouchableOpacity key={index} onPress={() => handleStarPress(index)}>
+        <TouchableOpacity
+          key={index}
+          onPress={() => handleStarPress(index)}
+          disabled={!editable}
+        >
           <MaterialCommunityIcons
             name={
               star === StarKind.FULL_STAR

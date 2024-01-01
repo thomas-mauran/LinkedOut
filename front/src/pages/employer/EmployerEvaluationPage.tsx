@@ -57,7 +57,7 @@ const EmployerEvaluationPage: FC<EmployerEvaluationPageProps> = ({
 
   // API calls
   const { data: employer, refetch: refetchEmployer } =
-    useGetEmployerQuery(employerId); // Replace '123' with the actual employer ID
+    useGetEmployerQuery(employerId);
 
   const [postEmployerEvaluation] = usePostEmployerEvaluationMutation();
 

@@ -4,8 +4,9 @@ import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import ProfilePicturePlaceholder from '@/components/utils/ProfilePicturePlaceholder';
-import StarRating from '@/components/utils/StarRating';
 import { Evaluation } from '@/models/entities/evaluation';
+
+import StarRatingSelector from '../utils/StarRatingSelector';
 
 /**
  * The styles for the EvaluationItem component.
@@ -54,7 +55,7 @@ const EvaluationItem: FC<EvaluationItemProps> = ({ evaluation }) => {
             {`${evaluation.employerFirstName} ${evaluation.employerLastName}`}
           </Text>
 
-          <StarRating rating={evaluation.score} />
+          <StarRatingSelector editable={false} rating={evaluation.score} />
         </View>
       </View>
 
