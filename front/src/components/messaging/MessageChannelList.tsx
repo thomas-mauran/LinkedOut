@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 
+import { Employer } from '@/models/entities/employer';
 import { MessageChannel } from '@/models/entities/messageChannel';
 
 import MessageChannelItem from './MessageChannelItem';
@@ -24,6 +25,10 @@ type MessageChannelListProps = {
   onItemPress?: (messageChannel: MessageChannel) => void;
 
   /**
+   * The function to call when the profile picture is pressed.
+   */
+  onProfilePress?: (employer: Employer) => void;
+  /**
    * The list of message channels to display.
    */
   messageChannels: MessageChannel[];
@@ -31,6 +36,7 @@ type MessageChannelListProps = {
 
 const MessageChannelList: FC<MessageChannelListProps> = ({
   onItemPress,
+  onProfilePress,
   messageChannels,
 }) => {
   return (
@@ -39,6 +45,7 @@ const MessageChannelList: FC<MessageChannelListProps> = ({
         <View key={messageChannel.id}>
           <MessageChannelItem
             onItemPress={onItemPress}
+            onProfilePress={onProfilePress}
             messageChannel={messageChannel}
           />
           <Divider style={styles.divider} />

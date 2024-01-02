@@ -4,6 +4,7 @@ import { FC, useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import MessagingList from '@/components/messaging/MessageChannelList';
+import { Employer } from '@/models/entities/employer';
 import { MessageChannel } from '@/models/entities/messageChannel';
 import { useGetMessageChannelsQuery } from '@/store/api/messagingApiSlice';
 
@@ -48,6 +49,13 @@ const MessageChannelListPage: FC<MessagingListPageProps> = ({ navigation }) => {
     [navigation],
   );
 
+  const handleProfilePicturePress = useCallback(
+    (employer: Employer) => {
+      navigation.navigate('EmployerEvaluation', { id: employer.id });
+    },
+    [navigation],
+  );
+
   // Fetch data from the API when the page is focused
   useFocusEffect(
     useCallback(() => {
@@ -66,6 +74,7 @@ const MessageChannelListPage: FC<MessagingListPageProps> = ({ navigation }) => {
     >
       <MessagingList
         onItemPress={handleMessageChannelPress}
+        onProfilePress={handleProfilePicturePress}
         messageChannels={messageChannels}
       />
     </ScrollView>

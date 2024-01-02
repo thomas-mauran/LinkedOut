@@ -3,6 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import i18n from '@/utils/i18n';
 
+import EmployerEvaluationPage, {
+  EmployerEvaluationPageParams,
+} from '../employer/EmployerEvaluationPage';
 import MessageChannelPage, {
   MessageChannelPageParams,
 } from './MessageChannelPage';
@@ -15,6 +18,7 @@ export type MessagingStackParamList = {
   MessageChannelList: undefined;
   MessageChannel: MessageChannelPageParams;
   MessageTabBar: undefined;
+  EmployerEvaluation: EmployerEvaluationPageParams;
 };
 
 const MessagingStack = createNativeStackNavigator<MessagingStackParamList>();
@@ -35,7 +39,18 @@ const MessagingNav = () => {
       <MessagingStack.Screen
         name='MessageChannel'
         component={MessageChannelPage}
-        options={{ headerTitle: `${i18n.t('messaging.info.messageChannel')}` }}
+        options={{
+          headerTitle: `${i18n.t('messaging.info.messageChannel')}`,
+          headerShown: true,
+        }}
+      />
+      <MessagingStack.Screen
+        name='EmployerEvaluation'
+        component={EmployerEvaluationPage}
+        options={{
+          headerTitle: `${i18n.t('employer.evaluation')}`,
+          headerShown: true,
+        }}
       />
       <MessagingStack.Screen
         name='MessageTabBar'

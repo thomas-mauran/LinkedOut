@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
-import StarRating from '@/components/utils/StarRating';
+import StarRatingSelector from '@/components/utils/StarRatingSelector';
 
 /**
  * The styles for the ProfileHeaderName component.
@@ -71,7 +71,7 @@ const ProfileHeaderName: FC<ProfileHeaderNameProps> = ({
           {firstName} {lastName}
         </Text>
 
-        <StarRating rating={averageRating} />
+        <StarRatingSelector editable={false} rating={averageRating} />
       </View>
     </View>
   );

@@ -7,6 +7,12 @@
     "delete": "Supprimer",
     "confirm": "Confirmer"
   },
+  "employer": {
+    "evaluation": "Avis sur l'employeur",
+    "giveAReview": "Donnez un avis",
+    "review": "Decrivez votre expérience à ce job",
+    "sendEvaluation": "Envoyer mon avis"
+  },
   "jobOffer": {
     "info": {
       "jobOfferList": "Liste des offres d'emploi",

@@ -13,6 +13,7 @@ export const apiSlice = createApi({
   endpoints: () => ({}),
   tagTypes: [
     'Availabilities',
+    'Employer',
     'Evaluations',
     'Experiences',
     'JobCategories',

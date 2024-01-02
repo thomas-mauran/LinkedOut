@@ -3,6 +3,11 @@
  */
 export type Employer = {
   /**
+   * The id of the employer
+   */
+  id: string;
+
+  /**
    * The first name of the employer.
    */
   firstName: string;
