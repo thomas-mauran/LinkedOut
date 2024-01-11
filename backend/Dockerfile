@@ -11,13 +11,13 @@ COPY ./gradle.properties .
 COPY ./gradlew .
 COPY ./settings.gradle.kts .
 
-RUN --mount=type=cache,target=/root/.gradle ./gradlew clean build -x test
+RUN --mount=type=cache,target=/root/.gradle ./gradlew clean bootJar
 
 # Run stage
 FROM amazoncorretto:17-alpine AS run
 ARG SERVICE_NAME
 WORKDIR /app
 
-COPY --from=build /app/$SERVICE_NAME/build/libs/*-SNAPSHOT.jar ./app.jar
+COPY --from=build /app/$SERVICE_NAME/build/libs/$SERVICE_NAME.jar ./app.jar
 
 ENTRYPOINT ["java", "-jar", "./app.jar"]
