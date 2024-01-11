@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: linkedout-notification
+  labels:
+    app.kubernetes.io/name: linkedout-notification
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: linkedout-notification
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: linkedout-notification
+        app.kubernetes.io/part-of: linkedout
+    spec:
+      containers:
+      - name: linkedout-notification
+        image: ghcr.io/thomas-mauran/linkedout/notification
+        imagePullPolicy: Always
+        env: []
+        ports:
+          - containerPort: 8084
+            name: api
