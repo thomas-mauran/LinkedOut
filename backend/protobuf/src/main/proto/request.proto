@@ -6,6 +6,7 @@ import "services/messaging.proto";
 import "services/employer.proto";
 import "services/notification.proto";
 import "services/profile.proto";
+import "services/recommendations.proto";
 
 // Message that contains a generic request
 message Request {
@@ -67,5 +68,6 @@ message Request {
     services.SetUserProfilePictureRequest set_user_profile_picture_request = 54;
     services.GetUserCvRequest get_user_cv_request = 55;
     services.SetUserCvRequest set_user_cv_request = 56;
+    services.GetRecommendationRequest get_user_recommendation = 57;
   }
 }

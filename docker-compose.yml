@@ -18,6 +18,15 @@ services:
     ports:
       - 4222:4222
       - 8222:8222
+  # neo4j
+  neo4j:
+    image: bitnami/neo4j:4.4.29
+    ports:
+      - 7474:7474
+      - 7473:7473
+      - 7687:7687
+    volumes:
+      - neo4j_data:/bitnami/neo4j
 
   # # Keycloak
   # keycloak_postgresql:
@@ -58,4 +67,5 @@ services:
 
 volumes:
   postgresql_data:
+  neo4j_data:
   # keycloak_postgresql_data:

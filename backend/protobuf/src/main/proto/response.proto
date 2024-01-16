@@ -6,6 +6,7 @@ import "services/messaging.proto";
 import "services/employer.proto";
 import "services/notification.proto";
 import "services/profile.proto";
+import "services/recommendations.proto";
 
 // Message that contains a generic response
 message Error {
@@ -71,5 +72,6 @@ message Response {
     services.SetUserProfilePictureResponse set_user_profile_picture_response = 53;
     services.GetUserCvResponse get_user_cv_response = 54;
     services.SetUserCvResponse set_user_cv_response = 55;
+    services.GetRecommendationResponse get_recommendation_response = 56;
   }
 }

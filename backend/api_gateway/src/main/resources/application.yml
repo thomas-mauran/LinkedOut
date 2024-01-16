@@ -15,6 +15,9 @@ nats:
 
 app:
   services:
+    recommendation:
+      subjects:
+        findAll: recommendations.findAll
     jobs:
       subjects:
         findAll: jobs.findAll
