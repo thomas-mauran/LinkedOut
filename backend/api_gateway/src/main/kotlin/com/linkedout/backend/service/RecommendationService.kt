@@ -40,25 +40,3 @@ class RecommendationService(
         }
     }
 }
-
-private fun convertJobOfferFromProto(source: JobOfferOuterClass.JobOffer): JobOffer {
-    return JobOffer(
-        source.id,
-        source.title,
-        source.description,
-        LocalDate.parse(source.startDate),
-        LocalDate.parse(source.endDate),
-        source.geographicArea,
-        Job(
-            source.job.id,
-            source.job.title,
-            source.job.category
-        ),
-        Company(
-            source.company.id,
-            source.company.name
-        ),
-        source.salary,
-        source.statusValue
-    )
-}

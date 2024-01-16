@@ -13,7 +13,6 @@ import reactor.core.publisher.Flux
 open class RecommendationController(private val recommendationService: RecommendationService) {
     @GetMapping
     open fun getJobs(request: ServerHttpRequest): Flux<Recommendation> {
-        println("HERE")
         return Flux.fromIterable(recommendationService.findAll(request.id))
     }
 }
