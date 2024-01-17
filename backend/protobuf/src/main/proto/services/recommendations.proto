@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.linkedout.proto.services;
+
+import "models/recommendation.proto";
+
+// Get recommendations for a user
+message GetRecommendationRequest {
+//  string id = 1;
+}
+
+message GetRecommendationResponse {
+  repeated models.Recommendation recommendations = 1;
+}
+
