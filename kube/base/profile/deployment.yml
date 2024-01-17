@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: linkedout-profile
+  labels:
+    app.kubernetes.io/name: linkedout-profile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: linkedout-profile
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: linkedout-profile
+        app.kubernetes.io/part-of: linkedout
+    spec:
+      containers:
+      - name: linkedout-profile
+        image: ghcr.io/thomas-mauran/linkedout/profile
+        imagePullPolicy: Always
+        env: []
+        ports:
+          - containerPort: 8085
+            name: api

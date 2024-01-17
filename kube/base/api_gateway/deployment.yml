@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: linkedout-apigw
+  labels:
+    app.kubernetes.io/name: linkedout-apigw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: linkedout-apigw
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: linkedout-apigw
+        app.kubernetes.io/part-of: linkedout
+    spec:
+      containers:
+      - name: linkedout-apigw
+        image: ghcr.io/thomas-mauran/linkedout/api_gateway
+        imagePullPolicy: Always
+        env: []
+        ports:
+          - containerPort: 9090
+            name: api

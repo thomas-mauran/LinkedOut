@@ -1,0 +1,5 @@
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: NATS_SPRING_SERVER
+    value: nats://nats:4222

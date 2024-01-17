@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - api_gateway/deployment.yml
+  - api_gateway/ingress.yml
+  - api_gateway/svc.yml
+  - employer/deployment.yml
+  - employer/svc.yml
+  - jobs/deployment.yml
+  - jobs/svc.yml
+  - messaging/deployment.yml
+  - messaging/svc.yml
+  - notification/deployment.yml
+  - notification/svc.yml
+  - profile/deployment.yml
+  - profile/svc.yml
+
+commonLabels:
+  app.kubernetes.io/part-of: linkedout

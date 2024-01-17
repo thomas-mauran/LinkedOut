@@ -1,0 +1,64 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: linkedout
+resources:
+- ../base
+
+patches:
+- target:
+    group: networking.k8s.io
+    version: v1
+    kind: Ingress
+  path: api_gateway/configure-ingress.patch.yml
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+  path: add-nats.patch.yml
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: linkedout-employer
+  path: employer/add-postgres.patch.yml
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: linkedout-jobs
+  path: jobs/add-postgres.patch.yml
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: linkedout-messaging
+  path: messaging/add-postgres.patch.yml
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: linkedout-notification
+  path: notification/add-postgres.patch.yml
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: linkedout-profile
+  path: profile/add-postgres.patch.yml
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: linkedout-profile
+  path: profile/add-s3.patch.yml
+
+secretGenerator:
+- name: database-credentials
+  envs:
+  - db.sec.env
+  type: Opaque
+- name: s3-credentials
+  envs:
+  - s3.sec.env
+  type: Opaque
