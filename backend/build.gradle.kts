@@ -1,4 +1,4 @@
 allprojects {
-    group = "com.linkedoutdew"
+    group = "com.linkedout"
     version = "1.0.0-SNAPSHOT"
 }
