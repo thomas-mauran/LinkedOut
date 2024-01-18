@@ -16,19 +16,26 @@ jobs:
       run:
         working-directory: ${{ inputs.gradle-root-project-path }}
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Use Java
-      uses: actions/setup-java@v3
-      with:
-        java-version: 17
-        distribution: corretto
+      - name: Use Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: corretto
 
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-    - name: Lint Kotlin
-      run: ./gradlew ktlintCheck
+      - uses: snyk/actions/gradle-jdk17@0.4.0
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=backend/build.gradle.kts --all-sub-projects
 
-    - name: Execute Gradle build
-      run: ./gradlew build -x test
+      - name: Lint Kotlin
+        run: ./gradlew ktlintCheck
+
+      - name: Execute Gradle build
+        run: ./gradlew build -x test
