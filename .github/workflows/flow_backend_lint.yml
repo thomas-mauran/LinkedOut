@@ -27,13 +27,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - uses: snyk/actions/gradle-jdk17@0.4.0
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --file=backend/build.gradle.kts --all-sub-projects
-
       - name: Lint Kotlin
         run: ./gradlew ktlintCheck
 
