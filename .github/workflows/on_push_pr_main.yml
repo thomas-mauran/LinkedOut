@@ -38,11 +38,35 @@ jobs:
     if: ${{ needs.detect_changes.outputs.frontend == 'true' }}
     uses: ./.github/workflows/flow_front_lint.yml
 
+  security_frontend:
+    name: Run Snyk on the frontend
+    runs-on: ubuntu-latest
+    needs: detect_changes
+    if: ${{ needs.detect_changes.outputs.frontend == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: snyk/actions/node@0.4.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
   lint_backend:
     name: Lint backend
     needs: detect_changes
     if: ${{ needs.detect_changes.outputs.backend == 'true' }}
     uses: ./.github/workflows/flow_backend_lint.yml
+
+  security_backend:
+    name: Run Snyk on the backend
+    runs-on: ubuntu-latest
+    needs: detect_changes
+    if: ${{ needs.detect_changes.outputs.backend == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: snyk/actions/gradle-jdk17@0.4.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   build_push_backend:
     name: Build & push Docker image of the "${{ matrix.service }}" service
