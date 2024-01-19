@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useCallback } from 'react';
 import { useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
 import RootNavigator from '@/RootNavigator';
@@ -47,13 +48,15 @@ const App = () => {
     <Provider store={store}>
       <PaperProvider theme={theme}>
         <ApiProvider api={apiSlice}>
-          <NavigationContainer
-            theme={theme}
-            onReady={handleNavigationContainerReady}
-          >
-            <StatusBar style='auto' />
-            <RootNavigator />
-          </NavigationContainer>
+          <SafeAreaProvider>
+            <NavigationContainer
+              theme={theme}
+              onReady={handleNavigationContainerReady}
+            >
+              <StatusBar style='auto' />
+              <RootNavigator />
+            </NavigationContainer>
+          </SafeAreaProvider>
         </ApiProvider>
       </PaperProvider>
     </Provider>
