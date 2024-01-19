@@ -1,5 +1,6 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { StyleSheet } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -32,6 +33,7 @@ const MessagingTabBar =
  */
 const MessageTabBarNav = () => {
   const insets = useSafeAreaInsets();
+  const theme = useTheme();
 
   return (
     <MessagingTabBar.Navigator
@@ -44,6 +46,11 @@ const MessageTabBarNav = () => {
         },
         styles.container,
       ]}
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: theme.colors.background,
+        },
+      }}
     >
       <MessagingTabBar.Screen
         name='MessagesTabBar'
