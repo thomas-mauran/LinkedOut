@@ -1,7 +1,9 @@
 syntax = "proto3";
 package com.linkedout.proto.services;
 
+import "models/job.proto";
 import "models/recommendation.proto";
+import "dto/job/create_job_dto.proto";
 
 // Get recommendations for a user
 message GetRecommendationRequest {
@@ -10,5 +12,14 @@ message GetRecommendationRequest {
 
 message GetRecommendationResponse {
   repeated models.Recommendation recommendations = 1;
+}
+
+// Creates a job
+message CreateJobRequest {
+  dto.job.CreateJobDto job = 1;
+}
+
+message CreateJobResponse {
+  models.Job job = 1;
 }
 

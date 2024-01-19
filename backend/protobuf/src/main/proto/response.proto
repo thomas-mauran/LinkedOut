@@ -73,5 +73,6 @@ message Response {
     services.GetUserCvResponse get_user_cv_response = 54;
     services.SetUserCvResponse set_user_cv_response = 55;
     services.GetRecommendationResponse get_recommendation_response = 56;
+    services.CreateJobResponse create_job_response = 57;
   }
 }

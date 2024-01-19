@@ -13,4 +13,5 @@ class RecommendationService(
     fun findAll(): Flux<JobOfferEntity> {
         return jobOfferRepository.findAll()
     }
+
 }

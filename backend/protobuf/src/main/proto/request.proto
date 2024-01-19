@@ -69,5 +69,6 @@ message Request {
     services.GetUserCvRequest get_user_cv_request = 55;
     services.SetUserCvRequest set_user_cv_request = 56;
     services.GetRecommendationRequest get_recommendation_request = 57;
+    services.CreateJobRequest create_job_request = 58;
   }
 }

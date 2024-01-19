@@ -18,6 +18,7 @@ app:
     recommendation:
       subjects:
         findAll: recommendations.findAll
+        createJob: recommendations.createJob
     jobs:
       subjects:
         findAll: jobs.findAll
