@@ -2,15 +2,17 @@ package com.linkedout.recommendation.service
 
 import com.linkedout.recommendation.dto.CreateJobDto
 import com.linkedout.recommendation.entity.JobEntity
+import com.linkedout.recommendation.entity.ProfileEntity
 import com.linkedout.recommendation.repository.JobRepository
+import com.linkedout.recommendation.repository.ProfileRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
 @Service
-class JobService(
-    private val jobRepository: JobRepository
+class ProfileService(
+    private val profileRepository: ProfileRepository
 ) {
-    fun saveJob(job: JobEntity): Mono<JobEntity> {
-        return jobRepository.save(job);
+    fun saveProfile(profile: ProfileEntity): Mono<ProfileEntity> {
+        return profileRepository.save(profile);
     }
 }

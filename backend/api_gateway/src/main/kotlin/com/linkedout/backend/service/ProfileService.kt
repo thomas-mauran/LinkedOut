@@ -8,8 +8,10 @@ import com.linkedout.backend.dto.profile.SetProfileDto
 import com.linkedout.backend.dto.profile.UpdateProfileDto
 import com.linkedout.backend.model.Address
 import com.linkedout.backend.model.Profile
+import com.linkedout.backend.model.RecommendationProfile
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.dto.profile.CreateRecommendationProfileDtoOuterClass
 import com.linkedout.proto.models.ProfileOuterClass
 import com.linkedout.proto.services.Profile.DeleteProfileRequest
 import com.linkedout.proto.services.Profile.GetProfilesRequestingDeletionRequest
@@ -21,6 +23,7 @@ import com.linkedout.proto.services.Profile.SetUserCvRequest
 import com.linkedout.proto.services.Profile.SetUserProfilePictureRequest
 import com.linkedout.proto.services.Profile.SetUserProfileRequest
 import com.linkedout.proto.services.Profile.UpdateUserProfileRequest
+import com.linkedout.proto.services.Recommendations
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.format.DateTimeFormatter
@@ -38,7 +41,8 @@ class ProfileService(
     @Value("\${app.services.profile.subjects.findOneCvOfUser}") private val findOneCvOfUserSubject: String,
     @Value("\${app.services.profile.subjects.saveOneCvOfUser}") private val saveOneCvOfUserSubject: String,
     @Value("\${app.services.profile.subjects.findOneProfilePictureOfUser}") private val findOneProfilePictureOfUserSubject: String,
-    @Value("\${app.services.profile.subjects.saveOneProfilePictureOfUser}") private val saveOneProfilePictureOfUserSubject: String
+    @Value("\${app.services.profile.subjects.saveOneProfilePictureOfUser}") private val saveOneProfilePictureOfUserSubject: String,
+    @Value("\${app.services.recommendation.subjects.createRecommendationProfile}") private val createRecommendationProfile: String
 ) {
     fun findOne(requestId: String, userId: String): ProfileWithStatsDto {
         // Request profile from the profile service
@@ -95,6 +99,23 @@ class ProfileService(
 
         // Handle the response
         if (!response.hasSetUserProfileResponse()) {
+            throw Exception("Invalid response")
+        }
+
+        // Create the recommendation profile in neo4j
+
+        val requestRecommendation = RequestResponseFactory.newRequest(requestId)
+            .setCreateRecommendationProfileRequest(
+                Recommendations.CreateRecommendationProfileRequest.newBuilder().
+                    setProfile(
+                        CreateRecommendationProfileDtoOuterClass.CreateRecommendationProfileDto
+                            .newBuilder().setId(response.getUserProfileResponse.profile.id))
+            ).build()
+
+        val responseRecommendation = natsService.requestWithReply(createRecommendationProfile, requestRecommendation)
+
+        // Handle the response
+        if (!responseRecommendation.hasCreateRecommendationProfileResponse()) {
             throw Exception("Invalid response")
         }
 
