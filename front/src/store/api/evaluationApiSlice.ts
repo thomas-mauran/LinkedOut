@@ -7,7 +7,7 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getEvaluations: builder.query<Evaluation[], void>({
-      query: () => 'profile/evaluations/',
+      query: () => 'profile/evaluations',
       providesTags: (result) =>
         result
           ? [

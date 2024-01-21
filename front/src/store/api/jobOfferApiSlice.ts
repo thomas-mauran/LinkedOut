@@ -7,7 +7,7 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getJobOffers: builder.query<JobOffer[], void>({
-      query: () => 'jobOffers/',
+      query: () => 'jobOffers',
       providesTags: (result) =>
         result
           ? [
@@ -20,7 +20,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           : [{ type: 'JobOffer', id: 'LIST' }],
     }),
     getJobOffer: builder.query<JobOffer, string>({
-      query: (id) => `jobOffers/${id}/`,
+      query: (id) => `jobOffers/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'JobOffer', id }],
     }),
     postApplyJobOffer: builder.mutation<JobOffer, string>({

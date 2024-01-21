@@ -9,7 +9,7 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getReferences: builder.query<Reference[], void>({
-      query: () => 'profile/references/',
+      query: () => 'profile/references',
       providesTags: (result) =>
         result
           ? [
@@ -22,12 +22,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           : [{ type: 'References', id: 'LIST' }],
     }),
     getReference: builder.query<Reference, string>({
-      query: (id) => `profile/references/${id}/`,
+      query: (id) => `profile/references/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'References', id }],
     }),
     postReference: builder.mutation<Reference, CreateReferenceDto>({
       query: (body) => ({
-        url: 'profile/references/',
+        url: 'profile/references',
         method: 'POST',
         body,
       }),
@@ -35,7 +35,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     patchReference: builder.mutation<Reference, UpdateReferenceDto>({
       query: (body) => ({
-        url: `profile/references/${body.id}/`,
+        url: `profile/references/${body.id}`,
         method: 'PATCH',
         body,
       }),
@@ -46,7 +46,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     deleteReference: builder.mutation<void, string>({
       query: (id) => ({
-        url: `profile/references/${id}/`,
+        url: `profile/references/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: (_result, _error, id) => [

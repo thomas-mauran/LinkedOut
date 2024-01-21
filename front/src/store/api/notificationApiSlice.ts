@@ -7,7 +7,7 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getNotifications: builder.query<Notification[], void>({
-      query: () => 'notifications/',
+      query: () => 'notifications',
       providesTags: (result) =>
         result
           ? [
