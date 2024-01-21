@@ -1,13 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import InternalTabNav from '@/pages/InternalTabNav';
-import MainTabNav from '@/pages/MainTabNav';
+import LoginNav from '@/pages/LoginNav';
+import { useAppSelector } from '@/store/hooks';
 
 /**
  * The parameter list for the RootStack navigator.
  */
 export type RootStackParamList = {
   Internal: undefined;
+  Login: undefined;
   Main: undefined;
 };
 
@@ -18,13 +20,18 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
  * @constructor
  */
 const RootNavigator = () => {
+  // Store hooks
+  const authState = useAppSelector((state) => state.auth.state);
+
   return (
-    <RootStack.Navigator
-      initialRouteName='Internal'
-      screenOptions={{ headerShown: false }}
-    >
+    <RootStack.Navigator screenOptions={{ headerShown: false }}>
+      {authState === 'authenticated' ? (
+        <RootStack.Screen name='Main' component={InternalTabNav} />
+      ) : (
+        <RootStack.Screen name='Login' component={LoginNav} />
+      )}
+
       <RootStack.Screen name='Internal' component={InternalTabNav} />
-      <RootStack.Screen name='Main' component={MainTabNav} />
     </RootStack.Navigator>
   );
 };

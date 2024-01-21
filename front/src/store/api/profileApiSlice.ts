@@ -8,12 +8,12 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProfile: builder.query<Profile, void>({
-      query: () => 'profile/',
+      query: () => 'profile',
       providesTags: ['Profile'],
     }),
     patchProfile: builder.mutation<Profile, UpdateProfileDto>({
       query: (body) => ({
-        url: 'profile/',
+        url: 'profile',
         method: 'PATCH',
         body,
       }),

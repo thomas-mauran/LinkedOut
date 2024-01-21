@@ -93,5 +93,12 @@
       "delete": "Supprimer la disponibilité",
       "deleteConfirm": "Voulez-vous vraiment supprimer cette disponibilité?"
     }
+  },
+  "login": {
+    "login": "Se connecter",
+    "logout": "Se déconnecter"
+  },
+  "app": {
+    "branding": "LinkedOut"
   }
 }

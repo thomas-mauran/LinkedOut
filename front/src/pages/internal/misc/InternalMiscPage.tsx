@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { Button, Divider, Text } from 'react-native-paper';
 
 import InternalOIDCTest from '@/components/internal/InternalOIDCTest';
+import LogoutButton from '@/components/login/LogoutButton';
 import { InternalMiscStackParamList } from '@/pages/internal/InternalMiscNav';
 import i18n from '@/utils/i18n';
 
@@ -54,6 +55,7 @@ const InternalMiscPage: FC<InternalMiscPageProps> = ({ navigation }) => {
       <Divider style={styles.divider} />
       <Text variant='headlineMedium'>OIDC w/ Keycloak</Text>
       <InternalOIDCTest />
+      <LogoutButton />
 
       <Divider style={styles.divider} />
       <Text variant='headlineMedium'>Localization</Text>

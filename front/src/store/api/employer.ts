@@ -9,7 +9,7 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getEmployer: builder.query<Employer, string>({
-      query: (id) => `employers/${id}/`,
+      query: (id) => `employers/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'Employer', id }],
     }),
     postEmployerEvaluation: builder.mutation<
@@ -17,7 +17,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       EmployerEvaluationDto
     >({
       query: (body) => ({
-        url: `employers/${body.id}/evaluations/`,
+        url: `employers/${body.id}/evaluations`,
         method: 'POST',
         body: body.evaluation,
       }),

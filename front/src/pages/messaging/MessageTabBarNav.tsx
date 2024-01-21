@@ -1,8 +1,10 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { StyleSheet } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import NotificationListPage from '../notifications/NotificationlListPage';
+import NotificationListPage from '../notifications/NotificationListPage';
 import MessageChannelListPage from './MessageChannelListPage';
 
 /**
@@ -30,8 +32,26 @@ const MessagingTabBar =
  * @constructor
  */
 const MessageTabBarNav = () => {
+  const insets = useSafeAreaInsets();
+  const theme = useTheme();
+
   return (
-    <MessagingTabBar.Navigator style={styles.container}>
+    <MessagingTabBar.Navigator
+      style={[
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+        styles.container,
+      ]}
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: theme.colors.background,
+        },
+      }}
+    >
       <MessagingTabBar.Screen
         name='MessagesTabBar'
         component={MessageChannelListPage}

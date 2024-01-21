@@ -9,7 +9,7 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getMessageChannels: builder.query<MessageChannel[], void>({
-      query: () => 'messaging/',
+      query: () => 'messaging',
       providesTags: (result) =>
         result
           ? [
@@ -22,7 +22,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           : [{ type: 'MessageChannel', id: 'LIST' }],
     }),
     getMessageChannel: builder.query<MessageChannel, string>({
-      query: (id) => `messaging/${id}/`,
+      query: (id) => `messaging/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'MessageChannel', id }],
     }),
     getMessages: builder.query<Message[], string>({

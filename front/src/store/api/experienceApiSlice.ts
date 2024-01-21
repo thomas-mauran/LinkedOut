@@ -9,7 +9,7 @@ import { apiSlice } from '@/store/api/apiSlice';
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getExperiences: builder.query<Experience[], void>({
-      query: () => 'profile/experiences/',
+      query: () => 'profile/experiences',
       providesTags: (result) =>
         result
           ? [
@@ -22,12 +22,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           : [{ type: 'Experiences', id: 'LIST' }],
     }),
     getExperience: builder.query<Experience, string>({
-      query: (id) => `profile/experiences/${id}/`,
+      query: (id) => `profile/experiences/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'Experiences', id }],
     }),
     postExperience: builder.mutation<Experience, CreateExperienceDto>({
       query: (body) => ({
-        url: 'profile/experiences/',
+        url: 'profile/experiences',
         method: 'POST',
         body,
       }),
@@ -35,7 +35,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     patchExperience: builder.mutation<Experience, UpdateExperienceDto>({
       query: (body) => ({
-        url: `profile/experiences/${body.id}/`,
+        url: `profile/experiences/${body.id}`,
         method: 'PATCH',
         body,
       }),
@@ -46,7 +46,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     deleteExperience: builder.mutation<void, string>({
       query: (id) => ({
-        url: `profile/experiences/${id}/`,
+        url: `profile/experiences/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: (_result, _error, id) => [

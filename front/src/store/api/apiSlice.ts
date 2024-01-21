@@ -1,6 +1,8 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
+import { RootState } from '@/store/store';
+
 const baseUrl = process.env.EXPO_PUBLIC_API_URL;
 
 /**
@@ -9,6 +11,14 @@ const baseUrl = process.env.EXPO_PUBLIC_API_URL;
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const state = getState() as RootState;
+      if (state.auth.state === 'authenticated') {
+        headers.set('Authorization', `Bearer ${state.auth.token}`);
+      }
+
+      return headers;
+    },
   }),
   endpoints: () => ({}),
   tagTypes: [
