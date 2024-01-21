@@ -93,5 +93,12 @@
       "delete": "Delete availability",
       "deleteConfirm": "Are you sure you want to delete this availability?"
     }
+  },
+  "login": {
+    "login": "Sign in",
+    "logout": "Sign out"
+  },
+  "app": {
+    "branding": "LinkedOut"
   }
 }
