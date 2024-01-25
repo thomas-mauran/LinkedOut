@@ -1,3 +1,4 @@
+import { CreateProfileDto } from '@/models/dtos/profile/createProfileDto';
 import { UpdateProfileDto } from '@/models/dtos/profile/updateProfileDto';
 import { Profile } from '@/models/entities/profile';
 import { apiSlice } from '@/store/api/apiSlice';
@@ -19,7 +20,19 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Profile'],
     }),
+    putProfile: builder.mutation<Profile, CreateProfileDto>({
+      query: (body) => ({
+        url: 'profile',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Profile'],
+    }),
   }),
 });
 
-export const { useGetProfileQuery, usePatchProfileMutation } = extendedApiSlice;
+export const {
+  useGetProfileQuery,
+  usePatchProfileMutation,
+  usePutProfileMutation,
+} = extendedApiSlice;
