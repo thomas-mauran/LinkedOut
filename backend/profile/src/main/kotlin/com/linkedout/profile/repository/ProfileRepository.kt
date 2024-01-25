@@ -116,9 +116,9 @@ interface ProfileRepository : ReactiveCrudRepository<Profile, UUID> {
        (SELECT COUNT(*)
         FROM evaluation
         WHERE user_id = :userId) as nb_reviews,
-       (SELECT AVG(score)
+        COALESCE((SELECT AVG(score)
         FROM evaluation
-        WHERE user_id = :userId) as avg_rating;
+        WHERE user_id = :userId), 0) as avg_rating;
     """
     )
     fun getProfileStatsOfUser(userId: UUID): Mono<ProfileStats>
