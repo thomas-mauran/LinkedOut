@@ -13,8 +13,10 @@ import java.util.*
 import java.util.function.Function
 
 @Component
-class CreateProfile(private val profileService: ProfileService) : Function<Request, Response> {
+class CreateRecommendationProfile(private val profileService: ProfileService) : Function<Request, Response> {
     override fun apply(t: Request): Response = handleRequestError {
+
+
         // Extract the request
         val request = t.createRecommendationProfileRequest
         val requestDto = ProfileEntity(

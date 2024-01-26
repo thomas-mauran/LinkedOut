@@ -103,13 +103,12 @@ class ProfileService(
         }
 
         // Create the recommendation profile in neo4j
-
         val requestRecommendation = RequestResponseFactory.newRequest(requestId)
             .setCreateRecommendationProfileRequest(
                 Recommendations.CreateRecommendationProfileRequest.newBuilder().
                     setProfile(
                         CreateRecommendationProfileDtoOuterClass.CreateRecommendationProfileDto
-                            .newBuilder().setId(response.getUserProfileResponse.profile.id))
+                            .newBuilder().setId(response.setUserProfileResponse.profile.id))
             ).build()
 
         val responseRecommendation = natsService.requestWithReply(createRecommendationProfile, requestRecommendation)
