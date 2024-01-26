@@ -1,8 +1,10 @@
 package com.linkedout.backend.service
 
 import com.linkedout.backend.converter.experience.CreateExperienceDtoToProto
+import com.linkedout.backend.converter.experience.CreateRecommendationExperienceDtoToProto
 import com.linkedout.backend.converter.experience.UpdateExperienceDtoToProto
 import com.linkedout.backend.dto.experience.CreateExperienceDto
+import com.linkedout.backend.dto.experience.CreateRecommendationExperienceDto
 import com.linkedout.backend.dto.experience.UpdateExperienceDto
 import com.linkedout.backend.model.Address
 import com.linkedout.backend.model.Company
@@ -12,6 +14,7 @@ import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.models.ExperienceOuterClass
 import com.linkedout.proto.services.Profile
+import com.linkedout.proto.services.Recommendations
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.format.DateTimeFormatter
@@ -22,11 +25,13 @@ class ExperienceService(
     private val natsService: NatsService,
     private val companyService: CompanyService,
     private val jobService: JobService,
+    private val jobCategoryService: JobCategoryService,
     @Value("\${app.services.experience.subjects.createOneOfUser}") private val createOneOfUserSubject: String,
     @Value("\${app.services.experience.subjects.deleteOneOfUser}") private val deleteOneOfUserSubject: String,
     @Value("\${app.services.experience.subjects.findAllOfUser}") private val findAllOfUserSubject: String,
     @Value("\${app.services.experience.subjects.findOneOfUser}") private val findOneOfUserSubject: String,
-    @Value("\${app.services.experience.subjects.updateOneOfUser}") private val updateOneOfUserSubject: String
+    @Value("\${app.services.experience.subjects.updateOneOfUser}") private val updateOneOfUserSubject: String,
+    @Value("\${app.services.recommendation.subjects.createRecommendationExperience}") private val createRecommendationExperience: String
 ) {
     fun findAllOfUser(requestId: String, userId: String): List<Experience> {
         // Request experiences from the profile service
@@ -76,7 +81,7 @@ class ExperienceService(
         // Ensure the company exists and get the job
         val company = companyService.ensureExists(requestId, dto.company.name)
         val job = jobService.findOne(requestId, dto.jobId)
-
+        
         // Create the experience using the profile service
         val request = RequestResponseFactory.newRequest(requestId)
             .setCreateUserExperienceRequest(
@@ -97,6 +102,31 @@ class ExperienceService(
         if (!response.hasCreateUserExperienceResponse()) {
             throw Exception("Invalid response")
         }
+
+        // Create the experience using the profile service
+        val requestRecommendation = RequestResponseFactory.newRequest(requestId)
+            .setCreateRecommendationExperienceRequest(
+                Recommendations.CreateRecommendationExperienceRequest.newBuilder()
+                    .setExperience(
+                        CreateRecommendationExperienceDtoToProto()
+                            .convert(CreateRecommendationExperienceDto(
+                                UUID.fromString(response.createUserExperienceResponse.experience.id),
+                                UUID.fromString(userId),
+                                UUID.fromString(job.id),
+                                job.title,
+                                job.category
+                            ))
+                    )
+            )
+            .build()
+
+        val responseRecommendation = natsService.requestWithReply(createRecommendationExperience, requestRecommendation)
+
+        // Handle the response
+        if (!responseRecommendation.hasCreateRecommendationExperienceResponse()) {
+            throw Exception("Invalid response")
+        }
+
 
         val createUserExperienceResponse = response.createUserExperienceResponse
         return convertExperienceFromProto(createUserExperienceResponse.experience, company, job)

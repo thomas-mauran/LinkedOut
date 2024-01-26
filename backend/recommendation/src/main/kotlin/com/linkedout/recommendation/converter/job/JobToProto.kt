@@ -9,6 +9,6 @@ class JobToProto : Converter<JobEntity, JobOuterClass.Job.Builder> {
         return JobOuterClass.Job.newBuilder()
             .setId(source.id.toString())
             .setTitle(source.title)
-            .setCategory(source.category)
+            .setCategory(source.category.title)
     }
 }

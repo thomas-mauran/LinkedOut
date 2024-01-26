@@ -20,6 +20,7 @@ app:
         findAll: recommendations.findAll
         createJob: recommendations.createJob
         createRecommendationProfile: recommendations.createRecommendationProfile
+        createRecommendationExperience: recommendations.createRecommendationExperience
     jobs:
       subjects:
         findAll: jobs.findAll

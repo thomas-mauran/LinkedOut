@@ -5,12 +5,8 @@ import org.springframework.data.neo4j.core.schema.Node
 import org.springframework.data.neo4j.core.schema.Relationship
 import java.util.*
 
-@Node("Job")
-data class JobEntity(
+@Node("JobCategory")
+data class JobCategory(
     @Id
-    val id: UUID,
     val title: String,
-
-    @Relationship(type = "BELONGS_TO", direction = Relationship.Direction.OUTGOING)
-    val category: JobCategory,
 )
