@@ -6,10 +6,8 @@ import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.services.Recommendations
 import com.linkedout.recommendation.converter.experience.ExperienceToProto
+import com.linkedout.recommendation.dto.CreateEntityDto
 import com.linkedout.recommendation.entity.ExperienceEntity
-import com.linkedout.recommendation.entity.JobCategory
-import com.linkedout.recommendation.entity.JobEntity
-import com.linkedout.recommendation.entity.ProfileEntity
 import com.linkedout.recommendation.service.ExperienceService
 import org.springframework.stereotype.Component
 import java.util.*
@@ -20,27 +18,20 @@ class CreateRecommendationExperience(private val experienceService: ExperienceSe
     override fun apply(t: Request): Response = handleRequestError {
 
         // Extract the request
+        println("createExperienceEntity")
         val request = t.createRecommendationExperienceRequest
-        val requestDto = ExperienceEntity(
+        println(request)
+        val requestDto = CreateEntityDto(
             UUID.fromString(request.experience.id),
-            JobEntity(
-                UUID.fromString(request.experience.jobId),
-                request.experience.jobTitle,
-                JobCategory(request.experience.jobCategory)
-            ),
-            ProfileEntity(
-                UUID.fromString(request.experience.profileId)
-            )
+            request.experience.jobId,
+            request.experience.profileId
         )
 
         // Create the profile
         val reactiveResponse = experienceService.saveExperience(requestDto)
             .map { experience ->
-                ExperienceToProto().convert(experience)
-            }
-            .map { experience ->
                 Recommendations.CreateRecommendationExperienceResponse.newBuilder()
-                    .setId(experience.id)
+                    .setId(experience.id.toString())
                     .build()
             }
 

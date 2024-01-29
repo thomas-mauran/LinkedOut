@@ -108,7 +108,7 @@ class ProfileService(
                 Recommendations.CreateRecommendationProfileRequest.newBuilder().
                     setProfile(
                         CreateRecommendationProfileDtoOuterClass.CreateRecommendationProfileDto
-                            .newBuilder().setId(response.setUserProfileResponse.profile.id))
+                            .newBuilder().setId(userId))
             ).build()
 
         val responseRecommendation = natsService.requestWithReply(createRecommendationProfile, requestRecommendation)

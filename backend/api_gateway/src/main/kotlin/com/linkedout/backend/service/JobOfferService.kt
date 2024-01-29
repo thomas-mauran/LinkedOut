@@ -17,7 +17,9 @@ class JobOfferService(
     private val natsService: NatsService,
     @Value("\${app.services.jobOffers.subjects.findAllForUser}") private val findAllSubject: String,
     @Value("\${app.services.jobOffers.subjects.findOneForUser}") private val findOneSubject: String,
-    @Value("\${app.services.jobOffers.subjects.applyTo}") private val applyToSubject: String
+    @Value("\${app.services.jobOffers.subjects.applyTo}") private val applyToSubject: String,
+    @Value("\${app.services.recommendation.subjects.findAll}") private val findAll: String
+
 ) {
     fun findAll(requestId: String, userId: String): List<JobOffer> {
         // Request job offers from the job service

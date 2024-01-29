@@ -11,7 +11,7 @@ import "dto/profile/create_recommendation_profile_dto.proto";
 
 // Get recommendations for a user
 message GetRecommendationRequest {
-//  string id = 1;
+  string userId = 1;
 }
 
 message GetRecommendationResponse {

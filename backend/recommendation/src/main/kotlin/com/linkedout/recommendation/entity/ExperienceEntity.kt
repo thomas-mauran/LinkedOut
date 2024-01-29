@@ -9,10 +9,4 @@ import java.util.*
 data class ExperienceEntity(
     @Id
     val id: UUID,
-
-    @Relationship(type = "HAS_JOB", direction = Relationship.Direction.OUTGOING)
-    val job: JobEntity,
-
-    @Relationship(type = "HAS_PROFILE", direction = Relationship.Direction.INCOMING)
-    val profile: ProfileEntity
 )

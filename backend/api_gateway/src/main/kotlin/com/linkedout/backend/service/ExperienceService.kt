@@ -81,7 +81,7 @@ class ExperienceService(
         // Ensure the company exists and get the job
         val company = companyService.ensureExists(requestId, dto.company.name)
         val job = jobService.findOne(requestId, dto.jobId)
-        
+
         // Create the experience using the profile service
         val request = RequestResponseFactory.newRequest(requestId)
             .setCreateUserExperienceRequest(
@@ -102,6 +102,8 @@ class ExperienceService(
         if (!response.hasCreateUserExperienceResponse()) {
             throw Exception("Invalid response")
         }
+
+
 
         // Create the experience using the profile service
         val requestRecommendation = RequestResponseFactory.newRequest(requestId)

@@ -12,7 +12,7 @@ class CreateRecommendationExperienceDtoToProto : Converter<CreateRecommendationE
         return CreateRecommendationExperienceDtoOuterClass.CreateRecommendationExperienceDto.newBuilder()
             .setId(source.id.toString())
             .setProfileId(source.profileId.toString())
-            .setJobId(source.profileId.toString())
+            .setJobId(source.jobId.toString())
             .setJobTitle(source.jobTitle)
             .setJobCategory(source.jobCategory.toString())
     }
