@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import InternalTabNav from '@/pages/InternalTabNav';
+import MainTabNav from '@/pages/MainTabNav';
 import FirstLoginPage from '@/pages/login/FirstLoginPage';
 import { useGetProfileQuery } from '@/store/api/profileApiSlice';
 
@@ -47,7 +47,7 @@ const LoggedInNav = () => {
           }}
         />
       ) : (
-        <LoggedInStack.Screen name='Main' component={InternalTabNav} />
+        <LoggedInStack.Screen name='Main' component={MainTabNav} />
       )}
     </LoggedInStack.Navigator>
   );
