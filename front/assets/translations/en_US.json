@@ -5,7 +5,10 @@
   "common": {
     "cancel": "Cancel",
     "delete": "Delete",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "submit": "Submit",
+    "unknown": "Unknown",
+    "unspecified": "Unspecified"
   },
   "employer": {
     "evaluation": "Employer evaluation",
@@ -31,6 +34,7 @@
     }
   },
   "profile": {
+    "create": "Create your profile",
     "info": {
       "contact": "Contact",
       "availabilities": "Availabilities",
@@ -55,7 +59,14 @@
       "lastName": "Last name",
       "shortBiography": "Biography",
       "updateProfile": "Update profile",
-      "profile": "Profile"
+      "profile": "Profile",
+      "gender": "Gender",
+      "genders": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "nationality": "Nationality",
+      "birthday": "Birthday"
     },
     "experiences": {
       "edit": "Edit experience",
@@ -84,7 +95,9 @@
     },
     "date": {
       "dateRange": "Date range",
-      "pickRange": "Pick range"
+      "pickRange": "Pick range",
+      "singleDate": "Date",
+      "pickDate": "Pick date"
     },
     "availabilities": {
       "edit": "Edit availability",
@@ -100,5 +113,10 @@
   },
   "app": {
     "branding": "LinkedOut"
+  },
+  "nationalities": {
+    "belarus": "Belarusian",
+    "france": "French",
+    "germany": "German"
   }
 }
