@@ -5,9 +5,7 @@ import com.linkedout.common.utils.handleRequestError
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.services.Recommendations
-import com.linkedout.recommendation.converter.experience.ExperienceToProto
 import com.linkedout.recommendation.dto.CreateEntityDto
-import com.linkedout.recommendation.entity.ExperienceEntity
 import com.linkedout.recommendation.service.ExperienceService
 import org.springframework.stereotype.Component
 import java.util.*
@@ -16,7 +14,6 @@ import java.util.function.Function
 @Component
 class CreateRecommendationExperience(private val experienceService: ExperienceService) : Function<Request, Response> {
     override fun apply(t: Request): Response = handleRequestError {
-
         // Extract the request
         val request = t.createRecommendationExperienceRequest
         val requestDto = CreateEntityDto(

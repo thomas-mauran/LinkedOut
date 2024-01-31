@@ -1,6 +1,5 @@
 package com.linkedout.backend.dto.experience
 
-import com.linkedout.backend.model.JobCategory
 import java.util.UUID
 
 data class CreateRecommendationExperienceDto(

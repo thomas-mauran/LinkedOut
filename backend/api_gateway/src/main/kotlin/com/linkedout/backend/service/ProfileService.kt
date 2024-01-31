@@ -8,7 +8,6 @@ import com.linkedout.backend.dto.profile.SetProfileDto
 import com.linkedout.backend.dto.profile.UpdateProfileDto
 import com.linkedout.backend.model.Address
 import com.linkedout.backend.model.Profile
-import com.linkedout.backend.model.RecommendationProfile
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.proto.dto.profile.CreateRecommendationProfileDtoOuterClass
@@ -105,10 +104,11 @@ class ProfileService(
         // Create the recommendation profile in neo4j
         val requestRecommendation = RequestResponseFactory.newRequest(requestId)
             .setCreateRecommendationProfileRequest(
-                Recommendations.CreateRecommendationProfileRequest.newBuilder().
-                    setProfile(
+                Recommendations.CreateRecommendationProfileRequest.newBuilder()
+                    .setProfile(
                         CreateRecommendationProfileDtoOuterClass.CreateRecommendationProfileDto
-                            .newBuilder().setId(userId))
+                            .newBuilder().setId(userId)
+                    )
             ).build()
 
         val responseRecommendation = natsService.requestWithReply(createRecommendationProfile, requestRecommendation)

@@ -15,8 +15,6 @@ import java.util.function.Function
 @Component
 class CreateRecommendationProfile(private val profileService: ProfileService) : Function<Request, Response> {
     override fun apply(t: Request): Response = handleRequestError {
-
-
         // Extract the request
         val request = t.createRecommendationProfileRequest
         val requestDto = ProfileEntity(

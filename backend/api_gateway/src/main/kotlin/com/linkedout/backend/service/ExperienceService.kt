@@ -103,21 +103,21 @@ class ExperienceService(
             throw Exception("Invalid response")
         }
 
-
-
         // Create the experience using the profile service
         val requestRecommendation = RequestResponseFactory.newRequest(requestId)
             .setCreateRecommendationExperienceRequest(
                 Recommendations.CreateRecommendationExperienceRequest.newBuilder()
                     .setExperience(
                         CreateRecommendationExperienceDtoToProto()
-                            .convert(CreateRecommendationExperienceDto(
-                                UUID.fromString(response.createUserExperienceResponse.experience.id),
-                                UUID.fromString(userId),
-                                UUID.fromString(job.id),
-                                job.title,
-                                job.category
-                            ))
+                            .convert(
+                                CreateRecommendationExperienceDto(
+                                    UUID.fromString(response.createUserExperienceResponse.experience.id),
+                                    UUID.fromString(userId),
+                                    UUID.fromString(job.id),
+                                    job.title,
+                                    job.category
+                                )
+                            )
                     )
             )
             .build()

@@ -3,13 +3,10 @@ package com.linkedout.jobs.function.jobOffers
 import com.linkedout.common.utils.RequestResponseFactory
 import com.linkedout.common.utils.handleRequestError
 import com.linkedout.jobs.converter.jobOffers.JobOfferWithJobAndCompanyToProto
-import com.linkedout.jobs.converter.jobs.JobWithCategoryToProto
 import com.linkedout.jobs.service.JobOfferService
-import com.linkedout.jobs.service.JobService
 import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.ResponseOuterClass.Response
 import com.linkedout.proto.services.Jobs.GetMultipleJobOffersResponse
-import com.linkedout.proto.services.Jobs.GetMultipleJobsResponse
 import org.springframework.stereotype.Component
 import java.util.UUID
 import java.util.function.Function

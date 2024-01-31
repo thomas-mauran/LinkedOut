@@ -3,7 +3,6 @@ package com.linkedout.backend.service
 import com.linkedout.backend.model.Job
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
-import com.linkedout.proto.dto.job.CreateJobDtoOuterClass.CreateJobDto
 import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
 import com.linkedout.proto.services.Jobs.GetJobRequest
@@ -15,7 +14,7 @@ class JobService(
     private val natsService: NatsService,
     @Value("\${app.services.jobs.subjects.findAll}") private val findAllSubject: String,
     @Value("\${app.services.jobs.subjects.findMultiple}") private val findMultipleSubject: String,
-    @Value("\${app.services.jobs.subjects.findOne}") private val findOneSubject: String,
+    @Value("\${app.services.jobs.subjects.findOne}") private val findOneSubject: String
 ) {
     fun findAll(requestId: String): List<Job> {
         // Request jobs from the jobs service

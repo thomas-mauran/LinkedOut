@@ -10,6 +10,6 @@ class ProfileService(
     private val profileRepository: ProfileRepository
 ) {
     fun saveProfile(profile: ProfileEntity): Mono<ProfileEntity> {
-        return profileRepository.save(profile);
+        return profileRepository.save(profile)
     }
 }

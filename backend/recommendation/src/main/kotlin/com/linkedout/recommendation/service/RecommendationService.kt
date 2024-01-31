@@ -10,7 +10,6 @@ class RecommendationService(
     private val jobOfferRepository: JobOfferRepository
 ) {
     fun getRecommendations(userId: String): Flux<JobOfferEntity> {
-        return jobOfferRepository.getRecommendations(userId);
+        return jobOfferRepository.getRecommendations(userId)
     }
-
 }

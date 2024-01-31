@@ -1,8 +1,6 @@
 package com.linkedout.recommendation.converter.experience
 
 import com.linkedout.proto.dto.experience.CreateRecommendationExperienceDtoOuterClass
-import com.linkedout.proto.models.ExperienceOuterClass
-import com.linkedout.recommendation.dto.CreateEntityDto
 import com.linkedout.recommendation.entity.ExperienceEntity
 import org.springframework.core.convert.converter.Converter
 

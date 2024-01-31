@@ -5,7 +5,6 @@ import com.linkedout.backend.model.Job
 import com.linkedout.backend.model.JobOffer
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
-import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.models.JobOfferOuterClass
 import com.linkedout.proto.services.Jobs
 import com.linkedout.proto.services.Jobs.ApplyToJobOfferRequest
@@ -51,7 +50,6 @@ class JobOfferService(
             ).build()
 
         val responseJobOffers = natsService.requestWithReply(findMultipleSubject, requestJobOffers)
-
 
         // Handle the response
         if (!responseJobOffers.hasGetMultipleJobOffersResponse()) {

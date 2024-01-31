@@ -7,5 +7,5 @@ import java.util.*
 @Node("Profile")
 data class ProfileEntity(
     @Id
-    val id: UUID,
+    val id: UUID
 )
