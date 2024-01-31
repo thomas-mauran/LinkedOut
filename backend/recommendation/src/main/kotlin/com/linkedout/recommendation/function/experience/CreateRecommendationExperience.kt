@@ -18,9 +18,7 @@ class CreateRecommendationExperience(private val experienceService: ExperienceSe
     override fun apply(t: Request): Response = handleRequestError {
 
         // Extract the request
-        println("createExperienceEntity")
         val request = t.createRecommendationExperienceRequest
-        println(request)
         val requestDto = CreateEntityDto(
             UUID.fromString(request.experience.id),
             request.experience.jobId,

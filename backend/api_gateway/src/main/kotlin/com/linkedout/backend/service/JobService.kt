@@ -7,8 +7,6 @@ import com.linkedout.proto.dto.job.CreateJobDtoOuterClass.CreateJobDto
 import com.linkedout.proto.models.JobOuterClass
 import com.linkedout.proto.services.Jobs
 import com.linkedout.proto.services.Jobs.GetJobRequest
-import com.linkedout.proto.services.Recommendations.CreateJobRequest
-import com.linkedout.proto.services.Recommendations.CreateJobResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
@@ -18,7 +16,6 @@ class JobService(
     @Value("\${app.services.jobs.subjects.findAll}") private val findAllSubject: String,
     @Value("\${app.services.jobs.subjects.findMultiple}") private val findMultipleSubject: String,
     @Value("\${app.services.jobs.subjects.findOne}") private val findOneSubject: String,
-    @Value("\${app.services.recommendation.subjects.createJob}") private val createJobSubject: String
 ) {
     fun findAll(requestId: String): List<Job> {
         // Request jobs from the jobs service
@@ -75,16 +72,6 @@ class JobService(
         }
 
         val getJobResponse = response.getJobResponse
-
-
-        // request for neo4j service
-        val request2 = RequestResponseFactory.newRequest(requestId)
-            .setCreateJobRequest(
-                CreateJobRequest.newBuilder().setJob(CreateJobDto.newBuilder().setId("a764fdee-41f8-42f4-a140-038807b70a90").setCategory("Category").setTitle("Title"))
-            )
-            .build()
-        val response2 = natsService.requestWithReply(createJobSubject, request2)
-        println(response2)
 
         return convertJobFromProto(getJobResponse.job)
     }

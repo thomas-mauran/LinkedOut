@@ -14,10 +14,9 @@ import java.util.function.Function
 class GetRecommendations(private val recommendationService: RecommendationService) : Function<Request, Response> {
     override fun apply(t: Request): Response = handleRequestError {
         // Extract the request
-        val request = t.getUserJobOffersRequest
-        // Get all the job offers from the database
-        // TODO: Pass the user ID to then fetch the user and get his experiences etc and use it in the recommendation query
-        val reactiveResponse = recommendationService.findAll()
+        val request = t.getRecommendationRequest
+
+        val reactiveResponse = recommendationService.getRecommendations(request.userId)
             .map { jobOffer ->
                 JobOfferToProto().convert(jobOffer)
             }

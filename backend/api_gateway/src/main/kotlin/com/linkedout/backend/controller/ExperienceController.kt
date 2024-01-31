@@ -31,8 +31,6 @@ class ExperienceController(private val experienceService: ExperienceService) {
         principal: Principal,
         @RequestBody body: CreateExperienceDto
     ): Mono<Experience> {
-        println("here")
-        println(principal.name)
         return Mono.just(experienceService.createOneOfUser(request.id, principal.name, body))
     }
 

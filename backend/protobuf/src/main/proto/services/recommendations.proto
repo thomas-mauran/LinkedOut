@@ -18,15 +18,6 @@ message GetRecommendationResponse {
   repeated models.Recommendation recommendations = 1;
 }
 
-// Creates a job
-message CreateJobRequest {
-  dto.job.CreateJobDto job = 1;
-}
-
-message CreateJobResponse {
-  models.Job job = 1;
-}
-
 message CreateRecommendationProfileRequest {
   dto.profile.CreateRecommendationProfileDto profile = 1;
 }

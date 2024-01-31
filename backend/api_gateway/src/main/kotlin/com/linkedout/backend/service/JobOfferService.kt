@@ -5,9 +5,11 @@ import com.linkedout.backend.model.Job
 import com.linkedout.backend.model.JobOffer
 import com.linkedout.common.service.NatsService
 import com.linkedout.common.utils.RequestResponseFactory
+import com.linkedout.proto.RequestOuterClass.Request
 import com.linkedout.proto.models.JobOfferOuterClass
 import com.linkedout.proto.services.Jobs
 import com.linkedout.proto.services.Jobs.ApplyToJobOfferRequest
+import com.linkedout.proto.services.Recommendations
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -17,6 +19,7 @@ class JobOfferService(
     private val natsService: NatsService,
     @Value("\${app.services.jobOffers.subjects.findAllForUser}") private val findAllSubject: String,
     @Value("\${app.services.jobOffers.subjects.findOneForUser}") private val findOneSubject: String,
+    @Value("\${app.services.jobOffers.subjects.findMultiple}") private val findMultipleSubject: String,
     @Value("\${app.services.jobOffers.subjects.applyTo}") private val applyToSubject: String,
     @Value("\${app.services.recommendation.subjects.findAll}") private val findAll: String
 
@@ -24,20 +27,38 @@ class JobOfferService(
     fun findAll(requestId: String, userId: String): List<JobOffer> {
         // Request job offers from the job service
         val request = RequestResponseFactory.newRequest(requestId)
-            .setGetUserJobOffersRequest(
-                Jobs.GetUserJobOffersRequest.newBuilder()
+            .setGetRecommendationRequest(
+                Recommendations.GetRecommendationRequest.newBuilder()
                     .setUserId(userId)
             )
             .build()
 
-        val response = natsService.requestWithReply(findAllSubject, request)
+        val response = natsService.requestWithReply(findAll, request)
 
         // Handle the response
-        if (!response.hasGetUserJobOffersResponse()) {
+        if (!response.hasGetRecommendationResponse()) {
             throw Exception("Invalid response")
         }
 
-        val getUserJobOffersResponse = response.getUserJobOffersResponse
+        val recommendationIds = response.getRecommendationResponse.recommendationsList.map { recommendation ->
+            recommendation.id // Assuming Recommendation has an 'id' field representing its ID
+        }
+
+        val requestJobOffers = RequestResponseFactory.newRequest(requestId)
+            .setGetMultipleJobOffersRequest(
+                Jobs.GetMultipleJobOffersRequest.newBuilder()
+                    .addAllIds(recommendationIds)
+            ).build()
+
+        val responseJobOffers = natsService.requestWithReply(findMultipleSubject, requestJobOffers)
+
+
+        // Handle the response
+        if (!responseJobOffers.hasGetMultipleJobOffersResponse()) {
+            throw Exception("Invalid response")
+        }
+
+        val getUserJobOffersResponse = responseJobOffers.getMultipleJobOffersResponse
         return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
             convertJobOfferFromProto(jobOffer)
         }

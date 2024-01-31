@@ -129,7 +129,6 @@ class ExperienceService(
             throw Exception("Invalid response")
         }
 
-
         val createUserExperienceResponse = response.createUserExperienceResponse
         return convertExperienceFromProto(createUserExperienceResponse.experience, company, job)
     }

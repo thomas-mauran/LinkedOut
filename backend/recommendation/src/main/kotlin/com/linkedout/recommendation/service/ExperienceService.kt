@@ -11,7 +11,6 @@ class ExperienceService(
     private val experienceRepository: ExperienceRepository
 ) {
     fun saveExperience(experience: CreateEntityDto): Mono<ExperienceEntity> {
-        println(experience)
         return experienceRepository.createExperience(experience.profile, experience.job, experience.id)
     }
 }

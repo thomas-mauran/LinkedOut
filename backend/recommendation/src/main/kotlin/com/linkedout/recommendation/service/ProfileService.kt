@@ -1,9 +1,6 @@
 package com.linkedout.recommendation.service
 
-import com.linkedout.recommendation.dto.CreateJobDto
-import com.linkedout.recommendation.entity.JobEntity
 import com.linkedout.recommendation.entity.ProfileEntity
-import com.linkedout.recommendation.repository.JobRepository
 import com.linkedout.recommendation.repository.ProfileRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono

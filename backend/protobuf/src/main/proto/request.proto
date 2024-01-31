@@ -69,8 +69,8 @@ message Request {
     services.GetUserCvRequest get_user_cv_request = 55;
     services.SetUserCvRequest set_user_cv_request = 56;
     services.GetRecommendationRequest get_recommendation_request = 57;
-    services.CreateJobRequest create_job_request = 58;
-    services.CreateRecommendationProfileRequest create_recommendation_profile_request = 59;
-    services.CreateRecommendationExperienceRequest create_recommendation_experience_request = 60;
+    services.CreateRecommendationProfileRequest create_recommendation_profile_request = 58;
+    services.CreateRecommendationExperienceRequest create_recommendation_experience_request = 59;
+    services.GetMultipleJobOffersRequest get_multiple_job_offers_request = 60;
   }
 }

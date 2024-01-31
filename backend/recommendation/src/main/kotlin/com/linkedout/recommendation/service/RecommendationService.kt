@@ -9,8 +9,8 @@ import reactor.core.publisher.Flux
 class RecommendationService(
     private val jobOfferRepository: JobOfferRepository
 ) {
-    fun findAll(): Flux<JobOfferEntity> {
-        return jobOfferRepository.findAll()
+    fun getRecommendations(userId: String): Flux<JobOfferEntity> {
+        return jobOfferRepository.getRecommendations(userId);
     }
 
 }
