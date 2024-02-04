@@ -73,5 +73,8 @@ message Response {
     services.GetUserCvResponse get_user_cv_response = 54;
     services.SetUserCvResponse set_user_cv_response = 55;
     services.GetRecommendationResponse get_recommendation_response = 56;
+    services.CreateRecommendationProfileResponse create_recommendation_profile_response = 57;
+    services.CreateRecommendationExperienceResponse create_recommendation_experience_response = 58;
+    services.GetMultipleJobOffersResponse get_multiple_job_offers_response = 59;
   }
 }

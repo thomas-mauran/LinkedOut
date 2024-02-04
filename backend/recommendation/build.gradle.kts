@@ -20,7 +20,7 @@ repositories {
 dependencies {
     implementation(project(":common"))
     implementation(project(":protobuf"))
-    implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
+    implementation("org.springframework.data:spring-data-neo4j:7.2.2")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")

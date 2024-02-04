@@ -1,14 +1,35 @@
 syntax = "proto3";
 package com.linkedout.proto.services;
 
+import "models/job.proto";
 import "models/recommendation.proto";
+import "dto/job/create_job_dto.proto";
+import "dto/experience/create_recommendation_experience_dto.proto";
+
+//import "dto/job/create_job_dto.proto";
+import "dto/profile/create_recommendation_profile_dto.proto";
 
 // Get recommendations for a user
 message GetRecommendationRequest {
-//  string id = 1;
+  string userId = 1;
 }
 
 message GetRecommendationResponse {
   repeated models.Recommendation recommendations = 1;
 }
 
+message CreateRecommendationProfileRequest {
+  dto.profile.CreateRecommendationProfileDto profile = 1;
+}
+
+message CreateRecommendationProfileResponse {
+  string id = 1;
+}
+
+message CreateRecommendationExperienceRequest {
+  dto.experience.CreateRecommendationExperienceDto experience = 1;
+}
+
+message CreateRecommendationExperienceResponse {
+  string id = 1;
+}

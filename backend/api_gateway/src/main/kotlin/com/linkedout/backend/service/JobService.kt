@@ -71,6 +71,7 @@ class JobService(
         }
 
         val getJobResponse = response.getJobResponse
+
         return convertJobFromProto(getJobResponse.job)
     }
 

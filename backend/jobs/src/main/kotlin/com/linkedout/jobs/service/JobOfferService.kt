@@ -18,4 +18,8 @@ class JobOfferService(
     fun findOneForUser(userId: UUID, jobOfferId: UUID): Mono<JobOfferWithJobAndCompanyAndApplicationStatus> {
         return jobOffer.findOneForUserWithJobAndCompany(userId, jobOfferId)
     }
+
+    fun findMultipleWithJobAndCompanyAndApplicationStatus(ids: Iterable<UUID>): Flux<JobOfferWithJobAndCompanyAndApplicationStatus> {
+        return jobOffer.findMultipleWithJobAndCompanyAndApplicationStatus(ids)
+    }
 }

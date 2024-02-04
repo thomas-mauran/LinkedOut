@@ -9,6 +9,7 @@ enum class ProfileGender(val value: Int) {
     Unspecified(9);
 
     companion object {
+
         fun fromProto(value: Profile.Gender): ProfileGender {
             return when (value) {
                 Profile.Gender.Unknown -> Unknown

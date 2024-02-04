@@ -18,6 +18,8 @@ app:
     recommendation:
       subjects:
         findAll: recommendations.findAll
+        createRecommendationProfile: recommendations.createRecommendationProfile
+        createRecommendationExperience: recommendations.createRecommendationExperience
     jobs:
       subjects:
         findAll: jobs.findAll
@@ -26,6 +28,7 @@ app:
     jobOffers:
       subjects:
         findAllForUser: jobs.findAllJobOffersForUser
+        findMultiple: jobs.findMultipleJobOffers
         findOneForUser: jobs.findOneJobOfferForUser
         applyTo: jobs.applyToJobOffer
     jobCategories:

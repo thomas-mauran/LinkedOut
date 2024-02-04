@@ -4,10 +4,8 @@ import org.springframework.data.neo4j.core.schema.Id
 import org.springframework.data.neo4j.core.schema.Node
 import java.util.*
 
-@Node("JobOffer")
-data class JobOfferEntity(
+@Node("Profile")
+data class ProfileEntity(
     @Id
     val id: UUID
-//    val geographicArea: Date,
-//    val createdAt: Timestamp
 )

@@ -97,6 +97,15 @@ message ApplyToJobOfferRequest {
   string job_offer_id = 2;
 }
 
+// Get multiple companies
+message GetMultipleJobOffersRequest {
+  repeated string ids = 1;
+}
+
+message GetMultipleJobOffersResponse {
+  repeated models.JobOffer jobOffers = 1;
+}
+
 message ApplyToJobOfferResponse {}
 
 // Get multiple job categories

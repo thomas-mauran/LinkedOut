@@ -1,0 +1,10 @@
+syntax = "proto3";
+package com.linkedout.proto.dto.experience;
+
+message CreateRecommendationExperienceDto {
+  string id = 1;
+  string profile_id = 2;
+  string job_id = 3;
+  string job_title = 4;
+  string job_category = 5;
+}
