@@ -29,7 +29,7 @@ const JobOffersNav = () => {
       <JobOfferStack.Screen
         name='JobOfferList'
         component={JobOfferListPage}
-        options={{ headerTitle: `${i18n.t('jobOffer.info.jobOfferList')}` }}
+        options={{ headerTitle: `${i18n.t('home.home')}` }}
       />
       <JobOfferStack.Screen
         name='JobOffer'

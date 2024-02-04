@@ -50,12 +50,12 @@ const ProfileNav = () => {
       <ProfileStack.Screen
         name='Profile'
         component={ProfilePage}
-        options={{ headerTitle: `${i18n.t('profile.info.profile')}` }}
+        options={{ headerTitle: `${i18n.t('profile.profile')}` }}
       />
       <ProfileStack.Screen
         name='ProfileUpdate'
         component={ProfileUpdatePage}
-        options={{ headerTitle: `${i18n.t('profile.info.profile')}` }}
+        options={{ headerTitle: `${i18n.t('profile.profile')}` }}
       />
 
       <ProfileStack.Screen

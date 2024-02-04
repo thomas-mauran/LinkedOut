@@ -28,12 +28,14 @@
     }
   },
   "messaging": {
+    "messages": "Messages",
     "info": {
       "messageChannel": "Messages",
       "textInputPlaceholer": "Your message"
     }
   },
   "profile": {
+    "profile": "Profile",
     "create": "Create your profile",
     "info": {
       "contact": "Contact",
@@ -59,7 +61,6 @@
       "lastName": "Last name",
       "shortBiography": "Biography",
       "updateProfile": "Update profile",
-      "profile": "Profile",
       "gender": "Gender",
       "genders": {
         "male": "Male",
@@ -118,5 +119,11 @@
     "belarus": "Belarusian",
     "france": "French",
     "germany": "German"
+  },
+  "home": {
+    "home": "Home"
+  },
+  "applications": {
+    "applications": "Applications"
   }
 }
