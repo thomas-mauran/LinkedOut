@@ -10,7 +10,7 @@ import ProfileUpdateInfosForm, {
 import { UpdateProfileDto } from '@/models/dtos/profile/updateProfileDto';
 import { Availability } from '@/models/entities/availability';
 import {
-  useDeleteAvailabilitiesMutation,
+  useDeleteAvailabilityMutation,
   useGetAvailabilitiesQuery,
 } from '@/store/api/availabilityApiSlice';
 import {
@@ -52,7 +52,7 @@ const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
   const { data: profile } = useGetProfileQuery();
   const { data: availabilities } = useGetAvailabilitiesQuery();
   const [patchProfile] = usePatchProfileMutation();
-  const [deleteAvailability] = useDeleteAvailabilitiesMutation();
+  const [deleteAvailability] = useDeleteAvailabilityMutation();
 
   // State
   const [formData, setFormData] = useState<

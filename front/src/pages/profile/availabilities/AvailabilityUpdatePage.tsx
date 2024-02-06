@@ -9,7 +9,7 @@ import AvailabilityForm, {
 import { UpdateAvailabilityDto } from '@/models/dtos/availability/updateAvailabilityDto';
 import {
   useGetAvailabilityQuery,
-  usePatchAvailabilitiesMutation,
+  usePatchAvailabilityMutation,
 } from '@/store/api/availabilityApiSlice';
 import { useGetJobCategoriesQuery } from '@/store/api/jobApiSlice';
 
@@ -60,7 +60,7 @@ const AvailabilityUpdatePage: FC<AvailabilityUpdatePageProps> = ({
   // API calls
   const { data: availability } = useGetAvailabilityQuery(availabilityId);
   const { data: jobCategories } = useGetJobCategoriesQuery();
-  const [patchAvailability] = usePatchAvailabilitiesMutation();
+  const [patchAvailability] = usePatchAvailabilityMutation();
 
   // State
   const [formData, setFormData] = useState<AvailabilityFormData | undefined>();

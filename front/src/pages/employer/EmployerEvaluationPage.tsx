@@ -11,7 +11,7 @@ import { EmployerEvaluationDto } from '@/models/dtos/employer/EmployerEvaluation
 import {
   useGetEmployerQuery,
   usePostEmployerEvaluationMutation,
-} from '@/store/api/employer';
+} from '@/store/api/employerApiSlice';
 import i18n from '@/utils/i18n';
 
 import { MessagingStackParamList } from '../messaging/MessagingNav';
