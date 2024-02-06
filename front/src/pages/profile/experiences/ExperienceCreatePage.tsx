@@ -51,8 +51,8 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
     zipCode: '',
     city: '',
     companyName: '',
-    startDate: null,
-    endDate: null,
+    startDate: new Date().toISOString(),
+    endDate: new Date().toISOString(),
   });
 
   // Callbacks
@@ -61,7 +61,7 @@ const ExperienceCreatePage: FC<ExperienceCreatePageProps> = ({
       company: {
         name: formData.companyName,
       },
-      jobId: '',
+      jobId: formData.jobId,
       address: {
         firstLine: formData.firstLine,
         zipCode: formData.zipCode,
