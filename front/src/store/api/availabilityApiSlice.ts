@@ -26,20 +26,15 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         query: (id) => `profile/availabilities/${id}`,
         providesTags: (_result, _error, id) => [{ type: 'Availabilities', id }],
       }),
-      postAvailability: builder.mutation<Availability, CreateAvailabilityDto>(
-        {
-          query: (body) => ({
-            url: 'profile/availabilities',
-            method: 'POST',
-            body,
-          }),
-          invalidatesTags: [{ type: 'Availabilities', id: 'LIST' }],
-        },
-      ),
-      patchAvailability: builder.mutation<
-        Availability,
-        UpdateAvailabilityDto
-      >({
+      postAvailability: builder.mutation<Availability, CreateAvailabilityDto>({
+        query: (body) => ({
+          url: 'profile/availabilities',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: [{ type: 'Availabilities', id: 'LIST' }],
+      }),
+      patchAvailability: builder.mutation<Availability, UpdateAvailabilityDto>({
         query: (body) => ({
           url: `profile/availabilities/${body.id}`,
           method: 'PATCH',

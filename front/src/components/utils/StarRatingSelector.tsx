@@ -94,8 +94,8 @@ const StarRatingSelector: FC<StarRatingSelectorProps> = ({
               star === StarKind.FULL_STAR
                 ? 'star'
                 : star === StarKind.HALF_STAR
-                ? 'star-half-full'
-                : 'star-outline'
+                  ? 'star-half-full'
+                  : 'star-outline'
             }
             size={24}
             style={{
