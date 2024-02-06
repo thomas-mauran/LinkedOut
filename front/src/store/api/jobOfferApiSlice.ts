@@ -43,7 +43,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: `jobOffers/${id}/apply`,
         method: 'POST',
       }),
-      invalidatesTags: [{ type: 'JobOffer', id: 'LIST' }],
+      invalidatesTags: (_result, _error, id) => [
+        { type: 'JobOffer', id: 'LIST' },
+        { type: 'JobOffer', id },
+      ],
     }),
   }),
 });

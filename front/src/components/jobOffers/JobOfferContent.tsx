@@ -4,7 +4,7 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { JobOffer } from '@/models/entities/jobOffer';
+import { JobOffer, JobOfferStatus } from '@/models/entities/jobOffer';
 import { usePostApplyJobOfferMutation } from '@/store/api/jobOfferApiSlice';
 import i18n from '@/utils/i18n';
 
@@ -67,7 +67,6 @@ const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
           {
             text: i18n.t('common.confirm'),
             onPress: () => applyToJobOffer(jobOffer.id),
-            style: 'destructive',
           },
         ],
       );
@@ -108,15 +107,17 @@ const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
 
       <Text>{`${jobOffer.description}`}</Text>
 
-      <View style={styles.verticalCentered}>
-        <Button
-          mode={'contained-tonal'}
-          style={styles.button}
-          onPress={() => handleApplyToJobOffer(jobOffer)}
-        >
-          {i18n.t('jobOffer.apply.apply')}
-        </Button>
-      </View>
+      {jobOffer.status === JobOfferStatus.NOT_APPLIED && (
+        <View style={styles.verticalCentered}>
+          <Button
+            mode={'contained-tonal'}
+            style={styles.button}
+            onPress={() => handleApplyToJobOffer(jobOffer)}
+          >
+            {i18n.t('jobOffer.apply.apply')}
+          </Button>
+        </View>
+      )}
     </View>
   );
 };
