@@ -1,3 +1,4 @@
+
 package com.linkedout.profile.function.profile
 
 import com.linkedout.common.utils.RequestResponseFactory
@@ -15,6 +16,7 @@ import java.util.function.Function
 @Component
 class SetProfileOfUser(private val profileService: ProfileService) : Function<Request, Response> {
     override fun apply(t: Request): Response = handleRequestError {
+
         // Extract the request
         val request = t.setUserProfileRequest
         val userId = UUID.fromString(request.userId)

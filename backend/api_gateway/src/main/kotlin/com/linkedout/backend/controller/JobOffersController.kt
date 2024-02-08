@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -15,8 +16,16 @@ import java.security.Principal
 @RestController
 @RequestMapping("/api/v1/jobOffers")
 class JobOffersController(private val jobOffersService: JobOfferService) {
+
     @GetMapping
-    open fun getJobOffers(request: ServerHttpRequest, principal: Principal): Flux<JobOffer> {
+    open fun getJobOffers(
+        request: ServerHttpRequest,
+        principal: Principal,
+        @RequestParam(required = false, defaultValue = "false") onlyApplied: Boolean
+    ): Flux<JobOffer> {
+        if (onlyApplied) {
+            return Flux.fromIterable(jobOffersService.findAllApplied(request.id, principal.name))
+        }
         return Flux.fromIterable(jobOffersService.findAll(request.id, principal.name))
     }
 

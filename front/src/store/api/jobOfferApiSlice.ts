@@ -23,6 +23,21 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (id) => `jobOffers/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'JobOffer', id }],
     }),
+    getAppliedJobOffers: builder.query<JobOffer[], void>({
+      query: () => {
+        return 'jobOffers?onlyApplied=true';
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({
+                type: 'JobOffer' as const,
+                id,
+              })),
+              { type: 'JobOffer', id: 'LIST' },
+            ]
+          : [{ type: 'JobOffer', id: 'LIST' }],
+    }),
     postApplyJobOffer: builder.mutation<JobOffer, string>({
       query: (id) => ({
         url: `jobOffers/${id}/apply`,
@@ -37,4 +52,5 @@ export const {
   useGetJobOffersQuery,
   useGetJobOfferQuery,
   usePostApplyJobOfferMutation,
+  useGetAppliedJobOffersQuery,
 } = extendedApiSlice;

@@ -81,6 +81,15 @@ message GetUserJobOffersResponse {
   repeated models.JobOffer jobOffers = 1;
 }
 
+// Get job offers that a user applied to
+message GetUserJobOffersAppliedRequest {
+  string user_id = 1;
+}
+
+message GetUserJobOffersAppliedResponse {
+  repeated models.JobOffer jobOffers = 1;
+}
+
 // Get a job offer for a user
 message GetUserJobOfferRequest {
   string user_id = 1;

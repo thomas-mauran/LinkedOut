@@ -72,5 +72,6 @@ message Request {
     services.CreateRecommendationProfileRequest create_recommendation_profile_request = 58;
     services.CreateRecommendationExperienceRequest create_recommendation_experience_request = 59;
     services.GetMultipleJobOffersRequest get_multiple_job_offers_request = 60;
+    services.GetUserJobOffersAppliedRequest get_user_job_offers_applied_request = 61;
   }
 }

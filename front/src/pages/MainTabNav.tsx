@@ -1,11 +1,12 @@
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import InternalPagesNav from '@/pages/internal/InternalPagesNav';
 import JobOffersNav from '@/pages/jobOffer/JobOfferNav';
 import MessagingNav from '@/pages/messaging/MessagingNav';
 import ProfileNav from '@/pages/profile/ProfileNav';
 import i18n from '@/utils/i18n';
+
+import JobOffersApplicationNav from './jobOffer/JobOfferApplicationNav';
 
 /**
  * The parameter list for the MainTab navigator.
@@ -43,7 +44,7 @@ const MainTabNav = () => {
       />
       <MainTab.Screen
         name='Applications'
-        component={InternalPagesNav}
+        component={JobOffersApplicationNav}
         options={{
           tabBarLabel: i18n.t('applications.applications'),
           tabBarIcon: ({ color }) => (

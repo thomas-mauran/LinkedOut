@@ -51,6 +51,30 @@ interface JobOfferRepository : ReactiveCrudRepository<JobOffer, UUID> {
                  JOIN company c ON jo.company = c.id
                  JOIN job j ON jo.job = j.id
                  JOIN jobcategory jc ON j.category = jc.id
+                 RIGHT JOIN jobapplication ja ON jo.id = ja.offerid AND ja.userid = :userId
+        """
+    )
+    fun findAllAppliedForUserWithJobAndCompany(userId: UUID): Flux<JobOfferWithJobAndCompanyAndApplicationStatus>
+
+    @Query(
+        """
+        SELECT jo.id                   as jobOfferId,
+               jo.job                  as jobId,
+               jo.title                as jobOfferTitle,
+               jo.description          as jobOfferDescription,
+               jo.geographicArea       as jobOfferGeographicArea,
+               jo.startdate            as jobOfferStartDate,
+               jo.enddate              as jobOfferEndDate,
+               jo.company              as companyId,
+               c.name                  as companyName,
+               jo.salary               as jobOfferSalary,
+               jc.title                as jobCategoryTitle,
+               j.title                 as jobTitle,
+               COALESCE(ja.status, -1) as jobApplicationStatus
+        FROM jobOffer jo
+                 JOIN company c ON jo.company = c.id
+                 JOIN job j ON jo.job = j.id
+                 JOIN jobcategory jc ON j.category = jc.id
                  LEFT JOIN jobapplication ja ON jo.id = ja.offerid AND ja.userid = :userId
         WHERE jo.id = :jobOfferId
         """

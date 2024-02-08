@@ -28,6 +28,7 @@ app:
     jobOffers:
       subjects:
         findAllForUser: jobs.findAllJobOffersForUser
+        findAllAppliedForUser: jobs.findAllJobOffersAppliedForUser
         findMultiple: jobs.findMultipleJobOffers
         findOneForUser: jobs.findOneJobOfferForUser
         applyTo: jobs.applyToJobOffer
