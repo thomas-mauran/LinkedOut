@@ -43,22 +43,42 @@ class JobOfferService(
             recommendation.id // Assuming Recommendation has an 'id' field representing its ID
         }
 
-        val requestJobOffers = RequestResponseFactory.newRequest(requestId)
-            .setGetMultipleJobOffersRequest(
-                Jobs.GetMultipleJobOffersRequest.newBuilder()
-                    .addAllIds(recommendationIds)
-            ).build()
+        if (recommendationIds.size === 0) {
+            val requestJobOffers = RequestResponseFactory.newRequest(requestId)
+                .setGetUserJobOffersRequest(
+                    Jobs.GetUserJobOffersRequest.newBuilder()
+                        .setUserId(userId)
+                ).build()
 
-        val responseJobOffers = natsService.requestWithReply(findMultipleSubject, requestJobOffers)
+            val responseJobOffers = natsService.requestWithReply(findAllSubject, requestJobOffers)
 
-        // Handle the response
-        if (!responseJobOffers.hasGetMultipleJobOffersResponse()) {
-            throw Exception("Invalid response")
-        }
+            // Handle the response
+            if (!responseJobOffers.hasGetUserJobOffersResponse()) {
+                throw Exception("Invalid response")
+            }
 
-        val getUserJobOffersResponse = responseJobOffers.getMultipleJobOffersResponse
-        return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
-            convertJobOfferFromProto(jobOffer)
+            val getUserJobOffersResponse = responseJobOffers.getUserJobOffersResponse
+            return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
+                convertJobOfferFromProto(jobOffer)
+            }
+        }else{
+            val requestJobOffers = RequestResponseFactory.newRequest(requestId)
+                .setGetMultipleJobOffersRequest(
+                    Jobs.GetMultipleJobOffersRequest.newBuilder()
+                        .addAllIds(recommendationIds)
+                ).build()
+
+            val responseJobOffers = natsService.requestWithReply(findMultipleSubject, requestJobOffers)
+
+            // Handle the response
+            if (!responseJobOffers.hasGetMultipleJobOffersResponse()) {
+                throw Exception("Invalid response")
+            }
+
+            val getUserJobOffersResponse = responseJobOffers.getMultipleJobOffersResponse
+            return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
+                convertJobOfferFromProto(jobOffer)
+            }
         }
     }
 
