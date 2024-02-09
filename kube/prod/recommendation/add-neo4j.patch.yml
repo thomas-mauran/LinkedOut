@@ -1,0 +1,21 @@
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: SPRING_NEO4J_URI
+    value: bolt://neo4j:7687
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: SPRING_NEO4J_AUTHENTICATION_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: neo4j-credentials
+        key: username
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: SPRING_NEO4J_AUTHENTICATION_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: neo4j-credentials
+        key: password

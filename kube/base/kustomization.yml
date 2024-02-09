@@ -15,6 +15,8 @@ resources:
   - notification/svc.yml
   - profile/deployment.yml
   - profile/svc.yml
+  - recommendation/deployment.yml
+  - recommendation/svc.yml
 
 commonLabels:
   app.kubernetes.io/part-of: linkedout
