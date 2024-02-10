@@ -27,14 +27,14 @@
       "applyConfirm": "Voulez-vous candidater à cette offre ?"
     },
     "applied": {
-      "jobOfferAppliedList": "Liste des offres d'emploi candidatés"
+      "jobOfferAppliedList": "Candidatures"
     }
   },
   "messaging": {
     "messages": "Messages",
     "info": {
       "messageChannel": "Messages",
-      "textInputPlaceholer": "Votre message"
+      "textInputPlaceholder": "Votre message"
     }
   },
   "profile": {
