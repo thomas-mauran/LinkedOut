@@ -25,6 +25,9 @@
       "apply": "Postuler",
       "applyTitle": "Confirmation de candidature",
       "applyConfirm": "Voulez-vous candidater à cette offre ?"
+    },
+    "applied": {
+      "jobOfferAppliedList": "Liste des offres d'emploi candidatés"
     }
   },
   "messaging": {

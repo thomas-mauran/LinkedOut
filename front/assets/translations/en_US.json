@@ -25,6 +25,9 @@
       "apply": "Apply",
       "applyTitle": "Apply confirmation",
       "applyConfirm": "Do you want to apply to this job?"
+    },
+    "applied": {
+      "jobOfferAppliedList": "Job offer applied list"
     }
   },
   "messaging": {

@@ -76,5 +76,6 @@ message Response {
     services.CreateRecommendationProfileResponse create_recommendation_profile_response = 57;
     services.CreateRecommendationExperienceResponse create_recommendation_experience_response = 58;
     services.GetMultipleJobOffersResponse get_multiple_job_offers_response = 59;
+    services.GetUserJobOffersAppliedResponse get_user_job_offers_applied_response = 60;
   }
 }

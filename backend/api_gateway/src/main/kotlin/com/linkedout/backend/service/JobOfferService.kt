@@ -17,6 +17,7 @@ import java.time.LocalDate
 class JobOfferService(
     private val natsService: NatsService,
     @Value("\${app.services.jobOffers.subjects.findAllForUser}") private val findAllSubject: String,
+    @Value("\${app.services.jobOffers.subjects.findAllAppliedForUser}") private val findAllAppliedSubject: String,
     @Value("\${app.services.jobOffers.subjects.findOneForUser}") private val findOneSubject: String,
     @Value("\${app.services.jobOffers.subjects.findMultiple}") private val findMultipleSubject: String,
     @Value("\${app.services.jobOffers.subjects.applyTo}") private val applyToSubject: String,
@@ -24,7 +25,7 @@ class JobOfferService(
 
 ) {
     fun findAll(requestId: String, userId: String): List<JobOffer> {
-        // Request job offers from the job service
+        // Request job offers from the recommendation
         val request = RequestResponseFactory.newRequest(requestId)
             .setGetRecommendationRequest(
                 Recommendations.GetRecommendationRequest.newBuilder()
@@ -43,21 +44,62 @@ class JobOfferService(
             recommendation.id // Assuming Recommendation has an 'id' field representing its ID
         }
 
+        if (recommendationIds.size === 0) {
+            val requestJobOffers = RequestResponseFactory.newRequest(requestId)
+                .setGetUserJobOffersRequest(
+                    Jobs.GetUserJobOffersRequest.newBuilder()
+                        .setUserId(userId)
+                ).build()
+
+            val responseJobOffers = natsService.requestWithReply(findAllSubject, requestJobOffers)
+
+            // Handle the response
+            if (!responseJobOffers.hasGetUserJobOffersResponse()) {
+                throw Exception("Invalid response")
+            }
+
+            val getUserJobOffersResponse = responseJobOffers.getUserJobOffersResponse
+            return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
+                convertJobOfferFromProto(jobOffer)
+            }
+        } else {
+            val requestJobOffers = RequestResponseFactory.newRequest(requestId)
+                .setGetMultipleJobOffersRequest(
+                    Jobs.GetMultipleJobOffersRequest.newBuilder()
+                        .addAllIds(recommendationIds)
+                ).build()
+
+            val responseJobOffers = natsService.requestWithReply(findMultipleSubject, requestJobOffers)
+
+            // Handle the response
+            if (!responseJobOffers.hasGetMultipleJobOffersResponse()) {
+                throw Exception("Invalid response")
+            }
+
+            val getUserJobOffersResponse = responseJobOffers.getMultipleJobOffersResponse
+            return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
+                convertJobOfferFromProto(jobOffer)
+            }
+        }
+    }
+
+    fun findAllApplied(requestId: String, userId: String): List<JobOffer> {
+        // Request job offers from the job service
         val requestJobOffers = RequestResponseFactory.newRequest(requestId)
-            .setGetMultipleJobOffersRequest(
-                Jobs.GetMultipleJobOffersRequest.newBuilder()
-                    .addAllIds(recommendationIds)
+            .setGetUserJobOffersAppliedRequest(
+                Jobs.GetUserJobOffersAppliedRequest.newBuilder()
+                    .setUserId(userId)
             ).build()
 
-        val responseJobOffers = natsService.requestWithReply(findMultipleSubject, requestJobOffers)
+        val responseJobOffers = natsService.requestWithReply(findAllAppliedSubject, requestJobOffers)
 
         // Handle the response
-        if (!responseJobOffers.hasGetMultipleJobOffersResponse()) {
+        if (!responseJobOffers.hasGetUserJobOffersAppliedResponse()) {
             throw Exception("Invalid response")
         }
 
-        val getUserJobOffersResponse = responseJobOffers.getMultipleJobOffersResponse
-        return getUserJobOffersResponse.jobOffersList.map { jobOffer ->
+        val getUserJobOffersAppliedResponse = responseJobOffers.getUserJobOffersAppliedResponse
+        return getUserJobOffersAppliedResponse.jobOffersList.map { jobOffer ->
             convertJobOfferFromProto(jobOffer)
         }
     }

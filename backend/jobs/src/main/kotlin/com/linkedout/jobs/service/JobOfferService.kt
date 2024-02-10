@@ -15,6 +15,10 @@ class JobOfferService(
         return jobOffer.findAllForUserWithJobAndCompany(userId)
     }
 
+    fun findAllAppliedForUser(userId: UUID): Flux<JobOfferWithJobAndCompanyAndApplicationStatus> {
+        return jobOffer.findAllAppliedForUserWithJobAndCompany(userId)
+    }
+
     fun findOneForUser(userId: UUID, jobOfferId: UUID): Mono<JobOfferWithJobAndCompanyAndApplicationStatus> {
         return jobOffer.findOneForUserWithJobAndCompany(userId, jobOfferId)
     }

@@ -12,6 +12,7 @@ import JobOfferPage, { JobOfferPageParams } from './JobOfferPage';
 export type JobOfferStackParamList = {
   JobOfferList: undefined;
   JobOffer: JobOfferPageParams;
+  JobOfferApplication: undefined;
 };
 
 const JobOfferStack = createNativeStackNavigator<JobOfferStackParamList>();
