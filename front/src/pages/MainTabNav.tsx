@@ -16,7 +16,7 @@ export type MainTabParamList = {
   Home: undefined;
   Applications: undefined;
   Messages: undefined;
-  Profile: undefined;
+  ProfileNav: undefined;
 };
 
 const MainTab = createMaterialBottomTabNavigator<MainTabParamList>();
@@ -71,7 +71,7 @@ const MainTabNav = () => {
         }}
       />
       <MainTab.Screen
-        name='Profile'
+        name='ProfileNav'
         component={ProfileNav}
         options={{
           tabBarLabel: i18n.t('profile.profile'),

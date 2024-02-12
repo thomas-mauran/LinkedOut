@@ -44,7 +44,7 @@ const MessageTextInput: FC<MessageTextInputProps> = ({ messageChannelId }) => {
     <View style={styles.container}>
       <TextInput
         style={styles.textInput}
-        placeholder={i18n.t('messaging.info.textInputPlaceholer')}
+        placeholder={i18n.t('messaging.info.textInputPlaceholder')}
         value={content}
         onChangeText={setContent}
         mode={'outlined'}

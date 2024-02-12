@@ -7,7 +7,7 @@ import AvailabilityForm, {
   AvailabilityFormData,
 } from '@/components/availabilities/AvailabilityForm';
 import { CreateAvailabilityDto } from '@/models/dtos/availability/createAvailabilityDto';
-import { usePostAvailabilitiesMutation } from '@/store/api/availabilityApiSlice';
+import { usePostAvailabilityMutation } from '@/store/api/availabilityApiSlice';
 import { useGetJobCategoriesQuery } from '@/store/api/jobApiSlice';
 
 import { ProfileStackParamList } from '../ProfileNav';
@@ -42,7 +42,7 @@ const AvailabilityCreatePage: FC<AvailabilityCreatePageProps> = ({
 }) => {
   // API calls
   const { data: jobCategories } = useGetJobCategoriesQuery();
-  const [postAvailability] = usePostAvailabilitiesMutation();
+  const [postAvailability] = usePostAvailabilityMutation();
 
   // State
   const [formData, setFormData] = useState<AvailabilityFormData>({

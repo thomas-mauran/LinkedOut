@@ -12,6 +12,6 @@ class EvaluationToProto : Converter<Evaluation, EmployeeEvaluationOuterClass.Emp
             .setEmployerId(source.employerId.toString())
             .setScore(source.score)
             .setComment(source.comment)
-            .setCreatedAt(source.createdAt.toEpochSecond(ZoneOffset.UTC))
+            .setCreatedAt(source.createdAt.toEpochSecond(ZoneOffset.UTC) * 1000)
     }
 }

@@ -26,20 +26,15 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         query: (id) => `profile/availabilities/${id}`,
         providesTags: (_result, _error, id) => [{ type: 'Availabilities', id }],
       }),
-      postAvailabilities: builder.mutation<Availability, CreateAvailabilityDto>(
-        {
-          query: (body) => ({
-            url: 'profile/availabilities',
-            method: 'POST',
-            body,
-          }),
-          invalidatesTags: [{ type: 'Availabilities', id: 'LIST' }],
-        },
-      ),
-      patchAvailabilities: builder.mutation<
-        Availability,
-        UpdateAvailabilityDto
-      >({
+      postAvailability: builder.mutation<Availability, CreateAvailabilityDto>({
+        query: (body) => ({
+          url: 'profile/availabilities',
+          method: 'POST',
+          body,
+        }),
+        invalidatesTags: [{ type: 'Availabilities', id: 'LIST' }],
+      }),
+      patchAvailability: builder.mutation<Availability, UpdateAvailabilityDto>({
         query: (body) => ({
           url: `profile/availabilities/${body.id}`,
           method: 'PATCH',
@@ -50,7 +45,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           { type: 'Availabilities', id },
         ],
       }),
-      deleteAvailabilities: builder.mutation<void, string>({
+      deleteAvailability: builder.mutation<void, string>({
         query: (id) => ({
           url: `profile/availabilities/${id}`,
           method: 'DELETE',
@@ -67,7 +62,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetAvailabilitiesQuery,
   useGetAvailabilityQuery,
-  usePostAvailabilitiesMutation,
-  usePatchAvailabilitiesMutation,
-  useDeleteAvailabilitiesMutation,
+  usePostAvailabilityMutation,
+  usePatchAvailabilityMutation,
+  useDeleteAvailabilityMutation,
 } = extendedApiSlice;

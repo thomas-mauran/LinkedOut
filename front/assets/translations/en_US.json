@@ -27,14 +27,14 @@
       "applyConfirm": "Do you want to apply to this job?"
     },
     "applied": {
-      "jobOfferAppliedList": "Job offer applied list"
+      "jobOfferAppliedList": "Applications"
     }
   },
   "messaging": {
     "messages": "Messages",
     "info": {
       "messageChannel": "Messages",
-      "textInputPlaceholer": "Your message"
+      "textInputPlaceholder": "Your message"
     }
   },
   "profile": {
