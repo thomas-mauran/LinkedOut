@@ -46,7 +46,7 @@ interface JobOfferRepository : ReactiveCrudRepository<JobOffer, UUID> {
                jo.salary               as jobOfferSalary,
                jc.title                as jobCategoryTitle,
                j.title                 as jobTitle,
-               COALESCE(ja.status, -1) as jobApplicationStatus
+               ja.status               as jobApplicationStatus
         FROM jobOffer jo
                  JOIN company c ON jo.company = c.id
                  JOIN job j ON jo.job = j.id

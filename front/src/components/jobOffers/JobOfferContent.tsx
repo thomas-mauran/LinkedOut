@@ -4,6 +4,7 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import JobOfferStatusBadge from '@/components/jobOffers/JobOfferStatusBadge';
 import { JobOffer, JobOfferStatus } from '@/models/entities/jobOffer';
 import { usePostApplyJobOfferMutation } from '@/store/api/jobOfferApiSlice';
 import i18n from '@/utils/i18n';
@@ -19,8 +20,12 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   horizontalContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     gap: 12,
+  },
+  offerTitle: {
+    flex: 1,
   },
   sectionContainer: {
     gap: 8,
@@ -77,7 +82,15 @@ const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
   return (
     <View style={styles.container}>
       <View style={styles.sectionContainer}>
-        <Text variant='titleLarge'>{`${jobOffer.title}`}</Text>
+        <View style={styles.horizontalContainer}>
+          <Text
+            variant='titleLarge'
+            style={styles.offerTitle}
+          >{`${jobOffer.title}`}</Text>
+
+          <JobOfferStatusBadge status={jobOffer.status} />
+        </View>
+
         <View style={styles.sectionContainer}>
           <View style={styles.horizontalContainer}>
             <MaterialCommunityIcons

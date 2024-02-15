@@ -24,6 +24,7 @@ class GetMultipleJobOffers(private val jobOfferService: JobOfferService) : Funct
         val reactiveResponse = jobOfferService.findMultipleWithJobAndCompanyAndApplicationStatus(jobOfferIds)
             .map { jobOffer ->
                 JobOfferWithJobAndCompanyToProto().convert(jobOffer)
+                    .setStatusValue(jobOffer.jobApplicationStatus)
             }
             .reduce(GetMultipleJobOffersResponse.newBuilder()) { builder, jobOffer ->
                 builder.addJobOffers(jobOffer)

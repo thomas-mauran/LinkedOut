@@ -44,7 +44,7 @@ class JobOfferService(
             recommendation.id // Assuming Recommendation has an 'id' field representing its ID
         }
 
-        if (recommendationIds.size === 0) {
+        if (recommendationIds.isEmpty()) {
             val requestJobOffers = RequestResponseFactory.newRequest(requestId)
                 .setGetUserJobOffersRequest(
                     Jobs.GetUserJobOffersRequest.newBuilder()

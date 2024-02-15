@@ -28,6 +28,11 @@
     },
     "applied": {
       "jobOfferAppliedList": "Candidatures"
+    },
+    "status": {
+      "pending": "En attente",
+      "accepted": "Accepté",
+      "rejected": "Refusé"
     }
   },
   "messaging": {

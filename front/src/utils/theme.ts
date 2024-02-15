@@ -271,3 +271,33 @@ export const DarkTheme = deepmerge(AdaptedNavigationDarkTheme, {
   },
   fonts: configureFonts({ config: FontConfig }),
 });
+
+export const LightBadgeColorPalette = {
+  orange: {
+    backgroundColor: '#FFDCBE',
+    textColor: '#2D1600',
+  },
+  green: {
+    backgroundColor: '#B1F49D',
+    textColor: '#002200',
+  },
+  red: {
+    backgroundColor: '#FFDAD4',
+    textColor: '#410000',
+  },
+};
+
+export const DarkBadgeColorPalette = {
+  orange: {
+    backgroundColor: '#6A3C00',
+    textColor: '#FFDCBE',
+  },
+  green: {
+    backgroundColor: '#16520E',
+    textColor: '#B1F49D',
+  },
+  red: {
+    backgroundColor: '#7D2B20',
+    textColor: '#FFDAD4',
+  },
+};
