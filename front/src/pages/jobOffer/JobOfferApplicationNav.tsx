@@ -4,7 +4,7 @@ import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import i18n from '@/utils/i18n';
 
 import JobOfferPage, { JobOfferPageParams } from './JobOfferPage';
-import JobOfferApplicationPage from './jobOfferApplicationPage';
+import JobOfferApplicationPage from './JobOfferApplicationPage';
 
 /**
  * The parameter list for the JobOffersNav navigator.
