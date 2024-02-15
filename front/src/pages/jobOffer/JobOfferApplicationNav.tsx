@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
 import i18n from '@/utils/i18n';
 
+import JobOfferApplicationPage from './JobOfferApplicationPage';
 import JobOfferPage, { JobOfferPageParams } from './JobOfferPage';
-import JobOfferApplicationPage from './jobOfferApplicationPage';
 
 /**
  * The parameter list for the JobOffersNav navigator.

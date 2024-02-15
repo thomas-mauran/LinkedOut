@@ -28,6 +28,11 @@
     },
     "applied": {
       "jobOfferAppliedList": "Applications"
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
     }
   },
   "messaging": {
