@@ -51,6 +51,11 @@ type JobOfferContentProps = {
    * The function to call when a message has been sent.
    */
   onMessageSent?: (message: Message) => void;
+
+  /**
+   * The function to call when the user wants to see the employer's info.
+   */
+  onEmployerInfoClick?: () => void;
 };
 
 /**
@@ -60,6 +65,7 @@ type JobOfferContentProps = {
 const JobOfferContent: FC<JobOfferContentProps> = ({
   jobOffer,
   onMessageSent,
+  onEmployerInfoClick,
 }) => {
   // API calls
   const [applyToJobOffer] = usePostApplyJobOfferMutation();
@@ -143,10 +149,16 @@ const JobOfferContent: FC<JobOfferContentProps> = ({
       )}
 
       {jobOffer.status === JobOfferStatus.ACCEPTED && (
-        <JobOfferMessageSender
-          employerId={jobOffer.employerId}
-          onMessageSent={onMessageSent}
-        />
+        <>
+          <JobOfferMessageSender
+            employerId={jobOffer.employerId}
+            onMessageSent={onMessageSent}
+          />
+
+          <Button mode={'contained-tonal'} onPress={onEmployerInfoClick}>
+            {i18n.t('jobOffer.info.employerInfo')}
+          </Button>
+        </>
       )}
     </View>
   );

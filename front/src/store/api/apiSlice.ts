@@ -24,6 +24,7 @@ export const apiSlice = createApi({
   tagTypes: [
     'Availabilities',
     'Employer',
+    'EmployerEvaluation',
     'Evaluations',
     'Experiences',
     'JobCategories',

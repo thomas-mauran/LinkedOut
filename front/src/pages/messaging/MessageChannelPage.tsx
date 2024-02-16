@@ -2,6 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC, useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Appbar } from 'react-native-paper';
 
 import MessageChannelContent from '@/components/messaging/MessageChannelContent';
 import {
@@ -63,12 +64,22 @@ const MessageChannelPage: FC<MessageChannelPageProps> = ({
     }, [refetchMessages]),
   );
 
-  // Set the header title
+  // Callbacks
+  const handleInfoPress = useCallback(() => {
+    navigation.navigate('EmployerEvaluation', {
+      id: messageChannel.employer.id,
+    });
+  }, [messageChannel, navigation]);
+
+  // Set the header title and button
   useEffect(() => {
     navigation.setOptions({
       headerTitle: `${messageChannel?.employer.firstName} ${messageChannel?.employer.lastName}`,
+      headerRight: () => (
+        <Appbar.Action icon={'information-outline'} onPress={handleInfoPress} />
+      ),
     });
-  }, [messageChannel, navigation]);
+  }, [handleInfoPress, messageChannel, navigation]);
 
   if (messageChannel === undefined || messages === undefined) {
     return null;

@@ -23,7 +23,24 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: body.evaluation,
       }),
-      invalidatesTags: [{ type: 'Employer', id: 'LIST' }],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: 'EmployerEvaluation', id },
+      ],
+    }),
+    getEmployerEvaluation: builder.query<EmployerEvaluation, string>({
+      query: (id) => `employers/${id}/evaluations`,
+      providesTags: (_result, _error, id) => [
+        { type: 'EmployerEvaluation', id },
+      ],
+    }),
+    deleteEmployerEvaluation: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `employers/${id}/evaluations`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_result, _error, id) => [
+        { type: 'EmployerEvaluation', id },
+      ],
     }),
     postEmployerMessage: builder.mutation<Message, CreateEmployerMessageDto>({
       query: (body) => ({
@@ -39,5 +56,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetEmployerQuery,
   usePostEmployerEvaluationMutation,
+  useGetEmployerEvaluationQuery,
+  useDeleteEmployerEvaluationMutation,
   usePostEmployerMessageMutation,
 } = extendedApiSlice;

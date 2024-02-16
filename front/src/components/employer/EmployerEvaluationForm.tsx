@@ -1,9 +1,8 @@
 import { FC, useCallback } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { Text, TextInput } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Button, Text, TextInput } from 'react-native-paper';
 
 import StarRatingSelector from '@/components/utils/StarRatingSelector';
-import { Employer } from '@/models/entities/employer';
 import i18n from '@/utils/i18n';
 
 /**
@@ -11,20 +10,7 @@ import i18n from '@/utils/i18n';
  */
 const styles = StyleSheet.create({
   container: {
-    gap: 6,
-  },
-  nameContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: 8,
-  },
-  profilePicture: {
-    borderRadius: 48,
-    height: 60,
-    width: 60,
-  },
-  textInput: {
-    marginVertical: 8,
+    gap: 12,
   },
 });
 
@@ -41,11 +27,6 @@ export type EmployerEvaluationFormData = {
  */
 type EmployerEvaluationFormProps = {
   /**
-   * The employer to evaluate.
-   */
-  employer: Employer;
-
-  /**
    * The data for the form.
    */
   formData: EmployerEvaluationFormData;
@@ -54,6 +35,11 @@ type EmployerEvaluationFormProps = {
    * The function to call when the form data is updated.
    */
   onFormDataUpdate: (data: EmployerEvaluationFormData) => void;
+
+  /**
+   * The function to call when the form is submitted.
+   */
+  onSubmit: () => void;
 };
 
 /**
@@ -61,9 +47,9 @@ type EmployerEvaluationFormProps = {
  * @constructor
  */
 const EmployerEvaluationForm: FC<EmployerEvaluationFormProps> = ({
-  employer,
   formData,
   onFormDataUpdate,
+  onSubmit,
 }) => {
   // Callbacks
   const handleInputChange = useCallback(
@@ -81,30 +67,23 @@ const EmployerEvaluationForm: FC<EmployerEvaluationFormProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.nameContainer}>
-        <Image
-          style={styles.profilePicture}
-          source={{
-            uri: employer.picture,
-          }}
-        />
-        <View>
-          <Text variant='headlineMedium'>{`${employer.firstName} ${employer.lastName}`}</Text>
-        </View>
-      </View>
       <Text variant='titleLarge'> {i18n.t('employer.giveAReview')}</Text>
       <StarRatingSelector
         rating={formData.score}
         onStarPress={(value) => handleInputChange('score', value)}
       />
+
       <TextInput
         label={i18n.t('employer.review')}
         value={formData.review}
-        style={styles.textInput}
         multiline
         numberOfLines={6}
         onChangeText={(value) => handleInputChange('review', value)}
       />
+
+      <Button mode='contained' onPress={onSubmit}>
+        {i18n.t('employer.sendEvaluation')}
+      </Button>
     </View>
   );
 };

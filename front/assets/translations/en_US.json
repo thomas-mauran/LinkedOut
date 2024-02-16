@@ -14,12 +14,18 @@
     "evaluation": "Employer evaluation",
     "giveAReview": "Give a review",
     "review": "Describe your experience at this job",
-    "sendEvaluation": "Send my evaluation"
+    "sendEvaluation": "Send my evaluation",
+    "deleteEvaluation": {
+      "button": "Delete my evaluation",
+      "title": "Delete evaluation",
+      "message": "Are you sure you want to delete your evaluation?"
+    }
   },
   "jobOffer": {
     "info": {
       "jobOfferList": "Job offer list",
-      "jobOffer": "Job offer"
+      "jobOffer": "Job offer",
+      "employerInfo": "See employer information"
     },
     "apply": {
       "apply": "Apply",

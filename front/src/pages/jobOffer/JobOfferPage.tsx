@@ -59,6 +59,12 @@ const JobOfferPage: FC<JobOfferPageProps> = ({ navigation, route }) => {
     [navigation],
   );
 
+  const handleEmployerInfoClick = useCallback(() => {
+    navigation.navigate('OfferEmployerEvaluation', {
+      id: jobOffer?.employerId,
+    });
+  }, [jobOffer, navigation]);
+
   if (jobOffer === undefined) {
     return null;
   }
@@ -68,7 +74,11 @@ const JobOfferPage: FC<JobOfferPageProps> = ({ navigation, route }) => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <JobOfferContent jobOffer={jobOffer} onMessageSent={handleMessageSent} />
+      <JobOfferContent
+        jobOffer={jobOffer}
+        onMessageSent={handleMessageSent}
+        onEmployerInfoClick={handleEmployerInfoClick}
+      />
     </ScrollView>
   );
 };

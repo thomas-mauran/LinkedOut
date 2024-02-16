@@ -1,6 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
+import EmployerEvaluationPage, {
+  EmployerEvaluationPageParams,
+} from '@/pages/employer/EmployerEvaluationPage';
 import MessageChannelPage, {
   MessageChannelPageParams,
 } from '@/pages/messaging/MessageChannelPage';
@@ -17,6 +20,7 @@ export type JobOfferStackParamList = {
   JobOfferList: undefined;
   JobOffer: JobOfferPageParams;
   JobOfferApplication: undefined;
+  OfferEmployerEvaluation: EmployerEvaluationPageParams;
 };
 
 const JobOfferStack = createNativeStackNavigator<JobOfferStackParamList>();
@@ -46,6 +50,14 @@ const JobOffersNav = () => {
         component={MessageChannelPage}
         options={{
           headerTitle: `${i18n.t('messaging.info.messageChannel')}`,
+          headerShown: true,
+        }}
+      />
+      <JobOfferStack.Screen
+        name='OfferEmployerEvaluation'
+        component={EmployerEvaluationPage}
+        options={{
+          headerTitle: `${i18n.t('employer.evaluation')}`,
           headerShown: true,
         }}
       />
