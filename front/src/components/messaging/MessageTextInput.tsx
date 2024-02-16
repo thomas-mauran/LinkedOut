@@ -30,9 +30,11 @@ type MessageTextInputProps = {
 };
 
 const MessageTextInput: FC<MessageTextInputProps> = ({ messageChannelId }) => {
+  // Hooks
   const theme = useTheme();
-  // API calls
   const [content, setContent] = useState('');
+
+  // API calls
   const [postMessage] = usePostMessageMutation();
 
   // Callbacks
@@ -40,6 +42,7 @@ const MessageTextInput: FC<MessageTextInputProps> = ({ messageChannelId }) => {
     postMessage({ id: messageChannelId, content });
     setContent('');
   };
+
   return (
     <View style={styles.container}>
       <TextInput

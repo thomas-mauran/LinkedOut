@@ -1,8 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import JobOfferContent from '@/components/jobOffers/JobOfferContent';
+import { Message } from '@/models/entities/message';
 import { useGetJobOfferQuery } from '@/store/api/jobOfferApiSlice';
 
 import { JobOfferStackParamList } from './JobOfferNav';
@@ -43,12 +44,20 @@ export type JobOfferPageParams = {
  * Displays the page for a single job offer.
  * @constructor
  */
-const JobOfferPage: FC<JobOfferPageProps> = ({ route }) => {
+const JobOfferPage: FC<JobOfferPageProps> = ({ navigation, route }) => {
   // Route params
   const { id: jobOfferId } = route.params;
 
   // API calls
   const { data: jobOffer } = useGetJobOfferQuery(jobOfferId);
+
+  // Callbacks
+  const handleMessageSent = useCallback(
+    (message: Message) => {
+      navigation.navigate('EmployerMessageChannel', { id: message.channelId });
+    },
+    [navigation],
+  );
 
   if (jobOffer === undefined) {
     return null;
@@ -59,7 +68,7 @@ const JobOfferPage: FC<JobOfferPageProps> = ({ route }) => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <JobOfferContent jobOffer={jobOffer} />
+      <JobOfferContent jobOffer={jobOffer} onMessageSent={handleMessageSent} />
     </ScrollView>
   );
 };

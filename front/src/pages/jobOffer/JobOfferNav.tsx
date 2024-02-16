@@ -1,6 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
+import MessageChannelPage, {
+  MessageChannelPageParams,
+} from '@/pages/messaging/MessageChannelPage';
 import i18n from '@/utils/i18n';
 
 import JobOfferListPage from './JobOfferListPage';
@@ -10,6 +13,7 @@ import JobOfferPage, { JobOfferPageParams } from './JobOfferPage';
  * The parameter list for the JobOffersNav navigator.
  */
 export type JobOfferStackParamList = {
+  EmployerMessageChannel: MessageChannelPageParams;
   JobOfferList: undefined;
   JobOffer: JobOfferPageParams;
   JobOfferApplication: undefined;
@@ -36,6 +40,14 @@ const JobOffersNav = () => {
         name='JobOffer'
         component={JobOfferPage}
         options={{ headerTitle: `${i18n.t('jobOffer.info.jobOffer')}` }}
+      />
+      <JobOfferStack.Screen
+        name='EmployerMessageChannel'
+        component={MessageChannelPage}
+        options={{
+          headerTitle: `${i18n.t('messaging.info.messageChannel')}`,
+          headerShown: true,
+        }}
       />
     </JobOfferStack.Navigator>
   );

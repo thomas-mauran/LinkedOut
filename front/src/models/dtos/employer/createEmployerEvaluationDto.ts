@@ -3,7 +3,7 @@ import { EmployerEvaluation } from '@/models/entities/employerEvaluation';
 /**
  * DTO for creating a new employer evaluation.
  */
-export type EmployerEvaluationDto = {
+export type CreateEmployerEvaluationDto = {
   /**
    * The id of the employer.
    */

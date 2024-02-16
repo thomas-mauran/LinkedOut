@@ -7,7 +7,7 @@ import { Button } from 'react-native-paper';
 import EmployerEvaluationForm, {
   EmployerEvaluationFormData,
 } from '@/components/employer/EmployerEvaluationForm';
-import { EmployerEvaluationDto } from '@/models/dtos/employer/EmployerEvaluationDto';
+import { CreateEmployerEvaluationDto } from '@/models/dtos/employer/createEmployerEvaluationDto';
 import {
   useGetEmployerQuery,
   usePostEmployerEvaluationMutation,
@@ -69,7 +69,7 @@ const EmployerEvaluationPage: FC<EmployerEvaluationPageProps> = ({
 
   // Callbacks
   const handleSubmitEvaluation = useCallback(() => {
-    const newEvaluation: EmployerEvaluationDto = {
+    const newEvaluation: CreateEmployerEvaluationDto = {
       id: employerId,
       evaluation: {
         score: formData.score,
