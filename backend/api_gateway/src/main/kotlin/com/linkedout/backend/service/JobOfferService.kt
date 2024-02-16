@@ -161,7 +161,8 @@ class JobOfferService(
                 source.company.name
             ),
             source.salary,
-            source.statusValue
+            source.statusValue,
+            source.employerId
         )
     }
 }
