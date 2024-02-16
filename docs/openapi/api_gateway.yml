@@ -1234,6 +1234,10 @@ components:
           type: integer
           format: int8
           example: -1
+        employerId:
+          type: string
+          format: uuid
+          example: 813ec247-9746-4049-b455-4ffe279f6221
     MessageChannel:
       type: object
       properties:

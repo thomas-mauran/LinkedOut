@@ -10,6 +10,8 @@ data class JobOfferWithJobAndCompanyAndApplicationStatus(
     val jobId: String,
     @Column("companyid")
     val companyId: String,
+    @Column("employerid")
+    val employerId: String,
     @Column("joboffertitle")
     val title: String,
     @Column("jobofferdescription")

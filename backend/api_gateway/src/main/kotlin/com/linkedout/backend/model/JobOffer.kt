@@ -13,5 +13,6 @@ data class JobOffer(
     val job: Job,
     val company: Company,
     val salary: Int,
-    val status: Int
+    val status: Int,
+    val employerId: String
 )

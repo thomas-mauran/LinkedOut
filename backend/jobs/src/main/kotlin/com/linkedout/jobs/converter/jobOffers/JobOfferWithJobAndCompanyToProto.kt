@@ -27,5 +27,6 @@ class JobOfferWithJobAndCompanyToProto : Converter<JobOfferWithJobAndCompanyAndA
                     .setTitle(source.jobTitle)
                     .setCategory(source.jobCategoryTitle)
             )
+            .setEmployerId(source.employerId)
     }
 }

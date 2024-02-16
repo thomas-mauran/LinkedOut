@@ -21,4 +21,5 @@ message JobOffer {
   Job job = 8;
   Company company = 9;
   Status status = 10;
+  string employerId = 11;
 }
