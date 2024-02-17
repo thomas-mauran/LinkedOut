@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button } from 'react-native-paper';
 
+import ProfileShareResumeButton from '@/components/profile/ProfileShareResumeButton';
 import ProfileHeaderDescription from '@/components/profile/header/ProfileHeaderDescription';
 import ProfileHeaderName from '@/components/profile/header/ProfileHeaderName';
-import i18n from '@/utils/i18n';
 
 /**
  * The styles for the ProfileHeader component.
@@ -68,10 +67,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({
       />
 
       <ProfileHeaderDescription shortBiography={shortBiography} />
-
-      <Button icon='file-document' mode={'contained-tonal'}>
-        {i18n.t('profile.info.downloadResume')}
-      </Button>
+      <ProfileShareResumeButton />
     </View>
   );
 };

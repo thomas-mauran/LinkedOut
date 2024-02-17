@@ -64,7 +64,15 @@
       "references": "Références",
       "uploadPicture": "Modifier la photo de profil",
       "uploadResume": "Modifier le CV",
-      "downloadResume": "Télécharger le CV",
+      "shareResume": "Partager le CV",
+      "resumeNotFound": {
+        "title": "Aucun CV trouvé",
+        "message": "Vous n'avez pas encore ajouté de CV à votre profil."
+      },
+      "resumeDownloadError": {
+        "title": "Erreur de téléchargement",
+        "message": "Une erreur est survenue lors du téléchargement de votre CV."
+      },
       "information": "Informations",
       "firstName": "Prénom",
       "lastName": "Nom",
