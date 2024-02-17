@@ -5,7 +5,10 @@ import { Appbar } from 'react-native-paper';
 
 import ProfileContents from '@/components/profile/ProfileContents';
 import { useGetAvailabilitiesQuery } from '@/store/api/availabilityApiSlice';
-import { useGetProfileQuery } from '@/store/api/profileApiSlice';
+import {
+  useGetProfilePictureQuery,
+  useGetProfileQuery,
+} from '@/store/api/profileApiSlice';
 
 import { ProfileStackParamList } from './ProfileNav';
 
@@ -24,6 +27,7 @@ type ProfilePageProps = NativeStackScreenProps<
 const ProfilePage: FC<ProfilePageProps> = ({ navigation }) => {
   // API calls
   const { data: profile, refetch: refetchProfile } = useGetProfileQuery();
+  const { data: profilePicture } = useGetProfilePictureQuery();
   const { data: availabilities, refetch: refetchAvailabilities } =
     useGetAvailabilitiesQuery();
 
@@ -71,7 +75,7 @@ const ProfilePage: FC<ProfilePageProps> = ({ navigation }) => {
   return (
     <ProfileContents
       profile={profile}
-      profilePictureUrl={`${process.env.EXPO_PUBLIC_API_URL}/profile/photo`}
+      profilePictureUrl={profilePicture}
       availabilities={availabilities}
       onExperiencesPress={handleExperiencesPress}
       onReferencesPress={handleReferencesPress}

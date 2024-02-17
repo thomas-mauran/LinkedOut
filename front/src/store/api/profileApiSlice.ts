@@ -28,6 +28,21 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Profile'],
     }),
+    getProfilePicture: builder.query<string, void>({
+      query: () => ({
+        url: 'profile/photo',
+        responseHandler: async (response) => {
+          const blob = await response.blob();
+
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+          });
+        },
+      }),
+      providesTags: ['ProfilePicture'],
+    }),
     uploadProfilePicture: builder.mutation<void, string>({
       query: (uri) => {
         const formData = new FormData();
@@ -53,5 +68,6 @@ export const {
   useGetProfileQuery,
   usePatchProfileMutation,
   usePutProfileMutation,
+  useGetProfilePictureQuery,
   useUploadProfilePictureMutation,
 } = extendedApiSlice;
