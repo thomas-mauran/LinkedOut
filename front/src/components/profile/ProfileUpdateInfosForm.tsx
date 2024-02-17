@@ -3,6 +3,7 @@ import { Image, StyleSheet, View, ViewStyle } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
 
 import ProfileUploadPictureButton from '@/components/profile/ProfileUploadPictureButton';
+import ProfileUploadResumeButton from '@/components/profile/ProfileUploadResumeButton';
 import i18n from '@/utils/i18n';
 
 /**
@@ -26,6 +27,10 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   textInput: {
+    marginVertical: 8,
+  },
+  uploadButtonContainer: {
+    gap: 8,
     marginVertical: 8,
   },
 });
@@ -128,7 +133,10 @@ const ProfileUpdateInfosForm: FC<ProfileUpdateInfosFormProps> = ({
         onChangeText={(value) => handleInputChange('shortBiography', value)}
       />
 
-      <ProfileUploadPictureButton />
+      <View style={styles.uploadButtonContainer}>
+        <ProfileUploadPictureButton />
+        <ProfileUploadResumeButton />
+      </View>
 
       <Text variant='headlineMedium' style={styles.sectionTitle}>
         {i18n.t('profile.info.contact')}

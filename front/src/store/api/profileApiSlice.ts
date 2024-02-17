@@ -61,6 +61,24 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ['ProfilePicture'],
     }),
+    uploadResume: builder.mutation<void, string>({
+      query: (uri) => {
+        const formData = new FormData();
+        formData.append('file', {
+          uri,
+          name: 'cv.pdf',
+          type: 'application/pdf',
+        });
+
+        return {
+          url: 'profile/cv',
+          method: 'POST',
+          body: formData,
+          formData: true,
+        };
+      },
+      invalidatesTags: ['ProfileResume'],
+    }),
   }),
 });
 
@@ -70,4 +88,5 @@ export const {
   usePutProfileMutation,
   useGetProfilePictureQuery,
   useUploadProfilePictureMutation,
+  useUploadResumeMutation,
 } = extendedApiSlice;

@@ -29,6 +29,7 @@ export const apiSlice = createApi({
     'JobCategories',
     'Profile',
     'ProfilePicture',
+    'ProfileResume',
     'References',
     'Job',
     'JobOffer',
