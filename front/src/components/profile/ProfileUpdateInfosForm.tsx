@@ -2,6 +2,7 @@ import { FC, useCallback } from 'react';
 import { Image, StyleSheet, View, ViewStyle } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
 
+import ProfileUploadPictureButton from '@/components/profile/ProfileUploadPictureButton';
 import i18n from '@/utils/i18n';
 
 /**
@@ -126,6 +127,8 @@ const ProfileUpdateInfosForm: FC<ProfileUpdateInfosFormProps> = ({
         numberOfLines={6}
         onChangeText={(value) => handleInputChange('shortBiography', value)}
       />
+
+      <ProfileUploadPictureButton />
 
       <Text variant='headlineMedium' style={styles.sectionTitle}>
         {i18n.t('profile.info.contact')}

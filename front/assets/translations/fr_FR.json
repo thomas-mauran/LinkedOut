@@ -62,6 +62,8 @@
       "phoneNumber": "Numéro de téléphone",
       "email": "Email",
       "references": "Références",
+      "uploadPicture": "Modifier la photo de profil",
+      "uploadResume": "Modifier le CV",
       "downloadResume": "Télécharger le CV",
       "information": "Informations",
       "firstName": "Prénom",

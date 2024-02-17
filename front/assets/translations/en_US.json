@@ -63,6 +63,8 @@
       "phoneNumber": "Phone number",
       "email": "Email",
       "references": "References",
+      "uploadPicture": "Upload profile picture",
+      "uploadResume": "Upload resume",
       "downloadResume": "Download resume",
       "information": "Information",
       "firstName": "First name",

@@ -28,6 +28,24 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Profile'],
     }),
+    uploadProfilePicture: builder.mutation<void, string>({
+      query: (uri) => {
+        const formData = new FormData();
+        formData.append('file', {
+          uri,
+          name: 'profile-picture.png',
+          type: 'image/png',
+        });
+
+        return {
+          url: 'profile/photo',
+          method: 'POST',
+          body: formData,
+          formData: true,
+        };
+      },
+      invalidatesTags: ['ProfilePicture'],
+    }),
   }),
 });
 
@@ -35,4 +53,5 @@ export const {
   useGetProfileQuery,
   usePatchProfileMutation,
   usePutProfileMutation,
+  useUploadProfilePictureMutation,
 } = extendedApiSlice;
