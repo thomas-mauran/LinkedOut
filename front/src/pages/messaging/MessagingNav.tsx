@@ -15,10 +15,10 @@ import MessageTabBarNav from './MessageTabBarNav';
  * The parameter list for the MessagingNav navigator.
  */
 export type MessagingStackParamList = {
+  EmployerEvaluation: EmployerEvaluationPageParams;
   MessageChannelList: undefined;
   MessageChannel: MessageChannelPageParams;
   MessageTabBar: undefined;
-  EmployerEvaluation: EmployerEvaluationPageParams;
 };
 
 const MessagingStack = createNativeStackNavigator<MessagingStackParamList>();

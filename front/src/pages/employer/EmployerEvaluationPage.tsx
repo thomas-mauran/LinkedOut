@@ -1,18 +1,13 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button } from 'react-native-paper';
 
-import EmployerEvaluationForm, {
-  EmployerEvaluationFormData,
-} from '@/components/employer/EmployerEvaluationForm';
-import { EmployerEvaluationDto } from '@/models/dtos/employer/EmployerEvaluationDto';
+import EmployerEvaluationContent from '@/components/employer/EmployerEvaluationContent';
 import {
+  useGetEmployerEvaluationQuery,
   useGetEmployerQuery,
-  usePostEmployerEvaluationMutation,
 } from '@/store/api/employerApiSlice';
-import i18n from '@/utils/i18n';
 
 import { MessagingStackParamList } from '../messaging/MessagingNav';
 
@@ -46,65 +41,44 @@ export type EmployerEvaluationPageParams = {
 };
 
 /**
- * Displays the page for a single message channel.
+ * Displays the page for an employer.
  * @constructor
  */
-const EmployerEvaluationPage: FC<EmployerEvaluationPageProps> = ({
-  route,
-  navigation,
-}) => {
+const EmployerEvaluationPage: FC<EmployerEvaluationPageProps> = ({ route }) => {
+  // Route params
   const { id: employerId } = route.params;
 
   // API calls
   const { data: employer, refetch: refetchEmployer } =
     useGetEmployerQuery(employerId);
 
-  const [postEmployerEvaluation] = usePostEmployerEvaluationMutation();
-
-  // State
-  const [formData, setFormData] = useState<EmployerEvaluationFormData>({
-    score: 1,
-    review: '',
-  });
-
-  // Callbacks
-  const handleSubmitEvaluation = useCallback(() => {
-    const newEvaluation: EmployerEvaluationDto = {
-      id: employerId,
-      evaluation: {
-        score: formData.score,
-        review: formData.review,
-      },
-    };
-
-    postEmployerEvaluation(newEvaluation)
-      .unwrap()
-      .then(() => {
-        navigation.goBack();
-      });
-  }, [employerId, formData, navigation, postEmployerEvaluation]);
+  const {
+    data: employerEvaluation,
+    refetch: refetchEmployerEvaluation,
+    isError: hasEmployerEvaluationErrored,
+  } = useGetEmployerEvaluationQuery(employerId);
 
   // Fetch data from the API when the page is focused
   useFocusEffect(
     useCallback(() => {
       refetchEmployer();
-    }, [refetchEmployer]),
+      refetchEmployerEvaluation();
+    }, [refetchEmployer, refetchEmployerEvaluation]),
   );
 
-  if (employer === undefined) {
+  if (
+    employer === undefined ||
+    (employerEvaluation === undefined && !hasEmployerEvaluationErrored)
+  ) {
     return null;
   }
 
   return (
     <View style={styles.contentContainer}>
-      <EmployerEvaluationForm
+      <EmployerEvaluationContent
         employer={employer}
-        formData={formData}
-        onFormDataUpdate={setFormData}
+        employerEvaluation={employerEvaluation}
       />
-      <Button mode='contained-tonal' onPress={handleSubmitEvaluation}>
-        {i18n.t('employer.sendEvaluation')}
-      </Button>
     </View>
   );
 };

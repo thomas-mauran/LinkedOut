@@ -4,8 +4,10 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { JobOfferMessageSender } from '@/components/jobOffers/JobOfferMessageSender';
 import JobOfferStatusBadge from '@/components/jobOffers/JobOfferStatusBadge';
 import { JobOffer, JobOfferStatus } from '@/models/entities/jobOffer';
+import { Message } from '@/models/entities/message';
 import { usePostApplyJobOfferMutation } from '@/store/api/jobOfferApiSlice';
 import i18n from '@/utils/i18n';
 
@@ -44,13 +46,27 @@ type JobOfferContentProps = {
    * The job offer to display.
    */
   jobOffer: JobOffer;
+
+  /**
+   * The function to call when a message has been sent.
+   */
+  onMessageSent?: (message: Message) => void;
+
+  /**
+   * The function to call when the user wants to see the employer's info.
+   */
+  onEmployerInfoClick?: () => void;
 };
 
 /**
  * Displays the details about a job offer.
  * @constructor
  */
-const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
+const JobOfferContent: FC<JobOfferContentProps> = ({
+  jobOffer,
+  onMessageSent,
+  onEmployerInfoClick,
+}) => {
   // API calls
   const [applyToJobOffer] = usePostApplyJobOfferMutation();
 
@@ -130,6 +146,19 @@ const JobOfferContent: FC<JobOfferContentProps> = ({ jobOffer }) => {
             {i18n.t('jobOffer.apply.apply')}
           </Button>
         </View>
+      )}
+
+      {jobOffer.status === JobOfferStatus.ACCEPTED && (
+        <>
+          <JobOfferMessageSender
+            employerId={jobOffer.employerId}
+            onMessageSent={onMessageSent}
+          />
+
+          <Button mode={'contained-tonal'} onPress={onEmployerInfoClick}>
+            {i18n.t('jobOffer.info.employerInfo')}
+          </Button>
+        </>
       )}
     </View>
   );

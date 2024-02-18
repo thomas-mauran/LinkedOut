@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 type MessageChannelListProps = {
   /**
-   * The function to call when an a message channel is pressed.
+   * The function to call when a message channel is pressed.
    */
   onItemPress?: (messageChannel: MessageChannel) => void;
 

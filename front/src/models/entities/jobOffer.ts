@@ -48,4 +48,9 @@ export type JobOffer = {
    * The status of the job offer.
    */
   status: JobOfferStatus;
+
+  /**
+   * The ID of the employer that created the job offer.
+   */
+  employerId: string;
 };

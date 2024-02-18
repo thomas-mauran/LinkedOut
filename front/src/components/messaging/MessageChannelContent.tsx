@@ -33,7 +33,7 @@ type MessageChannelContentProps = {
 };
 
 /**
- * Displays the the conversation of a message channel.
+ * Displays the conversation of a message channel.
  * @constructor
  */
 const MessageChannelContent: FC<MessageChannelContentProps> = ({

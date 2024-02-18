@@ -69,6 +69,7 @@ const FirstLoginPage: FC = () => {
 
     putProfile(newProfile);
   }, [formData, putProfile]);
+
   return (
     <ScrollView
       style={styles.container}

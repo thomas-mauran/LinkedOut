@@ -14,12 +14,18 @@
     "evaluation": "Avis sur l'employeur",
     "giveAReview": "Donnez un avis",
     "review": "Decrivez votre expérience à ce job",
-    "sendEvaluation": "Envoyer mon avis"
+    "sendEvaluation": "Envoyer mon avis",
+    "deleteEvaluation": {
+      "button": "Supprimer mon avis",
+      "title": "Suppression de l'avis",
+      "message": "Voulez-vous vraiment supprimer votre avis ?"
+    }
   },
   "jobOffer": {
     "info": {
       "jobOfferList": "Liste des offres d'emploi",
-      "jobOffer": "Offre d'emploi"
+      "jobOffer": "Offre d'emploi",
+      "employerInfo": "Voir le profil de l'employeur"
     },
     "apply": {
       "apply": "Postuler",
