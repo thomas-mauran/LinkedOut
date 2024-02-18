@@ -69,7 +69,17 @@
       "phoneNumber": "Phone number",
       "email": "Email",
       "references": "References",
-      "downloadResume": "Download resume",
+      "uploadPicture": "Upload profile picture",
+      "uploadResume": "Upload resume",
+      "shareResume": "Share resume",
+      "resumeNotFound": {
+        "title": "Resume not found",
+        "message": "You have not uploaded a resume yet."
+      },
+      "resumeDownloadError": {
+        "title": "Download error",
+        "message": "An error occurred while downloading the resume."
+      },
       "information": "Information",
       "firstName": "First name",
       "lastName": "Last name",

@@ -14,6 +14,7 @@ import {
   useGetAvailabilitiesQuery,
 } from '@/store/api/availabilityApiSlice';
 import {
+  useGetProfilePictureQuery,
   useGetProfileQuery,
   usePatchProfileMutation,
 } from '@/store/api/profileApiSlice';
@@ -50,6 +51,7 @@ type ProfileUpdatePageProps = NativeStackScreenProps<
 const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
   // API calls
   const { data: profile } = useGetProfileQuery();
+  const { data: profilePicture } = useGetProfilePictureQuery();
   const { data: availabilities } = useGetAvailabilitiesQuery();
   const [patchProfile] = usePatchProfileMutation();
   const [deleteAvailability] = useDeleteAvailabilityMutation();
@@ -143,7 +145,7 @@ const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
       contentContainerStyle={styles.contentContainer}
     >
       <ProfileUpdateInfosForm
-        profilePictureUrl={`${process.env.EXPO_PUBLIC_API_URL}/profile/photo`}
+        profilePictureUrl={profilePicture}
         data={formData}
         onDataChange={setFormData}
       />

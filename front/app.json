@@ -28,6 +28,11 @@
     "experiments": {
       "tsconfigPaths": true
     },
-    "plugins": ["expo-localization", "expo-font", "expo-secure-store"]
+    "plugins": [
+      "expo-localization",
+      "expo-font",
+      "expo-secure-store",
+      "expo-document-picker"
+    ]
   }
 }
