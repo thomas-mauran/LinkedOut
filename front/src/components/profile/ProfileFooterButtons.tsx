@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 
+import LogoutButton from '@/components/login/LogoutButton';
 import BigButton from '@/components/utils/BigButton';
 import i18n from '@/utils/i18n';
 
@@ -10,6 +11,9 @@ import i18n from '@/utils/i18n';
 const styles = StyleSheet.create({
   container: {
     gap: 8,
+  },
+  logoutButton: {
+    marginTop: 8,
   },
 });
 
@@ -69,6 +73,8 @@ const ProfileFooterButtons: FC<ProfileFooterButtonsProps> = ({
         subtitle={i18n.t('profile.info.reviewsCount', { count: nbReviews })}
         onPress={onReferencesPress}
       />
+
+      <LogoutButton style={styles.logoutButton} />
     </View>
   );
 };
