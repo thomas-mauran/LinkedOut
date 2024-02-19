@@ -130,6 +130,13 @@
       "radiusRange": "Rayon de recherche : %{range} km",
       "delete": "Supprimer la disponibilité",
       "deleteConfirm": "Voulez-vous vraiment supprimer cette disponibilité?"
+    },
+    "requestDeletion": {
+      "button": "Supprimer mon profil",
+      "buttonDisabled": "Suppression du profil demandée",
+      "title": "Demande de suppression de profil",
+      "message": "Êtes-vous sûr de vouloir supprimer votre profil ?\n\nUn administrateur devra valider votre demande avant que votre profil ne soit supprimé.",
+      "confirm": "Confirmer la demande"
     }
   },
   "login": {

@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import { Appbar, Button } from 'react-native-paper';
 
 import AvailabilityList from '@/components/availabilities/AvailabilityList';
 import ProfileUpdateInfosForm, {
@@ -17,6 +17,7 @@ import {
   useGetProfilePictureQuery,
   useGetProfileQuery,
   usePatchProfileMutation,
+  useRequestDeletionMutation,
 } from '@/store/api/profileApiSlice';
 import i18n from '@/utils/i18n';
 
@@ -33,6 +34,9 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingBottom: 8,
     paddingHorizontal: 16,
+  },
+  requestDeletionButton: {
+    marginTop: 8,
   },
 });
 
@@ -55,6 +59,7 @@ const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
   const { data: availabilities } = useGetAvailabilitiesQuery();
   const [patchProfile] = usePatchProfileMutation();
   const [deleteAvailability] = useDeleteAvailabilityMutation();
+  const [requestDeletion] = useRequestDeletionMutation();
 
   // State
   const [formData, setFormData] = useState<
@@ -110,6 +115,24 @@ const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
     [deleteAvailability],
   );
 
+  const handleRequestDeletionPress = useCallback(() => {
+    Alert.alert(
+      i18n.t('profile.requestDeletion.title'),
+      i18n.t('profile.requestDeletion.message'),
+      [
+        {
+          text: i18n.t('common.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: i18n.t('profile.requestDeletion.confirm'),
+          onPress: () => requestDeletion(),
+          style: 'destructive',
+        },
+      ],
+    );
+  }, [requestDeletion]);
+
   // Set the header button
   useEffect(() => {
     navigation.setOptions({
@@ -157,6 +180,17 @@ const ProfileUpdatePage: FC<ProfileUpdatePageProps> = ({ navigation }) => {
         onItemEditPress={handleEditAvailabilityPress}
         onItemDeletePress={handleDeleteAvailabilityPress}
       />
+
+      <Button
+        mode='contained-tonal'
+        onPress={handleRequestDeletionPress}
+        style={styles.requestDeletionButton}
+        disabled={profile.deletionRequested}
+      >
+        {profile.deletionRequested
+          ? i18n.t('profile.requestDeletion.buttonDisabled')
+          : i18n.t('profile.requestDeletion.button')}
+      </Button>
     </ScrollView>
   );
 };

@@ -130,6 +130,13 @@
       "radiusRange": "Radius range: %{range} km",
       "delete": "Delete availability",
       "deleteConfirm": "Are you sure you want to delete this availability?"
+    },
+    "requestDeletion": {
+      "button": "Delete my profile",
+      "buttonDisabled": "Profile deletion requested",
+      "title": "Request profile deletion",
+      "message": "Are you sure you want to request the deletion of your profile?\n\nAn administrator will manually review your request before deleting your profile.",
+      "confirm": "Request deletion"
     }
   },
   "login": {
