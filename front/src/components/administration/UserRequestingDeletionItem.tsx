@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { Icon, Text, TouchableRipple } from 'react-native-paper';
 
 import ProfileHeaderDescription from '@/components/profile/header/ProfileHeaderDescription';
 import { Profile } from '@/models/entities/profile';
@@ -45,20 +45,22 @@ type UserRequestingDeletionItemProps = {
  */
 export const UserRequestingDeletionItem: FC<
   UserRequestingDeletionItemProps
-> = ({ profile }) => {
+> = ({ profile, onItemPress }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.nameContainer}>
-        <Text variant='headlineSmall'>
-          {profile.firstName} {profile.lastName}
-        </Text>
-        <ProfileHeaderDescription shortBiography={profile.shortBiography} />
-      </View>
+    <TouchableRipple onPress={() => onItemPress?.(profile)}>
+      <View style={styles.container}>
+        <View style={styles.nameContainer}>
+          <Text variant='headlineSmall'>
+            {profile.firstName} {profile.lastName}
+          </Text>
+          <ProfileHeaderDescription shortBiography={profile.shortBiography} />
+        </View>
 
-      <View style={styles.iconContainer}>
-        <Icon size={30} source='trash-can-outline' />
+        <View style={styles.iconContainer}>
+          <Icon size={30} source='trash-can-outline' />
+        </View>
       </View>
-    </View>
+    </TouchableRipple>
   );
 };
 

@@ -1,9 +1,14 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { Alert, ScrollView, StyleSheet } from 'react-native';
 
 import UserRequestingDeletionList from '@/components/administration/UserRequestingDeletionList';
-import { useGetProfilesRequestingDeletionQuery } from '@/store/api/profileApiSlice';
+import { Profile } from '@/models/entities/profile';
+import {
+  useDeleteProfileMutation,
+  useGetProfilesRequestingDeletionQuery,
+} from '@/store/api/profileApiSlice';
+import i18n from '@/utils/i18n';
 
 /**
  * The styles for the ReferencesPage component.
@@ -28,6 +33,32 @@ export const AdminUserDeletionPage = () => {
   const { data: profiles, refetch: refetchProfiles } =
     useGetProfilesRequestingDeletionQuery();
 
+  const [deleteProfile] = useDeleteProfileMutation();
+
+  // Callbacks
+  const handleUserDeletion = useCallback(
+    (profile: Profile) => {
+      Alert.alert(
+        i18n.t('admin.userDeletion.dialogTitle'),
+        i18n.t('admin.userDeletion.dialogMessage', {
+          name: `${profile.firstName} ${profile.lastName}`,
+        }),
+        [
+          {
+            text: i18n.t('common.cancel'),
+            style: 'cancel',
+          },
+          {
+            text: i18n.t('common.delete'),
+            onPress: () => deleteProfile(profile.id),
+            style: 'destructive',
+          },
+        ],
+      );
+    },
+    [deleteProfile],
+  );
+
   // Fetch data from the API when the page is focused
   useFocusEffect(
     useCallback(() => {
@@ -44,7 +75,10 @@ export const AdminUserDeletionPage = () => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <UserRequestingDeletionList profiles={profiles} />
+      <UserRequestingDeletionList
+        profiles={profiles}
+        onItemPress={handleUserDeletion}
+      />
     </ScrollView>
   );
 };

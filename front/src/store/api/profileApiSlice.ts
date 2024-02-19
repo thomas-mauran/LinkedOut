@@ -90,6 +90,13 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: () => 'profile/requestDeletion',
       providesTags: ['ProfilesRequestingDeletion'],
     }),
+    deleteProfile: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `profile/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['ProfilesRequestingDeletion'],
+    }),
   }),
 });
 
@@ -102,4 +109,5 @@ export const {
   useUploadResumeMutation,
   useRequestDeletionMutation,
   useGetProfilesRequestingDeletionQuery,
+  useDeleteProfileMutation,
 } = extendedApiSlice;

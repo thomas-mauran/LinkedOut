@@ -14,10 +14,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     width: '100%',
   },
-  itemContainer: {
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-  },
 });
 
 /**
@@ -46,7 +42,7 @@ const UserRequestingDeletionList: FC<UserRequestingDeletionListProps> = ({
   return (
     <View>
       {profiles?.map((profile) => (
-        <View key={profile.id} style={styles.itemContainer}>
+        <View key={profile.id}>
           <UserRequestingDeletionItem
             profile={profile}
             onItemPress={onItemPress}

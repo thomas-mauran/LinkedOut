@@ -110,7 +110,7 @@ const ProfileNav = () => {
       <ProfileStack.Screen
         name='AdminUserDeletion'
         component={AdminUserDeletionPage}
-        options={{ headerTitle: `${i18n.t('admin.userDeletion')}` }}
+        options={{ headerTitle: `${i18n.t('admin.userDeletion.headerTitle')}` }}
       />
     </ProfileStack.Navigator>
   );

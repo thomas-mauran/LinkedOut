@@ -162,6 +162,10 @@
     "applications": "Applications"
   },
   "admin": {
-    "userDeletion": "User deletion"
+    "userDeletion": {
+      "headerTitle": "User deletion",
+      "dialogTitle": "Delete user",
+      "dialogMessage": "Are you sure you want to delete %{name}?"
+    }
   }
 }
