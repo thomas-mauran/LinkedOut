@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import PaperNavigationBar from '@/components/utils/PaperNavigationBar';
+import AdminUserDeletionPage from '@/pages/administration/AdminUserDeletionPage';
 import ProfilePage from '@/pages/profile/ProfilePage';
 import ProfileUpdatePage from '@/pages/profile/ProfileUpdatePage';
 import AvailabilityCreatePage from '@/pages/profile/availabilities/AvailabilityCreatePage';
@@ -33,6 +34,7 @@ export type ProfileStackParamList = {
   References: undefined;
   ReferenceCreate: undefined;
   ReferenceUpdate: ReferenceUpdatePageParams;
+  AdminUserDeletion: undefined;
 };
 
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
@@ -103,6 +105,12 @@ const ProfileNav = () => {
         name='ReferenceUpdate'
         component={ReferenceUpdatePage}
         options={{ headerTitle: `${i18n.t('profile.references.edit')}` }}
+      />
+
+      <ProfileStack.Screen
+        name='AdminUserDeletion'
+        component={AdminUserDeletionPage}
+        options={{ headerTitle: `${i18n.t('admin.userDeletion')}` }}
       />
     </ProfileStack.Navigator>
   );

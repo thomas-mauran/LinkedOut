@@ -137,6 +137,10 @@
       "title": "Request profile deletion",
       "message": "Are you sure you want to request the deletion of your profile?\n\nAn administrator will manually review your request before deleting your profile.",
       "confirm": "Request deletion"
+    },
+    "admin": {
+      "buttonTitle": "Administration panel",
+      "buttonSubtitle": "Administration of the platform"
     }
   },
   "login": {
@@ -156,5 +160,8 @@
   },
   "applications": {
     "applications": "Applications"
+  },
+  "admin": {
+    "userDeletion": "User deletion"
   }
 }

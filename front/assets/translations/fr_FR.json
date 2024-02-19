@@ -137,6 +137,10 @@
       "title": "Demande de suppression de profil",
       "message": "Êtes-vous sûr de vouloir supprimer votre profil ?\n\nUn administrateur devra valider votre demande avant que votre profil ne soit supprimé.",
       "confirm": "Confirmer la demande"
+    },
+    "admin": {
+      "buttonTitle": "Panel d'administration",
+      "buttonSubtitle": "Administration de la plateforme"
     }
   },
   "login": {
@@ -156,5 +160,8 @@
   },
   "applications": {
     "applications": "Candidatures"
+  },
+  "admin": {
+    "userDeletion": "Suppression d'utilisateurs"
   }
 }
