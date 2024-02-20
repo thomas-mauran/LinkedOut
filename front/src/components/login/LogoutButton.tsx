@@ -1,6 +1,7 @@
 import * as AuthSession from 'expo-auth-session';
 import { TokenTypeHint, useAutoDiscovery } from 'expo-auth-session';
 import { FC, useCallback } from 'react';
+import { ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { logout } from '@/store/features/authenticationSlice';
@@ -15,13 +16,18 @@ type LogoutButtonProps = {
    * The mode of the button.
    */
   mode?: 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';
+
+  /**
+   * The style of the container.
+   */
+  style?: ViewStyle;
 };
 
 /**
  * The button for logging out of the app.
  * @constructor
  */
-const LogoutButton: FC<LogoutButtonProps> = ({ mode }) => {
+const LogoutButton: FC<LogoutButtonProps> = ({ mode, style }) => {
   // Store hooks
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -61,7 +67,11 @@ const LogoutButton: FC<LogoutButtonProps> = ({ mode }) => {
   }, [authState, discovery, dispatch, oidcClientId]);
 
   return (
-    <Button mode={mode ?? 'contained'} onPress={handleLogoutPress}>
+    <Button
+      mode={mode ?? 'contained'}
+      onPress={handleLogoutPress}
+      style={style}
+    >
       {i18n.t('login.logout')}
     </Button>
   );

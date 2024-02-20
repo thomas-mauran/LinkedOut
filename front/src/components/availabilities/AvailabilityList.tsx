@@ -46,7 +46,6 @@ type AvailabilityListProps = {
   /**
    * The function to call when the delete button of an item is pressed.
    */
-
   onItemDeletePress?: (availability: Availability) => void;
 };
 

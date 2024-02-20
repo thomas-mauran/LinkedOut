@@ -5,8 +5,10 @@ import AvailabilityList from '@/components/availabilities/AvailabilityList';
 import ProfileContactInfos from '@/components/profile/ProfileContactInfos';
 import ProfileFooterButtons from '@/components/profile/ProfileFooterButtons';
 import ProfileHeader from '@/components/profile/header/ProfileHeader';
+import BigButton from '@/components/utils/BigButton';
 import { Availability } from '@/models/entities/availability';
 import { Profile } from '@/models/entities/profile';
+import i18n from '@/utils/i18n';
 
 /**
  * The styles for the ProfilePage component.
@@ -46,6 +48,11 @@ type ProfileProps = {
   availabilities: Availability[];
 
   /**
+   * Whether to show access to the administration panel.
+   */
+  showAdmin: boolean;
+
+  /**
    * The function to call when the experiences button is pressed.
    */
   onExperiencesPress?: () => void;
@@ -54,6 +61,11 @@ type ProfileProps = {
    * The function to call when the references button is pressed.
    */
   onReferencesPress?: () => void;
+
+  /**
+   * The function to call when the admin button is pressed.
+   */
+  onAdminPress?: () => void;
 };
 
 /**
@@ -64,8 +76,10 @@ const ProfileContents: FC<ProfileProps> = ({
   profile,
   profilePictureUrl,
   availabilities,
+  showAdmin,
   onExperiencesPress,
   onReferencesPress,
+  onAdminPress,
 }) => {
   return (
     <ScrollView
@@ -90,6 +104,14 @@ const ProfileContents: FC<ProfileProps> = ({
         onReferencesPress={onReferencesPress}
         style={styles.footerButtons}
       />
+
+      {showAdmin && (
+        <BigButton
+          title={i18n.t('profile.admin.buttonTitle')}
+          subtitle={i18n.t('profile.admin.buttonSubtitle')}
+          onPress={onAdminPress}
+        />
+      )}
     </ScrollView>
   );
 };

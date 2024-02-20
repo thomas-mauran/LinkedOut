@@ -9,6 +9,7 @@ import {
   useGetProfilePictureQuery,
   useGetProfileQuery,
 } from '@/store/api/profileApiSlice';
+import { useAppSelector } from '@/store/hooks';
 
 import { ProfileStackParamList } from './ProfileNav';
 
@@ -25,6 +26,9 @@ type ProfilePageProps = NativeStackScreenProps<
  * @constructor
  */
 const ProfilePage: FC<ProfilePageProps> = ({ navigation }) => {
+  // Store hooks
+  const auth = useAppSelector((state) => state.auth);
+
   // API calls
   const { data: profile, refetch: refetchProfile } = useGetProfileQuery();
   const { data: profilePicture } = useGetProfilePictureQuery();
@@ -42,6 +46,10 @@ const ProfilePage: FC<ProfilePageProps> = ({ navigation }) => {
 
   const handleReferencesPress = useCallback(() => {
     navigation.navigate('References');
+  }, [navigation]);
+
+  const handleAdminPress = useCallback(() => {
+    navigation.navigate('AdminUserDeletion');
   }, [navigation]);
 
   // Set the header button
@@ -77,8 +85,10 @@ const ProfilePage: FC<ProfilePageProps> = ({ navigation }) => {
       profile={profile}
       profilePictureUrl={profilePicture}
       availabilities={availabilities}
+      showAdmin={auth.state === 'authenticated' && auth.isAdmin}
       onExperiencesPress={handleExperiencesPress}
       onReferencesPress={handleReferencesPress}
+      onAdminPress={handleAdminPress}
     />
   );
 };

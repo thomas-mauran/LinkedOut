@@ -130,6 +130,17 @@
       "radiusRange": "Rayon de recherche : %{range} km",
       "delete": "Supprimer la disponibilité",
       "deleteConfirm": "Voulez-vous vraiment supprimer cette disponibilité?"
+    },
+    "requestDeletion": {
+      "button": "Supprimer mon profil",
+      "buttonDisabled": "Suppression du profil demandée",
+      "title": "Demande de suppression de profil",
+      "message": "Êtes-vous sûr de vouloir supprimer votre profil ?\n\nUn administrateur devra valider votre demande avant que votre profil ne soit supprimé.",
+      "confirm": "Confirmer la demande"
+    },
+    "admin": {
+      "buttonTitle": "Panel d'administration",
+      "buttonSubtitle": "Administration de la plateforme"
     }
   },
   "login": {
@@ -149,5 +160,12 @@
   },
   "applications": {
     "applications": "Candidatures"
+  },
+  "admin": {
+    "userDeletion": {
+      "headerTitle": "Suppression d'utilisateurs",
+      "dialogTitle": "Supprimer un utilisateur",
+      "dialogMessage": "Êtes-vous sûr de vouloir supprimer %{name} ?"
+    }
   }
 }

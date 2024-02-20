@@ -79,6 +79,24 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ['ProfileResume'],
     }),
+    requestDeletion: builder.mutation<void, void>({
+      query: () => ({
+        url: 'profile/requestDeletion',
+        method: 'POST',
+      }),
+      invalidatesTags: ['Profile'],
+    }),
+    getProfilesRequestingDeletion: builder.query<Profile[], void>({
+      query: () => 'profile/requestDeletion',
+      providesTags: ['ProfilesRequestingDeletion'],
+    }),
+    deleteProfile: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `profile/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['ProfilesRequestingDeletion'],
+    }),
   }),
 });
 
@@ -89,4 +107,7 @@ export const {
   useGetProfilePictureQuery,
   useUploadProfilePictureMutation,
   useUploadResumeMutation,
+  useRequestDeletionMutation,
+  useGetProfilesRequestingDeletionQuery,
+  useDeleteProfileMutation,
 } = extendedApiSlice;
