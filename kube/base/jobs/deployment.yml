@@ -14,12 +14,20 @@ spec:
       labels:
         app.kubernetes.io/name: linkedout-jobs
         app.kubernetes.io/part-of: linkedout
+        network-group: microservices
     spec:
       containers:
       - name: linkedout-jobs
         image: ghcr.io/thomas-mauran/linkedout/jobs
         imagePullPolicy: Always
         env: []
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
         ports:
           - containerPort: 8081
             name: api

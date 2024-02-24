@@ -14,12 +14,20 @@ spec:
       labels:
         app.kubernetes.io/name: linkedout-apigw
         app.kubernetes.io/part-of: linkedout
+        network-group: api-gateway
     spec:
       containers:
       - name: linkedout-apigw
         image: ghcr.io/thomas-mauran/linkedout/api_gateway
         imagePullPolicy: Always
         env: []
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
         ports:
           - containerPort: 9090
             name: api
