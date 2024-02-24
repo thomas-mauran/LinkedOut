@@ -434,8 +434,7 @@ This policy defines the following:
   key (the one associated with the private key used to sign the images).
 \end{itemize}
 
-% // TODO
-\textbf{TODO:} Link to the policy in the repository.
+This policy is available \href{https://github.com/thomas-mauran/LinkedOut/blob/main/kube/prod/kyverno-policy.yml}{\textbf{here}}.
 
 \begin{figure}[H]
   \centering
@@ -515,9 +514,7 @@ This configuration does the following:
   \item \textbf{CPU limit:} This field specifies that the container is limited to 1 of a CPU.
 \end{itemize}
 
-% // TODO
-\medskip
-\textbf{TODO:} Link to the patch for adding resource requests/limits in the repository.
+The configured limits are available \href{https://github.com/thomas-mauran/LinkedOut/blob/main/kube/prod/add-resource-limits.patch.yml}{\textbf{here}}.
 
 % Network policies
 \subsection{Network policies}
@@ -580,8 +577,7 @@ spec:
 \textbf{Note:} While not shown here, we also add to add a second network policy to allow
 the pods to communicate with the in-cluster DNS server.
 
-% // TODO
 \medskip
-\textbf{TODO:} Link to the network policies in the repository.
+The network policies are available \href{https://github.com/thomas-mauran/LinkedOut/blob/main/kube/prod/network-policies.yml}{\textbf{here}}.
 
 \end{document}
