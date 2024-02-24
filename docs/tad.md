@@ -86,11 +86,11 @@ This service also has to contact the recommendation service to retrieve custom j
 
 ### Message Service
 
-- Explain the role of the message services
+The Message Service is responsible for managing messages and message channels within the LinkedOut platform. It handles the creation and retrieval of messages and message channels. By doing so, it allows the user to communicate with employers and directly exchange messages with them.
 
 ### Notification Service
 
-- Explain the role of the notification services
+The Notification Service is responsible for managing notifications within the LinkedOut platform. It handles the creation and retrieval of notifications. By doing so, it allows the user to receive notifications from the platform.
 
 ### Recommendation Service
 
@@ -109,20 +109,9 @@ By doing so we have a graph of users, experiences, jobs and job offers. We then 
 
 In the picture above you can see the graph database after we created a new user (the green node) with multiple experiences (the pink nodes).
 
-- we wanted to try graph databases since we never tried it before
-- explain when and how we create nodes
-- explain how the recommendation works
-- screenshot of the database nodes
-
 ## Kubernetes deployment
 
-We chose to deploy our microservices architecture on a Kubernetes cluster to take advantage of its container orchestration capabilities, scalability, and resilience and to improve our understanding of this tool.
-
-- talk about how each micro service can be scaled
-- talk about how the application can be deployed on any kubernetes cluster
-- talk about the charts
-
-### Database structures
+We chose to deploy our microservices architecture on a Kubernetes cluster to take advantage of its container orchestration capabilities, scalability, and resilience and to improve our understanding of this tool. The production environment is deployed on a k3s cluster hosted on a proxmox virtual machine at Polytech. We used Kustomize to manage the configuration of the different services and to make the deployment easier.
 
 ## Mobile App
 
@@ -206,8 +195,9 @@ The profile screen provides comprehensive details including the user's email add
 <div align="center">
   <img src="./assets/app/experienceEdit.png" alt="Experience Editing" width="300">
   <br>
-  Experiences Editing
+  Experiences Editingx
 </div>
+
 ## Post mortem and conclusion
 
 Overall, the project was a success. We learned a lot about microservices, kubernetes, keycloak, neo4j, NATS, protobuf, and many other technologies. We also learned a lot about the importance of organization in general and how to prepare a project the right way by planning it.
