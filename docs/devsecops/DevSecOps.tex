@@ -205,7 +205,35 @@ self-hosted Kubernetes cluster. Our code is stored on GitHub.
 
 % // TODO
 \medskip
-\textbf{TODO:} Describe the threat model.
+To get a better overview of the whole application architecture we used OWASP Threat Dragon
+to make a vulnerabilities diagram
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{imgs/threat_dragon.png}
+  \caption{Threat dragon infrastructure vulnerabilities diagram}
+\end{figure}
+
+\begin{table}[htbp] % Adjusted placement specifier
+  \centering
+  \small % Smaller font size
+  \begin{tabular}{|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{4cm}|p{4cm}|}
+  \hline
+  \textbf{Target} & \textbf{Title} & \textbf{Type} & \textbf{Description} & \textbf{Mitigations} \\ 
+  \hline
+  Mobile app & Man in the middle & Spoofing & A man-in-the-middle attack is a form of cyber attack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, a man in the middle would only let the attacker get the DNS the users it's talking to since the information will be encrypted from end to end. \\ 
+  \hline
+  Backend pods & Man in the middle & Elevation of privilege & A man-in-the-middle attack is a form of cyber attack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, a man in the middle would only let the attacker get the DNS the users it's talking to since the information will be encrypted from end to end. \\ 
+  \hline
+  API Gateway & JWT spoofing & Spoofing & JWT spoofing is the deceptive practice of forging or altering JSON Web Tokens to impersonate legitimate users or gain unauthorized access to systems and resources. & Since our authentication token only lasts 5 minutes, we limit the time someone who stole a token can impersonate. \\ 
+  \hline
+  API Gateway & JWT spoofing & Spoofing & JWT spoofing is the deceptive practice of forging or altering JSON Web Tokens to impersonate legitimate users or gain unauthorized access to systems and resources. & Since our authentication token only lasts 5 minutes, we limit the time someone who stole a token can impersonate. \\ 
+  \hline
+  \end{tabular}
+  \caption{Description of threats and mitigations}
+\end{table}
+
+\bigskip
 
 % Version control
 \section{Version control}
