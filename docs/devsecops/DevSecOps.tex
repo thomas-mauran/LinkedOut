@@ -216,21 +216,22 @@ to make a vulnerabilities diagram
 \begin{table}[htbp] % Adjusted placement specifier
   \centering
   \small % Smaller font size
-  \begin{tabular}{|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{4cm}|p{4cm}|}
+  \begin{tabular}{|p{2.5cm}|p{2.5cm}|p{6cm}|p{5cm}|}
   \hline
-  \textbf{Target} & \textbf{Title} & \textbf{Type} & \textbf{Description} & \textbf{Mitigations} \\ 
+  \textbf{Target} & \textbf{Threat} & \textbf{Description} & \textbf{Mitigations} \\ 
   \hline
-  Mobile app & Man-in-the-middle & Spoofing & A man-in-the-middle attack is a form of cyberattack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, a man-in-the-middle would only let the attacker get the DNS the user is talking to (if not using a protocol such as DNS over HTTPS) since the HTTPS traffic will be encrypted from end-to-end. \\ 
+  Mobile app & Man-in-the-middle & A form of cyberattack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, a man-in-the-middle would only let the attacker get the DNS the user is talking to (if not using a protocol such as DNS over HTTPS) since the HTTPS traffic will be encrypted from end-to-end. \\ 
   \hline
-  Backend pods & Man-in-the-middle & Privilege escalation & A man-in-the-middle attack is a form of cyberattack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, and if the machine of the user is not compromised, it is not possible to tamper with the traffic in a useful manner because it is encrypted. \\ 
+  Backend pods & Elevation of privilege & Elevation of privilege is a security exploit where an attacker gains higher-level access or permissions than originally authorized, typically allowing them to execute actions or access resources beyond their intended scope. & Since the API uses HTTPS, and if the user's machine is not compromised, it is not possible to tamper with the traffic in a useful manner because it is encrypted. \\ 
   \hline
-  API Gateway & JWT spoofing & Spoofing & JWT spoofing is the deceptive practice of forging or altering JSON Web Tokens to impersonate legitimate users or gain unauthorized access to systems and resources. & Since our authentication token only lasts 5 minutes, we limit the time someone who stole a token can impersonate. \\ 
+  API Gateway & JWT spoofing & Deceptive practice of forging or altering JSON Web Tokens to impersonate legitimate users or gain unauthorized access to systems and resources. & Since our authentication token only lasts 5 minutes, we limit the time someone who stole a token can impersonate. \\ 
   \hline
-  API Gateway & JWT spoofing & Spoofing & JWT spoofing is the deceptive practice of forging or altering JSON Web Tokens to impersonate legitimate users or gain unauthorized access to systems and resources. & Since our authentication token only lasts 5 minutes, we limit the time someone who stole a token can impersonate. \\ 
+  Relational database & SQL injection & Exploiting SQL vulnerabilities to execute arbitrary SQL code on a database. & Proper input validation and parameterized queries can prevent SQL injection attacks. Regular security audits and updates are also crucial. \\ 
   \hline
   \end{tabular}
   \caption{Description of threats and mitigations}
 \end{table}
+
 
 \bigskip
 
