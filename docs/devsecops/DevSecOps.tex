@@ -221,9 +221,9 @@ to make a vulnerabilities diagram
   \hline
   \textbf{Target} & \textbf{Title} & \textbf{Type} & \textbf{Description} & \textbf{Mitigations} \\ 
   \hline
-  Mobile app & Man in the middle & Spoofing & A man-in-the-middle attack is a form of cyber attack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, a man in the middle would only let the attacker get the DNS the users it's talking to since the information will be encrypted from end to end. \\ 
+  Mobile app & Man-in-the-middle & Spoofing & A man-in-the-middle attack is a form of cyberattack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, a man-in-the-middle would only let the attacker get the DNS the user is talking to (if not using a protocol such as DNS over HTTPS) since the HTTPS traffic will be encrypted from end-to-end. \\ 
   \hline
-  Backend pods & Man in the middle & Elevation of privilege & A man-in-the-middle attack is a form of cyber attack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, a man in the middle would only let the attacker get the DNS the users it's talking to since the information will be encrypted from end to end. \\ 
+  Backend pods & Man-in-the-middle & Privilege escalation & A man-in-the-middle attack is a form of cyberattack where an unauthorized third party intercepts and possibly alters communication between two parties without their knowledge or consent. & Since the API uses HTTPS, and if the machine of the user is not compromised, it is not possible to tamper with the traffic in a useful manner because it is encrypted. \\ 
   \hline
   API Gateway & JWT spoofing & Spoofing & JWT spoofing is the deceptive practice of forging or altering JSON Web Tokens to impersonate legitimate users or gain unauthorized access to systems and resources. & Since our authentication token only lasts 5 minutes, we limit the time someone who stole a token can impersonate. \\ 
   \hline
