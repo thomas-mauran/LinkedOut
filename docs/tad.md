@@ -34,7 +34,7 @@ In handling HTTP requests, the API Gateway acts as a reverse proxy, receiving in
 Moreover, the API Gateway can leverage NATS (a lightweight and high-performance messaging system) to facilitate inter-service communication. When a client request requires interaction with multiple microservices, the API Gateway can publish messages to NATS topics, allowing interested microservices to subscribe and respond accordingly. This asynchronous messaging pattern enhances scalability and resilience within the microservices ecosystem. For example if a microservice is down, the message will be stored in the NATS server and the microservice will be able to process it once it is back up. That process is called event sourcing.
 
 At the beginning of the project we decided to use the OpenAPI specification to define the API Gateway's RESTful API.
-This allowed us to define the API's structure, enabling us to have a common view of what the backend will have to look like. Looking back, it was a good decision since it allowed us to have a clear view of what we had to do and it also allowed us to write a mock server to test the front end using [json-server](https://www.npmjs.com/package/json-server). That allowed us to work on the front-end and the back-end at the same time without having to wait for the other to be done.
+This allowed us to define the API's structure, enabling us to have a common view of what the backend will have to look like. Looking back, it was a good decision since it allowed us to have a clear view of what we had to do, and it also allowed us to write a mock server to test the front end using [json-server](https://www.npmjs.com/package/json-server). That allowed us to work on the front-end and the back-end at the same time without having to wait for the other to be done.
 To explore the OpenAPI documentation for the HTTP API exposed by the API Gateway, you can access the following link: [API Gateway OpenAPI Specification](openapi/api_gateway.yml)
 
 ### NATS
@@ -45,7 +45,7 @@ In essence, NATS functions as a publish-subscribe messaging system, where produc
 
 Within a microservices architecture, NATS is used to enable inter-service communication. When one microservice needs to communicate with another, it can publish messages to relevant NATS subjects, indicating the intent or action required. Subsequently, other microservices that are interested in the message content can subscribe to the appropriate subjects and react accordingly.
 
-To optimize message transmission and ensure compatibility between microservices, we chose [Protocol Buffers](https://protobuf.dev/) (protobuf) to define the structure and serialization format of messages exchanged via NATS. Protobuf allows for the definition of message schemas in a language-neutral format, facilitating communication between services implemented in different programming languages. We splitted the messages into smaller, granular units based on business logic and functional requirements.
+To optimize message transmission and ensure compatibility between microservices, we chose [Protocol Buffers](https://protobuf.dev/) (protobuf) to define the structure and serialization format of messages exchanged via NATS. Protobuf allows for the definition of message schemas in a language-neutral format, facilitating communication between services implemented in different programming languages. We split the messages into smaller, granular units based on business logic and functional requirements.
 
 - There are [models](./backend/protobuf/src/main/proto/models/), which represent basic objects holding data like an `experience`, a `jobOffer`, a `profile`...
 - We also have [DTOs](./backend/protobuf/src/main/proto/dto/) which are Data Transfer Objects. Those are used as the parameters of the request to services, and can use the models.
@@ -68,7 +68,7 @@ Once Keycloak verifies the user's credentials, it issues a JSON Web Token (JWT) 
 
 Within our microservices architecture, we have implemented a centralized authentication mechanism using Keycloak and the API Gateway. The API Gateway intercepts incoming requests from clients and checks the signature of the JWT provided in the request headers against the Keycloak server to ensure the user's authentication and authorization status. If the JWT is valid and its signature is verified, the API Gateway forwards the request to the appropriate microservice for further processing, trusting its content (the most important being the user ID).
 
-We decided to only check the token in the gateway and not in each microservice to avoid the overhead of checking the token for each request in each microservice used. We could have done a zero-trust architecture where each microservice would check the token but we decided to go with the centralized approach. Such a zero-trust architecture would be more appropriate for a more complex project that would have more resources for its development, as it is intrinsically more secure but also more complex to implement efficiently.
+We decided to only check the token in the gateway and not in each microservice to avoid the overhead of checking the token for each request in each microservice used. We could have done a zero-trust architecture where each microservice would check the token, but we decided to go with the centralized approach. Such a zero-trust architecture would be more appropriate for a more complex project that would have more resources for its development, as it is intrinsically more secure but also more complex to implement efficiently.
 
 Our Keycloak configuration is stored in the [linkedout_realm.json](./config/keycloak/linkedout_realm.json) file, which contains the roles and the clients we use already inside a realm. This config is then imported in the Keycloak server and saves us a lot of time since we don't have to create the roles and the clients manually.
 
@@ -105,7 +105,7 @@ In the picture above, you can see the graph database after initialization: in re
 
 When a new user profile is created, the Recommendation Service stores the user profile as a new node in the Neo4j graph database containing only its ID. Same thing when a new experience is created: we create a new node with the experience ID and link it to both a user node and a job.
 
-By doing so we have a graph of users, experiences, jobs and job offers. We then use the Neo4j driver to retrieve the recommendations. We use the graph database to find the shortest path between the user and the job offer. We then return a list of job offers IDs. This list of job offers IDs is then used to retrieve the job offers from the job service. If there is no job offers to return, the job service will return all the job offers in the database.
+By doing so we have a graph of users, experiences, jobs and job offers. We then use the Neo4j driver to retrieve the recommendations. We use the graph database to find the shortest path between the user and the job offer. Finally, we return a list of job offers IDs. This list of job offers IDs is then used to retrieve the job offers from the job service. If there is no job offers to return, the job service will return all the job offers in the database.
 
 ![Graph database visualization](./assets/graph-db-2.png)
 
@@ -117,15 +117,15 @@ We chose to deploy our microservices architecture on a Kubernetes cluster to tak
 
 ## Mobile App
 
-We also developed a mobile app to interact with the platform. The app is in written in React Native with the Expo framework making it available for both Android and iOS. The app features few interesting things such as an english and french version, a dark mode and a light mode. It is made of this main screens:
+We also developed a mobile app to interact with the platform. The app is in written in React Native with the Expo framework making it available for both Android and iOS. The app features few interesting things such as an English and French version, a dark mode and a light mode. It is made of this main screens:
 
 ### Login and Register
 
-When the user opens the app for the first time, they are greeted with a keycloak login screen. If they don't have an account, they can click on the "Register" button to create a new account. After the user logs in, the app will store the token in the device's storage and use it to authenticate the user in the future.
+When the user opens the app for the first time, they are greeted with a Keycloak login screen. If they don't have an account, they can click on the "Register" button to create a new account. After the user logs in, the app will store the token in the device's storage and use it to authenticate the user in the future.
 
 ### Job Offers
 
-Displays the job offers. The user can apply get more informations about the offer by clicking on it. They can also apply to the job offer by clicking on the "Apply" button. By default the backend will send every job offers to the app if the user doesn't have any experience yet but if they do, the backend will send only the job offers that are recommended for the user using the recommendation service.
+Displays the job offers. The user can apply get more information about the offer by clicking on it. They can also apply to the job offer by clicking on the "Apply" button. By default, the backend will send every job offers to the app if the user doesn't have any experience yet but if they do, the backend will send only the job offers that are recommended for the user using the recommendation service.
 
 <div align="center">
   <img src="./assets/app/jobOffers.png" alt="Job Offers Page" width="300">
@@ -135,7 +135,7 @@ Displays the job offers. The user can apply get more informations about the offe
 
 ### The list of applied jobs
 
-Whenever the user applies to a job offer, the job offer is added to the list of applied jobs. The user can click on the job offer to get more informations about it. This list is very useful for the user to keep track of the job offers they applied to and their current status.
+Whenever the user applies to a job offer, the job offer is added to the list of applied jobs. The user can click on the job offer to get more information about it. This list is very useful for the user to keep track of the job offers they applied to and their current status.
 
 <div align="center">
   <img src="./assets/app/applications.png" alt="Applied job page" width="300">
@@ -151,7 +151,7 @@ Whenever the user applies to a job offer, the job offer is added to the list of 
 
 ### Messages and Notifications
 
-The user can see their messages and notifications, both behing splited in two different tabs available at the top of the screen. The messages are sent by the employer to the user and the notifications are sent by the app to the user. The user can click on a message to enter the message channel between him and an employer and can click on a notification to get more informations about it.
+The user can see their messages and notifications, both being split in two different tabs available at the top of the screen. The messages are sent by the employer to the user and the notifications are sent by the app to the user. The user can click on a message to enter the message channel between him and an employer and can click on a notification to get more information about it.
 
 <div align="center">
   <img src="./assets/app/notifications.png" alt="Notifications page" width="300">
@@ -200,13 +200,13 @@ The profile screen provides comprehensive details including the user's email add
   Experiences Editingx
 </div>
 
-## Post mortem and conclusion
+## Postmortem and conclusion
 
 Overall, the project was a success. We learned a lot about microservices, Kubernetes, Keycloak, Neo4j, NATS, Protocol Buffers, and many other technologies. We also learned a lot about the importance of organization in general and how to prepare a project the right way by planning it.
 
 Having a good view of the project before it starts is a key point. This is done by defining the OpenAPI specification, by creating detailed models of the application. Doing this allows us to enlighten all the potential dark spots of the projects and to make sure if we work in a team that we have a same definition of done for each feature.
 
 Another good thing we did was to implement a mockup server to test the front-end and the back-end at the same time. This allowed us to work on the front-end and the back-end at the same time without having to wait for the other to be done. This was a good decision since it allowed us to work on the project faster and to have a better view of the project as a whole.
-It also made the backend and frontend connexion a lot easier since we already coded and tested most of the frontend accordingly to the backend's API.
+It also made the backend and frontend connection a lot easier since we already coded and tested most of the frontend accordingly to the backend's API.
 
 During this project we have been able to split the work accordingly to our preferences and also made sure we both worked on different parts of the project to make sure we both learned as much as possible. Forcing ourselves to get out of our comfort allowed us to learn a lot more than we would have if we had worked on the same parts of the project.
