@@ -88,6 +88,8 @@ This service also has to contact the recommendation service to retrieve custom j
 
 The Message Service is responsible for managing messages and message channels within the LinkedOut platform. It handles the creation and retrieval of messages and message channels. By doing so, it allows the user to communicate with employers and directly exchange messages with them.
 
+A message channel is a single message room that is shared between a seasonal worker and an employer. It contains the list of messages that were exchanged between both.
+
 ### Notification Service
 
 The Notification Service is responsible for managing notifications within the LinkedOut platform. It handles the creation and retrieval of notifications. By doing so, it allows the user to receive notifications from the platform.
