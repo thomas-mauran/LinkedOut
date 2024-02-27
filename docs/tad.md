@@ -111,7 +111,7 @@ In the picture above you can see the graph database after we created a new user 
 
 ## Kubernetes deployment
 
-We chose to deploy our microservices architecture on a Kubernetes cluster to take advantage of its container orchestration capabilities, scalability, and resilience and to improve our understanding of this tool. The production environment is deployed on a k3s cluster hosted on a proxmox virtual machine at Polytech. We used Kustomize to manage the configuration of the different services and to make the deployment easier.
+We chose to deploy our microservices architecture on a Kubernetes cluster to take advantage of its container orchestration capabilities, scalability, and resilience and to improve our understanding of this tool. The production environment is deployed on a k3s cluster hosted on a Proxmox virtual machine at Polytech. We used Kustomize to manage the configuration of the different services and to make the deployment easier.
 
 ## Mobile App
 
@@ -200,9 +200,9 @@ The profile screen provides comprehensive details including the user's email add
 
 ## Post mortem and conclusion
 
-Overall, the project was a success. We learned a lot about microservices, kubernetes, keycloak, neo4j, NATS, protobuf, and many other technologies. We also learned a lot about the importance of organization in general and how to prepare a project the right way by planning it.
+Overall, the project was a success. We learned a lot about microservices, Kubernetes, Keycloak, Neo4j, NATS, Protocol Buffers, and many other technologies. We also learned a lot about the importance of organization in general and how to prepare a project the right way by planning it.
 
-Having a good view of the project before it starts is a key point. This is done by defining the Open API, by creating detailed models of the application. Doing this allows us to enlighten all the potential dark spots of the projects and to make sure if we work in a team that we have a same definition of done for each feature.
+Having a good view of the project before it starts is a key point. This is done by defining the OpenAPI specification, by creating detailed models of the application. Doing this allows us to enlighten all the potential dark spots of the projects and to make sure if we work in a team that we have a same definition of done for each feature.
 
 Another good thing we did was to implement a mockup server to test the front-end and the back-end at the same time. This allowed us to work on the front-end and the back-end at the same time without having to wait for the other to be done. This was a good decision since it allowed us to work on the project faster and to have a better view of the project as a whole.
 It also made the backend and frontend connexion a lot easier since we already coded and tested most of the frontend accordingly to the backend's API.
