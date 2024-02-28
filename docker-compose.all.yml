@@ -1,0 +1,138 @@
+x-linkedout-common: &linkedout_common
+  depends_on:
+    postgres:
+      condition: service_healthy
+    nats:
+      condition: service_started
+    neo4j:
+      condition: service_started
+
+x-linkedout-env: &linkedout_env
+  NATS_SPRING_SERVER: nats://nats:4222
+
+services:
+  # Postgres
+  postgres:
+    image: bitnami/postgresql:16.1.0
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+      POSTGRESQL_USERNAME: postgres
+      POSTGRESQL_POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+      - ./config/postgres:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres'"]
+      interval: 5s
+      timeout: 2s
+      retries: 24
+
+  # NATS
+  nats:
+    image: bitnami/nats:2.10.5
+
+  # Neo4j
+  neo4j:
+    image: neo4j
+    environment:
+      NEO4J_PLUGINS: "[\"apoc\", \"apoc-extended\"]"
+      NEO4J_AUTH: neo4j/password
+      NEO4J_dbms_security_procedures_allowlist: gds.*, apoc.*
+      NEO4J_dbms_security_procedures_unrestricted: gds.*, apoc.*
+    volumes:
+      - neo4j_data:/bitnami/neo4j
+      - ./backend/recommendation/apoc.conf:/var/lib/neo4j/conf/apoc.conf
+      - ./backend/recommendation/schema.cypher:/var/lib/neo4j/db_init/schema.cypher
+
+  # MinIO
+  minio:
+    image: bitnami/minio:2024.2.26
+    ports:
+      - 8280:9001
+    volumes:
+      - minio_data:/bitnami/minio/data
+
+  # LinkedOut microservices
+  linkedout_api_gateway:
+    <<: *linkedout_common
+    image: ghcr.io/thomas-mauran/linkedout/api_gateway
+    ports:
+      - 9090:9090
+    environment:
+      <<: *linkedout_env
+
+  linkedout_employer:
+    <<: *linkedout_common
+    image: ghcr.io/thomas-mauran/linkedout/employer
+    environment:
+      <<: *linkedout_env
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/employer
+      SPRING_R2DBC_USERNAME: employer
+      SPRING_R2DBC_PASSWORD: employer
+      SPRING_FLYWAY_URL: jdbc:postgresql://postgres:5432/employer
+      SPRING_FLYWAY_USER: employer
+      SPRING_FLYWAY_PASSWORD: employer
+
+  linkedout_jobs:
+    <<: *linkedout_common
+    image: ghcr.io/thomas-mauran/linkedout/jobs
+    environment:
+      <<: *linkedout_env
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/job
+      SPRING_R2DBC_USERNAME: job
+      SPRING_R2DBC_PASSWORD: job
+      SPRING_FLYWAY_URL: jdbc:postgresql://postgres:5432/job
+      SPRING_FLYWAY_USER: job
+      SPRING_FLYWAY_PASSWORD: job
+
+  linkedout_messaging:
+    <<: *linkedout_common
+    image: ghcr.io/thomas-mauran/linkedout/messaging
+    environment:
+      <<: *linkedout_env
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/messaging
+      SPRING_R2DBC_USERNAME: messaging
+      SPRING_R2DBC_PASSWORD: messaging
+      SPRING_FLYWAY_URL: jdbc:postgresql://postgres:5432/messaging
+      SPRING_FLYWAY_USER: messaging
+      SPRING_FLYWAY_PASSWORD: messaging
+
+  linkedout_notification:
+    <<: *linkedout_common
+    image: ghcr.io/thomas-mauran/linkedout/notification
+    environment:
+      <<: *linkedout_env
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/notification
+      SPRING_R2DBC_USERNAME: notification
+      SPRING_R2DBC_PASSWORD: notification
+      SPRING_FLYWAY_URL: jdbc:postgresql://postgres:5432/notification
+      SPRING_FLYWAY_USER: notification
+      SPRING_FLYWAY_PASSWORD: notification
+
+  linkedout_profile:
+    <<: *linkedout_common
+    image: ghcr.io/thomas-mauran/linkedout/profile
+    environment:
+      <<: *linkedout_env
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/profile
+      SPRING_R2DBC_USERNAME: profile
+      SPRING_R2DBC_PASSWORD: profile
+      SPRING_FLYWAY_URL: jdbc:postgresql://postgres:5432/profile
+      SPRING_FLYWAY_USER: profile
+      SPRING_FLYWAY_PASSWORD: profile
+      S3_ACCESS_KEY: minio
+      S3_SECRET_KEY: miniosecret
+
+  linkedout_recommendation:
+    <<: *linkedout_common
+    image: ghcr.io/thomas-mauran/linkedout/recommendation
+    environment:
+      <<: *linkedout_env
+      SPRING_NEO4J_URI: bolt://neo4j:7687
+      SPRING_NEO4J_AUTHENTICATION_USERNAME: neo4j
+      SPRING_NEO4J_AUTHENTICATION_PASSWORD: password
+
+volumes:
+  postgresql_data:
+  neo4j_data:
+  minio_data:
