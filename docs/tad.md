@@ -130,7 +130,7 @@ Displays the job offers. The user can apply get more information about the offer
 <div align="center">
   <img src="./assets/app/jobOffers.png" alt="Job Offers Page" width="300">
   <br>
-  Home Page (list of job offers)
+  Home page (list of available job offers)
 </div>
 
 ### The list of applied jobs
@@ -140,13 +140,13 @@ Whenever the user applies to a job offer, the job offer is added to the list of 
 <div align="center">
   <img src="./assets/app/applications.png" alt="Applied job page" width="300">
   <br>
-  Applied jobs page
+  Applied jobs
 </div>
-
+<br>
 <div align="center">
   <img src="./assets/app/jobOfferView.png" alt="Applied job page" width="300">
   <br>
-  Applied jobs page
+  Details of a job offer
 </div>
 
 ### Messages and Notifications
@@ -156,19 +156,19 @@ The user can see their messages and notifications, both being split in two diffe
 <div align="center">
   <img src="./assets/app/notifications.png" alt="Notifications page" width="300">
   <br>
-  Notifications page
+  Notifications
 </div>
-
+<br>
 <div align="center">
   <img src="./assets/app/messages.png" alt="Messages page" width="300">
   <br>
-  Messages page
+  Conversations
 </div>
-
+<br>
 <div align="center">
   <img src="./assets/app/messageChannel.png" alt="Messages channel page" width="300">
   <br>
-  Messages chan page
+  Messages with an employer
 </div>
 
 ### Profile
@@ -179,25 +179,25 @@ The profile screen provides comprehensive details including the user's email add
 <div align="center">
   <img src="./assets/app/profile.png" alt="Profile Page" width="300">
   <br>
-  Profile page
+  Profile
 </div>
-
+<br>
 <div align="center">
   <img src="./assets/app/experiences.png" alt="Experience Page" width="300">
   <br>
-  Experiences page
+  Experiences
 </div>
-
+<br>
 <div align="center">
   <img src="./assets/app/experienceEditBtn.png" alt="Experience Editing button" width="300">
   <br>
-  Experiences Editing Page when pressing the edit button
+  Updating experiences
 </div>
-
+<br>
 <div align="center">
   <img src="./assets/app/experienceEdit.png" alt="Experience Editing" width="300">
   <br>
-  Experiences Editingx
+  Editing an experience
 </div>
 
 ## Postmortem and conclusion
